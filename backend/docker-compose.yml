@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  # Conteiner do MySQL
+  odoya_datalake:
+    container_name: odoya_datalake
+    image: mysql:8
+    env_file:
+      - .env
+    ports:
+      - "4000:3306"
+    volumes:
+      - datalake:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - bridge_odoya
+
+  # Conteiner do servidor
+  odoya_backend:
+    depends_on:
+      - odoya_datalake
+    container_name: odoya_backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    expose:
+      - 5000
+    volumes:
+      - .:/home/app
+
+    networks:
+      - bridge_odoya
+
+volumes:
+  datalake:
+    driver: local
+
+networks:
+  bridge_odoya:
+    driver: bridge
