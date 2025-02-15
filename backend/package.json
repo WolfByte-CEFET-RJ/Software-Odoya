@@ -8,7 +8,7 @@
     "dev": "nodemon --legacy-watch src/server.ts",
     "start-ts": "ts-node src/server.ts",
     "build": "tsc",
-    "docker-up": "npm i && docker-compose -p software-odoya up --build"
+    "docker-up": "npm i --silent && docker-compose -p software-odoya up --build -d"
   },
   "keywords": [],
   "author": "",
