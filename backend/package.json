@@ -8,7 +8,10 @@
     "dev": "nodemon --legacy-watch src/server.ts",
     "start-ts": "ts-node src/server.ts",
     "build": "tsc",
-    "docker-up": "npm i --silent && docker-compose -p software-odoya up --build -d"
+    "docker-up": "npm i --silent && docker-compose -p software-odoya up --build -d",
+	"knex:migrate": "knex migrate:latest",
+    "knex:migrate:rollback": "knex migrate:rollback",
+    "knex:seed": "knex seed:run"
   },
   "keywords": [],
   "author": "",
@@ -16,11 +19,14 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "knex": "^3.1.0",
+    "mysql2": "^3.12.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/knex": "^0.15.2",
     "@types/node": "^22.13.4",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",

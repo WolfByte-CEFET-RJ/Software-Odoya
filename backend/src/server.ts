@@ -6,8 +6,10 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import routes from './router'
+import DatabaseConnection from './database/connection/DatabaseConnection';
 
 const app: express.Express = express();
+const db = DatabaseConnection.getInstance();
 
 // Middlewares de configuração
 app.use(cors());
@@ -22,3 +24,8 @@ const HOST: string = process.env.HOST || '0.0.0.0';
 app.listen(PORT, HOST, () => {
     console.log(`🔥 \tServidor ativo em http://localhost:${PORT}`);
 });
+
+async function example() {
+  const results = await db('example').select('*');
+  return results;
+}
