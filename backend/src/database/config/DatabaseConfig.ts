@@ -4,6 +4,9 @@ import path from 'path';
 
 dotenv.config();
 
+/**
+ * Concentra as configurações e credenciais do bando de dados
+ */
 class DatabaseConfig {
   private static config: Knex.Config = {
     client: 'mysql2',
@@ -26,7 +29,11 @@ class DatabaseConfig {
       directory: path.resolve(__dirname, '..', 'seeds')
     }
   };
-
+  
+  /**
+   * Retorna detalhes da configuração do knex
+   * @returns {Knex.Config}
+   */
   public static getConfig(): Knex.Config {
     return this.config;
   }
