@@ -2,7 +2,7 @@ import { HttpCode, HttpError } from "./erro.config";
 
 /**
  * @extends HttpError
- * @description Erro não previsto. Deve ser chamado após outras verificaçãoes de resposta, por ser genérico.
+ * @description Erro que não pôde ser previsto. Deve ser lançado após outras verificações de resposta, por ser genérico.
  */
 export class ImprevistError extends HttpError{
     constructor(message: string 
