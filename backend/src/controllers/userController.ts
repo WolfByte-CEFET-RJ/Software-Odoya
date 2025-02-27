@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
-const userService = require('../services/userService');
+import UserService from '../services/userService';
 import { HttpCode, HttpError } from '../erros/erro.config';
 
 
-module.exports = {
-    async createUser(req: Request, res: Response){
+export default class UserController {
+    public static async createUser(req: Request, res: Response): Promise<any>{
         const {name, email, password} = req.body;
         if (!name || !email || !password) {
             return res.status(HttpCode.BAD_REQUEST).json({ message: "Nome, e-mail e senha são obrigatórios" });
         }
         try{
-            const response = await userService.createUser(name, email, password);
+            const response = await UserService.createUser(name, email, password);
             return res.status(HttpCode.CREATED).json({message: response});
         }catch(e: any){
             if(e instanceof HttpError) {

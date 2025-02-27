@@ -5,9 +5,9 @@ import { HttpCode, HttpError } from "../erros/erro.config";
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
 
-module.exports = {
+export default class UserService {
 
-    async createUser(name: string, email: string, password: string): Promise<string> {
+    public static async createUser(name: string, email: string, password: string): Promise<string> {
         const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new HttpError({status: HttpCode.BAD_REQUEST, message: "Email já em uso"});
