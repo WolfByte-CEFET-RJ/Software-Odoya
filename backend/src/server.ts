@@ -5,7 +5,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import routes from './router'
+import routes from './routes'
 import DatabaseConnection from './database/connection/DatabaseConnection';
 
 const app: express.Express = express();
