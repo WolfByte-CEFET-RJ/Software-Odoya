@@ -31,7 +31,7 @@ export class AuthService {
             name: user.name,
             admin: user.admin
         }, process.env.JWT_SECRET!, {
-            expiresIn: '1h'
+            expiresIn: '24h'
         })
 
         return token;
