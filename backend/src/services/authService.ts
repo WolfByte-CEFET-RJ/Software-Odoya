@@ -3,8 +3,18 @@ import DatabaseConnection from "../database/connection/DatabaseConnection";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
+/**
+ * @class AuthService
+ * @description Serviço para autenticação.
+ */
 export class AuthService {
-    public static async login(email: string, password: string){
+    /**
+     * @description Realiza Login.
+     * @param {string} email - O email do usuário.
+     * @param {string} password - A senha do usuário.
+     * @returns { message: string; token?: string; }
+     */
+    public static async login(email: string, password: string): Promise<string>{
         const database = DatabaseConnection.getInstance();
 
         const user = await database('User')
@@ -12,16 +22,12 @@ export class AuthService {
             .where({email}).first()
 
         if(!user){
-            //lancar erro UserNotFound ou InvalidEmail
-            console.log("Email incorreto.");
             throw new Error("Email incorreto");
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if(!passwordMatch){
-            //lancar erro Senha Invalida
-            console.log("Senha invalida.");
             throw new Error("Senha Invalida");
         }
 
