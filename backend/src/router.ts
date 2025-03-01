@@ -3,6 +3,7 @@
 */
 
 import { Express, Request, Response } from 'express';
+import rootUser from './routes/rootUserRoutes';
 
 /**
  * Define endpoints mapeados
@@ -17,6 +18,8 @@ import { Express, Request, Response } from 'express';
  * router(app)
  */
 export default (app: Express): void => {
+    app.
+        use(rootUser)
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
