@@ -1,16 +1,27 @@
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { HttpCode, HttpError } from "../erros/erro.config";
+import { EmailDuplicate } from "../erros/UserErros";
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
 
+/**
+ * @class UserService
+ * @description Serviços para Usuário
+ */
 export default class UserService {
-
+    
+    /**
+     * @description Realiza a criação do Usuário
+     * @param {string} name
+     * @param {string} email
+     * @param {string} password
+     * @returns {Promise<string>}
+     */
     public static async createUser(name: string, email: string, password: string): Promise<string> {
         const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
-            throw new HttpError({status: HttpCode.BAD_REQUEST, message: "Email já em uso"});
+            throw new EmailDuplicate();
         }
 
         const hashPassword = await hash(password, 10);

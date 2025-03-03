@@ -4,7 +4,7 @@
 
 import { Express, Request, Response } from 'express';
 const bodyParser = require('body-parser');
-import user from './userRoutes';
+import user from './routes/userRoutes';
 
 /**
  * Define endpoints mapeados
