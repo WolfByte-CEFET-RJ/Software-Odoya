@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { EmailDuplicate } from "../erros/UserErros";
+import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
@@ -10,7 +10,7 @@ const knex = DatabaseConnection.getInstance();
  * @description Serviços para Usuário
  */
 export default class UserService {
-    
+
     /**
      * @description Realiza a criação do Usuário
      * @param {string} name
@@ -34,4 +34,35 @@ export default class UserService {
         await knex('User').insert(user);
         return "Usuário Cadastrado";
     }
+
+    /**
+     * @description Realiza a atualização do Usuário
+     * @param {string} id
+     * @param {UpdateUserData} data
+     * @returns {Promise<string>}
+     */
+    public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+        const user = await knex('User').where({ id }).first();
+        if (!user) {
+            throw new UserNotFound();
+        }
+
+        if (data.password) {
+            const hashPassword = await hash(data.password, 10);
+            data.password = hashPassword;
+        }
+
+        await knex('User').where({ id }).update({
+            name: data.name,
+            password: data.password,
+            points: data.points
+        });
+        return "Usuário Atualizado";
+    }
+}
+
+interface UpdateUserData {
+    name?: string;
+    password?: string;
+    points?: string;
 }

@@ -12,3 +12,16 @@ export class EmailDuplicate extends HttpError{
 
     }
 }
+
+/**
+ * @extends HttpError
+ * @description Erro de Usuário não Encontrado
+ */
+export class UserNotFound extends HttpError{
+    constructor(message: string 
+            = 'Usuário não Encontrado'){
+
+        super({status: HttpCode.NOT_FOUND, message})
+
+    }
+}

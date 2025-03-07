@@ -22,4 +22,19 @@ export default class UserController {
             return classified_err.sendMessage(res);
         }
     }
+    public static async updateUser(req: Request, res: Response): Promise<any>{
+        const { id, ...data } = req.body;
+        
+        try{
+            const response = await UserService.updateUser(id,data);
+            return res.status(HttpCode.OK).json({message: response});
+        }catch(e: any){
+            if(e instanceof HttpError) {
+                return e.sendMessage(res);
+            } 
+
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
 }

@@ -13,5 +13,13 @@ router
      * @returns { message: string } 
      */
     .post('/user', UserController.createUser)
+    /**
+     * @route PATCH /user
+     * @description Altera um usuário.
+     * @param {string} id
+     * @param {UpdateUserData} data
+     * @returns { message: string } 
+     */
+    .patch('/user', UserController.updateUser)
 
 export default router;
