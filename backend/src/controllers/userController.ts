@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import UserService from '../services/userService';
 import { HttpCode, HttpError } from '../erros/erro.config';
+import { ImprevistError } from '../erros/ImprevistError';
 
 
 export default class UserController {
@@ -17,7 +18,8 @@ export default class UserController {
                 return e.sendMessage(res);
             } 
 
-            return res.status(HttpCode.INTERNAL_SERVER_ERROR).json({ message: e.message });
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
         }
     }
 }
