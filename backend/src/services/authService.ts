@@ -15,6 +15,13 @@ export class AuthService {
      * @returns { message: string; token?: string; }
      */
     public static async login(email: string, password: string): Promise<string>{
+
+        const isAnyFieldEmpty = (!email || !password);
+
+        if(isAnyFieldEmpty){
+            throw new Error("Nenhum campo fornecido.");
+        }
+
         const database = DatabaseConnection.getInstance();
 
         const user = await database('User')
