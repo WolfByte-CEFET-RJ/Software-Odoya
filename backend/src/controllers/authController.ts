@@ -11,7 +11,7 @@ export default class AuthController {
 
             return res.status(200).send({
                 message: 'Login Realizado com sucesso',
-                token: `Bearer ${token}`
+                token: `${token}`
             })
         }catch(error: any){
             //login error
