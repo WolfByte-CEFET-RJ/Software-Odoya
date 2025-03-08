@@ -5,6 +5,8 @@
 import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
+import bodyParser from 'body-parser';
+import user from './routes/userRoutes';
 
 /**
  * Define endpoints mapeados
@@ -22,10 +24,12 @@ export default (app: Express): void => {
     app
         .use(rootUser)
         .use(authRouter)
+        .use(bodyParser.json())
+        .use(user);
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
         res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
     });
-
+    
 }
