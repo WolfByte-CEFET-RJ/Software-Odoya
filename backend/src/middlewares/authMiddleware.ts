@@ -1,9 +1,12 @@
 // src/middlewares/AuthMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { AccessDeniedError, AuthenticationError } from '../erros/AuthErros';
+import { HttpError } from '../erros/erro.config';
+import { ImprevistError } from '../erros/ImprevistError';
 
 interface TokenPayload {
-  id: number;
+  id: string;
   email: string;
   name: string;
   admin: boolean;
@@ -73,6 +76,34 @@ class AuthMiddleware {
       return res.status(403).json({ message: 'Acesso negado. Permissão de administrador necessária.' });
     });
   }
+
+   /**
+   * @method authorizeRoot
+   * @description Autoriza super-usuários a realizar ações exclusivas.
+   */
+   public static authorizeRoot(req: Request, res: Response, next: NextFunction): any {
+    AuthMiddleware.ensureAdmin(req, res, ()=>{
+      try {
+
+        if (req.user?.email != process.env.ROOT_EMAIL) {
+          throw new AccessDeniedError("Acesso negado. Permissão de super-usuário necessária.");
+        }
+        
+        return next();
+  
+      } catch (e) {
+        console.error(e);
+
+        if (e instanceof HttpError) {
+          return e.sendMessage(res);
+        }
+  
+        const classifiedError = new ImprevistError();
+        return classifiedError.sendMessage(res);
+      }
+    });
+  }
+  
 }
 
 // Extensão da interface Request do Express para incluir o usuário
@@ -80,7 +111,7 @@ declare global {
   namespace Express {
     interface Request {
       user?: {
-        id: number;
+        id: string;
         email: string;
         name: string;
         admin: boolean;

@@ -8,8 +8,7 @@ export default class RootUserController {
     public static async changeRole(req: Request, res: Response): Promise<any>{
         try{
             const { user_id } = req.params;
-
-            if(req.user.id === user_id){
+            if(req.user?.id === user_id){
                 throw new RootUserModificationError("Usuário root não pode ter suas permissões alteradas.")
             }
 

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import authorizeRoot from "../middlewares/authorizeRoot";
 import RootUserController from "../controllers/rootUserController";
+import AuthMiddleware from "../middlewares/authMiddleware";
 
 const rootUserRouter = Router();
 
@@ -11,6 +11,6 @@ rootUserRouter
      * @param {string} user_id - ID do usuário cujo cargo será alterado.
      * @returns { message: string; } 
      */
-    .patch("/role/:user_id", authorizeRoot, RootUserController.changeRole);
+    .patch("/role/:user_id", AuthMiddleware.authorizeRoot, RootUserController.changeRole);
 
 export default rootUserRouter;
