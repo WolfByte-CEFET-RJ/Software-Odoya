@@ -4,6 +4,7 @@
 
 import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
+import authRouter from './routes/authRoutes';
 
 /**
  * Define endpoints mapeados
@@ -18,8 +19,9 @@ import rootUser from './routes/rootUserRoutes';
  * router(app)
  */
 export default (app: Express): void => {
-    app.
-        use(rootUser)
+    app
+        .use(rootUser)
+        .use(authRouter)
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
