@@ -11,6 +11,13 @@ rootUserRouter
      * @param {string} user_id - ID do usuário cujo cargo será alterado.
      * @returns { message: string; } 
      */
-    .patch("/role/:user_id", AuthMiddleware.authorizeRoot, RootUserController.changeRole);
+    .patch("/role/:user_id", AuthMiddleware.authorizeRoot, RootUserController.changeRole)
+    
+    /**
+    * @route GET /user/all
+    * @description Fornece todos os usuários (com exceção do super-usuário) 
+    * @returns { amount: number; user: User[] } 
+    */
+    .get("/user/all", AuthMiddleware.authorizeRoot, RootUserController.getAllUsers);
 
 export default rootUserRouter;
