@@ -1,7 +1,8 @@
-import { compareSync, hash } from "bcryptjs";
 import DatabaseConnection from "../database/connection/DatabaseConnection";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { RequiredFieldsError } from "../erros/RequiredFieldsError";
+import { InvalidCredentialsError } from "../erros/InvalidCredentialsError";
 
 /**
  * @class AuthService
@@ -19,7 +20,7 @@ export class AuthService {
         const isAnyFieldEmpty = (!email || !password);
 
         if(isAnyFieldEmpty){
-            throw new Error("Nenhum campo fornecido.");
+            throw new RequiredFieldsError();
         }
 
         const database = DatabaseConnection.getInstance();
@@ -29,13 +30,13 @@ export class AuthService {
             .where({email}).first()
 
         if(!user){
-            throw new Error("Email incorreto");
+            throw new InvalidCredentialsError();
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if(!passwordMatch){
-            throw new Error("Senha Invalida");
+            throw new InvalidCredentialsError();
         }
 
         const token = jsonwebtoken.sign({
