@@ -55,7 +55,6 @@ export default class UserService {
         await knex('User').where({ id }).update({
             name: data.name,
             password: data.password,
-            points: data.points
         });
         return "Usuário Atualizado";
     }
@@ -64,5 +63,4 @@ export default class UserService {
 interface UpdateUserData {
     name?: string;
     password?: string;
-    points?: string;
 }
