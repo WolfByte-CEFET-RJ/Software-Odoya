@@ -1,8 +1,8 @@
 import DatabaseConnection from "../database/connection/DatabaseConnection";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { RequiredFieldsError } from "../erros/RequiredFieldsError";
-import { InvalidCredentialsError } from "../erros/InvalidCredentialsError";
+
+import { RequiredFieldsError, InvalidCredentialsError } from "../erros/LoginError";
 
 /**
  * @class AuthService
