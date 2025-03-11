@@ -1,4 +1,3 @@
-// src/middlewares/AuthMiddleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AccessDeniedError, AuthenticationError } from '../erros/AuthErros';
@@ -27,25 +26,25 @@ class AuthMiddleware {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      return res.status(401).json({ message: 'Token não fornecido' });
+      throw new AuthenticationError("Token não fornecido");
     }
 
     const parts = authHeader.split(' ');
     if (parts.length !== 2) {
-      return res.status(401).json({ message: 'Erro no formato do token' });
+      throw new AuthenticationError("Erro no formato do token");
     }
 
     const [scheme, token] = parts;
 
     if (!/^Bearer$/i.test(scheme)) {
-      return res.status(401).json({ message: 'Token mal formatado' });
+      throw new AuthenticationError("Token mal formatado");
     }
 
     try {
       const jwtSecret = process.env.JWT_SECRET;
       
       if (!jwtSecret) {
-        throw new Error('JWT_SECRET não está definido no ambiente');
+        throw new ImprevistError('JWT_SECRET não está definido no ambiente');
       }
 
       const decoded = jwt.verify(token, jwtSecret) as TokenPayload;
@@ -59,7 +58,17 @@ class AuthMiddleware {
 
       return next();
     } catch (error) {
-      return res.status(401).json({ message: 'Token inválido ou expirado' });
+      if (error instanceof HttpError) {
+        return error.sendMessage(res);
+      }
+      
+      if (error instanceof jwt.JsonWebTokenError) {
+        const authError = new AuthenticationError("Token inválido ou expirado");
+        return authError.sendMessage(res);
+      }
+      
+      const classifiedError = new ImprevistError();
+      return classifiedError.sendMessage(res);
     }
   }
 
@@ -68,13 +77,23 @@ class AuthMiddleware {
    * @description Verifica se o usuário é administrador.
    */
   public static ensureAdmin(req: Request, res: Response, next: NextFunction): void {
-    AuthMiddleware.ensureAuthenticated(req, res, () => {
-      if (req.user?.admin) {
+    try {
+      AuthMiddleware.ensureAuthenticated(req, res, () => {
+        if (!req.user?.admin) {
+          const error = new AccessDeniedError("Acesso negado. Permissão de administrador necessária.");
+          return error.sendMessage(res);
+        }
+        
         return next();
+      });
+    } catch (error) {
+      if (error instanceof HttpError) {
+        return error.sendMessage(res);
       }
       
-      return res.status(403).json({ message: 'Acesso negado. Permissão de administrador necessária.' });
-    });
+      const classifiedError = new ImprevistError();
+      return classifiedError.sendMessage(res);
+    }
   }
 
    /**
