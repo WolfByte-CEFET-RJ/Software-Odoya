@@ -1,7 +1,8 @@
-import { compareSync, hash } from "bcryptjs";
 import DatabaseConnection from "../database/connection/DatabaseConnection";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+
+import { RequiredFieldsError, InvalidCredentialsError } from "../erros/LoginError";
 
 /**
  * @class AuthService
@@ -15,6 +16,13 @@ export class AuthService {
      * @returns { message: string; token?: string; }
      */
     public static async login(email: string, password: string): Promise<string>{
+
+        const isAnyFieldEmpty = (!email || !password);
+
+        if(isAnyFieldEmpty){
+            throw new RequiredFieldsError();
+        }
+
         const database = DatabaseConnection.getInstance();
 
         const user = await database('User')
@@ -22,13 +30,13 @@ export class AuthService {
             .where({email}).first()
 
         if(!user){
-            throw new Error("Email incorreto");
+            throw new InvalidCredentialsError();
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
 
         if(!passwordMatch){
-            throw new Error("Senha Invalida");
+            throw new InvalidCredentialsError();
         }
 
         const token = jsonwebtoken.sign({
