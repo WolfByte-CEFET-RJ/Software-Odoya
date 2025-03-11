@@ -3,7 +3,6 @@
 */
 
 import { Express, Request, Response } from 'express';
-const bodyParser = require('body-parser');
 import user from './routes/userRoutes';
 
 /**
@@ -20,7 +19,6 @@ import user from './routes/userRoutes';
  */
 export default (app: Express): void => {
     app
-        .use(bodyParser.json())
         .use(user);
 
     // Rota padrão

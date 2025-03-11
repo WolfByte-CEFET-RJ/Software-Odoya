@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
@@ -24,7 +25,7 @@ export default class UserService {
             throw new EmailDuplicate();
         }
 
-        const hashPassword = await hash(password, 10);
+        const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
             id: v4(),
             name,
@@ -36,7 +37,7 @@ export default class UserService {
     }
 
     /**
-     * @description Realiza a atualização do Usuário
+     * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
      * @param {string} id
      * @param {UpdateUserData} data
      * @returns {Promise<string>}
@@ -48,7 +49,7 @@ export default class UserService {
         }
 
         if (data.password) {
-            const hashPassword = await hash(data.password, 10);
+            const hashPassword = await hash(data.password, Number(process.env.SALT_ROUNDS));
             data.password = hashPassword;
         }
 
