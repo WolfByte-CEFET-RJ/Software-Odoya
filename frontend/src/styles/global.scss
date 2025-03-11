@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+ 
+  
+  body {
+    background-color: #FFFFFF;
+    min-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  label {
+    display: inline-block;
+  }
+  
+   /* width */
+  ::-webkit-scrollbar {
+    width: 11px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px #a5a5a5;
+    
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+  }

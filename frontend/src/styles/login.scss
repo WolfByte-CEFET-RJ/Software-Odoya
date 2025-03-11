@@ -1,0 +1,80 @@
+.body{
+    background-image: url("../../public/fundoLogin.jpg");
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+    height: 100vh;
+    text-align: center;
+    
+    justify-content: center;
+    
+    
+    
+}
+.forms{
+    border-radius: 2% 0 0 2%;
+    margin: 2% 0 5% 5%;
+    align-items: center;
+    
+    display:flex;
+    flex-direction: column;
+    background-color: #F1F1F1;
+    height: 90%;
+    width:50%;    
+}
+.forms .logoazul{
+    margin-top: 10%;
+    width: 130px;
+    height: 130px;
+}
+.forms input{
+    
+    margin-top:3%;
+    width: 50%;
+    height: 7%;
+    border-radius: 10px;
+    background-color: #B1E3FA;
+}
+
+.forms a{
+    margin-top:1%;
+    margin-right: 23%;
+    font-size: 10px;
+    opacity: 60%;
+    font-style: italic;
+}
+
+.forms button{
+    all: unset;
+    margin-top:3%;
+    width: 50%;
+    height: 7%;
+    border-radius: 10px;
+    background-color: #269BDF;
+    color: #F1F1F1;
+    
+}
+
+.logo{
+    background-color: #00B8F1;
+    border-radius: 0 2% 2% 0;
+    align-items: center;
+    width:50%;
+    height: 90%;
+    margin: 2% 5% 5% 0;
+}
+.logo .logobranca{
+    margin-top: 20%;
+    height: 200px;
+    width: 320px;
+    
+}
+.logo h3{
+    
+    color:white;
+    margin-top: -5%;
+    font-style:italic;
+    font-weight: bold;
+    font-size: 15px;
+}
