@@ -48,10 +48,9 @@ export default class UserService {
         }
         
         // Traduzindo campos booleanos
-        users.map(user => ({
-            ...user,
-            admin: Boolean(user.admin)
-        }));
+        users.forEach(user => {
+            user.admin = Boolean(user.admin);
+        });
 
         return users
     }
