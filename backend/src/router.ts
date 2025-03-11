@@ -6,7 +6,6 @@ import { Express, Request, Response } from 'express';
 import authRouter from './routes/authRoutes';
 import user from './routes/userRoutes';
 
-const bodyParser = require('body-parser');
 /**
  * Define endpoints mapeados
  * 
@@ -21,7 +20,6 @@ const bodyParser = require('body-parser');
  */
 export default (app: Express): void => {
     app
-        .use(bodyParser.json())
         .use(user)
         .use(authRouter)
 

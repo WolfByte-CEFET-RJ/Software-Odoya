@@ -1,6 +1,7 @@
+import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { EmailDuplicate } from "../erros/UserErros";
+import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
@@ -10,7 +11,7 @@ const knex = DatabaseConnection.getInstance();
  * @description Serviços para Usuário
  */
 export default class UserService {
-    
+
     /**
      * @description Realiza a criação do Usuário
      * @param {string} name
@@ -24,7 +25,7 @@ export default class UserService {
             throw new EmailDuplicate();
         }
 
-        const hashPassword = await hash(password, 10);
+        const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
             id: v4(),
             name,
@@ -34,4 +35,33 @@ export default class UserService {
         await knex('User').insert(user);
         return "Usuário Cadastrado";
     }
+
+    /**
+     * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
+     * @param {string} id
+     * @param {UpdateUserData} data
+     * @returns {Promise<string>}
+     */
+    public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+        const user = await knex('User').where({ id }).first();
+        if (!user) {
+            throw new UserNotFound();
+        }
+
+        if (data.password) {
+            const hashPassword = await hash(data.password, Number(process.env.SALT_ROUNDS));
+            data.password = hashPassword;
+        }
+
+        await knex('User').where({ id }).update({
+            name: data.name,
+            password: data.password,
+        });
+        return "Usuário Atualizado";
+    }
+}
+
+interface UpdateUserData {
+    name?: string;
+    password?: string;
 }
