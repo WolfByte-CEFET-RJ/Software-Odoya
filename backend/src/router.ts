@@ -3,6 +3,7 @@
 */
 
 import { Express, Request, Response } from 'express';
+import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
 import user from './routes/userRoutes';
 
@@ -20,8 +21,9 @@ import user from './routes/userRoutes';
  */
 export default (app: Express): void => {
     app
-        .use(user)
+        .use(rootUser)
         .use(authRouter)
+        .use(user);
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
