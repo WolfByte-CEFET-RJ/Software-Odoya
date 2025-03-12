@@ -37,4 +37,21 @@ export default class UserController {
             return classified_err.sendMessage(res);
         }
     }
+    public static async deleteUser(req: Request, res: Response): Promise<any>{
+        try{
+            const idParam = req.params.id;
+            const id = Number(idParam);
+            
+            const response = await UserService.deleteUser(id);
+
+            return res.status(HttpCode.OK).json({message: response});
+        }catch(e: any){
+            if(e instanceof HttpError){
+                return e.sendMessage(res);
+            }
+
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
 }

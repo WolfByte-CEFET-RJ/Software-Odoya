@@ -21,5 +21,12 @@ router
      * @returns { message: string } 
      */
     .patch('/user', UserController.updateUser)
+    /**
+     * @route DELETE /user
+     * @description Deleta um usuario
+     * @param {string} id
+     * @returns { message: string }
+     */
+    .delete('/user', UserController.deleteUser)
 
 export default router;
