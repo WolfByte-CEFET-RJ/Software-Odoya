@@ -16,4 +16,3 @@ authRouter
 
 export default authRouter;
 
-
