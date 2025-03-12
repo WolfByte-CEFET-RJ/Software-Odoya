@@ -16,7 +16,7 @@
     border-radius: 2% 0 0 2%;
     margin: 2% 0 5% 5%;
     align-items: center;
-    
+   
     display:flex;
     flex-direction: column;
     background-color: #F1F1F1;
@@ -33,13 +33,14 @@
     margin-top:3%;
     width: 50%;
     height: 7%;
+    border: none;
     border-radius: 10px;
     background-color: #B1E3FA;
 }
 
 .forms a{
     margin-top:1%;
-    margin-right: 23%;
+    margin-right: 36%;
     font-size: 10px;
     opacity: 60%;
     font-style: italic;
