@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
 import User from "../types/user"
+=======
+import { v4 } from "uuid";
+import { hash } from "bcryptjs";
+import { EmailDuplicate } from "../erros/UserErros";
+>>>>>>> feature/login-front
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
@@ -12,7 +18,11 @@ const knex = DatabaseConnection.getInstance();
  * @description Serviços para Usuário
  */
 export default class UserService {
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> feature/login-front
     /**
      * @description Realiza a criação do Usuário
      * @param {string} name
@@ -26,7 +36,11 @@ export default class UserService {
             throw new EmailDuplicate();
         }
 
+<<<<<<< HEAD
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
+=======
+        const hashPassword = await hash(password, 10);
+>>>>>>> feature/login-front
         const user = {
             id: v4(),
             name,
@@ -36,6 +50,7 @@ export default class UserService {
         await knex('User').insert(user);
         return "Usuário Cadastrado";
     }
+<<<<<<< HEAD
 
     /**
      * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
@@ -86,3 +101,6 @@ interface UpdateUserData {
     password?: string;
 }   
 
+=======
+}
+>>>>>>> feature/login-front

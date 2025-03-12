@@ -1,0 +1,91 @@
+.body{
+    background-image: url("../../public/fundoLogin.jpg");
+    display: flex;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width:100%;
+    height: 100vh;
+    text-align: center;
+    
+    justify-content: center;
+    
+    
+    
+}
+.formulario{
+    border-radius: 2% 1% 1% 2%;
+    margin: 2% -0.5% 5% 5%;
+    align-items: center;
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    background-color: #F1F1F1;
+    height: 90%;
+    width:50%;    
+}
+.formulario .logoazul{
+    margin-top: 10%;
+    width: 230px;
+    height: 230px;
+}
+// .formulario input{
+    
+//     margin-top:3%;
+//     width: 50%;
+//     height: 7%;
+//     border-radius: 10px;
+//     background-color: #B1E3FA;
+// }
+
+.formulario a{
+    margin-top:1%;
+    margin-right: 23%;
+    font-size: 10px;
+    opacity: 60%;
+    font-style: italic;
+}
+
+.button-register-form{
+    all: unset;
+    margin-top:3%;
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #269BDF;
+    color: #F1F1F1;
+    font-weight: 800;
+    font-size: 16px;
+    
+}
+
+.logo-container{
+    background-color: #00B8F1;
+    border-radius: 0 2% 2% 0;
+    align-items: center;
+    justify-content: center;
+    width:50%;
+    height: 90%;
+    margin: 2% 5% 5% 0;
+}
+.logomarca{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    margin: 2% 5% 5% 0;
+}
+.logomarca .logobranca{
+    margin-top: 20%;
+    height: 420px;
+    width: 672px;
+    
+}
+.logomarca h3{
+    color:white;
+    margin-top:-2%;
+    display: flex;
+    font-style:italic;
+    width: 70%;
+    font-weight: bold;
+    font-size: 25px;
+}

@@ -22,6 +22,7 @@ export default class UserController {
             return classified_err.sendMessage(res);
         }
     }
+<<<<<<< HEAD
     public static async updateUser(req: Request, res: Response): Promise<any>{
         const { id, ...data } = req.body;
         
@@ -37,4 +38,6 @@ export default class UserController {
             return classified_err.sendMessage(res);
         }
     }
+=======
+>>>>>>> feature/login-front
 }

@@ -8,6 +8,7 @@ export default class AuthController {
         try{
             const email = req.body.email;
             const password = req.body.password;
+            
 
             const token = await AuthService.login(email, password);
 

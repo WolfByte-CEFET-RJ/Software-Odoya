@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { HttpCode, HttpError } from "./erro.config";
+=======
+import { HttpCode, HttpError } from "./erro.config"
+>>>>>>> feature/login-front
 
 /**
  * @extends HttpError

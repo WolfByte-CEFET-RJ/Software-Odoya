@@ -5,8 +5,13 @@
 import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
+<<<<<<< HEAD
 import user from './routes/userRoutes';
+=======
+import user from './routes/UserRoutes';
+>>>>>>> feature/login-front
 
+const bodyParser = require('body-parser');
 /**
  * Define endpoints mapeados
  * 
@@ -21,7 +26,12 @@ import user from './routes/userRoutes';
  */
 export default (app: Express): void => {
     app
+<<<<<<< HEAD
         .use(rootUser)
+=======
+        .use(bodyParser.json())
+        .use(user)
+>>>>>>> feature/login-front
         .use(authRouter)
         .use(user);
 
@@ -30,4 +40,8 @@ export default (app: Express): void => {
         res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
     });
     
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> feature/login-front

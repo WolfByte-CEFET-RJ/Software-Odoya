@@ -11,6 +11,7 @@ export class EmailDuplicate extends HttpError{
         super({status: HttpCode.CONFLICT, message})
 
     }
+<<<<<<< HEAD
 }
 
 /**
@@ -24,4 +25,6 @@ export class UserNotFound extends HttpError{
         super({status: HttpCode.NOT_FOUND, message})
 
     }
+=======
+>>>>>>> feature/login-front
 }
