@@ -22,7 +22,7 @@ class AuthMiddleware {
    * @method ensureAuthenticated
    * @description Verifica se o usuário está autenticado através do token JWT.
    */
-  public static ensureAuthenticated(req: Request, res: Response, next: NextFunction): Response | void {
+  public static ensureAuthenticated(req: Request, res: Response, next: NextFunction): void {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {

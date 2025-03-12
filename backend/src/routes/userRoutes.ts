@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from '../controllers/userController';
+import AuthMiddleware from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -20,6 +21,6 @@ router
      * @param {UpdateUserData} data
      * @returns { message: string } 
      */
-    .patch('/user', UserController.updateUser)
+    .patch('/user', AuthMiddleware.ensureAuthenticated, UserController.updateUser)
 
 export default router;

@@ -23,10 +23,11 @@ export default class UserController {
         }
     }
     public static async updateUser(req: Request, res: Response): Promise<any>{
-        const { id, ...data } = req.body;
+        const id = req.user?.id;
+        const data = req.body;
         
         try{
-            const response = await UserService.updateUser(id,data);
+            const response = await UserService.updateUser(String(id),data);
             return res.status(HttpCode.OK).json({message: response});
         }catch(e: any){
             if(e instanceof HttpError) {
