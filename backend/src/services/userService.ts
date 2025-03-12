@@ -84,7 +84,7 @@ export default class UserService {
      * @description Delete o usuário do id seleccionado
      * @returns {Promise<string>}
      */
-    public static async deleteUser(id: number): Promise<string>{
+    public static async deleteUser(id: string | undefined): Promise<string>{
         if(!id){
             throw new RequiredIdError();
         }

@@ -39,8 +39,7 @@ export default class UserController {
     }
     public static async deleteUser(req: Request, res: Response): Promise<any>{
         try{
-            const idParam = req.params.id;
-            const id = Number(idParam);
+            const id = req.user?.id;
             
             const response = await UserService.deleteUser(id);
 
