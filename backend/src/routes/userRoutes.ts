@@ -27,6 +27,6 @@ router
      * @param {string} id
      * @returns { message: string }
      */
-    .delete('/user', UserController.deleteUser)
+    .delete('/user/:id', UserController.deleteUser)
 
 export default router;
