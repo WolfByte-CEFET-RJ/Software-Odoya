@@ -38,19 +38,19 @@ function Cadastro(){
     return(
         <>
             <div className="body">
-                <form className="formulario" onSubmit={register}>
+                <div className="formulario" >
                     <img src="../public/LogoAzul.svg" className="logoazul" alt="Logo Azul da ENACTUS"/>
-                    <InputForm type='text' onChange={(event) => handleChange(event, setName)} placeholder='Nome'/>
-                    <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
-                    <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
-                    <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Confirmar Senha"/>
-                    
+                    <form onSubmit={register}>
+                        <InputForm type='text' onChange={(event) => handleChange(event, setName)} placeholder='Nome'/>
+                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
+                        <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
+                        <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Confirmar Senha"/>
+                        
 
-                    <button className='button-register-form' type='onSubmit'>Cadastrar</button>
+                        <button className='button-register-form' type='onSubmit'>Cadastrar</button>
+                    </form>
                     <button className='button-register-form' onClick={()=>navigate("/")}>Cancelar</button>
-                    
-
-                </form>
+                </div>
                 <div className="logo-container">
                     <div className="logomarca">
                         <img src="../public/LogoBranca.svg " alt="Logo Branca da ENACTUS" className="logobranca"/>

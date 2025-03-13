@@ -16,7 +16,7 @@
     border-radius: 2% 0 0 2%;
     margin: 2% 0 5% 5%;
     align-items: center;
-    
+   
     display:flex;
     flex-direction: column;
     background-color: #F1F1F1;
@@ -28,18 +28,47 @@
     width: 130px;
     height: 130px;
 }
+.forms .logoazul{
+    margin-top: 10%;
+    width: 130px;
+    height: 130px;
+    transition: transform 1s linear;
+}
+
+.forms .logoazul2{
+    margin-top: 10%;
+    width: 130px;
+    height: 130px;
+}
+.forms .logoazul2{
+    margin-top: 10%;
+    width: 130px;
+    height: 130px;
+    animation: rotacionar 1s linear infinite;
+}
+
+@keyframes rotacionar{
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 // .forms input{
     
 //     margin-top:3%;
 //     width: 50%;
 //     height: 7%;
+//     border: none;
 //     border-radius: 10px;
 //     background-color: #B1E3FA;
 // }
 
 .forms a{
     margin-top:1%;
-    margin-right: 23%;
+    cursor: pointer;
+    margin-right: 33%;
     font-size: 10px;
     opacity: 60%;
     font-style: italic;
