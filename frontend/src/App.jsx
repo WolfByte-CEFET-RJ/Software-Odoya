@@ -8,8 +8,6 @@ const Routing = () =>{
         
             <Routes>
                 <Route path="/" element={<Login/>}/>
-                
-                
             </Routes>
         
         </>
