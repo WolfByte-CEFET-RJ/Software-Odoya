@@ -1,5 +1,6 @@
-import { Router } from 'express';
+import { RequestHandler, Router } from 'express';
 import UserController from '../controllers/userController';
+import AuthMiddleware from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -27,6 +28,6 @@ router
      * @param {string} id
      * @returns { message: string }
      */
-    .delete('/user/:id', UserController.deleteUser)
+    .delete('/user', AuthMiddleware.ensureAuthenticated, UserController.deleteUser)
 
 export default router;
