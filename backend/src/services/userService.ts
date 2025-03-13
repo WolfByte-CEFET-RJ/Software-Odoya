@@ -89,9 +89,14 @@ export default class UserService {
             throw new RequiredIdError();
         }
 
-       await knex("User").where({id: id}).del();
+       const linesAffected = await knex("User").where({id: id}).del();
 
-       return "Usuario deletado com sucesso.";
+       if(linesAffected > 0){
+        return "Usuario deletado com sucesso";
+       } else {
+        throw new UserNotFound();
+       }
+       
     }
 }
 
