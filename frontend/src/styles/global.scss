@@ -1,16 +1,28 @@
+@font-face {
+  font-family: 'Batangas';
+  src: url(../assets/fonts/Batangas.otf);
+}
+
+@font-face {
+  font-family: 'Tankindred';
+  src: url(../assets/fonts/TANKINDRED-Display.otf);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  
- 
-  
   body {
     background-color: #FFFFFF;
     min-width: 100vw;
     overflow-x: hidden;
+    font-family: 'Batangas', sans-serif;
+    font-weight: 200;
   }
   
   label {
