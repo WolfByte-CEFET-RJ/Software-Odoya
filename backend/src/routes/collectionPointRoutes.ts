@@ -1,5 +1,6 @@
 import { Router } from "express";
 import CollectionPointController from "../controllers/collectionPointController";
+import AuthMiddleware from "../middlewares/authMiddleware";
 
 const collectionPointRouter = Router();
 
