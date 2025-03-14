@@ -3,7 +3,7 @@ import { useState } from "react";
 import "../../styles/inputForm.scss";
 import { Eye, EyeOff } from "lucide-react";
 
-function InputFormPassword({onChange, placeholder}){
+function InputFormPassword({onChange, placeholder, off}){
     const [view, setView] = useState(false);
     const handleClick = (e) =>{
         e.preventDefault()
@@ -11,7 +11,7 @@ function InputFormPassword({onChange, placeholder}){
     }
 return(
 <div className="container-inputForm">
-    <input className= "inputForm" type={view ? "text": "password"} onChange={onChange} placeholder={placeholder}/>
+    <input className= "inputForm" type={view ? "text": "password"} disable={off} onChange={onChange} placeholder={placeholder}/>
     <button className ="input-eye-btn" onClick={handleClick}>
         {view ? <EyeOff size={25} /> : <Eye size={25} />}
     </button>

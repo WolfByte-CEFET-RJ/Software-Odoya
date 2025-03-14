@@ -18,12 +18,12 @@ apiConnection.interceptors.request.use(
         
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
+        
+            /*
         } else{
             window.location.href="/";
-            //necessário testar
-            
+        */
         }
-  
         return config;
     },
     (error) => {

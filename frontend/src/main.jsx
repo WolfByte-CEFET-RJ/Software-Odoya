@@ -6,12 +6,12 @@ import { ToastContainer } from 'react-toastify';
 
 import {BrowserRouter} from 'react-router-dom'
 
-const client_id = "adquirir id"
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <GoogleOAuthProvider clientId={client_id}>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENTID} >
       
       <Routing/>
       </GoogleOAuthProvider>
