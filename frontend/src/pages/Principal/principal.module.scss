@@ -1,0 +1,86 @@
+.container {
+    display: flex;
+    justify-content: center;
+    height: 50%;
+    
+    .banner {
+        width: 100%;
+    }
+    
+}
+
+.separador {
+    width: 100%;
+    margin-top: -3%;
+}
+
+.secao_equipe {
+    display: flex;
+    justify-content: center;
+
+    margin-top: -4%;     
+    flex-direction: column;
+    font-family: 'Abel', sans-serif;
+    font-size: 1.2rem;
+    background-color: var(--tertiary-color);
+    padding: 0 5% 0 5%;
+
+    .titulo {
+        margin-top: 8%;
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 3%;
+        font-family: 'Tankindred', sans-serif;
+        color: var(--secondary-color);
+    }
+
+    .textos_conteudo {
+        display: flex;
+        flex-direction: row;
+        gap: 10rem;
+        align-items: center;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    .texto {
+        text-align: center;
+        font-size: 1.3rem;
+        margin-bottom: 3%;
+    }
+
+    .subtitulo {
+        font-family: 'Batangas', sans-serif;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+    .botao_container {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+        
+            .botao {
+                text-align: center;
+                background-color: var(--primary-color);
+                
+                padding: 1rem 5rem;
+                border-radius:50px;
+                text-decoration: none;
+             
+                color: white;
+                font-family: 'Batangas', sans-serif;
+                font-size: 1.3rem;
+                width: auto;
+                margin: 0 auto;
+            }
+    }
+
+    img {
+        height: 50%;
+    }
+}
