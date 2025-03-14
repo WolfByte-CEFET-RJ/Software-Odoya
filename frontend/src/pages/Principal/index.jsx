@@ -70,21 +70,21 @@ const Principal = () => {
                             <h2>Valores</h2>
                             <div className={principal.valores}>
                                 <div>
-                                    <HiMiniGlobeAmericas size={40}/>
+                                    <HiMiniGlobeAmericas size={40} color="00B8F1"/>
                                     <p>Sustentabilidade</p>
                                 </div>
                                 <div>
-                                    <MdOutlineMenuBook size={40}/>
+                                    <MdOutlineMenuBook size={40} color="00B8F1"/>
                                     <p>Educação Ambiental</p>
                                 </div>
                             </div>
                             <div className={principal.valores}>
                                 <div>
-                                <FaRegLightbulb size={40}/>
+                                <FaRegLightbulb size={40} color="00B8F1"/>
                                     <p>Inovação</p>
                                 </div>
                                 <div>
-                                <FaPeopleGroup size={40}/>
+                                <FaPeopleGroup size={40} color="00B8F1"/>
                                     <p>Empoderamento Comunitário</p>
                                 </div>
                             </div>
