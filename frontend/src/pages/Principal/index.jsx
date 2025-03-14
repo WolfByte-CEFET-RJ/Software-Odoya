@@ -3,6 +3,10 @@ import Header from "../../components/Header";
 import principal from "./principal.module.scss";
 import { TbArrowRightDashed } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { HiMiniGlobeAmericas } from "react-icons/hi2";
+import { MdOutlineMenuBook } from "react-icons/md";
+import { FaRegLightbulb } from "react-icons/fa";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 const Principal = () => {
     return (
@@ -12,7 +16,7 @@ const Principal = () => {
                 <img src="./Banner.png" className={principal.banner} alt="Equipe Odoyá" />
             </section>
             <img src="./separador.png" className={principal.separador}/>
-            <section className={principal.secao_equipe}>
+            <section className={principal.secao}>
                 <h1 className={principal.titulo}>Junte-se a nós na Coleta de Esponjas!</h1>
                 <div className={principal.textos_conteudo}>
                     <div>
@@ -39,6 +43,59 @@ const Principal = () => {
                     <img src="./equipe.png" alt="Equipe Odoyá" />
                 </div>
             </section>
+            <img src="./separador.png" className={principal.separador}/>
+            <section className={principal.secao2}>
+                <h1 className={principal.titulo}>Sobre o Projeto</h1>
+                <div className={principal.caracteristicas}>
+                    <div>
+                        <div className={principal.card}>
+                            <h2>Missão</h2>
+                            <p>Promover a conservação do meio ambiente e dos recursos hídricos, através da conscientização da população e do desenvolvimento de soluções de destinação e reaproveitamento de esponjas plásticas, de forma a apoiar a construção de uma sociedade mais sustentável na cidade do Rio de Janeiro.</p>
+                            <img src="./target.png" className={principal.icone} alt="" />
+                        </div>
+                        <div className={principal.card}>
+                            <h2>Objetivos Específicos</h2>
+                            <p>Promover o letramento ambiental nas comunidades locais focando no público jovem Introduzir a esponja plástica na economia circular criando meios de coleta e reutilização do material Incentivar a adoção do uso da bucha vegetal na sociedade Conectar organizações ambientais na limpeza de regiões próximas a corpos hídricos</p>
+                            <img src="./flag.png" className={principal.icone} alt="" />
+                        </div>
+                    </div>
+                    <div>
+                        <div className={principal.card}>
+                            <h2>Visão</h2>
+                            <p>Ser um negócio de impacto socioambiental, de referência na cidade do Rio de Janeiro, no desenvolvimento de produtos e serviços inovadores, que promovam o reaproveitamento de esponjas plásticas e a conservação dos recursos hídricos.</p>
+                            <img src="./visibility.png" className={principal.icone} alt="" />
+                        
+                        </div>
+                        <div className={principal.card}>
+                            <h2>Valores</h2>
+                            <div className={principal.valores}>
+                                <div>
+                                    <HiMiniGlobeAmericas size={40}/>
+                                    <p>Sustentabilidade</p>
+                                </div>
+                                <div>
+                                    <MdOutlineMenuBook size={40}/>
+                                    <p>Educação Ambiental</p>
+                                </div>
+                            </div>
+                            <div className={principal.valores}>
+                                <div>
+                                <FaRegLightbulb size={40}/>
+                                    <p>Inovação</p>
+                                </div>
+                                <div>
+                                <FaPeopleGroup size={40}/>
+                                    <p>Empoderamento Comunitário</p>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
         </>
     );
 };

@@ -12,9 +12,10 @@
 .separador {
     width: 100%;
     margin-top: -3%;
+
 }
 
-.secao_equipe {
+.secao, .secao2 {
     display: flex;
     justify-content: center;
 
@@ -26,7 +27,7 @@
     padding: 0 5% 0 5%;
 
     .titulo {
-        margin-top: 8%;
+        margin-top: 10%;
         text-align: center;
         font-size: 1.8rem;
         margin-bottom: 3%;
@@ -46,7 +47,7 @@
     }
 
     .texto {
-        text-align: center;
+
         font-size: 1.3rem;
         margin-bottom: 3%;
     }
@@ -62,7 +63,7 @@
         display: flex;
         justify-content: center;
         margin-top: 3rem;
-        margin-bottom: 3rem;
+        margin-bottom: 10rem;
         
             .botao {
                 text-align: center;
@@ -83,4 +84,42 @@
     img {
         height: 50%;
     }
+
+    .valores {
+        display: flex;
+        gap: 5rem;
+        align-items: center;
+        justify-content: baseline;
+        margin-bottom: 3rem;
+
+       
+    }
+}
+
+.secao2 {
+    background-color: white;
+
+    .caracteristicas {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 1rem;
+
+        .card {
+            margin: 1rem 5rem 7rem 5rem;
+            .icone {
+                margin:-30% 0% 0% 50%;
+            }
+            
+        }
+    }
+
+    
+
+    h2 {
+        font-family: 'Tankindred', sans-serif;
+        margin-bottom: 2rem;
+    }
+
+    
 }
