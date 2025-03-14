@@ -6,6 +6,13 @@ const router = Router();
 
 router
     /**
+     * @route GET /user
+     * @description Busca um usuário.
+     * @param {string} id
+     * @returns { User }
+     */
+    .get('/user', AuthMiddleware.ensureAuthenticated, UserController.getUser)
+    /**
      * @route POST /user
      * @description Cria um usuário.
      * @param {string} name
