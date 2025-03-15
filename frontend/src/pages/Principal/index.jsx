@@ -15,7 +15,7 @@ const Principal = () => {
             <section className={principal.container}>
                 <img src="./Banner.png" className={principal.banner} alt="Equipe Odoyá" />
             </section>
-            <img src="./separador.png" className={principal.separador}/>
+            <img src="./Ondinhas.svg" className={principal.separador}/>
             <section className={principal.secao}>
                 <h1 className={principal.titulo}>Junte-se a nós na Coleta de Esponjas!</h1>
                 <div className={principal.textos_conteudo}>
@@ -43,7 +43,7 @@ const Principal = () => {
                     <img src="./equipe.png" alt="Equipe Odoyá" />
                 </div>
             </section>
-            <img src="./separador.png" className={principal.separador}/>
+            <img src="./Ondinhas.svg" className={principal.separador}/>
             <section className={principal.secao2}>
                 <h1 className={principal.titulo}>Sobre o Projeto</h1>
                 <div className={principal.caracteristicas}>
@@ -63,7 +63,7 @@ const Principal = () => {
                         <div className={principal.card}>
                             <h2>Visão</h2>
                             <p>Ser um negócio de impacto socioambiental, de referência na cidade do Rio de Janeiro, no desenvolvimento de produtos e serviços inovadores, que promovam o reaproveitamento de esponjas plásticas e a conservação dos recursos hídricos.</p>
-                            <img src="./visibility.png" className={principal.icone} alt="" />
+                            <img src="./visibility.png" className={principal.icone_olho} alt="" />
                         
                         </div>
                         <div className={principal.card}>

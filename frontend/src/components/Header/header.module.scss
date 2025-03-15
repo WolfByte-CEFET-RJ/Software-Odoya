@@ -8,7 +8,7 @@
 
 .links {
     display: flex;
-    gap: 4rem;
+    gap: 5rem;
 }
 
 
@@ -21,4 +21,9 @@
     text-decoration: none;
     font-size: 1.2rem;
  
+}
+
+.link:hover {
+    transition: all ease-in .2s    ;
+    color: rgb(207, 207, 207);
 }
