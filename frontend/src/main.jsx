@@ -6,8 +6,6 @@ import { ToastContainer } from 'react-toastify';
 
 import {BrowserRouter} from 'react-router-dom'
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>

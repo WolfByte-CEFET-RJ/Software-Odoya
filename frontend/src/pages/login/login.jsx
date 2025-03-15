@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import '../../styles/login.scss';
 import { useNavigate } from 'react-router-dom'
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google'
+import { useGoogleLogin } from '@react-oauth/google'
+import { GoogleButton } from 'react-google-button'
 import api from '../../api'
 import React, { useState, useEffect } from 'react'
 import InputForm from '../../components/inputForm/inputForm.jsx'
@@ -78,6 +79,7 @@ function Login(){
             setDisable(false)
         }
         if (Object.keys(user2).length > 0) {
+            console.log('token de acesso do usuario')
             axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user2.access_token}`, {
                     headers: {
                         Authorization: `Bearer ${user2.access_token}`,
@@ -91,7 +93,7 @@ function Login(){
 
                     try {
                         
-                        let res = await api.post("/login", userData);
+                        //let res = await api.post("/login", userData);
                         console.log(res.data)
                         if(res.data.token){
                             setTimeout(() => {
@@ -125,22 +127,12 @@ function Login(){
             <div className="body">
                     <div className="forms">
                         <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
-                        <InputForm type='email' off={disable} onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
-                        <InputFormPassword  off={disable}  onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
+                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
+                        <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
                         <a >Esqueci minha senha</a>
-                        {/* <h3>GOogle aqui</h3> }
-                        <GoogleLogin
-                            onSuccess={credentialResponse => {
-                                console.log(credentialResponse);
-                            }}
-                            onError={() => {
-                                console.log('Login Failed');
-                            }}
-                            useOneTap
-                            />;*/}
-                        <button onClick={login} className="button-login-form"> Login com o Google </button>
-                        <button disable={disable} className="button-login-form" onClick={loading}>Entrar</button>
-                        <button disable={disable} className="button-login-form" onClick={()=>navigate("/register")}>Criar conta</button>
+                        <GoogleButton type="light" label="Login com o Google" onClick={login}></GoogleButton>
+                        <button className="button-login-form" onClick={loading}>Entrar</button>
+                        <button className="button-login-form" onClick={()=>navigate("/register")}>Criar conta</button>
                         
     
                     </div>
