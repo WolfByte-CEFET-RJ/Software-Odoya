@@ -7,6 +7,7 @@ import { HiMiniGlobeAmericas } from "react-icons/hi2";
 import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
+import Footer from "../../components/Footer";
 
 const Principal = () => {
   return (
@@ -152,6 +153,7 @@ const Principal = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 };
