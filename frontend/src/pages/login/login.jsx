@@ -93,7 +93,7 @@ function Login(){
 
                     try {
                         
-                        //let res = await api.post("/login", userData);
+                        let res = await api.post("/login", userData);
                         console.log(res.data)
                         if(res.data.token){
                             setTimeout(() => {
