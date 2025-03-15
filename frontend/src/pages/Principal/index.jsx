@@ -40,7 +40,7 @@ const Principal = () => {
                             <Link className={principal.botao} to="/register">Cadastre-se</Link>
                         </div>
                     </div>
-                    <img src="./equipe.png" alt="Equipe Odoyá" />
+                    <img src="./equipe.png" alt="Equipe Odoyá" className={principal.imagemEquipe}/>
                 </div>
             </section>
             <img src="./Ondinhas.svg" className={principal.separador}/>
