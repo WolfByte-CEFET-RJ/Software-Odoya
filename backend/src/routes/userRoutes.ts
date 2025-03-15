@@ -1,5 +1,6 @@
-import { Router } from 'express';
+import { RequestHandler, Router } from 'express';
 import UserController from '../controllers/userController';
+import AuthMiddleware from '../middlewares/authMiddleware';
 
 const router = Router();
 
@@ -21,5 +22,12 @@ router
      * @returns { message: string } 
      */
     .patch('/user', UserController.updateUser)
+    /**
+     * @route DELETE /user
+     * @description Deleta um usuario
+     * @param {string} id
+     * @returns { message: string }
+     */
+    .delete('/user', AuthMiddleware.ensureAuthenticated, UserController.deleteUser)
 
 export default router;

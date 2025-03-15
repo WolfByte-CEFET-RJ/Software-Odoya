@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
+import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
 import User from "../types/user"
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
@@ -78,6 +78,25 @@ export default class UserService {
         });
     
         return users
+    }
+
+    /**
+     * @description Delete o usuário do id seleccionado
+     * @returns {Promise<string>}
+     */
+    public static async deleteUser(id: string | undefined): Promise<string>{
+        if(!id){
+            throw new RequiredIdError();
+        }
+
+       const linesAffected = await knex("User").where({id: id}).del();
+
+       if(linesAffected > 0){
+        return "Usuario deletado com sucesso";
+       } else {
+        throw new UserNotFound();
+       }
+       
     }
 }
 

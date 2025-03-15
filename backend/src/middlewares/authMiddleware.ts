@@ -23,22 +23,25 @@ class AuthMiddleware {
    * @method ensureAuthenticated
    * @description Verifica se o usuário está autenticado através do token JWT.
    */
-  public static ensureAuthenticated(req: Request, res: Response, next: NextFunction): Response | void {
+  public static ensureAuthenticated(req: Request, res: Response, next: NextFunction): void {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      return res.status(401).json({ message: 'Token não fornecido' });
+      res.status(401).json({ message: 'Token não fornecido' });
+      return;
     }
 
     const parts = authHeader.split(' ');
     if (parts.length !== 2) {
-      return res.status(401).json({ message: 'Erro no formato do token' });
+      res.status(401).json({ message: 'Erro no formato do token' });
+      return;
     }
 
     const [scheme, token] = parts;
 
     if (!/^Bearer$/i.test(scheme)) {
-      return res.status(401).json({ message: 'Token mal formatado' });
+      res.status(401).json({ message: 'Token mal formatado' });
+      return;
     }
 
     try {
@@ -59,7 +62,8 @@ class AuthMiddleware {
 
       return next();
     } catch (error) {
-      return res.status(401).json({ message: 'Token inválido ou expirado' });
+      res.status(401).json({ message: 'Token inválido ou expirado' });
+      return;
     }
   }
 

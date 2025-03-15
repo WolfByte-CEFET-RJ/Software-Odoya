@@ -25,3 +25,15 @@ export class UserNotFound extends HttpError{
 
     }
 }
+
+/**
+ * @extends HttpError
+ * @description Erro de id não inserido
+ */
+export class RequiredIdError extends HttpError {
+    constructor(
+        message: string = 'Id não fornecido'
+    ){
+        super({status: HttpCode.BAD_REQUEST, message});
+    }
+}
