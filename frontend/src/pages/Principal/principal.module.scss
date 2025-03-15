@@ -100,7 +100,7 @@
         display: flex;
         justify-content: center;
         margin-top: 3rem;
-        margin-bottom: 10rem;
+        margin-bottom: 5rem;
 
         @media (max-width: 910px) {
             margin-bottom: 3rem;
@@ -143,6 +143,7 @@
     .imagemEquipe {
         border: 4px solid var(--primary-color);
         border-radius: 10px;
+        margin-bottom: 5rem;
     }
 
 }
@@ -222,7 +223,7 @@
             }
             h2 {
                 color: var(--quaternary-color);
-
+                
                
             }
             
