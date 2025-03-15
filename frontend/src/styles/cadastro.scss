@@ -1,12 +1,11 @@
 .body{
-    background-image: url("../../public/fundoLogin.jpg");
+    background-image: url("../../public/Fundodetela.png");
     display: flex;
     background-repeat: no-repeat;
     background-size: cover;
     width:100%;
     height: 100vh;
     text-align: center;
-    
     justify-content: center;
     
     
@@ -25,8 +24,8 @@
 }
 .formulario .logoazul{
     margin-top: 10%;
-    width: 230px;
-    height: 230px;
+    width: 201px;
+    height: 156px;
 }
 // .formulario input{
     
@@ -76,16 +75,15 @@
 }
 .logomarca .logobranca{
     margin-top: 20%;
-    height: 420px;
-    width: 672px;
+    height: 218px;
+    width: 447px;
     
 }
 .logomarca h3{
     color:white;
     margin-top:-2%;
-    display: flex;
     font-style:italic;
     width: 70%;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 1rem;
 }
