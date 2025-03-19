@@ -17,6 +17,7 @@
     "react-dom": "^19.0.0",
     "react-google-button": "^0.8.0",
     "react-toastify": "^11.0.5",
+    "react-icons": "^5.5.0",
     "sass": "^1.85.1"
   },
   "devDependencies": {
