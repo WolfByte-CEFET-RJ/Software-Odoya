@@ -8,7 +8,6 @@ router
     /**
      * @route GET /user
      * @description Busca um usuário.
-     * @param {string} id
      * @returns { User }
      */
     .get('/user', AuthMiddleware.ensureAuthenticated, UserController.getUser)
