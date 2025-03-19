@@ -127,18 +127,22 @@ function Login(){
             <div className="body">
                     <div className="forms">
                         <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
-                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
-                        <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
-                        <a >Esqueci minha senha</a>
-                        <GoogleButton type="light" label="Login com o Google" onClick={login}></GoogleButton>
-                        <button className="button-login-form" onClick={loading}>Entrar</button>
-                        <button className="button-login-form" onClick={()=>navigate("/register")}>Criar conta</button>
-                        
-    
+                        <div className="div_forms_login">
+                            <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
+                            <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
+                            <a >Esqueci minha senha</a>
+                            <GoogleButton type="light" label="Login com o Google" onClick={login}></GoogleButton>
+                            
+                            <button className="button-login-form" onClick={loading}>Entrar</button>
+                            <button className="button-login-form" onClick={()=>navigate("/register")}>Criar conta</button>
+
+                        </div>
                     </div>
                     <div className="logo">
-                        <img src="../public/LogoBranca.svg " alt="Logo Branca da ENACTUS" className="logobranca"/>
-                        <h3> Envolvendo a comunidade, destacamos a importância da Sub-bacia do Rio Maracanã, os impactos da poluição e alternativas para o lixo doméstico.</h3>            
+                        <div className="logo-logomarca">
+                            <img src="../public/LogoBranca.svg " alt="Logo Branca da ENACTUS" className="logobranca"/>
+                            <h3> Envolvendo a comunidade, destacamos a importância da Sub-bacia do Rio Maracanã, os impactos da poluição e alternativas para o lixo doméstico.</h3>            
+                        </div>
                     </div>
             </div>            
         </>

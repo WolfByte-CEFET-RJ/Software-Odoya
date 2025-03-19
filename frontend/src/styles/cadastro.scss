@@ -7,9 +7,6 @@
     height: 100vh;
     text-align: center;
     justify-content: center;
-    
-    
-    
 }
 .formulario{
     border-radius: 2% 1% 1% 2%;
@@ -22,20 +19,45 @@
     height: 90%;
     width:50%;    
 }
+.div_formulario_cadastro{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+}
 .formulario .logoazul{
     margin-top: 10%;
     width: 201px;
     height: 156px;
 }
-// .formulario input{
-    
-//     margin-top:3%;
-//     width: 50%;
-//     height: 7%;
-//     border-radius: 10px;
-//     background-color: #B1E3FA;
-// }
+.formulario .logoazul{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    transition: transform 1s linear;
+}
 
+.formulario .logoazul2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+}
+.formulario .logoazul2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    animation: rotacionar 1s linear infinite;
+}
+
+@keyframes rotacionar{
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 .formulario a{
     margin-top:1%;
     margin-right: 23%;
@@ -86,4 +108,95 @@
     width: 70%;
     font-weight: bold;
     font-size: 1rem;
+}
+
+@media(max-width: 1020px){
+    .formulario{
+        margin: 4% -0.5% 5% 5%;   
+    }
+    .formulario .logoazul{
+        margin-top: 8%;
+    }
+    .div_formulario_cadastro{
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        align-items: center;
+        justify-content: center;
+    }
+    .button-register-form{
+        width: 250px;
+    }
+    .logo-container{
+        margin: 4% 5% 5% 0;
+    }
+    
+}
+@media(max-width: 820px){
+    .button-register-form{
+        width: 150px;
+    }
+    .logo-container{
+        width:50%;
+        height: 90%;
+    }
+    .logomarca{
+        width:100%;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+    .logomarca .logobranca{
+        margin-top: 20%;
+        height: 140px;
+        width: 300px;
+    }
+    .logomarca h3{
+        font-size: 1rem;
+    }
+}
+@media(max-width: 640px){
+    .body{
+        flex-direction: column;
+    }
+    .formulario{
+        width: 85%;
+        height: 100%;
+        margin: 5% 5% 5% 5%;
+        padding-bottom: 5%;   
+    }
+    .formulario .logoazul{
+        margin-top: 8%;
+    }
+    .button-register-form{
+        width: 250px;
+    }
+    .logo-container{
+        margin: -7.5% 5% 5% 5%;
+        width:85%;
+        height: 30%;
+    }
+    .logomarca{
+        top: -25%;
+    }
+}
+@media(max-width: 480px){
+    .body{
+        flex-direction: column;
+    }
+    .formulario{
+        width: 85%;
+        height: 100%;
+        margin: 5% 5% 5% 5%;
+        padding-bottom: 5%;   
+    }
+    .formulario .logoazul{
+        margin-top: 8%;
+    }
+    .div_formulario_cadastro{
+        width: 80%;
+    }
+    .button-register-form{
+        width: 200px;
+    }
 }

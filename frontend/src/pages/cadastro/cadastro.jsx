@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 function Cadastro(){
     const [user, setUser] = useState('')
     const [name, setName] = useState('')
+    const [load, setLoad]  = useState()
     const [password, setPass] = useState('')
     const [confirmPassword, setConfirmPass] = useState('')
 
@@ -21,8 +22,15 @@ function Cadastro(){
     const handleChange = (event, setText) => {
         setText(event.target.value);
     };
-    async function register(e){
+
+    function loading(e){
         e.preventDefault()
+        setLoad(true)
+        register(e)
+    }
+
+    async function register(){
+        // e.preventDefault()
         if(confirmPassword  !==  password){
             toast.error("as senhas não são condizentes.")
             return
@@ -30,12 +38,16 @@ function Cadastro(){
         const userData = {name:name, email: user, password: password}
         try {
             let res = await api.post("/user", userData);
-            setTimeout(() => {
-                toast.success(res.data.message)
-            },1000);
-            navigate("/")  
+            if(res.data){
+                setTimeout(() => {
+                    setLoad(false)
+                    toast.success(res.data.message)
+                },1000);
+                navigate("/login")  
+            }
         }catch(e){
             setTimeout(()=>{
+                setLoad(false)
                 toast.error(e.response.data.message);
             },1000);
         }
@@ -47,24 +59,23 @@ function Cadastro(){
         <>
             <div className="body">
                 <div className="formulario" >
-                    <img src="../public/LogoAzul.svg" className="logoazul" alt="Logo Azul da ENACTUS"/>
-                    <div>
+                    <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
+                    <div className="div_formulario_cadastro">
                         <InputForm type='text' onChange={(event) => handleChange(event, setName)} placeholder='Nome'/>
                         <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
                         <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
                         <InputFormPassword onChange={(event) => handleChange(event, setConfirmPass)} placeholder="Confirmar Senha"/>
                         
-
-                        <button className='button-register-form' onClick={register}>Cadastrar</button>
+                        <button className='button-register-form' onClick={loading}>Cadastrar</button>
+                        <button className='button-register-form' onClick={()=>navigate("/login")}>Cancelar</button>
                     </div>
-                    <button className='button-register-form' onClick={()=>navigate("/")}>Cancelar</button>
                 </div>
                 <div className="logo-container">
                     <div className="logomarca">
                         <img src="../public/LogoBranca.svg " alt="Logo Branca da ENACTUS" className="logobranca"/>
                         <h3> Envolvendo a comunidade, destacamos a importância da Sub-bacia do Rio Maracanã, os impactos da poluição e alternativas para o lixo doméstico.</h3>            
                     </div>
-                    </div>
+                </div>
             </div>
 
         </>

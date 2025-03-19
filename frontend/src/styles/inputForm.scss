@@ -1,5 +1,5 @@
 .container-inputForm{
-    width: 400px;
+    width: 100%;
     height: 45px;
     margin-bottom:15px;
 }
@@ -26,7 +26,7 @@
     border: none;
     // display: flex;
     position: relative;
-    right: -140px;
+    right: -40%;
     top:-35px;
     cursor: pointer;
 }
