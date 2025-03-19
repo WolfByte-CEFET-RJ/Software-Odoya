@@ -14,6 +14,20 @@ const knex = DatabaseConnection.getInstance();
 export default class UserService {
 
     /**
+     * @description Busca um Usuário
+     * @param {string} id
+     * @returns {Promise<User>}
+     */
+    public static async getUser(id: string): Promise<User> {
+
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({id}).first();
+        if (!user) {
+            throw new UserNotFound();
+        }
+        return user;
+    }
+
+    /**
      * @description Realiza a criação do Usuário
      * @param {string} name
      * @param {string} email

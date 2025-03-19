@@ -5,6 +5,21 @@ import { ImprevistError } from '../erros/ImprevistError';
 
 
 export default class UserController {
+    public static async getUser(req: Request, res: Response): Promise<any>{
+        const id = req.user?.id;
+
+        try{
+            const user = await UserService.getUser(String(id));
+            return res.status(HttpCode.OK).json(user);
+        }catch(e: any){
+            if(e instanceof HttpError) {
+                return e.sendMessage(res);
+            } 
+
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
     public static async createUser(req: Request, res: Response): Promise<any>{
         const {name, email, password} = req.body;
         if (!name || !email || !password) {
@@ -23,10 +38,11 @@ export default class UserController {
         }
     }
     public static async updateUser(req: Request, res: Response): Promise<any>{
-        const { id, ...data } = req.body;
+        const id = req.user?.id;
+        const data = req.body;
         
         try{
-            const response = await UserService.updateUser(id,data);
+            const response = await UserService.updateUser(String(id),data);
             return res.status(HttpCode.OK).json({message: response});
         }catch(e: any){
             if(e instanceof HttpError) {
