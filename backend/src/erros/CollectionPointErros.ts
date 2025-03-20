@@ -13,3 +13,13 @@ export class RequiredFieldsError extends HttpError {
         super({ status: HttpCode.BAD_REQUEST, message });
     }
 }
+
+/**
+ * @extends HttpError
+ * @description Erro lançado quando há tentativa de excluir um ponto de coleta que possui depósitos associados
+ */
+export class CollectionPointWithDepositsError extends HttpError {
+    constructor(message: string = 'Não é possível excluir um ponto de coleta que possui depósitos associados') {
+        super({ status: HttpCode.CONFLICT, message });
+    }
+}

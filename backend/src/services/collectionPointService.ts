@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import DatabaseConnection from "../database/connection/DatabaseConnection";
 import CollectionPoint from "../types/collectionPoint";
-import { CollectionPointNotFound, RequiredFieldsError } from "../erros/CollectionPointErros";
+import { CollectionPointNotFound, CollectionPointWithDepositsError, RequiredFieldsError } from "../erros/CollectionPointErros";
 const knex = DatabaseConnection.getInstance();
 
 export default class CollectionPointService {
@@ -42,5 +42,34 @@ export default class CollectionPointService {
         })
         
         return {"message": "Ponto de Coleta criado"};
+    }
+
+    /**
+     * @method deleteCollectionPoint
+     * @description Remove um ponto de coleta específico pelo ID, se não houver depósitos associados
+     * @param {string} id - ID do ponto de coleta a ser removido
+     * @throws {CollectionPointNotFound} Se o ponto de coleta não for encontrado
+     * @throws {CollectionPointWithDepositsError} Se existirem depósitos associados ao ponto de coleta
+     */
+    public static async deleteCollectionPoint(id: string) {
+        const collectionPoint = await knex("Collection_Point").where({ id }).first();
+        
+        if (!collectionPoint) {
+            throw new CollectionPointNotFound();
+        }
+        
+        const deposits = await knex("Deposit").where({ collectionPointId: id }).first();
+        
+        if (deposits) {
+            throw new CollectionPointWithDepositsError();
+        }
+        
+        const deletedCount = await knex("Collection_Point").where({ id }).delete();
+        
+        if (deletedCount === 0) {
+            throw new CollectionPointNotFound();
+        }
+        
+        return true;
     }
 }

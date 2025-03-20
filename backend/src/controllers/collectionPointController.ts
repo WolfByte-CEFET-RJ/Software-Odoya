@@ -55,5 +55,26 @@ export default class CollectionPointController {
         }
     }
 
+    /**
+     * @method deleteCollectionPoint
+     * @description Remove um ponto de coleta específico pelo ID
+     * @param {Request} req - Objeto de requisição Express
+     * @param {Response} res - Objeto de resposta Express
+     */
+    public static async deleteCollectionPoint(req: Request, res: Response) {
+        const { id } = req.params;
+
+        try {
+            await CollectionPointService.deleteCollectionPoint(id);
+            res.status(HttpCode.NO_CONTENT).send();
+        } catch (e) {
+            if(e instanceof HttpError) {
+                return e.sendMessage(res);
+            } 
+            
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
 
 }
