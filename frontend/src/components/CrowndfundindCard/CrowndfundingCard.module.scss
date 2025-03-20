@@ -1,0 +1,105 @@
+.container,.container2{
+    width: 242px;
+    height: 267px;
+    border-radius: 10px;
+    align-items: center;
+    transition: transform 0.3s linear;
+
+    .titulo{
+        margin-top: 10%;
+        margin-bottom: 3%;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 550;
+        font-family: 'Abel', sans-serif;
+        color: rgb(0, 0, 0);
+
+    }
+    .titulo2{
+        margin-top: 10%;
+        margin-bottom: 3%;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 550;
+        font-family: 'Abel', sans-serif;
+        color: rgb(255, 255, 255);
+
+    }
+
+    .info{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 20px;
+
+        .infoSpan{
+            font-family: 'Abel', sans-serif;
+            color: rgb(0, 0, 0);
+            display: flex;
+            gap: .6rem;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin: 7.5px 0px;
+            .icon{
+                color:#195D39
+            }
+        }
+        .infoSpan2{
+            font-family: 'Abel', sans-serif;
+            color: rgb(255, 255, 255);
+            display: flex;
+            gap: .6rem;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin: 7.5px 0px;
+            .icon{
+                color:#195D39
+            }
+        }
+    }
+    .iconCard{
+        color:#195D39;
+        display: flex;
+        position: relative;
+        left: 140px;
+        bottom: 20px;
+    }
+    .iconCardStar{
+        color: #114C6D;
+        display: flex;
+        position: relative;
+        left: 140px;
+        bottom: 20px;
+    }
+    .iconCard2{
+        color:#ffffff;
+        display: flex;
+        position: relative;
+        left: 140px;
+        bottom: 20px;
+    }
+}
+
+.container{
+    background-color: #A3CBB6;
+}
+
+.container:hover, .container2:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.presente{
+    background-color: #B1E3FA;
+    color: black;
+}
+.em_analise{
+    background-color: #FFB300;
+    color: white;
+}
+.faltou{
+    background-color: #D32F2F;
+    color: white;
+}
