@@ -18,10 +18,10 @@ const updateUserSchema = Yup.object({
 export default class UserValidator{
     
     public static async validateCreateUser(userData: {name: string, email: string, password: string}){
-        await createUserSchema.validate(userData);
+        await createUserSchema.validate(userData, { abortEarly: false });
     }
 
     public static async validateUpdateUser(userData: {name?: string, password?: string}){
-        await updateUserSchema.validate(userData);
+        await updateUserSchema.validate(userData, { abortEarly: false });
     }
 }
