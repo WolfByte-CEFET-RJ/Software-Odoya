@@ -27,7 +27,7 @@ router
      * @param {UpdateUserData} data
      * @returns { message: string } 
      */
-    .patch('/user', UserController.updateUser)
+    .patch('/user', AuthMiddleware.ensureAuthenticated, UserController.updateUser)
     /**
      * @route DELETE /user
      * @description Deleta um usuario
