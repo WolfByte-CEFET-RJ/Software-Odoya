@@ -1,6 +1,7 @@
 .container{
     width: 242px;
     height: 267px;
+    // position: relative;
     background-color: #B1E3FA;
     border-radius: 10px;
     align-items: center;
@@ -22,7 +23,8 @@
             font-size: 1.3rem;
             margin: 7.5px 0px;
             .icon{
-                color:#114C6D
+                color:#114C6D;
+                font-size: 22px;
             }
         }
     }
@@ -48,6 +50,7 @@
     }
     .iconCard{
         color:#114C6D;
+        font-size: 90px;
         display: flex;
         position: relative;
         left: 140px;
@@ -71,4 +74,35 @@
 .container:hover{
     cursor: pointer;
     transform: scale(1.05);
+}
+
+@media(max-width: 590px){
+    .container{
+        width: 170px;
+        height: 187px;
+        .info{
+            margin-left: 10px;
+    
+            .infoSpan{
+                gap: .6rem;
+                font-size: 0.9rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .infoPonto{
+            margin-left: 10px;
+            margin-top: 30px;
+    
+            .infoSpan{
+                gap: .6rem;
+                font-size: 0.9rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .iconCard{
+            font-size: 50px;
+            left: 100px;
+            bottom: 30px;
+        }
+    }
 }

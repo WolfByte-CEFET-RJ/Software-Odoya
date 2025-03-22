@@ -160,3 +160,57 @@
         }
     }
 }
+@media (max-width: 580px) {
+    .container{
+        height: 240px;
+    }
+    .iconDiv{
+        display: flex;
+        margin-left:0% ; 
+        .icon{
+            font-size:170px;
+        }
+        .iconQ{
+            font-size: 55px;
+            left: -120px;
+            top: 45px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 1.2rem;
+        }
+        .estrofe{
+            font-size: 0.8rem;
+            width: 20rem;
+        }
+    }
+}
+@media (max-width: 490px) {
+    .container{
+        padding: 5% 3%;
+        height: 220px;
+    }
+    .iconDiv{
+        display: flex;
+        margin-left:0% ;
+        margin-right: -10% ; 
+        .icon{
+            font-size:150px;
+        }
+        .iconQ{
+            font-size: 45px;
+            left: -100px;
+            top: 42px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 0.9rem;
+        }
+        .estrofe{
+            font-size: 0.6rem;
+            width: 13rem;
+        }
+    }
+}

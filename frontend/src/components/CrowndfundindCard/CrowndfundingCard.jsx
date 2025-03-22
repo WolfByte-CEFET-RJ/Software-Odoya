@@ -12,18 +12,16 @@ function CrowndfundingCard(props){
         props.state === "analise" 
         ? "em_analise" 
         : "faltou";
-
-    console.log(status);
     return(
         <>{ props.crownd ? 
             <div className={cardStyle.container}>
                 <h1 className={cardStyle.titulo}>{props.num} esponjas</h1>
                 <div className={cardStyle.info}>
-                    <span className={cardStyle.infoSpan} > <MdLocationOn className={cardStyle.icon} size={25}/> {props.place}</span>
-                    <span className={cardStyle.infoSpan} > <FaCalendarDays className={cardStyle.icon} size={25}/> {props.date}</span>
-                    <span className={cardStyle.infoSpan} > <MdAccessTimeFilled className={cardStyle.icon} size={25}/> {props.hour}</span>
+                    <span className={cardStyle.infoSpan} > <MdLocationOn className={cardStyle.icon} /> {props.place}</span>
+                    <span className={cardStyle.infoSpan} > <FaCalendarDays className={cardStyle.icon} /> {props.date}</span>
+                    <span className={cardStyle.infoSpan} > <MdAccessTimeFilled className={cardStyle.icon} /> {props.hour}</span>
                 </div>
-                <FaUsers className={cardStyle.iconCard} size={90}/>
+                <FaUsers className={cardStyle.iconCard} />
             </div>
             :
             <div className={`${cardStyle.container2} ${status === "presente" ? cardStyle.presente
@@ -33,20 +31,20 @@ function CrowndfundingCard(props){
                 <div className={cardStyle.info}>
                     <span className={`${status === "presente" ? cardStyle.infoSpan
                         : cardStyle.infoSpan2}`} > <MdLocationOn className={`${status === "presente" ? cardStyle.presente
-                        : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`} size={25}/> {props.place}</span>
+                        : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`}/> {props.place}</span>
                     <span className={`${status === "presente" ? cardStyle.infoSpan
                         : cardStyle.infoSpan2}`} > <FaCalendarDays className={`${status === "presente" ? cardStyle.presente
-                        : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`} size={25}/> {props.date}</span>
+                        : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`}/> {props.date}</span>
                     <span className={`${status === "presente" ? cardStyle.infoSpan
                         : cardStyle.infoSpan2}`} > <MdAccessTimeFilled className={`${status === "presente" ? cardStyle.presente
-                        : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`} size={25}/> {props.duration}</span>
+                        : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`}/> {props.duration}</span>
                 </div>
                 {
                     status === "presente" ?
-                    <FaStar  className={cardStyle.iconCardStar} size={90}/>
+                    <FaStar  className={cardStyle.iconCardStar} />
                     : status === "em_analise" ?
-                    <FaMinusSquare  className={cardStyle.iconCard2} size={85}/>
-                    : <FaWindowClose className={cardStyle.iconCard2} size={90}/>
+                    <FaMinusSquare  className={cardStyle.iconCard2}/>
+                    : <FaWindowClose className={cardStyle.iconCard2} />
 
                 }
                 

@@ -42,7 +42,8 @@
             font-size: 1.3rem;
             margin: 7.5px 0px;
             .icon{
-                color:#195D39
+                color:#195D39;
+                font-size: 22px;
             }
         }
         .infoSpan2{
@@ -61,6 +62,7 @@
     }
     .iconCard{
         color:#195D39;
+        font-size: 90px;
         display: flex;
         position: relative;
         left: 140px;
@@ -69,12 +71,14 @@
     .iconCardStar{
         color: #114C6D;
         display: flex;
+        font-size: 90px;
         position: relative;
         left: 140px;
         bottom: 20px;
     }
     .iconCard2{
         color:#ffffff;
+        font-size: 90px;
         display: flex;
         position: relative;
         left: 140px;
@@ -94,12 +98,46 @@
 .presente{
     background-color: #B1E3FA;
     color: black;
+    font-size: 22px;
 }
 .em_analise{
     background-color: #FFB300;
     color: white;
+    font-size: 22px;
 }
 .faltou{
     background-color: #D32F2F;
     color: white;
+    font-size: 22px;
+}
+
+@media(max-width: 590px){
+    .container,.container2{
+        width: 170px;
+        height: 187px;
+        .info{
+            margin-left: 10px;
+    
+            .infoSpan,.infoSpan2{
+                gap: .6rem;
+                font-size: 0.9rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .infoPonto{
+            margin-left: 10px;
+            margin-top: 30px;
+    
+            .infoSpan,.infoSpan2{
+                gap: .6rem;
+                font-size: 0.9rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .iconCard,.iconCardStar,.iconCard2{
+            font-size: 50px;
+            left: 100px;
+            bottom: 30px;
+        }
+    }
 }

@@ -6,21 +6,12 @@ import DonationCard from "../../components/DonationCard/DonationCard.jsx";
 import CuriositySection from "../../components/CuriositySection/CuriositySection.jsx";
 import api from "../../api.js";
 import CrowndfundingCard from "../../components/CrowndfundindCard/CrowndfundingCard.jsx";
+import Mapa from "../../components/MapaComponent/Mapa.jsx"
+import {Grid2} from "@mui/material"
 function Home(){
     const[user, setUser] = useState("user");
     const[esponge, setEsponge] = useState(false);
     const[muti, setMuti] = useState(false);
-
-    // async function fetchUser(){
-    //     try{
-    //         let res = await api.get("/user");
-    //         if(res.data){
-    //             setUser(res)
-    //         }
-    //     }catch(error){
-
-    //     }
-    // }
 
     function changePageEsponge(e){
         e.preventDefault()
@@ -35,34 +26,38 @@ function Home(){
 
     let dados = [
         {
+            idx:1,
             num:20,
             place:"Rua Canabarro, n100",
             date: "19/03/2025",
             hour: "14:35",
             state: "presetne",
         },
-        {
+        {   
+            idx:2,
             num:20,
             place:"Rua Canabarro, n100",
             date: "19/03/2025",
             hour: "14:35",
             state: "analise"
         },
-        {
+        {   
+            idx:3,
             num:20,
             place:"Rua Canabarro, n100",
             date: "19/03/2025",
             hour: "14:35",
             state: "presente"
         },
-        {
+        {   
+            idx:4,
             num:20,
             place:"Rua Canabarro, n100",
             date: "19/03/2025",
             hour: "14:35",
             state: "faltou"
         },
-    ]
+    ] 
     return(
         <>
             {user ? 
@@ -82,65 +77,68 @@ function Home(){
                 { esponge ?
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
-                        <div className="sectionCards-grid">
+                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
-                            <DonationCard donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
+                            <DonationCard key={dado.idx} donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
                             )) : <></>}
-                        </div>
+                        </Grid2>
                     </section>
                     :  muti ? 
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Minhas Inscrições</h1>
-                        <div className="sectionCards-grid">
+                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
-                            <CrowndfundingCard state={dado.state} nome={dado.num} place={dado.place} date={dado.date} duration={dado.hour}/>
+                            <CrowndfundingCard key={dado.idx}  state={dado.state} nome={dado.num} place={dado.place} date={dado.date} duration={dado.hour}/>
                             )) : <></>}
-                        </div>
+                        </Grid2>
                     </section>
                     :
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
-                        <div className="sectionCards-grid">
+                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
-                            <DonationCard donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
+                            <DonationCard key={dado.idx}  donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
                             )) : <></>}
-                        </div>
+                        </Grid2>
                     </section>
                         
                 }
                 { esponge ?
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Pontos de Coleta</h1>
-                        <div className="sectionCards-grid">
+                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
-                            <DonationCard nome={dado.num} place={dado.place} state={dado.date}/>
+                                <>
+                                <DonationCard key={dado.idx}  nome={dado.num} place={dado.place} state={dado.date}/>
+                                {/* <button onClick={initMap}></button> */}
+                            </>
                             )) : <></>}
-                        </div>
+                        </Grid2>
                     </section>
                     :  muti ? 
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
-                        <div className="sectionCards-grid">
+                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
-                            <CrowndfundingCard crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
+                            <CrowndfundingCard key={dado.idx}  crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
                             )) : <></>}
-                        </div>
+                        </Grid2>
                     </section>
                     :
                     <section className="sectionCards">
                     <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
-                    <div className="sectionCards-grid">
+                    <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                         {dados ? dados.map((dado)=>(
-                            <CrowndfundingCard crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
+                            <CrowndfundingCard key={dado.idx}  crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
                         )) : <></>}
-                    </div>
+                    </Grid2>
                 </section>
                         
                 }
                 {
                     esponge ?
-                    <section className="section_map">
-
+                    <section id='map'className="section_map">
+                        <Mapa adress={"Rua Canabarro"} />
                     </section>
                     : muti ? 
                     <section className="section_calendar">

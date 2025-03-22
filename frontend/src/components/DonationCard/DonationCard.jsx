@@ -12,11 +12,11 @@ function DonationCard(props){
             <div className={cardStyle.container}>
                 <h1 className={cardStyle.titulo}>{props.num} esponjas</h1>
                 <div className={cardStyle.info}>
-                    <span className={cardStyle.infoSpan} > <MdLocationOn className={cardStyle.icon} size={25}/> {props.place}</span>
-                    <span className={cardStyle.infoSpan} > <FaCalendarDays className={cardStyle.icon} size={25}/> {props.date}</span>
-                    <span className={cardStyle.infoSpan} > <MdAccessTimeFilled className={cardStyle.icon} size={25}/> {props.hour}</span>
+                    <span className={cardStyle.infoSpan} > <MdLocationOn className={cardStyle.icon} /> {props.place}</span>
+                    <span className={cardStyle.infoSpan} > <FaCalendarDays className={cardStyle.icon} /> {props.date}</span>
+                    <span className={cardStyle.infoSpan} > <MdAccessTimeFilled className={cardStyle.icon} /> {props.hour}</span>
                 </div>
-                <BiSolidDonateHeart className={cardStyle.iconCard} size={90}/>
+                <BiSolidDonateHeart className={cardStyle.iconCard} />
             </div>
             :
             <div className={cardStyle.container}>
