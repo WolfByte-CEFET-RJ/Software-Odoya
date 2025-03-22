@@ -8,6 +8,12 @@ import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import Footer from "../../components/Footer";
+import { RiInfinityLine } from "react-icons/ri";
+import { RiGraduationCapLine } from "react-icons/ri";
+import { MdOutlineWaterDrop } from "react-icons/md";
+import { FaTemperatureArrowDown } from "react-icons/fa6";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Principal = () => {
   return (
@@ -71,9 +77,10 @@ const Principal = () => {
               </strong>
             </p>
             <div className={principal.botao_container}>
+              {/*
               <Link className={principal.botao} to="/register">
                 Cadastre-se
-              </Link>
+              </Link>*/}
             </div>
           </div>
           <img
@@ -153,6 +160,72 @@ const Principal = () => {
           </div>
         </div>
       </section>
+      <img src="./Ondinhas.svg" className={principal.separador} />
+      <section className={principal.secao3}>
+        <h1 className={principal.titulo}>Nossas Ações </h1>
+        <div className={principal.line}>
+          <div className={principal.listaActions}>
+            <div className={principal.field}>
+              <TbArrowRightDashed size={30} color="269BDF" />
+              <h2>Coleta de Esponjas</h2>
+            </div>
+            <div className={principal.field}>
+              <TbArrowRightDashed size={30} color="269BDF" />
+              <h2>Coleta de Esponjas</h2>
+            </div>
+            <div className={principal.field}>
+              <TbArrowRightDashed size={30} color="269BDF" />
+              <h2>Coleta de Esponjas</h2>
+            </div>
+          </div>  
+          <div className={principal.partedebaixo}>
+          <div className={principal.slider}>
+            <div className={principal.setas}>
+            <IoIosArrowBack size={100}/>
+            </div>
+            <div className={principal.setas}>
+            <IoIosArrowForward size={100}/>
+            </div>
+            {/*Criar slider/carrosel aqui*/}
+          </div>
+          <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
+          <div className={principal.ordem}>
+          <div className={principal.cards}>
+            
+              <div className={principal.field2}>
+                <RiGraduationCapLine size={40} color="195D39"/>
+                <h2 className={principal.objetivos}>Educação de Qualidade</h2>
+              </div>
+            </div>
+        
+          <div className={principal.cards}>
+              <div className={principal.field2}>
+                <RiInfinityLine size={40} color="195D39"/>
+                <h2 className={principal.objetivos}>Consumo e Produção Saudável</h2>
+              </div>
+          </div>
+      
+          
+          <div className={principal.cards}>
+              <div className={principal.field2}>
+                <MdOutlineWaterDrop size={40} color="195D39"/>
+                <h2 className={principal.objetivos}>Água Potável e Saneamento</h2>
+              </div>
+            </div>
+            <div className={principal.cards}>
+              <div className={principal.field2}>
+                <FaTemperatureArrowDown size={40} color="195D39"/>
+                <h2 className={principal.objetivos}>Ação contra a mudança Global do clima </h2>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      
+      </section>
+      <img src="./Ondinhas.svg" className={principal.separador} />
+      <section className={principal.secao4}></section>
+
       <Footer />
     </>
   );

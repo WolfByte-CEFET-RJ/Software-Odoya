@@ -249,3 +249,88 @@
 
     
 }
+
+.secao3{
+    background-color: #B1E3FA;
+
+
+    
+    .titulo {
+        
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 3%;
+        font-family: 'Tankindred', sans-serif;
+        color: var(--secondary-color);
+
+        @media (max-width: 910px) {
+            font-size: 1.5rem;
+        }   
+    }
+
+    .objetivos{
+        text-align: center;
+        font-size: 1rem;
+        font-family: 'Abel', sans-serif;
+        margin-top: 10%;
+    }
+    .titulo2{
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 3%;
+        margin-top: 50%;
+        font-family: 'Tankindred', sans-serif;
+        color: #195D39;
+        
+    }
+    .line{
+        display:flex;
+    }
+    .listaActions{
+        display:flex;
+        flex-direction: column;
+        
+        
+    }
+    .field{
+        display:flex;
+        font-size: 0.8rem;
+        margin: 2% 0 2% 0;
+        font-family: 'Tankindred', sans-serif;
+        color: #269BDF;  
+    }
+    
+    .cards{
+        text-align: center;
+        background-color: #A3CBB6;
+        border: 0.2rem solid;
+        border-radius: 0.5rem;
+        border-color: #195D39;
+        display:grid;
+        gap: 10px;
+        margin: 5% 2% 10% 2%;
+        
+    }
+    .partedebaixo{
+        display:flex;
+        flex-direction: column;
+    }
+    .ordem{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .field2{
+        margin: 20% 20% 20% 20%;
+    }
+    .slider{
+        background-color: #F1F1F1;
+        border-radius: 0.5rem;
+        margin: 5% 0% 0 20%;
+    }
+    .setas{
+        display:flex;
+        
+    }
+}
