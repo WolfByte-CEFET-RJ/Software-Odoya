@@ -224,7 +224,39 @@ const Principal = () => {
       
       </section>
       <img src="./Ondinhas.svg" className={principal.separador} />
-      <section className={principal.secao4}></section>
+      <section className={principal.secao4}>
+        <div className={principal.resultados}>
+          <div className={principal.titulo}>
+            <h2>Nossos</h2> 
+            <h2>Principais</h2>
+            <h2>Resultados</h2> 
+          </div>
+          <div className={principal.resultados2}> 
+            <p>x esponjas coletadas</p>
+            <p>x pessoas alcançadas online</p>
+            <p>x KG de lixo reciclável coletado</p>
+            <p>x pessoas certificadas nas atividades</p>
+          </div>
+        </div>
+
+        <div className={principal.parceiros}>
+          <div className={principal.logos}>
+            <div className={principal.img1}>
+            <img src="./parceiro1.png" alt="Parceiro 1" />
+            <img src="./parceiro2.png" alt="Parceiro 2" />
+            <img src="./parceiro3.png" alt="Parceiro 3" />
+            </div>
+
+            <div className={principal.img2}>
+            <img src="./parceiro4.png" alt="Parceiro 4" />
+            <img src="./parceiro5.png" alt="Parceiro 5" />
+            <img src="./parceiro6.png" alt="Parceiro 6" />
+            </div>
+          </div>
+          <h2 className={principal.titulo}>Parcerias</h2>
+        </div>
+      </section>
+
 
       <Footer />
     </>
