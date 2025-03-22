@@ -1,7 +1,8 @@
 import { v4 } from "uuid";
 import DatabaseConnection from "../database/connection/DatabaseConnection";
-import CollectionPoint from "../types/collectionPoint";
-import { CollectionPointNotFound, CollectionPointWithDepositsError, RequiredFieldsError } from "../erros/CollectionPointErros";
+import CollectionPoint, { UpdateCollectionPoint } from "../types/collectionPoint";
+import { CollectionPointNotFound, CollectionPointWithDepositsError, RequiredCollectionPointIdError, RequiredDataError, RequiredFieldsError } from "../erros/CollectionPointErros";
+import { RequiredIdError } from "../erros/UserErros";
 const knex = DatabaseConnection.getInstance();
 
 export default class CollectionPointService {
@@ -42,6 +43,37 @@ export default class CollectionPointService {
         })
         
         return {"message": "Ponto de Coleta criado"};
+    }
+
+    /**
+     * @method updateCollectionPoint
+     * @description Remove um ponto de coleta específico pelo ID, se não houver depósitos associados
+     * @param {string} id - ID do ponto de coleta a ser removido.
+     * @param {CollectionPoint} data - Dados para atualizar no ponto de coleta.
+     * @throws {CollectionPointNotFound} Se o ponto de coleta não for encontrado.
+     * @throws {RequiredCollectionPointIdError} Se o id do ponto de coleta não for fornecido.
+     * @throws {RequiredDataError} se dados não forem fornecidos no corpo da requisição (body).
+     */
+    public static async updateCollectionPoint(id: string, data: CollectionPoint){
+        if(!id){
+            throw new RequiredCollectionPointIdError();
+        }
+        
+        const isDataEmpty = !data || Object.entries(data).length === 0;
+        
+        if(isDataEmpty){
+            throw new RequiredDataError();
+        }
+       
+        const collectionPoint = await knex("Collection_Point").where({ id: id }).first();
+        
+        if(!collectionPoint){
+            throw new CollectionPointNotFound();
+        }
+
+        await knex("Collection_Point").where({ id: id }).update(data);
+
+        return `Ponto de Coleta ${collectionPoint.name} atualizado com sucesso.`;
     }
 
     /**
