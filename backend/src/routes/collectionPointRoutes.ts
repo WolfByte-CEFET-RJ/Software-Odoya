@@ -8,6 +8,7 @@ collectionPointRouter
     .get("/collectionPoints", CollectionPointController.getAllCollectionPoint)
     .get("/collectionPoint/:id", CollectionPointController.getOneCollectionPoint)
     .post("/collectionPoint", CollectionPointController.createCollectionPoint)
+    .patch("/collectionPoint/:id", CollectionPointController.updateCollectionPoint)
     .delete("/collectionPoint/delete/:id", CollectionPointController.deleteCollectionPoint)
 
 export default collectionPointRouter;

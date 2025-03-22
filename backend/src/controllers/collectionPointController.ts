@@ -54,6 +54,22 @@ export default class CollectionPointController {
             return classified_err.sendMessage(res);
         }
     }
+    public static async updateCollectionPoint(req: Request, res: Response): Promise<any> {
+        const { id } = req.params;
+
+        try{
+            const data = req.body;
+            
+            const response = await CollectionPointService.updateCollectionPoint(id, data);
+            return res.status(HttpCode.OK).send({ message : response });
+        }catch(e){
+            if(e instanceof HttpError){   
+                return e.sendMessage(res);
+            }
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
 
     /**
      * @method deleteCollectionPoint
