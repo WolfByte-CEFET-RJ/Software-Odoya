@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
 import User from "../types/user"
-import UserValidator from '../Yup/userValidator';
+import UserValidator from '../utils/Yup/userValidator';
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();

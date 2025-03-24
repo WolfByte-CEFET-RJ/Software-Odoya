@@ -33,7 +33,7 @@ export default class UserController {
             } 
 
             if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.message });
+                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
             }
 
             const classified_err = new ImprevistError();
