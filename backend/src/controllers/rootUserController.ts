@@ -45,4 +45,55 @@ export default class RootUserController {
             return classified_err.sendMessage(res); 
         }
     }
+
+    public static async updateUser(req: Request, res: Response): Promise<any>{
+        try{
+            const { user_id } = req.params;
+            const { ...data } = req.body
+
+            if(req.user?.id === user_id){
+                throw new RootUserModificationError(
+                    "Usuário root não pode ter seus dados cadastrais atualizados. Contate os desenvolvedores para alteraçõess específicas");
+            }
+
+            const response: string = await UserService.updateUser(user_id, data);
+
+            res.status(HttpCode.OK).json({message: response});
+
+        }catch(e){
+             console.error(e);
+            
+            if(e instanceof HttpError){
+                return e.sendMessage(res);
+            }
+    
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res); 
+        }
+    }
+
+    public static async deleteUser(req: Request, res: Response): Promise<any>{
+        try{
+            const { user_id } = req.params;
+
+            if(req.user?.id === user_id){
+                throw new RootUserModificationError(
+                    "Usuário root não pode ter seus dados cadastrais excluídos. Contate os desenvolvedores para alterações específicas");
+            }
+
+            const response: string = await UserService.deleteUser(user_id);
+
+            res.status(HttpCode.OK).json({message: response});
+
+        }catch(e){
+             console.error(e);
+            
+            if(e instanceof HttpError){
+                return e.sendMessage(res);
+            }
+    
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res); 
+        }
+    }
 }
