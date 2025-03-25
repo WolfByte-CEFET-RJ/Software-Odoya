@@ -1,14 +1,21 @@
 import React from "react";
-import footer from "./footer.module.scss"
 
 const Footer = () => {
     return (
-        <footer className={footer.body}>
+        <footer className="footer">
             <p>© 2025 Odoyá. Todos os direitos reservados.</p>
-            <div className={footer.links}>
-                <a href="#">Política de Privacidade</a><p>|</p>
-                <a href="#">Termos e Condições</a><p>|</p>
+            <div>
+                <a href="#">Política de Privacidade</a>
+                <a href="#">Termos e Condições</a> 
                 <a href="#">Link para Contato</a>
+            </div>
+            <div>
+                <p>Siga-nos em:</p>
+                <div>
+                    <a href="#">@odoya</a>
+                    <a href="#">@odoya</a>
+                    <a href="#">@odoya</a>
+                </div>
             </div>
             <img src="/LogoPreta.png" alt="" />
         </footer>

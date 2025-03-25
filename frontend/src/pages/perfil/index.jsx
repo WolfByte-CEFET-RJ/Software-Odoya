@@ -27,6 +27,7 @@ const Perfil = () => {
         try{
             let req = await api.get('/user')
             console.log(req.data)
+            localStorage.setItem("id", req.data.id)
             setName(req.data.name)
             setEmail(req.data.email)
         }
@@ -40,11 +41,15 @@ const Perfil = () => {
     }
     }
     async function deleteUser(){
-        const userData = {name: name, email: mail}
+        
 
         try{
-            let req = await api.delete('/user', userData)
+            let req = await api.delete('/user')
+         
             console.log(req.data)
+            if(req.data.length > 0){
+                setLoad(false);
+            }
         }
         catch (error) {
             console.log(error)
@@ -56,11 +61,16 @@ const Perfil = () => {
     }
     }
     async function updateUser(){
+        //let tokenId = localStorage.getItem("id")
         const userData = {name: name, email: mail}
+        console.log(userData)
 
         try{
             let req = await api.patch('/user', userData)
             console.log(req.data)
+            if(req.data.length > 0){
+                setLoad(false);
+            }
         }
         catch (error) {
             console.log(error)
@@ -110,6 +120,8 @@ const Perfil = () => {
     useEffect(()=>{
         getUserData()
     },[])
+
+    console.log(name)
     return (
         <>
             <Header/>
@@ -119,9 +131,9 @@ const Perfil = () => {
                 <h1>boas vindas aqui</h1>
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
-                    <InputFormProfile  onChange={(event) => handleChange(event, setName)} disable={lock} type="text"></InputFormProfile>
+                    <InputFormProfile   onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormProfile>
                     <label>E-mail</label>
-                    <InputFormProfile onChange={(event) => handleChange(event, setEmail)} disable={lock} type="email"></InputFormProfile>
+                    <InputFormProfile onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="email"></InputFormProfile>
 
                     <label>Pontos</label>
                     <div className={perfil.divPoints}>
