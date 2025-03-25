@@ -14,7 +14,7 @@ const Perfil = () => {
     const navigate = useNavigate();
     const [load, setLoad] = useState(false);
     const [lock, setLock] = useState(false)
-    const [text, setText] = useState('')
+    //const [text, setText] = useState('')
     const [name, setName] = useState('')
     const [mail, setEmail] = useState('')
 
@@ -59,7 +59,7 @@ const Perfil = () => {
         const userData = {name: name, email: mail}
 
         try{
-            let req = await api.patch('colocar rota', userData)
+            let req = await api.patch('/user', userData)
             console.log(req.data)
         }
         catch (error) {
@@ -78,7 +78,9 @@ const Perfil = () => {
         if(func == 'update'){
             updateUser()
         }
+        
         else if(func == 'deleteUser'){
+            
             deleteUser()
         }
         
@@ -132,8 +134,8 @@ const Perfil = () => {
 
                     <div className={perfil.formButtons}>
                         <button className={perfil.buttonCancelar} disabled={lock} onClick={() => navigate("/")}>Cancelar</button>
-                        <button type="button" className={perfil.buttonAlterar} disabled={lock} onClick={loading('update')}>Alterar</button>
-                        <button className={perfil.buttonExcluirConta} disabled={lock} onClick={loading('deleteUser')}>Excluir Conta</button>
+                        <button type="button" className={perfil.buttonAlterar} disabled={lock} onClick={() => loading('update')}>Alterar</button>
+                        <button className={perfil.buttonExcluirConta} disabled={lock} onClick={() => loading('deleteUser')}>Excluir Conta</button>
                     </div>
                 </form>
             </div>
