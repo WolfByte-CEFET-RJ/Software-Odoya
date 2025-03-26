@@ -12,6 +12,7 @@ function Home(){
     const[user, setUser] = useState("user");
     const[esponge, setEsponge] = useState(false);
     const[muti, setMuti] = useState(false);
+    const[adress, setAdress] = useState({ street: '', lat: '', long: '' })
 
     function changePageEsponge(e){
         e.preventDefault()
@@ -24,11 +25,16 @@ function Home(){
         setMuti(true);
     }
 
+    // function changeAdress(end){
+    //     e.preventDefault();
+    //     setAdress(end)
+    // }
+
     let dados = [
         {
             idx:1,
             num:20,
-            place:"Rua Canabarro, n100",
+            place:"Rua Gen. Canabarro - Maracanã",
             date: "19/03/2025",
             hour: "14:35",
             state: "presetne",
@@ -36,7 +42,7 @@ function Home(){
         {   
             idx:2,
             num:20,
-            place:"Rua Canabarro, n100",
+            place:"Rua Sambaetiba - Padre Miguel, n44",
             date: "19/03/2025",
             hour: "14:35",
             state: "analise"
@@ -44,7 +50,7 @@ function Home(){
         {   
             idx:3,
             num:20,
-            place:"Rua Canabarro, n100",
+            place:"Norte Shopping",
             date: "19/03/2025",
             hour: "14:35",
             state: "presente"
@@ -109,7 +115,7 @@ function Home(){
                         <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
                                 <>
-                                <DonationCard key={dado.idx}  nome={dado.num} place={dado.place} state={dado.date}/>
+                                <DonationCard key={dado.idx}  nome={dado.num} place={dado.place} state={dado.date} setLocation={setAdress}/>
                                 {/* <button onClick={initMap}></button> */}
                             </>
                             )) : <></>}
@@ -138,7 +144,7 @@ function Home(){
                 {
                     esponge ?
                     <section id='map'className="section_map">
-                        <Mapa adress={"Rua Canabarro"} />
+                        <Mapa location={adress} />
                     </section>
                     : muti ? 
                     <section className="section_calendar">

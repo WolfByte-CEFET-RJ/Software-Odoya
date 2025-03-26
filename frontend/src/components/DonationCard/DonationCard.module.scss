@@ -22,10 +22,6 @@
             text-decoration: none;
             font-size: 1.3rem;
             margin: 7.5px 0px;
-            .icon{
-                color:#114C6D;
-                font-size: 22px;
-            }
         }
     }
     .infoPonto{
@@ -43,16 +39,22 @@
             text-decoration: none;
             font-size: 1.3rem;
             margin: 7.5px 0px;
-            .icon{
-                color:#114C6D
-            }
+            // .icon{
+            //     color:#114C6D
+            // }
         }
+    }
+    .icon{
+        color:#114C6D;
+        display: block;
+        position: relative;
+        font-size: 23px;
     }
     .iconCard{
         color:#114C6D;
         font-size: 90px;
-        display: flex;
-        position: relative;
+        display:block;
+        position:relative;
         left: 140px;
         bottom: 20px;
     }

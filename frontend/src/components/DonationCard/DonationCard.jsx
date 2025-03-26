@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from 'react';
 import cardStyle from "./DonationCard.module.scss"
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -6,6 +6,55 @@ import { FaUsers } from "react-icons/fa";
 import { MdAccessTimeFilled, MdLocationOn } from "react-icons/md";
 
 function DonationCard(props){
+
+    const [streetName, setStreetName] = useState('');
+    const [ lati, setLati] = useState('');
+    const [ longi, setLongi] = useState('');
+    
+      const handleSearch = () => {
+        setStreetName(props.place);
+        if(/[a-zA-Z]/.test(streetName)){
+            console.log(streetName)
+            const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(streetName)}&format=json`;
+            fetch(nominatimUrl)
+            .then((response)=>response.json())
+            .then((data) => {
+                if (data.length > 0) {
+                setLati(parseFloat(data[0].lat));
+                setLongi(parseFloat(data[0].lon));
+                props.setLocation({stret: streetName, lat: lati, long: longi})
+                } else {
+                alert('Rua não encontrada.');
+                }
+            })
+            .catch((error) => console.error('Erro ao buscar a rua:', error))
+        }
+        else{
+
+            const cepFormatted = streetName.replace(/\D/g, ''); 
+            const viaCepUrl = `https://viacep.com.br/ws/${cepFormatted}/json/`;
+            
+            fetch(viaCepUrl)
+              .then((response) => response.json())
+              .then((data) => {
+                setDado(true);
+                const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(data.logradouro+"-"+data.bairro)}&format=json`;
+                fetch(nominatimUrl)
+                .then((response)=>response.json())
+                .then((data) => {
+                    if (data.length > 0) {
+                    setLati(parseFloat(data[0].lat));
+                    setLongi(parseFloat(data[0].lon));
+                    props.setLocation({stret: streetName, lat: lati, long: longi})
+                    } else {
+                    alert('Rua não encontrada.');
+                    }
+                })
+                .catch((error) => console.error('Erro ao buscar a rua:', error))
+              })
+              .catch((error) => console.error('Erro ao buscar o cep:', error))
+        }
+      };
 
     return(
         <>{ props.donate ? 
@@ -19,7 +68,7 @@ function DonationCard(props){
                 <BiSolidDonateHeart className={cardStyle.iconCard} />
             </div>
             :
-            <div className={cardStyle.container}>
+            <div onClick={handleSearch} className={cardStyle.container}>
                 <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
                 <div className={cardStyle.infoPonto}>
                     <span className={cardStyle.infoSpan}> {props.place}</span>
