@@ -1,4 +1,4 @@
-enum DepositStatus {
+export enum DepositStatus {
     PENDENTE = "PENDENTE",
     APROVADO = "APROVADO",
     REPROVADO = "REPROVADO"
@@ -9,7 +9,7 @@ export default interface Deposit {
     collectionPointId: string,
     userId: string,
     amountSponges: number,
-    imageURL: string,
+    imageURL?: string,
     status: DepositStatus,
     createdAt: Date,
     updatedAt: Date
