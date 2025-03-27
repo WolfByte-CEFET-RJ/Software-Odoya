@@ -54,7 +54,7 @@ export default class CollectionPointService {
      * @throws {RequiredCollectionPointIdError} Se o id do ponto de coleta não for fornecido.
      * @throws {RequiredDataError} se dados não forem fornecidos no corpo da requisição (body).
      */
-    public static async updateCollectionPoint(id: string, data: CollectionPoint){
+    public static async updateCollectionPoint(id: string, data: UpdateCollectionPoint){
         if(!id){
             throw new RequiredCollectionPointIdError();
         }
