@@ -5,10 +5,10 @@ import AuthMiddleware from "../middlewares/authMiddleware";
 const collectionPointRouter = Router();
 
 collectionPointRouter
-    .get("/collectionPoints", CollectionPointController.getAllCollectionPoint)
-    .get("/collectionPoint/:id", CollectionPointController.getOneCollectionPoint)
-    .post("/collectionPoint", CollectionPointController.createCollectionPoint)
-    .patch("/collectionPoint/:id", CollectionPointController.updateCollectionPoint)
-    .delete("/collectionPoint/delete/:id", CollectionPointController.deleteCollectionPoint)
+    .get("/collectionPoints", AuthMiddleware.ensureAuthenticated, CollectionPointController.getAllCollectionPoint)
+    .get("/collectionPoint/:id", AuthMiddleware.ensureAuthenticated, CollectionPointController.getOneCollectionPoint)
+    .post("/collectionPoint", AuthMiddleware.ensureAuthenticated, AuthMiddleware.ensureAdmin, CollectionPointController.createCollectionPoint)
+    .patch("/collectionPoint/:id", AuthMiddleware.ensureAuthenticated, AuthMiddleware.ensureAdmin, CollectionPointController.updateCollectionPoint)
+    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAuthenticated, AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint)
 
 export default collectionPointRouter;
