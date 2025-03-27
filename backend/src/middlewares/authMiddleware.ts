@@ -24,23 +24,24 @@ class AuthMiddleware {
    */
   public static ensureAuthenticated(req: Request, res: Response, next: NextFunction): void {
     const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-      throw new AuthenticationError("Token não fornecido");
-    }
-
-    const parts = authHeader.split(' ');
-    if (parts.length !== 2) {
-      throw new AuthenticationError("Erro no formato do token");
-    }
-
-    const [scheme, token] = parts;
-
-    if (!/^Bearer$/i.test(scheme)) {
-      throw new AuthenticationError("Token mal formatado");
-    }
-
     try {
+
+      if (!authHeader) {
+        throw new AuthenticationError("Token não fornecido");
+      }
+
+      const parts = authHeader.split(' ');
+      if (parts.length !== 2) {
+        throw new AuthenticationError("Erro no formato do token");
+      }
+
+      const [scheme, token] = parts;
+
+      if (!/^Bearer$/i.test(scheme)) {
+        throw new AuthenticationError("Token mal formatado");
+      }
+
+    
       const jwtSecret = process.env.JWT_SECRET;
       
       if (!jwtSecret) {
