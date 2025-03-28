@@ -8,7 +8,7 @@ export default class DepositService{
     //pega todos os dados de um deposit dado seu id
     public static async getDeposit(id: string): Promise<Deposit> {
     
-            const deposit = await knex('Deposit').select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'createdAt', 'updatedAt').where({id}).first();
+            const deposit: Deposit = await knex('Deposit').select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'createdAt', 'updatedAt').where({id}).first();
             if (!deposit) {
                 throw new Error("Deposito não encontrado");
             }
@@ -54,10 +54,10 @@ export default class DepositService{
         }
     }
     //atualiza somente o status de um deposito dado a sua ID
-    public static async updateDepositStatus(id: string, status: DepositStatus){
+    public static async updateDepositStatus(id: string, status: string){
         try{
         const deposit: Partial<Deposit> = {
-            status
+            status:  status == "APROVADO" ? DepositStatus.APROVADO : DepositStatus.APROVADO ,
         }
         await knex('Deposit').where({ id }).update(deposit);
         return "Status de Deposito atualizado";
@@ -65,6 +65,7 @@ export default class DepositService{
             console.log("erro ao atualizar o status do deposito \ndetalhamento do erro:" + error);
         }
     }
+
     public static async deleteDeposit(id: string){
         try{
             await knex("Deposit").where({id: id}).delete();
