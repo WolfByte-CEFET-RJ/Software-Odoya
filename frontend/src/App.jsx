@@ -4,6 +4,9 @@ import Login from './pages/login/login.jsx'
 import Cadastro from './pages/cadastro/cadastro.jsx'
 import Principal from './pages/Principal/index.jsx'
 import Home from './pages/principal_Interna/Home.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 const Routing = () =>{
     return(

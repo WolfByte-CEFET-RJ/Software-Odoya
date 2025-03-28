@@ -8,6 +8,7 @@ import api from "../../api.js";
 import CrowndfundingCard from "../../components/CrowndfundindCard/CrowndfundingCard.jsx";
 import Mapa from "../../components/MapaComponent/Mapa.jsx"
 import {Grid2} from "@mui/material"
+import Calendar from "../../components/Calendar/Calendar.jsx";
 function Home(){
     const[user, setUser] = useState("user");
     const[esponge, setEsponge] = useState(false);
@@ -148,7 +149,7 @@ function Home(){
                     </section>
                     : muti ? 
                     <section className="section_calendar">
-
+                        <Calendar/>
                     </section>
                     : <></>
                 }

@@ -4,6 +4,7 @@
     border-radius: 10px;
     align-items: center;
     transition: transform 0.3s linear;
+    position: relative;
 
     .titulo{
         margin-top: 10%;
@@ -31,58 +32,52 @@
         flex-direction: column;
         justify-content: flex-start;
         margin-left: 20px;
-
         .infoSpan{
-            font-family: 'Abel', sans-serif;
             color: rgb(0, 0, 0);
-            display: flex;
-            gap: .6rem;
-            align-items: center;
-            text-decoration: none;
-            font-size: 1.3rem;
-            margin: 7.5px 0px;
-            .icon{
-                color:#195D39;
-                font-size: 22px;
-            }
         }
         .infoSpan2{
-            font-family: 'Abel', sans-serif;
             color: rgb(255, 255, 255);
+        }
+
+        .infoSpan, .infoSpan2{
+            font-family: 'Abel', sans-serif;
             display: flex;
             gap: .6rem;
             align-items: center;
             text-decoration: none;
             font-size: 1.3rem;
-            margin: 7.5px 0px;
-            .icon{
-                color:#195D39
-            }
+            margin: 5.5px 3px;
+        }
+        .infoSpan .icon, .infoSpan2.icon{
+            color:#195D39;
+            // font-size: 22px;
+            flex-shrink: 0;
+        }
+        .infoSpan .presente{
+            color: black;
+            // font-size: 22px;
+            flex-shrink: 0;
+        }
+        .infoSpan2 .em_analise, .infoSpan2 .faltou{
+            color:#ffffff;
+            flex-shrink: 0;
         }
     }
     .iconCard{
         color:#195D39;
-        font-size: 90px;
-        display: flex;
-        position: relative;
-        left: 140px;
-        bottom: 20px;
     }
     .iconCardStar{
         color: #114C6D;
-        display: flex;
-        font-size: 90px;
-        position: relative;
-        left: 140px;
-        bottom: 20px;
     }
     .iconCard2{
         color:#ffffff;
-        font-size: 90px;
-        display: flex;
-        position: relative;
-        left: 140px;
-        bottom: 20px;
+    }
+    .iconCard, .iconCardStar, .iconCard2 {
+        position: absolute;
+        bottom: 10px; // Ajuste conforme necessário
+        right: 10px;
+        font-size: 70px; // Reduza se necessário
+        max-width: 80%;
     }
 }
 
@@ -95,19 +90,16 @@
     transform: scale(1.05);
 }
 
-.presente{
+.container_presente{
     background-color: #B1E3FA;
-    color: black;
     font-size: 22px;
 }
-.em_analise{
+.container_em_analise{
     background-color: #FFB300;
-    color: white;
     font-size: 22px;
 }
-.faltou{
+.container_faltou{
     background-color: #D32F2F;
-    color: white;
     font-size: 22px;
 }
 
@@ -121,7 +113,7 @@
             .infoSpan,.infoSpan2{
                 gap: .6rem;
                 font-size: 0.9rem;
-                margin: 7.5px 0px;
+                margin: 5.5px 3px;
             }
         }
         .infoPonto{
@@ -134,10 +126,12 @@
                 margin: 7.5px 0px;
             }
         }
-        .iconCard,.iconCardStar,.iconCard2{
-            font-size: 50px;
-            left: 100px;
-            bottom: 30px;
+        .iconCard, .iconCardStar, .iconCard2 {
+            position: absolute;
+            bottom: 10px; // Ajuste conforme necessário
+            right: 10px;
+            font-size: 40px; // Reduza se necessário
+            max-width: 80%;
         }
     }
 }

@@ -24,8 +24,8 @@ function CrowndfundingCard(props){
                 <FaUsers className={cardStyle.iconCard} />
             </div>
             :
-            <div className={`${cardStyle.container2} ${status === "presente" ? cardStyle.presente
-                : status === "em_analise" ? cardStyle.em_analise : cardStyle.faltou}`}>
+            <div className={`${cardStyle.container2} ${status === "presente" ? cardStyle.container_presente
+                : status === "em_analise" ? cardStyle.container_em_analise : cardStyle.container_faltou}`}>
                 <h1 className={`${status === "presente" ? cardStyle.titulo
                         : cardStyle.titulo2}`}>{props.nome}</h1>
                 <div className={cardStyle.info}>
