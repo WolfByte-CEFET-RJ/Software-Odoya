@@ -25,8 +25,8 @@ export default class DepositService{
             amountSponges,
             imageURL,
             status: DepositStatus.PENDENTE,
-            createdAt: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,               
-            updatedAt: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,
+            created_at: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,               
+            updated_at: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,
         }
         await knex('Deposit').insert(deposit);
         return "Deposito realizado";
@@ -45,7 +45,7 @@ export default class DepositService{
             amountSponges,
             imageURL,
             status: DepositStatus.PENDENTE,
-            updatedAt: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,
+            updated_at: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,
         }
         await knex('Deposit').where({ id }).update(deposit);
         return "Deposito atualizado";

@@ -23,9 +23,9 @@ export default class DepositController{
     }
     //cria deposito, apenas usuario normal
     public static async createDeposit(req: Request, res: Response): Promise<any>{
-        const deposit  = req.deposit;
+        const deposit  = req.body;
         try{
-            const response = await DepositService.createDeposit(String(deposit?.collectionPointId), String(deposit?.userId), Number(deposit?.amountSponges), String(deposit?.imageURL)); //passar melhor isso depois
+            const response = await DepositService.createDeposit(String(deposit.collectionPointId), String(deposit.userId), Number(deposit.amountSponges), String(deposit.imageURL)); //passar melhor isso depois
             return res.status(HttpCode.CREATED).json({message: response});
         }catch(e: any){
             if(e instanceof HttpError) {

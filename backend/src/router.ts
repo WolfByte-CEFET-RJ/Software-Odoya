@@ -6,6 +6,7 @@ import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
 import user from './routes/userRoutes';
+import spongeDepositRouter from './routes/spongeDepositRoutes';
 
 /**
  * Define endpoints mapeados
@@ -23,7 +24,8 @@ export default (app: Express): void => {
     app
         .use(rootUser)
         .use(authRouter)
-        .use(user);
+        .use(user)
+        .use(spongeDepositRouter)
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
