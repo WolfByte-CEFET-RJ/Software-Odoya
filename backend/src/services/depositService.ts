@@ -57,7 +57,7 @@ export default class DepositService{
     public static async updateDepositStatus(id: string, status: string){
         try{
         const deposit: Partial<Deposit> = {
-            status:  status == "APROVADO" ? DepositStatus.APROVADO : DepositStatus.PENDENTE ,
+            status:  status == "APROVADO" ? DepositStatus.APROVADO : DepositStatus.REPROVADO ,
         }
         await knex('Deposit').where({ id }).update(deposit);
         return "Status de Deposito atualizado";
