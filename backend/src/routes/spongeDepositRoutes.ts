@@ -9,10 +9,10 @@ router
     .get('/spongeDeposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
     //cria um deposito,  verifica se o usuário está logado
     .post('/spongeDeposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
-    //atualiza um deposito, apenas verifica se um usuário está logado, novo estado será sempre pendente
+    //atualiza um deposito, apenas verifica se um usuário está logado, novo estado será sempre pendente !!!!!!!
     .patch('/spongeDepositStatus', AuthMiddleware.ensureAdmin, DepositController.updateDeposit) 
 
-    //apenas atualiza os estados, somente adiministradores
+    //apenas atualiza os estados, somente administradores
     .patch('/spongeDepositStatus', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
     //deleta o deposito, somente super root
     .delete('/spongeDeposit', AuthMiddleware.authorizeRoot, DepositController.deleteDeposit)

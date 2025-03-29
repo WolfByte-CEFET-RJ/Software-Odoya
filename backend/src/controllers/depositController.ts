@@ -3,7 +3,6 @@ import { HttpCode, HttpError } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import { ImprevistError } from '../erros/ImprevistError';
 import { ValidationError } from 'yup';
-import UserService from '../services/userService';
 export default class DepositController{
 
     //retorna todos os dados de um deposito dado seu id
@@ -42,7 +41,7 @@ export default class DepositController{
     }
 
     //atualiza deposito sem atualizar o status, nível usuário
-    public static async updateDeposit(req: Request, res: Response){
+    public static async updateDeposit(req: Request, res: Response): Promise<any>{
         const id = req.deposit?.id as string;
         const {collectionPointId, userId, amountSponges, imageURL} = req.body;
 
@@ -64,23 +63,19 @@ export default class DepositController{
         }
     }
     //atualiza deposito apenas adiministrador
-    public static async updateDepositStatus(req: Request, res: Response){
+    public static async updateDepositStatus(req: Request, res: Response) : Promise<any>{
         const id = req.deposit?.id as string;
         const { status } = req.body;
 
         try {
-            const userAdmin = req.user?.admin; // Supondo que o `role` do usuário esteja em `req.user`
-        if (!userAdmin) {
-            return res.status(HttpCode.FORBIDDEN).json({ message: 'Apenas administradores podem atualizar o status.' });
-        }
 
             const response = await DepositService.updateDepositStatus(String(id),status);
             return res.status(HttpCode.OK).json({message: response});
                     
         } catch (e: any) {
             if (e instanceof HttpError){
-                  return e.sendMessage(res);
-              }
+                return e.sendMessage(res);
+            }
 
             const classified_err = new ImprevistError();
             return classified_err.sendMessage(res);
@@ -92,14 +87,11 @@ export default class DepositController{
     public static async deleteDeposit(req: Request, res: any){
         try {
             const id = req.deposit?.id as string;
-
             if (!id) {
                 return res.status(HttpCode.BAD_REQUEST).json({ message: "Deposit ID is required." });
             }
-
             const response = await DepositService.deleteDeposit(id);
             return res.status(HttpCode.OK).json({message: response});
-
         } catch (e: any) {
             if (e instanceof HttpError){
                 return e.sendMessage(res);
