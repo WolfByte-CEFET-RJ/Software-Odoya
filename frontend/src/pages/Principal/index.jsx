@@ -162,6 +162,7 @@ const Principal = () => {
       </section>
       <img src="./Ondinhas.svg" className={principal.separador} />
       <section className={principal.secao3}>
+        <div style={{height:"130px"}}></div>
         <h1 className={principal.titulo}>Nossas Ações </h1>
         <div className={principal.line}>
           <div className={principal.listaActions}>
@@ -180,27 +181,32 @@ const Principal = () => {
           </div>  
           <div className={principal.partedebaixo}>
           <div className={principal.slider}>
-            <div className={principal.setas}>
+            <button className={principal.setas}>
             <IoIosArrowBack size={100}/>
+            </button>
+            <div className={principal.imagem}>
+              <img src="./ImagemCarrossel1.svg" style={{width:"100%"}}/>
+
             </div>
-            <div className={principal.setas}>
+            <button className={principal.setas}>
             <IoIosArrowForward size={100}/>
-            </div>
+            </button>
             {/*Criar slider/carrosel aqui*/}
           </div>
           <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
           <div className={principal.ordem}>
+
           <div className={principal.cards}>
-            
               <div className={principal.field2}>
-                <RiGraduationCapLine size={40} color="195D39"/>
+                <RiGraduationCapLine size={55} color="195D39"/>
                 <h2 className={principal.objetivos}>Educação de Qualidade</h2>
               </div>
             </div>
+            
         
           <div className={principal.cards}>
               <div className={principal.field2}>
-                <RiInfinityLine size={40} color="195D39"/>
+                <RiInfinityLine size={55} color="195D39"/>
                 <h2 className={principal.objetivos}>Consumo e Produção Saudável</h2>
               </div>
           </div>
@@ -208,13 +214,13 @@ const Principal = () => {
           
           <div className={principal.cards}>
               <div className={principal.field2}>
-                <MdOutlineWaterDrop size={40} color="195D39"/>
+                <MdOutlineWaterDrop size={55} color="195D39"/>
                 <h2 className={principal.objetivos}>Água Potável e Saneamento</h2>
               </div>
             </div>
             <div className={principal.cards}>
               <div className={principal.field2}>
-                <FaTemperatureArrowDown size={40} color="195D39"/>
+                <FaTemperatureArrowDown size={55} color="195D39"/>
                 <h2 className={principal.objetivos}>Ação contra a mudança Global do clima </h2>
               </div>
             </div>

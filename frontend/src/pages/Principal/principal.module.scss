@@ -252,14 +252,15 @@
 
 .secao3{
     background-color: #B1E3FA;
-
-
+    margin-top: -3.5%;
     
     .titulo {
-        
+        // display: flex;
+        position: relative;
+        top: 30%;
         text-align: center;
         font-size: 1.8rem;
-        margin-bottom: 3%;
+        // margin-top: 3%;
         font-family: 'Tankindred', sans-serif;
         color: var(--secondary-color);
 
@@ -278,7 +279,7 @@
         text-align: center;
         font-size: 1.8rem;
         margin-bottom: 3%;
-        margin-top: 50%;
+        margin-top: 25%;
         font-family: 'Tankindred', sans-serif;
         color: #195D39;
         
@@ -287,6 +288,7 @@
         display:flex;
     }
     .listaActions{
+        margin-top: 7rem;
         display:flex;
         flex-direction: column;
         
@@ -295,18 +297,19 @@
     .field{
         display:flex;
         font-size: 0.8rem;
-        margin: 2% 0 2% 0;
+        margin: 15% 0 15% 0;
         font-family: 'Tankindred', sans-serif;
         color: #269BDF;  
     }
     
     .cards{
+        width: 250px;
+        height: 200px;
         text-align: center;
         background-color: #A3CBB6;
         border: 0.2rem solid;
         border-radius: 0.5rem;
         border-color: #195D39;
-        display:grid;
         gap: 10px;
         margin: 5% 2% 10% 2%;
         
@@ -314,23 +317,41 @@
     .partedebaixo{
         display:flex;
         flex-direction: column;
+        margin-top: 2.5%;
+        
+       
     }
     .ordem{
         display:flex;
         align-items: center;
         justify-content: center;
         text-align: center;
+        
     }
     .field2{
         margin: 20% 20% 20% 20%;
+        
     }
     .slider{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         background-color: #F1F1F1;
-        border-radius: 0.5rem;
+        padding: 5% 0%;
+        border-radius: 1rem;
         margin: 5% 0% 0 20%;
+       
+    }
+    .imagem{
+        margin:5% 10% 5% 10%;
     }
     .setas{
-        display:flex;
-        
+        display: flex;
+        justify-content: space-between;
+        margin-top: -1.0rem;
+    }
+    .setas:hover{
+        color: gray;
+        cursor: pointer;
     }
 }
