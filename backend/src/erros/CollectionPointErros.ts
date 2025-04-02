@@ -23,3 +23,27 @@ export class CollectionPointWithDepositsError extends HttpError {
         super({ status: HttpCode.CONFLICT, message });
     }
 }
+
+/**
+ * @extends HttpError
+ * @description Erro de id de ponto de coleta não fornecido
+ */
+export class RequiredCollectionPointIdError extends HttpError {
+    constructor(
+        message: string = 'Id de ponto de coleta não fornecido'
+    ){
+        super({status: HttpCode.BAD_REQUEST, message});
+    }
+}
+
+/**
+ * @extends HttpError
+ * @description Erro de id de ponto de coleta não fornecido
+ */
+export class RequiredDataError extends HttpError {
+    constructor(
+        message: string = 'Dados para update não fornecidos.'
+    ){
+        super({status: HttpCode.BAD_REQUEST, message});
+    }
+}
