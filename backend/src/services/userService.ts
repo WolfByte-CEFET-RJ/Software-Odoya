@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
 import User from "../types/user"
+import UserValidator from '../utils/Yup/userValidator';
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
@@ -35,6 +36,8 @@ export default class UserService {
      * @returns {Promise<string>}
      */
     public static async createUser(name: string, email: string, password: string): Promise<string> {
+        await UserValidator.validateCreateUser({name,email,password});
+
         const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
@@ -58,6 +61,8 @@ export default class UserService {
      * @returns {Promise<string>}
      */
     public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+        await UserValidator.validateUpdateUser(data);
+
         const user = await knex('User').where({ id }).first();
         if (!user) {
             throw new UserNotFound();
