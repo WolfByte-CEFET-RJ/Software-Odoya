@@ -2,32 +2,24 @@ import {  Router } from 'express';
 import DepositController from '../controllers/depositController';
 import AuthMiddleware from '../middlewares/authMiddleware';
 
-const spongeDepositRouter = Router();
+const depositRouter = Router();
 
-spongeDepositRouter
+depositRouter
     //retorna um deposito dado id do deposito, verifica se o usuário está logado
-    .get('/spongeDeposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
+    .get('/deposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
     /**
-     * @route POST /spongeDeposit
-     * @description cria um deposito,verifica se o usuário está logado
+     * @route POST /deposit
+     * @description cria um deposito,verifica se o usuário está logado e pega o id do usuário logado para fazer o deposit
      * @param {string} collectionPointId
-     * @param {string} userId
      * @param {Number} amountSponges
      * @param {string} imageURL
      * @returns { message: string } 
      */
-    .post('/spongeDeposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
-
-    
-    //atualiza um deposito, apenas verifica se um usuário está logado, novo estado será sempre pendente !!!!!!!
-    .patch('/spongeDepositStatus', AuthMiddleware.ensureAdmin, DepositController.updateDeposit) 
+    .post('/deposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
 
 
     //apenas atualiza os estados, somente administradores
-    .patch('/spongeDepositStatus', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
+    .patch('/deposit/status', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
 
-    //deleta o deposito, somente super root
-    .delete('/spongeDeposit', AuthMiddleware.authorizeRoot, DepositController.deleteDeposit)
-
-export default spongeDepositRouter;
+export default depositRouter;

@@ -5,7 +5,12 @@ import { DepositStatus } from '../types/deposit';
 import { v4 } from "uuid";
 
 export default class DepositService{
-    //pega todos os dados de um deposit dado seu id
+    
+    /**
+     * @description Busca um Deposito
+     * @param {string} id
+     * @returns {Promise<Deposit>}
+     */
     public static async getDeposit(id: string): Promise<Deposit> {
     
             const deposit: Deposit = await knex('Deposit').select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'createdAt', 'updatedAt').where({id}).first();
@@ -14,8 +19,16 @@ export default class DepositService{
             }
             return deposit;
         }
-    //cria um deposit dado as colunas não nulas
-    public static async createDeposit(collectionPointId: string, userId: string, amountSponges: number, imageURL: string){
+
+    /**
+     * @description Cria um Usuário
+     * @param {string} collectionPointId
+     * @param {string} userId
+     * @param {number} amountSponges
+     * @param {string | NULL} imageURL
+     * @returns {Promise<string>}
+     */
+    public static async createDeposit(collectionPointId: string, userId: string, amountSponges: number, imageURL: string): Promise<string>{
         try{
             var today = new Date;
         const deposit: Deposit = {
@@ -32,25 +45,7 @@ export default class DepositService{
         return "Deposito realizado";
         } catch (error){
             console.log("erro ao fazer o deposito \ndetalhamento do erro:" + error);
-        }
-    }
-    //atualização padrão do deposit
-    public static async updateDeposit(id: string, collectionPointId: string, userId: string, amountSponges: number, imageURL: string){
-        try{
-            var today = new Date;
-        const deposit: Partial<Deposit> = {
-            id: id,
-            collectionPointId,
-            userId,
-            amountSponges,
-            imageURL,
-            status: DepositStatus.PENDENTE,
-            updated_at: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,
-        }
-        await knex('Deposit').where({ id }).update(deposit);
-        return "Deposito atualizado";
-        } catch (error){
-            console.log("erro ao atualizar o deposito \ndetalhamento do erro:" + error);
+            return("Erro ao fazer o deposito " + error);
         }
     }
     //atualiza somente o status de um deposito dado a sua ID
@@ -66,13 +61,6 @@ export default class DepositService{
         }
     }
 
-    public static async deleteDeposit(id: string){
-        try{
-            await knex("Deposit").where({id: id}).delete();
-        } catch (error){
-            console.log("erro ao deletar o status do deposito \ndetalhamento do erro:" + error);
-        }
-    }
 
 
 }

@@ -7,7 +7,7 @@ export default class DepositController{
 
     //retorna todos os dados de um deposito dado seu id
     public static async getDeposit(req: Request, res: Response): Promise<any>{
-        const id = req.deposit?.userId;
+        const id = req.user?.id;
         
                 try{
                     const deposit = await DepositService.getDeposit(String(id));
@@ -21,11 +21,22 @@ export default class DepositController{
                     return classified_err.sendMessage(res);
                 }
     }
-    //cria deposito, apenas usuario normal
+
+    //cria deposito
+    /**
+     *@function createDeposit
+     * @description cria um deposito
+     * @param {string} deposit.collectionPointId
+     * @param {string} user.id
+     * @param {Number} deposit.amountSponges
+     * @param {string} deposit.imageURL
+     * @returns { message: string } 
+     */
     public static async createDeposit(req: Request, res: Response): Promise<any>{
+        const userId = req.user?.id;
         const deposit  = req.body;
         try{
-            const response = await DepositService.createDeposit(String(deposit.collectionPointId), String(deposit.userId), Number(deposit.amountSponges), String(deposit.imageURL)); //passar melhor isso depois
+            const response = await DepositService.createDeposit(String(deposit.collectionPointId), String(userId), Number(deposit.amountSponges), String(deposit.imageURL)); //passar melhor isso depois
             return res.status(HttpCode.CREATED).json({message: response});
         }catch(e: any){
             if(e instanceof HttpError) {
@@ -40,29 +51,7 @@ export default class DepositController{
         }
     }
 
-    //atualiza deposito sem atualizar o status, nível usuário
-    public static async updateDeposit(req: Request, res: Response): Promise<any>{
-        const id = req.deposit?.id as string;
-        const {collectionPointId, userId, amountSponges, imageURL} = req.body;
-
-        try {
-            const response = await DepositService.updateDeposit(String(id),collectionPointId, userId, amountSponges, imageURL);
-            return res.status(HttpCode.OK).json({message: response});
-                    
-        } catch (e: any) {
-            if (e instanceof HttpError){
-                  return e.sendMessage(res);
-              }
-
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e. errors });            
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
-        }
-    }
-    //atualiza deposito apenas adiministrador
+    //atualiza deposito, apenas adiministrador
     public static async updateDepositStatus(req: Request, res: Response) : Promise<any>{
         const id = req.deposit?.id as string;
         const { status } = req.body;
@@ -83,21 +72,6 @@ export default class DepositController{
 
     }
     
-    //deleta deposito apenas super root
-    public static async deleteDeposit(req: Request, res: any){
-        try {
-            const id = req.deposit?.id as string;
-            if (!id) {
-                return res.status(HttpCode.BAD_REQUEST).json({ message: "Deposit ID is required." });
-            }
-            const response = await DepositService.deleteDeposit(id);
-            return res.status(HttpCode.OK).json({message: response});
-        } catch (e: any) {
-            if (e instanceof HttpError){
-                return e.sendMessage(res);
-            }
-        }
-    }
 
     
 }
