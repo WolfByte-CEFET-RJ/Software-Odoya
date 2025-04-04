@@ -7,7 +7,7 @@ export default class DepositController{
 
     //retorna todos os dados de um deposito dado seu id
     public static async getDeposit(req: Request, res: Response): Promise<any>{
-        const id = req.user?.id;
+        const id = req.deposit?.id;
         
                 try{
                     const deposit = await DepositService.getDeposit(String(id));
