@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
+import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
 import User from "../types/user"
+import UserValidator from '../utils/Yup/userValidator';
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
@@ -14,6 +15,20 @@ const knex = DatabaseConnection.getInstance();
 export default class UserService {
 
     /**
+     * @description Busca um Usuário
+     * @param {string} id
+     * @returns {Promise<User>}
+     */
+    public static async getUser(id: string): Promise<User> {
+
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({id}).first();
+        if (!user) {
+            throw new UserNotFound();
+        }
+        return user;
+    }
+
+    /**
      * @description Realiza a criação do Usuário
      * @param {string} name
      * @param {string} email
@@ -21,6 +36,8 @@ export default class UserService {
      * @returns {Promise<string>}
      */
     public static async createUser(name: string, email: string, password: string): Promise<string> {
+        await UserValidator.validateCreateUser({name,email,password});
+
         const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
@@ -44,6 +61,8 @@ export default class UserService {
      * @returns {Promise<string>}
      */
     public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+        await UserValidator.validateUpdateUser(data);
+
         const user = await knex('User').where({ id }).first();
         if (!user) {
             throw new UserNotFound();
@@ -78,6 +97,25 @@ export default class UserService {
         });
     
         return users
+    }
+
+    /**
+     * @description Delete o usuário do id seleccionado
+     * @returns {Promise<string>}
+     */
+    public static async deleteUser(id: string | undefined): Promise<string>{
+        if(!id){
+            throw new RequiredIdError();
+        }
+
+       const linesAffected = await knex("User").where({id: id}).del();
+
+       if(linesAffected > 0){
+        return "Usuario deletado com sucesso";
+       } else {
+        throw new UserNotFound();
+       }
+       
     }
 }
 
