@@ -3,7 +3,8 @@ const knex = DatabaseConnection.getInstance();
 import Deposit from '../types/deposit';
 import { DepositStatus } from '../types/deposit';
 import { v4 } from "uuid";
-
+import { CollectionPointNotFound } from "../erros/depositErrors";
+import depositValidator from '../utils/Yup/depositValidator';
 export default class DepositService{
     
     /**
@@ -29,6 +30,15 @@ export default class DepositService{
      * @returns {Promise<string>}
      */
     public static async createDeposit(collectionPointId: string, userId: string, amountSponges: number, imageURL: string): Promise<string>{
+        await depositValidator.validateCreateDeposit({amountSponges,imageURL});
+        const existCollectionPoint = await knex("collection_point").where({ id: collectionPointId }).first();
+        
+        if (!existCollectionPoint) {
+            throw new CollectionPointNotFound();
+        }
+        
+        const awaitTransactions = await knex.transaction();
+        
         try{
             var today = new Date;
         const deposit: Deposit = {
@@ -41,9 +51,13 @@ export default class DepositService{
             created_at: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,               
             updated_at: new Date(today.getFullYear(), today.getMonth(), today.getDay() ) ,
         }
-        await knex('Deposit').insert(deposit);
+
+        await awaitTransactions('Deposit').insert(deposit);
+        await awaitTransactions('collection_point').where({id: collectionPointId}).increment('amountSponges', amountSponges);
+        await awaitTransactions.commit();
         return "Deposito realizado";
         } catch (error){
+            await awaitTransactions.rollback();
             console.log("erro ao fazer o deposito \ndetalhamento do erro:" + error);
             return("Erro ao fazer o deposito " + error);
         }
