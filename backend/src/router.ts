@@ -6,7 +6,7 @@ import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
 import user from './routes/userRoutes';
-import spongeDepositRouter from './routes/spongeDepositRoutes';
+import spongeDepositRouter from './routes/depositRoutes';
 
 /**
  * Define endpoints mapeados
