@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/authService";
-import { HttpError } from "../erros/erro.config";
+import { HttpCode, HttpError } from "../erros/erro.config";
 import { ImprevistError } from "../erros/ImprevistError";
 
 export default class AuthController {
@@ -22,6 +22,28 @@ export default class AuthController {
             
             const imp_err = new ImprevistError();
             return imp_err.sendMessage(res);
+        }
+    }
+
+    public static async googleAuth(req: Request, res: Response): Promise<any>{
+        try {
+            const { token } = req.body;
+            const systemToken: string = await AuthService.handleGoogleAuth(token);
+
+            return res.status(HttpCode.OK).json({
+                message: "Autenticação com google realizada! Anexe o token fornecido ao cabeçalho das requisições",
+                token: systemToken
+            })
+            
+        } catch (e: any) {
+            console.log(e);
+
+            if(e instanceof HttpError){
+                return e.sendMessage(res);
+            }
+            
+            const imp_err = new ImprevistError(e.message);
+            return imp_err.sendMessage(res);        
         }
     }
 }
