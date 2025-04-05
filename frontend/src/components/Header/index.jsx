@@ -26,12 +26,6 @@ const Header = () => {
                         {menuOpen ? <MdClose size={30} color="#fff" /> : <MdMenu size={30} color="#fff" />}
                     </button>
                     <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
-                        <Link className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdRestoreFromTrash color="#114C6D"/>Pontos de Coleta
-                        </Link>
-                        <Link className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdGroups color="#114C6D"/>Mutirão
-                        </Link>
                         <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
                             <MdAccountCircle color="#114C6D"/>Perfil
                         </Link>

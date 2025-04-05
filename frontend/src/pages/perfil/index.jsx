@@ -16,6 +16,7 @@ const Perfil = () => {
     const [lock, setLock] = useState(false)
     //const [text, setText] = useState('')
     const [name, setName] = useState('')
+    const [username, setUser] = useState('')
     const [mail, setEmail] = useState('')
 
     const handleChange = (event, setText) => {
@@ -28,6 +29,7 @@ const Perfil = () => {
             let req = await api.get('/user')
             console.log(req.data)
             localStorage.setItem("id", req.data.id)
+            setUser(req.data.name)
             setName(req.data.name)
             setEmail(req.data.email)
         }
@@ -46,9 +48,15 @@ const Perfil = () => {
         try{
             let req = await api.delete('/user')
          
-            console.log(req.data)
-            if(req.data.length > 0){
-                setLoad(false);
+            
+            if(req.status == 200){
+                
+                setLoad(false)
+                 setTimeout(() => {
+                                    setLoad(false)
+                                    toast.success('Usário deletado!');
+                                }, 1000);
+                                navigate("/")
             }
         }
         catch (error) {
@@ -63,13 +71,18 @@ const Perfil = () => {
     async function updateUser(){
         //let tokenId = localStorage.getItem("id")
         const userData = {name: name, email: mail}
-        console.log(userData)
+        
 
         try{
             let req = await api.patch('/user', userData)
-            console.log(req.data)
-            if(req.data.length > 0){
-                setLoad(false);
+            if(req.status == 200){
+                
+                setLoad(false)
+                 setTimeout(() => {
+                                    setLoad(false)
+                                    toast.success('Usário atualizado!');
+                                }, 1000);
+                                getUserData()
             }
         }
         catch (error) {
@@ -112,6 +125,7 @@ const Perfil = () => {
                     
         }
         else{
+            toast.dismiss()
             setLock(false)
         }
 
@@ -121,14 +135,14 @@ const Perfil = () => {
         getUserData()
     },[])
 
-    console.log(name)
+    console.log(name, "asdsad")
     return (
         <>
             <Header/>
             <img src="./Ondinhas.svg" className={perfil.separador}/>
             <div className={perfil.container}>
             <img src="../public/LogoAzul.svg" className={perfil.logoazul} alt="Logo Azul da ENACTUS"/>
-                <h1>boas vindas aqui</h1>
+                <h1>Seja bem vindo {username}</h1>
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
                     <InputFormProfile   onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormProfile>

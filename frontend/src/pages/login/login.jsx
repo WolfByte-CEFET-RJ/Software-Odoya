@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import { toast } from 'react-toastify';
 //import {useNavigate} from 'react-router-dom'
@@ -54,6 +55,7 @@ function Login(){
                 }, 1000);
 
                 localStorage.setItem("token",res.data.token);   
+                navigate("/profile")
                 
             }
         } catch (error) {
