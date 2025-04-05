@@ -160,7 +160,9 @@ const Principal = () => {
           </div>
         </div>
       </section>
+
       <img src="./Ondinhas.svg" className={principal.separador} />
+
       <section className={principal.secao3}>
         <div style={{height:"130px"}}></div>
         <h1 className={principal.titulo}>Nossas Ações </h1>
@@ -172,11 +174,11 @@ const Principal = () => {
             </div>
             <div className={principal.field}>
               <TbArrowRightDashed size={30} color="269BDF" />
-              <h2>Coleta de Esponjas</h2>
+              <h2>Letramento Ambiental</h2>
             </div>
             <div className={principal.field}>
               <TbArrowRightDashed size={30} color="269BDF" />
-              <h2>Coleta de Esponjas</h2>
+              <h2>Mutirões de Limpeza</h2>
             </div>
           </div>  
           <div className={principal.partedebaixo}>
@@ -230,6 +232,7 @@ const Principal = () => {
       
       </section>
       <img src="./Ondinhas.svg" className={principal.separador} />
+
       <section className={principal.secao4}>
         <div className={principal.resultados}>
           <div className={principal.titulo}>
@@ -244,26 +247,26 @@ const Principal = () => {
             <p>x pessoas certificadas nas atividades</p>
           </div>
         </div>
-
-        <div className={principal.parceiros}>
-          <div className={principal.logos}>
-            <div className={principal.img1}>
-            <img src="./parceiro1.png" alt="Parceiro 1" />
-            <img src="./parceiro2.png" alt="Parceiro 2" />
-            <img src="./parceiro3.png" alt="Parceiro 3" />
+          <div className={principal.parceiros}>
+            <div className={principal.titulo}>
+            <h2 className={principal.titulo}>Parcerias</h2>
             </div>
+            <div className={principal.logos}>
 
-            <div className={principal.img2}>
-            <img src="./parceiro4.png" alt="Parceiro 4" />
-            <img src="./parceiro5.png" alt="Parceiro 5" />
-            <img src="./parceiro6.png" alt="Parceiro 6" />
+              <div className={principal.linha}>
+                <img src="./parceiro1.png" alt="Parceiro 1" />
+                <img src="./parceiro2.png" alt="Parceiro 2" />
+                <img src="./parceiro3.png" alt="Parceiro 3" />
+              </div>
+
+              <div className={principal.linha}>
+                <img src="./parceiro4.png" alt="Parceiro 4" />
+                <img src="./parceiro5.png" alt="Parceiro 5" />
+                <img src="./parceiro6.png" alt="Parceiro 6" />
+              </div>
             </div>
           </div>
-          <h2 className={principal.titulo}>Parcerias</h2>
-        </div>
-      </section>
-
-
+        </section>
       <Footer />
     </>
   );
