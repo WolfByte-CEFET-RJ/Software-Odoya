@@ -9,19 +9,14 @@ import './Calendar.scss';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 
-//  moment.updateLocale("pt"); // Define explicitamente o locale
-//  console.log(moment().locale("pt")); // Deve imprimir "pt-br"
-// console.log(moment().format('LLLL')); // Deve imprimir a data em português
+
 const DragAndDropCalendar = withDragAndDrop(Calendar);
-// const localizer = momentLocalizer(moment);
+
 
 const locales = {
-    'pt-BR': ptBR, // Define o locale para português do Brasil
+    'pt-BR': ptBR, 
   };
-// const shortWeekDays =[
-// { day:"Dom"},{ day:"Seg"},
-// {day:"Ter"},
-// { day:"Quar"},{ day:"Quin"},{ day:"Sex"},{ day:"Sab"}]
+
 const localizer = dateFnsLocalizer({
     format,
     parse,
@@ -75,12 +70,6 @@ function Calendario(){
             }}
             className="calendar"
             eventPropGetter={eventStyle}
-            messages={{
-                date: "Data",
-                time: "Hora",
-                event: "Evento",
-                noEventsInRange: "Nenhum evento neste período.",
-              }}
             />
         </div>
     )

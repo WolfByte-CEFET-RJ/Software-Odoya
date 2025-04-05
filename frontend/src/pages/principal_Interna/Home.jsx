@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderInterno from "../../components/header_Interno/headerInterno.jsx";
 import Footer from "../../components/Footer/index.jsx";
 import "./home.scss";
@@ -25,12 +25,6 @@ function Home(){
         setEsponge(false);
         setMuti(true);
     }
-
-    // function changeAdress(end){
-    //     e.preventDefault();
-    //     setAdress(end)
-    // }
-
     let dados = [
         {
             idx:1,
