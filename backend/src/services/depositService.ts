@@ -14,7 +14,7 @@ export default class DepositService{
      */
     public static async getAllDeposits(userId: string, isAdmin: boolean): Promise<Deposit[]> {
         let query = knex('Deposit')
-            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'createdAt', 'updatedAt');
+            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at');
 
         if (!isAdmin) {
             query = query.where({ userId });
