@@ -37,7 +37,7 @@ export default class DepositService{
      */
     public static async getDeposit(id: string, userId: string, isAdmin: boolean): Promise<Deposit> {
         const deposit = await knex('Deposit')
-            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'createdAt', 'updatedAt')
+            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at')
             .where({ id })
             .first();
 
