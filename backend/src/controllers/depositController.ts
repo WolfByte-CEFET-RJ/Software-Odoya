@@ -11,11 +11,9 @@ export default class DepositController {
   public static async getAllDeposits(req: Request, res: Response) {
       try {
           // Verifica se o usuário é admin através do middleware
-          console.log("chegou aqui");
           const isAdmin = req.user?.admin || false;
           const userId = req.user?.id as string;
 
-          console.log("chegou antes do service")
           const deposits: Deposit[] = await DepositService.getAllDeposits(userId, isAdmin);
           res.status(HttpCode.OK).json(deposits);
       } catch (e) {
