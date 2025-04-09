@@ -3,7 +3,10 @@ import DatabaseConnection from "../database/connection/DatabaseConnection";
 import CollectionPoint, { UpdateCollectionPoint } from "../types/collectionPoint";
 import { CollectionPointNotFound, CollectionPointWithDepositsError, RequiredCollectionPointIdError, RequiredDataError, RequiredFieldsError } from "../erros/CollectionPointErros";
 import { RequiredIdError } from "../erros/UserErros";
+import DateFormat from "../utils/dateFormat";
+import schedule from 'node-schedule';
 const knex = DatabaseConnection.getInstance();
+let scheduledTasks: Record<string, schedule.Job> = {};
 
 export default class CollectionPointService {
 
@@ -31,8 +34,9 @@ export default class CollectionPointService {
             throw new RequiredFieldsError();
         }
         
+        const id = v4();
         await knex("Collection_Point").insert({
-            id: v4(),
+            id,
             name,
             location,
             amountSponges,
@@ -42,6 +46,8 @@ export default class CollectionPointService {
             isInactive
         })
         
+        await this.collectionPointNotification(id, nextCollectionDate);
+
         return {"message": "Ponto de Coleta criado"};
     }
 
@@ -103,5 +109,30 @@ export default class CollectionPointService {
         }
         
         return true;
+    }
+
+    public static async collectionPointNotification(id: string, nextCollectionDate: Date) {
+        
+        if (scheduledTasks[id]) {
+            scheduledTasks[id].cancel();
+        }
+        
+        const date = await DateFormat.validateDate(nextCollectionDate);
+        date.setDate(date.getDate() - 2);
+        
+        const job = schedule.scheduleJob(date, () => {
+            console.log(`Tarefa ${id} executada na data ${date}`);
+            delete scheduledTasks[id];
+        })
+
+        scheduledTasks[id] = job;
+    }
+
+    public static async checkColectionPointNotification() {
+        const collectionPoints = await knex("Collection_Point").select("id", "nextCollectionDate");
+
+        collectionPoints.forEach(collectionPoint => {
+            this.collectionPointNotification(collectionPoint.id, collectionPoint.nextCollectionDate);
+        })
     }
 }
