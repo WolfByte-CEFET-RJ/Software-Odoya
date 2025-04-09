@@ -26,7 +26,7 @@ function Cadastro(){
     function loading(e){
         e.preventDefault()
         setLoad(true)
-        register(e)
+        register()
     }
 
     async function register(){
@@ -38,6 +38,7 @@ function Cadastro(){
         const userData = {name:name, email: user, password: password}
         try {
             let res = await api.post("/user", userData);
+            console.log(res.data)
             if(res.data){
                 setTimeout(() => {
                     setLoad(false)

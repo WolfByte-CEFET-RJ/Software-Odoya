@@ -36,9 +36,6 @@ export default class UserService {
     public static async getUserByEmail(email: string): Promise<User> {
 
         const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({email}).first();
-        if (!user) {
-            throw new UserNotFound();
-        }
         return user;
     }
 
@@ -62,7 +59,7 @@ export default class UserService {
     public static async createUser(name: string, email: string, password: string): Promise<string> {
         await UserValidator.validateCreateUser({name,email,password});
 
-        const existingUser = await  UserService.getUserByEmail(email)
+        const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
         }
@@ -87,7 +84,7 @@ export default class UserService {
      */
     public static async createUserWithoutPassword(name: string, email: string): Promise<boolean> {
 
-        const existingUser = await  UserService.getUserByEmail(email)
+        const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
         }

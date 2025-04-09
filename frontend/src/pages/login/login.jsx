@@ -70,10 +70,11 @@ function Login(){
         }
     }
    
-    useEffect(async() =>{
+    useEffect(() =>{
         
         
-        
+        async function effect(){
+            
         if(load == true){
             setDisable(true)
         }
@@ -86,15 +87,17 @@ function Login(){
            
             try {
                 
-                let res = api.get("/auth/google", token)
-              
+                let res = await api.post("/auth/google", token)
+                console.log(res.data)
                 if(res.data.token){
                     setTimeout(() => {
                         setLoad(false)
                         toast.success('Bem vindo!');
+                         
                     }, 1000);
     
-                    localStorage.setItem("token",res.data.token);   
+                    localStorage.setItem("token",res.data.token);
+                   navigate("/home")
                     
                 }}
             catch (error) {
@@ -106,13 +109,14 @@ function Login(){
             }, 1000);
             
         
-        }
+        }}
+
                    
                 
                 
                 
      
-    }}, [load, user2])
+    } effect()}, [load, user2])
 
     return(
         <>

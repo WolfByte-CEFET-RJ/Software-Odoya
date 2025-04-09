@@ -4,7 +4,7 @@ import { HttpCode, HttpError } from "../erros/erro.config";
 import { ImprevistError } from "../erros/ImprevistError";
 import { ValidationError } from "yup";
 
-export default class AuthController {
+export default class    AuthController {
     public static async login(req: Request, res: Response): Promise<any>{
         try{
             const email = req.body.email;
