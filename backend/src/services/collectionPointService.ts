@@ -79,6 +79,14 @@ export default class CollectionPointService {
 
         await knex("Collection_Point").where({ id: id }).update(data);
 
+        if (data.nextCollectionDate) {
+            const date = new Date(data.nextCollectionDate);
+            
+            if (date.getTime() != collectionPoint.nextCollectionDate.getTime()) {
+                await this.collectionPointNotification(id, date);
+            }
+        }
+
         return `Ponto de Coleta ${collectionPoint.name} atualizado com sucesso.`;
     }
 
@@ -112,27 +120,50 @@ export default class CollectionPointService {
     }
 
     public static async collectionPointNotification(id: string, nextCollectionDate: Date) {
-        
+    
         if (scheduledTasks[id]) {
             scheduledTasks[id].cancel();
         }
         
+        if (!nextCollectionDate) {
+            return;
+        }
+ 
         const date = await DateFormat.validateDate(nextCollectionDate);
         date.setDate(date.getDate() - 2);
         
+        if (date < new Date()) {
+            return "Data inválida";
+        }
+
         const job = schedule.scheduleJob(date, () => {
             console.log(`Tarefa ${id} executada na data ${date}`);
             delete scheduledTasks[id];
         })
 
         scheduledTasks[id] = job;
+        console.log(scheduledTasks);
     }
 
     public static async checkColectionPointNotification() {
         const collectionPoints = await knex("Collection_Point").select("id", "nextCollectionDate");
 
-        collectionPoints.forEach(collectionPoint => {
-            this.collectionPointNotification(collectionPoint.id, collectionPoint.nextCollectionDate);
+        collectionPoints.forEach(async collectionPoint => {
+            if (scheduledTasks[collectionPoint.id]) {
+                scheduledTasks[collectionPoint.id].cancel();
+            }
+
+            const date = await DateFormat.validateDate(collectionPoint.nextCollectionDate);
+            date.setDate(date.getDate() - 2);
+
+            const job = schedule.scheduleJob(date, () => {
+                console.log(`Tarefa ${collectionPoint.id} executada na data ${date}`);
+                delete scheduledTasks[collectionPoint.id];
+            })
+    
+            scheduledTasks[collectionPoint.id] = job;
         })
+
+        return scheduledTasks;
     }
 }
