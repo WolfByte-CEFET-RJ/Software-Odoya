@@ -1,0 +1,251 @@
+.container {
+    display: flex;
+    justify-content: center;
+    height: 50%;
+    
+    
+    .banner {
+        width: 100%;
+        
+        @media (min-width: 1300px) {
+            width: 60%;
+            border: 4px solid var(--primary-color);
+            
+        }
+    }
+
+    @media (min-width: 1300px) {
+        background-color: #F1F1F1;
+        background-image: url('../../public/fundobanner.png');
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size:cover;
+        
+    }
+    
+}
+
+.separador {
+    width: 100%;
+    margin-top: -3%;
+
+}
+
+.secao, .secao2 {
+    display: flex;
+    justify-content: center;
+
+    margin-top: -4%;     
+    flex-direction: column;
+    font-family: 'Abel', sans-serif;
+    font-size: 1.2rem;
+    background-color: var(--tertiary-color);
+    padding: 0 5% 0 5%;
+
+    .titulo {
+        margin-top: 10%;
+        text-align: center;
+        font-size: 1.8rem;
+        margin-bottom: 3%;
+        font-family: 'Tankindred', sans-serif;
+        color: var(--secondary-color);
+
+        @media (max-width: 910px) {
+            font-size: 1.5rem;
+        }
+    }
+
+    .textos_conteudo {
+        display: flex;
+        flex-direction: row;
+        gap: 10rem;
+        align-items: center;
+
+        
+        @media (max-width: 910px) {
+            flex-direction: column;
+            gap: 0rem;
+            font-size: 1.1rem;
+        }
+        
+        }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        @media (max-width: 910px) {
+            font-size: 1.2rem;
+        }
+    }
+
+    .texto {
+
+        font-size: 1.3rem;
+        margin-bottom: 3%;
+
+        @media (max-width: 910px) {
+            font-size: 1.3rem;
+        }
+    }
+
+    .subtitulo {
+        font-family: 'Batangas', sans-serif;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
+    .botao_container {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+        margin-bottom: 5rem;
+
+        @media (max-width: 910px) {
+            margin-bottom: 3rem;
+          
+        }
+        
+            .botao {
+                text-align: center;
+                background-color: var(--primary-color);
+                
+                padding: 1rem 5rem;
+                border-radius:50px;
+                text-decoration: none;
+             
+                color: white;
+                font-family: 'Batangas', sans-serif;
+                font-size: 1.3rem;
+                width: auto;
+                margin: 0 auto;
+                transition: all ease-in-out  .2s;
+
+                @media (max-width: 910px) {
+                    font-size: 1.2rem;
+                }
+            }
+
+            .botao:hover {
+                background-color: #114C6D;
+              
+            }   
+    }
+
+    img {
+        height: 50%;
+        @media (max-width: 910px) {
+            margin-bottom: 5rem;
+        }
+    }
+
+    .imagemEquipe {
+        border: 4px solid var(--primary-color);
+        border-radius: 10px;
+        margin-bottom: 5rem;
+    }
+
+}
+
+.secao2 {
+    background-color: white;
+
+
+    .caracteristicas {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 1rem;
+
+        @media (max-width: 910px) {
+            flex-direction: column;
+        }
+
+        .card {
+            margin: 1rem 5rem 7rem 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .icone {
+                margin:-50% 0% 0% 100%;
+                height: 15rem;
+
+                @media (min-width: 1500px) {
+                    margin:-30% 0% 0% 100%;
+                }
+                @media (min-width: 1780px) {
+                    margin:-20% 0% 0% 100%;
+                }
+                @media (max-width: 1499px) {
+                    margin:-30% 0% 0% 100%;
+                }
+                @media (max-width: 1880px) {
+                    margin:-40% 0% 0% 100%;
+                }
+                @media (max-width: 1080px) {
+                    margin:-60% 0% 0% 100%;
+                }
+                @media (max-width: 990px) {
+                    margin:-100% 0% 0% 100%;
+                }
+                @media (max-width: 910px) {
+                    // margin:-25% 0% 0% 100%;
+                    // height: 10rem;
+                    display: none;
+                }
+            }
+            
+            .icone_olho {
+                margin:-70% 0% 0% 100%;
+                height: 10rem;
+
+                @media (max-width: 910px) {
+                    // margin:-10% 0% 0% 10%;
+                    // height: 7rem;
+                    display: none;
+                }
+
+                @media (min-width: 1500px) {
+                    margin:-35% 0% 0% 100%;
+                }
+                @media (min-width: 1780px) {
+                    margin:-20% 0% 0% 100%;
+                }
+                @media (max-width: 1499px) {
+                    margin:-35% 0% 0% 100%;
+                }
+                @media (max-width: 1880px) {
+                    margin:-60% 0% 0% 100%;
+                }
+                
+            }
+            h2 {
+                color: var(--quaternary-color);
+                
+               
+            }
+            
+        }
+        
+    .valores {
+        display: flex;
+        gap: 5rem;
+        align-items: center;
+        justify-content: baseline;
+        margin-bottom: 3rem;
+        
+       
+    }
+    }
+
+    
+
+    h2 {
+        font-family: 'Tankindred', sans-serif;
+        margin-bottom: 2rem;
+    }
+
+    
+}
