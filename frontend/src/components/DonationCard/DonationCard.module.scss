@@ -1,8 +1,9 @@
 .container{
     width: 242px;
     height: 267px;
-    // position: relative;
-    background-color: #B1E3FA;
+    position: relative;
+    // background-color: #B1E3FA;
+    background-color: #00B8F1;
     border-radius: 10px;
     align-items: center;
     transition: transform 0.3s linear;
@@ -21,7 +22,7 @@
             align-items: center;
             text-decoration: none;
             font-size: 1.3rem;
-            margin: 7.5px 0px;
+            margin: 5.5px 3px;
         }
     }
     .infoPonto{
@@ -38,7 +39,7 @@
             align-items: center;
             text-decoration: none;
             font-size: 1.3rem;
-            margin: 7.5px 0px;
+            margin: 5.5px 3px;
             // .icon{
             //     color:#114C6D
             // }
@@ -48,15 +49,16 @@
         color:#114C6D;
         display: block;
         position: relative;
-        font-size: 23px;
+        flex-shrink: 0;
+        // font-size: 23px;
     }
     .iconCard{
         color:#114C6D;
-        font-size: 90px;
-        display:block;
-        position:relative;
-        left: 140px;
-        bottom: 20px;
+        position:absolute;
+        font-size: 70px; // Reduza se necessário
+        bottom: 10px; // Ajuste conforme necessário
+        right: 10px;
+        max-width: 80%;
     }
 }
 .titulo{
