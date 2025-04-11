@@ -1,0 +1,52 @@
+p {
+    color: black;
+} 
+
+img { 
+    margin-bottom: -3rem; 
+    width: 25%; 
+}
+
+a {
+    font-size: larger;
+    color: inherit; 
+} 
+
+.body {
+    text-align: center; 
+    padding: 50px; 
+    background-color: #F1F1F1; 
+} 
+
+.copyright { 
+    margin-bottom: -5rem; 
+    margin-top: 1rem; 
+} 
+
+.copyrightLinks { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px; 
+} 
+
+.copyrightLinks p {
+    margin-top: 2rem; 
+} 
+
+.redes { 
+    margin-top: -2rem; 
+    margin-left: 2rem; 
+    margin-bottom: 2rem; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+} 
+
+.redes a { 
+    font-size: medium; 
+    padding-left: 5px; 
+    padding-right: 35px; 
+    text-decoration: none; 
+    cursor: pointer; 
+}
