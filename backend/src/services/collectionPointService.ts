@@ -5,7 +5,9 @@ import { CollectionPointNotFound, CollectionPointWithDepositsError, RequiredColl
 import { RequiredIdError } from "../erros/UserErros";
 import DateFormat from "../utils/dateFormat";
 import schedule from 'node-schedule';
+import Mailer from "./Mailer";
 const knex = DatabaseConnection.getInstance();
+const mailer = new Mailer();
 let scheduledTasks: Record<string, schedule.Job> = {};
 
 export default class CollectionPointService {
@@ -46,7 +48,7 @@ export default class CollectionPointService {
             isInactive
         })
         
-        await this.collectionPointNotification(id, nextCollectionDate);
+        await this.collectionPointNotification(id, nextCollectionDate, name);
 
         return {"message": "Ponto de Coleta criado"};
     }
@@ -81,9 +83,10 @@ export default class CollectionPointService {
 
         if (data.nextCollectionDate) {
             const date = new Date(data.nextCollectionDate);
-            
+            const name = data.name || collectionPoint.name;
+
             if (date.getTime() != collectionPoint.nextCollectionDate.getTime()) {
-                await this.collectionPointNotification(id, date);
+                await this.collectionPointNotification(id, date, name);
             }
         }
 
@@ -115,11 +118,14 @@ export default class CollectionPointService {
         if (deletedCount === 0) {
             throw new CollectionPointNotFound();
         }
-        
+
+        scheduledTasks[id].cancel();
+        delete scheduledTasks[id];
+
         return true;
     }
 
-    public static async collectionPointNotification(id: string, nextCollectionDate: Date) {
+    public static async collectionPointNotification(id: string, nextCollectionDate: Date, name: string) {
     
         if (scheduledTasks[id]) {
             scheduledTasks[id].cancel();
@@ -136,7 +142,15 @@ export default class CollectionPointService {
             return "Data inválida";
         }
 
-        const job = schedule.scheduleJob(date, () => {
+        
+        const job = schedule.scheduleJob(date, async () => {
+            const users = await knex("User").where({admin: true}).select("email");
+            const emailList = users.map(user => user.email);
+            const usersEmails = emailList.join(", ");
+
+            const text = `Próxima coleta do ponto ${name}, deverá ser realizada na data ${nextCollectionDate}` 
+
+            mailer.sendMail(usersEmails, name, text);
             console.log(`Tarefa ${id} executada na data ${date}`);
             delete scheduledTasks[id];
         })
@@ -146,7 +160,7 @@ export default class CollectionPointService {
     }
 
     public static async checkColectionPointNotification() {
-        const collectionPoints = await knex("Collection_Point").select("id", "nextCollectionDate");
+        const collectionPoints = await knex("Collection_Point").select("id", "nextCollectionDate", "name");
 
         collectionPoints.forEach(async collectionPoint => {
             if (scheduledTasks[collectionPoint.id]) {
@@ -156,8 +170,15 @@ export default class CollectionPointService {
             const date = await DateFormat.validateDate(collectionPoint.nextCollectionDate);
             date.setDate(date.getDate() - 2);
 
-            const job = schedule.scheduleJob(date, () => {
-                console.log(`Tarefa ${collectionPoint.id} executada na data ${date}`);
+            const job = schedule.scheduleJob(date, async () => {
+                const users = await knex("User").where({admin: true}).select("email");
+                const emailList = users.map(user => user.email);
+                const usersEmails = emailList.join(", ");
+
+                const text = `Próxima coleta do ponto ${collectionPoint.name}, deverá ser realizada na data ${collectionPoint.nextCollectionDate}` 
+                
+                mailer.sendMail(usersEmails, collectionPoint.name, text);
+                console.log(`Tarefa ${collectionPoint.id} executada na data ${date}`);        
                 delete scheduledTasks[collectionPoint.id];
             })
     
