@@ -5,7 +5,7 @@ function MapComponent({ location }) {
   const [streetName, setStreetName] = useState('');
   const [ lati, setLati] = useState('');
   const [ longi, setLongi] = useState('');
-    const[ dado, setDado] = useState(false);
+  const[ dado, setDado] = useState(false);
 
   useEffect(() => {
     if (location.lat && location.long) {

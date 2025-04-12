@@ -1,7 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, use } from 'react';
 import cardStyle from "./DonationCard.module.scss"
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaCalendarDays } from "react-icons/fa6";
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { FaUsers } from "react-icons/fa";
 import { MdAccessTimeFilled, MdLocationOn } from "react-icons/md";
 
@@ -10,8 +12,10 @@ function DonationCard(props){
     const [streetName, setStreetName] = useState('');
     const [ lati, setLati] = useState('');
     const [ longi, setLongi] = useState('');
+    const [load, setLoad] = useState(false)
     
       const handleSearch = () => {
+        setLoad(true)
         setStreetName(props.place);
         if(/[a-zA-Z]/.test(streetName)){
             console.log(streetName)
@@ -20,6 +24,7 @@ function DonationCard(props){
             .then((response)=>response.json())
             .then((data) => {
                 if (data.length > 0) {
+                setLoad(false)
                 setLati(parseFloat(data[0].lat));
                 setLongi(parseFloat(data[0].lon));
                 props.setLocation({stret: streetName, lat: lati, long: longi})
@@ -43,6 +48,7 @@ function DonationCard(props){
                 .then((response)=>response.json())
                 .then((data) => {
                     if (data.length > 0) {
+                    setLoad(false)    
                     setLati(parseFloat(data[0].lat));
                     setLongi(parseFloat(data[0].lon));
                     props.setLocation({stret: streetName, lat: lati, long: longi})
@@ -55,6 +61,27 @@ function DonationCard(props){
               .catch((error) => console.error('Erro ao buscar o cep:', error))
         }
       };
+
+      useEffect(() =>{
+              if(load == true){
+                      toast.info(
+                      <div className='loadingDiv'>
+                          <h3>Aguarde um momento</h3>
+                          <img src="../public/LogoAzul.svg" className={(load===true) ? cardStyle.logoLoad2 : cardStyle.logoLoad} alt="Logo Azul da ENACTUS"/>
+                      </div>,
+                      {
+                          position: "top-center",
+                          autoClose: false,
+                          className:'loading' 
+                      })
+                          
+              }
+              else{
+                  toast.dismiss()
+              }
+      
+                  
+      },[load])
 
     return(
         <>{ props.donate ? 

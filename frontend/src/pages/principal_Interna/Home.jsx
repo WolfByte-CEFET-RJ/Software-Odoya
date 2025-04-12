@@ -14,6 +14,7 @@ function Home(){
     const[esponge, setEsponge] = useState(false);
     const[muti, setMuti] = useState(false);
     const[adress, setAdress] = useState({ street: '', lat: '', long: '' })
+    const[point, setPoint] = useState([]);
 
     function changePageEsponge(e){
         e.preventDefault()
@@ -58,7 +59,28 @@ function Home(){
             hour: "14:35",
             state: "faltou"
         },
-    ] 
+    ]
+    async function getColectData(){
+
+        try{
+            let req = await api.get('/Collection_Point')
+            console.log(req.data)
+            setPoint(req.data)
+            
+        }
+        catch (error) {
+            console.log(error)
+            
+            setTimeout(() => {
+                toast.error('Falha ao buscar os pontos de coleta');
+            }, 1000);
+        }
+    }
+
+    useEffect(()=>{
+        getColectData()
+    },[])
+
     return(
         <>
             {user ? 

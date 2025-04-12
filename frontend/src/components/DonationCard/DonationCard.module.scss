@@ -80,6 +80,36 @@
     transform: scale(1.05);
 }
 
+.logoazul{
+    margin-top:-10%;
+    width: 390px;
+    height: 390px;
+    z-index:1
+}
+.logoLoad{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    
+}
+
+.logoLoad2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    animation: rotacionar 1s linear infinite;
+}
+
+
+@keyframes rotacionar{
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
 @media(max-width: 590px){
     .container{
         width: 170px;
