@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+
 import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdRestoreFromTrash, MdGroups, MdHomeFilled, MdAccountCircle, MdLogout } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 import header from "./header.module.scss";
@@ -7,15 +8,18 @@ import header from "./header.module.scss";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState("");
     const location = useLocation();
     const currentLocation = location.pathname;
+    
+    
 
     useEffect(() => {
         if(localStorage.getItem("id") !== null) {
             setIsLoggedIn(true);
         }
     })
+  
 
     return (
         <header className={header.container}>
@@ -26,22 +30,57 @@ const Header = () => {
             <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
                 {isLoggedIn ? (
                     <>
-                        {currentLocation === "/profile" ? (
+                        {localStorage.getItem("adm") == false ? (
                             <>
-                            <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
-                                <MdHomeFilled color="#114C6D"/>Tela inicial
+                            {currentLocation === "/profile" ? (
+                                <>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>Tela inicial
+                                </Link>
+                                </>
+                            ) : (
+                                <>
+                                <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdAccountCircle color="#114C6D"/>Perfil
+                                </Link>
+                                </>
+                            )}
+                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false); localStorage.clear("id");}}>
+                                <MdLogout color="#114C6D"/>Sair
                             </Link>
                             </>
                         ) : (
                             <>
-                            <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
-                                <MdAccountCircle color="#114C6D"/>Perfil
+                            {currentLocation === "/profile" ? ( 
+                                <>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>RH
+                                </Link>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>Relatórios
+                                </Link>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>Tela inicial
+                                </Link>
+                                </>
+                            ) : (
+                                <>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>RH
+                                </Link>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>Relatórios
+                                </Link>
+                                <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdAccountCircle color="#114C6D"/>Perfil
+                                </Link>
+                                </>
+                            )}
+                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false); localStorage.clear("id");}}>
+                                <MdLogout color="#114C6D"/>Sair
                             </Link>
                             </>
                         )}
-                        <Link className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdLogout color="#114C6D"/>Sair
-                        </Link>
                     </>
                 ) : (
                     <>

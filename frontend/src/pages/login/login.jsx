@@ -96,7 +96,8 @@ function Login(){
                          
                     }, 1000);
     
-                    localStorage.setItem("token",res.data.token);
+                    localStorage.setItem("token",res.data.token)
+                    localStorage.setItem("ADM", true)
                    navigate("/home")
                     
                 }}
