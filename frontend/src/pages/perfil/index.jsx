@@ -36,10 +36,12 @@ const Perfil = () => {
         catch (error) {
             console.log(error)
             
+            
+            setLoad(false)
+            toast.error('Falha ao buscar dados do usuário');
             setTimeout(() => {
-                setLoad(false)
-                toast.error('Falha ao buscar dados do usuário');
-            }, 1000);
+                navigate('/')
+            }, 2000);
     }
     }
     async function deleteUser(){
@@ -54,7 +56,7 @@ const Perfil = () => {
                 setLoad(false)
                  setTimeout(() => {
                                     setLoad(false)
-                                    toast.success('Usário deletado!');
+                                    toast.success('Usuário deletado!');
                                 }, 1000);
                                 navigate("/")
             }
@@ -80,7 +82,7 @@ const Perfil = () => {
                 setLoad(false)
                  setTimeout(() => {
                                     setLoad(false)
-                                    toast.success('Usário atualizado!');
+                                    toast.success('Usuário atualizado!');
                                 }, 1000);
                                 getUserData()
             }
@@ -135,7 +137,7 @@ const Perfil = () => {
         getUserData()
     },[])
 
-    console.log(name, "asdsad")
+    
     return (
         <>
             <Header/>
