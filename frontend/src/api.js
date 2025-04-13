@@ -19,10 +19,7 @@ apiConnection.interceptors.request.use(
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         
-            /*
-        } else{
-            window.location.href="/";
-        */
+         
         }
         return config;
     },
@@ -31,4 +28,7 @@ apiConnection.interceptors.request.use(
     }
 );
 
+
+
 export default apiConnection;
+
