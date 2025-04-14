@@ -11,7 +11,7 @@ export default interface Deposit {
     amountSponges: number,
     imageURL?: string,
     status: DepositStatus,
-    createdAt: Date,
-    updatedAt: Date
+    created_at: Date,
+    updated_at: Date
 
 }

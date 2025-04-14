@@ -2,49 +2,45 @@ import { Router } from "express";
 import DepositController from "../controllers/depositController";
 import AuthMiddleware from "../middlewares/authMiddleware";
 
-/**
- * @class DepositRoutes
- * @description Classe que gerencia as rotas relacionadas aos depósitos
- */
-export default class DepositRoutes {
-    private router: Router;
+const depositRouter = Router();
+
+depositRouter
+    //retorna um deposito dado id do deposito, verifica se o usuário está logado
+    .get('/deposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
     /**
-     * @constructor
-     * @description Inicializa o router e configura as rotas
+     * @route GET /deposits
+     * @description Retorna todos os depósitos (todos para admin, somente do usuário para usuário comum)
+     * @returns { Deposit[] } 
      */
-    constructor() {
-        this.router = Router();
-        this.setupRoutes();
-    }
+    .get("/deposits", AuthMiddleware.ensureAuthenticated, DepositController.getAllDeposits)
+    /**
+     * @route GET /deposit/:id
+     * @description Retorna um depósito dado o ID do depósito
+     * @param {string} id - ID do depósito
+     * @returns { message: string } 
+     */
+    .get("/deposit/:id", AuthMiddleware.ensureAuthenticated, DepositController.getOneDeposit)
 
     /**
-     * @method setupRoutes
-     * @description Configura todas as rotas de depósitos
-     * @private
+     * @route POST /deposit
+     * @description cria um deposito,verifica se o usuário está logado e pega o id do usuário logado para fazer o deposit
+     * @param {string} collectionPointId
+     * @param {Number} amountSponges
+     * @param {string} imageURL
+     * @returns { message: string } 
      */
-    private setupRoutes(): void {
-        // Rota para buscar todos os depósitos (admin vê todos, usuário vê os seus)
-        this.router.get(
-            "/deposits", 
-            AuthMiddleware.ensureAuthenticated, 
-            DepositController.getAllDeposits
-        );
+    .post('/deposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
 
-        // Rota para buscar um depósito específico
-        this.router.get(
-            "/deposit/:id", 
-            AuthMiddleware.ensureAuthenticated, 
-            DepositController.getOneDeposit
-        );
-    }
 
+    //apenas atualiza os estados, somente administradores
     /**
-     * @method getRouter
-     * @description Retorna o router configurado com todas as rotas
-     * @returns {Router} Router do Express com as rotas configuradas
+     * @route PATCH /deposit/status
+     * @description Atualiza o status de um depósito
+     * @param {string} id - ID do depósito
+     * @param {string} status - Novo status do depósito
+     * @returns { message: string } 
      */
-    public getRouter(): Router {
-        return this.router;
-    }
-}
+    .patch('/deposit/status', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
+
+export default depositRouter;
