@@ -125,6 +125,27 @@ export default class CollectionPointService {
         return true;
     }
 
+    public static async notifyAdminsAboutNextCollection(id: string, nextCollectionDate: Date, name: string) {
+        const users = await knex("User").where({admin: true}).select("email");
+        const emailList = users.map(user => user.email);
+        const usersEmails = emailList.join(", ");
+        const { dateNotify, horaryNotify } = await DateFormat.convertLocaleDate(nextCollectionDate);
+
+        const text = `
+        Olá,
+            
+        A próxima coleta do ponto de coleta "${name}", está agendada para o dia ${dateNotify} às ${horaryNotify}.
+            
+        Fique atento(a) para garantir que a coleta ocorra conforme o previsto.
+            
+        Atenciosamente,
+        Software Odoyá
+        `;
+
+        mailer.sendMail(usersEmails, name, text);
+        delete scheduledTasks[id];
+    }
+
     public static async collectionPointNotification(id: string, nextCollectionDate: Date, name: string) {
     
         if (scheduledTasks[id]) {
@@ -144,15 +165,7 @@ export default class CollectionPointService {
 
         
         const job = schedule.scheduleJob(date, async () => {
-            const users = await knex("User").where({admin: true}).select("email");
-            const emailList = users.map(user => user.email);
-            const usersEmails = emailList.join(", ");
-
-            const text = `Próxima coleta do ponto ${name}, deverá ser realizada na data ${nextCollectionDate}` 
-
-            mailer.sendMail(usersEmails, name, text);
-            console.log(`Tarefa ${id} executada na data ${date}`);
-            delete scheduledTasks[id];
+            await this.notifyAdminsAboutNextCollection(id, nextCollectionDate, name);
         })
 
         scheduledTasks[id] = job;
@@ -171,20 +184,14 @@ export default class CollectionPointService {
             date.setDate(date.getDate() - 2);
 
             const job = schedule.scheduleJob(date, async () => {
-                const users = await knex("User").where({admin: true}).select("email");
-                const emailList = users.map(user => user.email);
-                const usersEmails = emailList.join(", ");
-
-                const text = `Próxima coleta do ponto ${collectionPoint.name}, deverá ser realizada na data ${collectionPoint.nextCollectionDate}` 
-                
-                mailer.sendMail(usersEmails, collectionPoint.name, text);
-                console.log(`Tarefa ${collectionPoint.id} executada na data ${date}`);        
-                delete scheduledTasks[collectionPoint.id];
+                await this.notifyAdminsAboutNextCollection(collectionPoint.id, collectionPoint.nextCollectionDate, collectionPoint.name);
             })
     
             scheduledTasks[collectionPoint.id] = job;
+            
         })
 
+        console.log(scheduledTasks);
         return scheduledTasks;
     }
 }
