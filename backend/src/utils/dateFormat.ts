@@ -12,4 +12,19 @@ export default class DateFormat{
         return dateFormat;
        
     }
+
+    public static async convertLocaleDate(date: Date) {
+        const dateObj = new Date(date);
+        
+        const dateNotify = dateObj.toLocaleDateString("pt-BR", {
+            timeZone: "America/Sao_Paulo"
+        });
+        const horaryNotify = dateObj.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "America/Sao_Paulo"
+        });
+
+        return { dateNotify, horaryNotify };
+    }
 }
