@@ -8,7 +8,7 @@ export default class Mailer {
         this.transporter = createTransport({
             service: "gmail",
             auth: {
-                user: process.env.EMAIL_USER,
+                user: process.env.EMAIL_APP_USER,
                 pass: process.env.EMAIL_APP_PASS
             }
         })
@@ -18,7 +18,7 @@ export default class Mailer {
         console.log(to, subject, text);
         
         const info = await this.transporter.sendMail({
-            from: process.env.EMAIL_USER,
+            from: `"Software Odoyá" <${process.env.EMAIL_APP_USER}>`,
             to,
             subject,
             text
