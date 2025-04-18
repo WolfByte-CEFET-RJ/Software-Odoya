@@ -11,6 +11,10 @@ export class RootUserModificationError extends HttpError {
     }
 }
 
+/**
+ * @extends HttpError
+ * @description Autenticação não realizada previamente
+ */
 export class AuthenticationError extends HttpError {
     constructor(message: string 
             = "Autenticação não realizada.") {
@@ -18,6 +22,10 @@ export class AuthenticationError extends HttpError {
     }
 }
 
+/**
+ * @extends HttpError
+ * @description Acesso não autorizado ao recurso
+ */
 export class AccessDeniedError extends HttpError {
     constructor(message: string 
             = "Acesso negado. Nivel de permissão insuficiente.") {

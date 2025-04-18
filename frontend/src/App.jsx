@@ -8,6 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
+import Perfil from './pages/perfil/index.jsx'
+
+
+
 const Routing = () =>{
     return(
         <>
@@ -17,6 +21,9 @@ const Routing = () =>{
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Cadastro/>}/>
                 <Route path='/home' element={<Home/>}/>
+                <Route path="/profile" element={<Perfil/>}/>
+                
+
             </Routes>
         
         </>

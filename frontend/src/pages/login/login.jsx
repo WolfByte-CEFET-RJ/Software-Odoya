@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 
 import { toast } from 'react-toastify';
 //import {useNavigate} from 'react-router-dom'
@@ -71,7 +73,8 @@ function Login(){
     useEffect(() =>{
         
         
-        
+        async function effect(){
+            
         if(load == true){
             setDisable(true)
         }
@@ -79,48 +82,41 @@ function Login(){
             setDisable(false)
         }
         if (Object.keys(user2).length > 0) {
-            console.log('token de acesso do usuario')
-            axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user2.access_token}`, {
-                    headers: {
-                        Authorization: `Bearer ${user2.access_token}`,
-                        Accept: 'application/json'
-                    }
-                })
-                .then(async (res) => {
-                    
-                    const userData = { email: res.data.email, password: '12345678'}
-                    console.log(userData)
-
-                    try {
-                        
-                        let res = await api.post("/login", userData);
-                        console.log(res.data)
-                        if(res.data.token){
-                            setTimeout(() => {
-                                setLoad(false)
-                                toast.success('Bem vindo!');
-                            }, 1000);
+            const token = {token: `${user2.access_token}`}
             
-                            localStorage.setItem("token",res.data.token);   
-                            
-                        }
-                    } catch (error) {
-                        console.log(error)
-                        
-                        setTimeout(() => {
-                            setLoad(false)
-                            toast.error('Falha ao fazer login!!!');
-                        }, 1000);
-                        
-                       
-                    }
+           
+            try {
+                
+                let res = await api.post("/auth/google", token)
+                console.log(res.data)
+                if(res.data.token){
+                    setTimeout(() => {
+                        setLoad(false)
+                        toast.success('Bem vindo!');
+                         
+                    }, 1000);
+    
+                    localStorage.setItem("token",res.data.token);
+                   navigate("/home")
+                    
+                }}
+            catch (error) {
+            console.log(error)
+            
+            setTimeout(() => {
+                setLoad(false)
+                toast.error('Falha ao fazer login!!!');
+            }, 1000);
+            
+        
+        }}
+
                    
                 
-                })
-                .catch((err) => console.log(err));
-                }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [load, user2])
+                
+                
+     
+    } effect()}, [load, user2])
 
     return(
         <>
@@ -150,4 +146,3 @@ function Login(){
 }
 
 export default Login;
-

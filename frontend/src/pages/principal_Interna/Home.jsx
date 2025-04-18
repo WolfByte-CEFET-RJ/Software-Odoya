@@ -93,8 +93,8 @@ function Home(){
                 <section className="escolhas-section">
                     <h1 className="escolha-titulo"> Escolha o que deseja fazer a seguir:</h1>
                     <div className="escolha-buttons">
-                        <button className="op1-escolha" onClick={changePageEsponge}> Depositar esponjas</button>
-                        <button className="op2-escolha" onClick={changePageMuti}> Participar de multirões</button>
+                        <button className="opcao1-escolha" onClick={changePageEsponge}> Depositar esponjas</button>
+                        <button className="opcao2-escolha" onClick={changePageMuti}> Participar de multirões</button>
                     </div>
                 </section>
                 { esponge ?

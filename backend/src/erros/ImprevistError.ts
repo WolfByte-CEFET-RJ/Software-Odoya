@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { HttpCode, HttpError } from "./erro.config"
+=======
+import { HttpCode, HttpError } from "./erro.config";
+>>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53
 
 /**
  * @extends HttpError

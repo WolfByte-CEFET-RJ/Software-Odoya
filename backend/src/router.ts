@@ -6,6 +6,7 @@ import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
 import user from './routes/userRoutes';
+import collectionPointRouter from './routes/collectionPointRoutes';
 
 const bodyParser = require('body-parser');
 /**
@@ -22,14 +23,19 @@ const bodyParser = require('body-parser');
  */
 export default (app: Express): void => {
     app
+
+        .use(rootUser)
         .use(bodyParser.json())
         .use(user)
         .use(authRouter)
-        .use(user);
-
+        .use(user)
+        .use(collectionPointRouter)
+        
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
         res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
     });
     
+
 }
+

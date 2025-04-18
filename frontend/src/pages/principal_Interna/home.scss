@@ -55,9 +55,10 @@
         align-items:center;
         font-family: 'Abel', sans-serif;
 
-        .op1-escolha,.op2-escolha{
+        .opcao1-escolha,.opcao2-escolha{
             width: 927px;
             height: 350px;
+            color:black;
             justify-content: center;
             // font-family: 'Abel', sans-serif;
             font-family: 'Tankindred', sans-serif;
@@ -68,14 +69,14 @@
             box-shadow: 1px 6px 20px 2px rgba(0, 0, 0, 0.301);
             transition: transform 0.2s linear;
         }
-        .op1-escolha:hover,.op2-escolha:hover{
+        .opcao1-escolha:hover,.opcao2-escolha:hover{
             transform: scale(1.1);
         }
-        .op1-escolha{
+        .opcao1-escolha{
             margin-right: 10%;
             background-color: #00B8F1;
         }
-        .op2-escolha{
+        .opcao2-escolha{
             margin-left: 10%;
             background-color: #A3CBB6;
         }
