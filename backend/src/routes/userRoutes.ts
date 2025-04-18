@@ -1,16 +1,9 @@
-import { RequestHandler, Router } from 'express';
+import { Router } from 'express';
 import UserController from '../controllers/userController';
-import AuthMiddleware from '../middlewares/authMiddleware';
 
 const router = Router();
 
 router
-    /**
-     * @route GET /user
-     * @description Busca um usuário.
-     * @returns { User }
-     */
-    .get('/user', AuthMiddleware.ensureAuthenticated, UserController.getUser)
     /**
      * @route POST /user
      * @description Cria um usuário.
@@ -20,20 +13,5 @@ router
      * @returns { message: string } 
      */
     .post('/user', UserController.createUser)
-    /**
-     * @route PATCH /user
-     * @description Altera um usuário.
-     * @param {string} id
-     * @param {UpdateUserData} data
-     * @returns { message: string } 
-     */
-    .patch('/user', AuthMiddleware.ensureAuthenticated, UserController.updateUser)
-    /**
-     * @route DELETE /user
-     * @description Deleta um usuario
-     * @param {string} id
-     * @returns { message: string }
-     */
-    .delete('/user', AuthMiddleware.ensureAuthenticated, UserController.deleteUser)
 
 export default router;
