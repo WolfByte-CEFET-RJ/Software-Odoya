@@ -18,8 +18,13 @@ depositRouter
      */
     .post('/deposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
 
-
-    //apenas atualiza os estados, somente administradores
+    /**
+     * @route PATCH /deposit/status
+     * @description  atualiza os estados do deposito, somente administradores
+     * @param {string} collectionPointId
+     * @param {string} status
+     * @returns { message: string } 
+     */
     .patch('/deposit/status', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
 
 export default depositRouter;
