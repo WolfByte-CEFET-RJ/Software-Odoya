@@ -75,7 +75,7 @@ export default class DepositService{
 
          // Verificar se o status já está aprovado
          if (depositData.status === DepositStatus.APROVADO) {
-            throw new Error("Não é possível alterar um depósito já aprovado.");
+            return "Não é possível alterar um depósito já aprovado.";
         }
 
         const deposit: Partial<Deposit> = {

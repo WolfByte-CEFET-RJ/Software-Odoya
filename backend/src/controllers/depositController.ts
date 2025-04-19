@@ -69,6 +69,11 @@ export default class DepositController{
                 return e.sendMessage(res);
             }
 
+             // Captura o erro de validação do Yup e envia a mensagem diretamente
+        if (e instanceof ValidationError) {
+            return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors[0] });
+        }
+
             const classified_err = new ImprevistError();
             return classified_err.sendMessage(res);
         }
