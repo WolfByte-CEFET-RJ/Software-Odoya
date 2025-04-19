@@ -67,7 +67,7 @@ export default class DepositService{
 
         try{
 
-        const depositData = await knex("Deposit").where({ id }).select("amountSponges", "collectionPointId").first();
+        const depositData = await knex("Deposit").where({ id }).select("amountSponges", "collectionPointId","status").first();
 
         if (!depositData) {
             throw new Error("valor do Depósito não encontrado.");

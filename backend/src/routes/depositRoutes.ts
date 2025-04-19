@@ -22,6 +22,7 @@ depositRouter
      * @route PATCH /deposit/status
      * @description  atualiza os estados do deposito, somente administradores
      * @param {string} collectionPointId
+     * @param {Number} id
      * @param {string} status
      * @returns { message: string } 
      */
