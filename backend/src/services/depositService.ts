@@ -73,6 +73,11 @@ export default class DepositService{
             throw new Error("valor do Depósito não encontrado.");
         }
 
+         // Verificar se o status já está aprovado
+         if (depositData.status === DepositStatus.APROVADO) {
+            throw new Error("Não é possível alterar um depósito já aprovado.");
+        }
+
         const deposit: Partial<Deposit> = {
             status:  status as DepositStatus ,
             amountSponges:  depositData.amountSponges,
