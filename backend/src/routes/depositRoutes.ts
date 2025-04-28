@@ -1,12 +1,26 @@
-import {  Router } from 'express';
-import DepositController from '../controllers/depositController';
-import AuthMiddleware from '../middlewares/authMiddleware';
+import { Router } from "express";
+import DepositController from "../controllers/depositController";
+import AuthMiddleware from "../middlewares/authMiddleware";
 
 const depositRouter = Router();
 
 depositRouter
     //retorna um deposito dado id do deposito, verifica se o usuário está logado
     .get('/deposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
+
+    /**
+     * @route GET /deposits
+     * @description Retorna todos os depósitos (todos para admin, somente do usuário para usuário comum)
+     * @returns { Deposit[] } 
+     */
+    .get("/deposits", AuthMiddleware.ensureAuthenticated, DepositController.getAllDeposits)
+    /**
+     * @route GET /deposit/:id
+     * @description Retorna um depósito dado o ID do depósito
+     * @param {string} id - ID do depósito
+     * @returns { message: string } 
+     */
+    .get("/deposit/:id", AuthMiddleware.ensureAuthenticated, DepositController.getOneDeposit)
 
     /**
      * @route POST /deposit

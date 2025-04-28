@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'Batangas';
+  src: url(../assets/fonts/Batangas.otf);
+}
+
+@font-face {
+  font-family: 'Tankindred';
+  src: url(../assets/fonts/TANKINDRED-Display.otf);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+:root {
+  --primary-color: #2493D4;
+  --secondary-color: #269BDF;
+  --tertiary-color: #B1E3FA;
+  --quaternary-color: #00B8F1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #FFFFFF;
+    min-width: 100vw;
+    overflow-x: hidden;
+    font-family: 'Batangas', sans-serif;
+    font-weight: 200;
+  }
+  
+  label {
+    display: inline-block;
+  }
+  
+   /* width */
+  ::-webkit-scrollbar {
+    width: 11px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px #a5a5a5;
+    
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #c4c4c4;
+  }

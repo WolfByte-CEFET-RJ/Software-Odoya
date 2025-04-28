@@ -11,7 +11,7 @@ export async function seed(knex: Knex): Promise<void> {
             id: v4(), 
             name: "Ponto de Coleta 1",
             location: "Enactus",
-            capacitySpounges: 100,
+            capacitySponges: 100,
             amountSponges: 50,
         }
     ]);

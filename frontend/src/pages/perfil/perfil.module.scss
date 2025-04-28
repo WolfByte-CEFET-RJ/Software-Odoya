@@ -1,0 +1,128 @@
+.container {
+    margin-top: -4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #B1E3FA;
+}
+
+h1 {
+    margin: -2% 0% 2% 0%;
+}
+
+.formProfile {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.divPoints {
+    display: flex;
+    gap: 10px;
+}
+
+.points {
+    margin: 0% 0% 0% 2%;
+    padding: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 35%;
+    border: none;
+    border-radius: 3px;
+    background-color: #269BDF;
+    opacity: 50%;
+    color: white;
+    font-weight: bold;
+}
+
+.pointsInfo {
+    display: flex;
+    gap: 5px;
+    margin-top: 1rem;
+}
+
+.separador {
+    width: 100%;
+    margin-top: 8%;
+}
+
+label {
+    margin: 2% 0% 0% 2%;
+    font-size: 18px;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5% 0% 5% 0%;
+    gap: 5rem;
+}
+
+button {
+    font-size: 20px;
+    border: none;
+    border-radius: 30px;
+    width: 20%;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #269BDF;
+    color: white;
+    cursor: pointer;
+    transition: all ease-in-out  .2s
+}
+
+.buttonAlterar:hover {
+    background-color: #207eb4;
+}
+
+.buttonCancelar {
+    background: none;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #269BDF;
+    color: black;
+}
+
+.buttonCancelar:hover {
+    background-color: #90bbcf;
+}
+
+.buttonExcluirConta {
+    background-color: #f84a4a;
+}
+
+.buttonExcluirConta:hover {
+    background-color: #ad3333
+}
+
+.logoazul{
+    margin-top:-10%;
+    width: 390px;
+    height: 390px;
+    z-index:1
+}
+.logoLoad{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    
+}
+
+.logoLoad2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    animation: rotacionar 1s linear infinite;
+}
+
+
+@keyframes rotacionar{
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

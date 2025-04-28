@@ -29,6 +29,27 @@ export default class UserService {
     }
 
     /**
+     * @description Busca um Usuário por email
+     * @param {string} id
+     * @returns {Promise<User>}
+     */
+    public static async getUserByEmail(email: string): Promise<User> {
+
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({email}).first();
+        return user;
+    }
+
+    /**
+     * @description Busca o hash da senha de um usuário dado um e-mail. Hash da senha incluso no objeto de resposta.
+     * @param {string} email
+     * @returns {Promise<User & { password: string } | null>
+     */
+    public static async getUserWithSensitiveData(email: string): Promise<User & { password: string } | null> {
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
+        return user;
+    }
+
+    /**
      * @description Realiza a criação do Usuário
      * @param {string} name
      * @param {string} email
@@ -43,6 +64,7 @@ export default class UserService {
             throw new EmailDuplicate();
         }
 
+
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
             id: v4(),
@@ -52,6 +74,29 @@ export default class UserService {
         }
         await knex('User').insert(user);
         return "Usuário Cadastrado";
+    }
+
+    /**
+     * @description Realiza a criação do Usuário sem senha, via serviços de terceiros
+     * @param {string} name
+     * @param {string} email
+     * @returns {Promise<boolean>}
+     */
+    public static async createUserWithoutPassword(name: string, email: string): Promise<boolean> {
+
+        const existingUser = await knex("User").where({ email }).first();
+        if (existingUser) {
+            throw new EmailDuplicate();
+        }
+
+        const user = {
+            id: v4(),
+            name,
+            email,
+            password: null
+        }
+        await knex('User').insert(user);
+        return true;
     }
 
     /**
@@ -123,4 +168,7 @@ interface UpdateUserData {
     name?: string;
     password?: string;
 }   
+
+
+
 
