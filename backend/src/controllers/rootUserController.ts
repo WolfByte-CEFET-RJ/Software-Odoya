@@ -18,7 +18,7 @@ export default class RootUserController {
             res.status(HttpCode.OK).json({message: response});
 
         }catch(e){
-             console.error(e);
+            console.error(e);
             
             if(e instanceof HttpError){
                 return e.sendMessage(res);

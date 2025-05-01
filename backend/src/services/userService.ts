@@ -39,7 +39,6 @@ export default class UserService {
         if (!user) {
             throw new UserNotFound();
         }
-        return user;
     }
 
     /**
@@ -70,11 +69,12 @@ export default class UserService {
      */
     public static async createUser(name: string, email: string, password: string): Promise<string> {
         await UserValidator.validateCreateUser({name,email,password});
-        
+
         const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
         }
+
 
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
@@ -160,4 +160,7 @@ interface UpdateUserData {
     name?: string;
     password?: string;
 }   
+
+
+
 

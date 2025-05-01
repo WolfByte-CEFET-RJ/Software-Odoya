@@ -9,4 +9,3 @@ export default interface User {
     admin: boolean;
     points: number;
 }
-  
