@@ -29,13 +29,13 @@ export default class UserService {
     }
 
     /**
-     * @description Busca um Usuário por email
-     * @param {string} id
-     * @returns {Promise<User>}
+     * @description Busca um Usuário por emaiail. Hash da senha incluso no objeto de resposta.
+     * @param {string} email
+     * @returns {Promise<User & { password: string }>}
      */
-    public static async getUserByEmail(email: string): Promise<User> {
+    public static async getUserSensitiveByEmail(email: string): Promise<User & { password: string }> {
 
-        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({email}).first();
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
         if (!user) {
             throw new UserNotFound();
         }
@@ -43,13 +43,22 @@ export default class UserService {
     }
 
     /**
-     * @description Busca o hash da senha de um usuário dado um e-mail. Hash da senha incluso no objeto de resposta.
-     * @param {string} email
-     * @returns {Promise<User & { password: string } | null>
+     * @description Busca todos os usuários, com exceção do super-usuário
+     * @returns {Promise<User[]>}
      */
-    public static async getUserWithSensitiveData(email: string): Promise<User & { password: string } | null> {
-        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
-        return user;
+    public static async getAll(): Promise<User[]>{
+        const users: User[] = await knex("User").select('id', 'name', 'email', 'admin', 'points').whereNot({email: process.env.ROOT_EMAIL});
+    
+        if(users.length===0){
+            throw new UserNotFound()
+        }
+        
+        // Traduzindo campos booleanos
+        users.forEach(user => {
+            user.admin = Boolean(user.admin);
+        });
+    
+        return users
     }
 
     /**
@@ -61,8 +70,8 @@ export default class UserService {
      */
     public static async createUser(name: string, email: string, password: string): Promise<string> {
         await UserValidator.validateCreateUser({name,email,password});
-
-        const existingUser = await  UserService.getUserByEmail(email)
+        
+        const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
         }
@@ -86,11 +95,11 @@ export default class UserService {
      */
     public static async createUserWithoutPassword(name: string, email: string): Promise<boolean> {
 
-        const existingUser = await  UserService.getUserByEmail(email)
+        const existingUser = await knex("User").where({ email }).first();
         if (existingUser) {
             throw new EmailDuplicate();
         }
-
+        
         const user = {
             id: v4(),
             name,
@@ -125,25 +134,6 @@ export default class UserService {
             password: data.password,
         });
         return "Usuário Atualizado";
-    }
-
-    /**
-     * @description Busca todos os usuários, com exceção do super-usuário
-     * @returns {Promise<User[]>}
-     */
-    public static async getAll(): Promise<User[]>{
-        const users: User[] = await knex("User").select('id', 'name', 'email', 'admin', 'points').whereNot({email: process.env.ROOT_EMAIL});
-    
-        if(users.length===0){
-            throw new UserNotFound()
-        }
-        
-        // Traduzindo campos booleanos
-        users.forEach(user => {
-            user.admin = Boolean(user.admin);
-        });
-    
-        return users
     }
 
     /**
