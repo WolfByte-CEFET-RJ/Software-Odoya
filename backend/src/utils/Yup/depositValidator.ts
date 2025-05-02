@@ -6,8 +6,13 @@ const createDepositSchema = Yup.object({
     imageURL: Yup.string().optional().url('A URL precisa ser válida'),
 });
 
+//Para o Yup, a string "" é um valor definido (!== undefined), então o .required não faz nada pois o campo não esta ausente. É necessário transformar para undefined antes.
 const updateDepositStatusSchema = Yup.object({
-    status: Yup.string().oneOf(Object.values(DepositStatus), 'Status inválido.').required('status tem que constar')
+    status: Yup.string()
+  .transform(value => (value === '' ? undefined : value))
+  .required('Status tem que constar!')
+  .oneOf(Object.values(DepositStatus), 'Status inválido.')
+
 });
 
 export default class depositValidator{
