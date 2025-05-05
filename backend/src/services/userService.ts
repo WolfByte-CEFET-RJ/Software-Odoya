@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
-import User from "../types/user"
+import User, { UpdateUser } from "../types/user"
 import UserValidator from '../utils/Yup/userValidator';
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
@@ -114,10 +114,10 @@ export default class UserService {
     /**
      * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
      * @param {string} id
-     * @param {UpdateUserData} data
+     * @param {UpdateUser} data
      * @returns {Promise<string>}
      */
-    public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+    public static async updateUser(id: string, data: UpdateUser): Promise<string> {
         await UserValidator.validateUpdateUser(data);
 
         const user = await knex('User').where({ id }).first();
@@ -156,12 +156,4 @@ export default class UserService {
        
     }
 }
-
-interface UpdateUserData {
-    name?: string;
-    password?: string;
-}   
-
-
-
 

@@ -9,3 +9,8 @@ export default interface User {
     admin: boolean;
     points: number;
 }
+
+export interface UpdateUser {
+    name?: string;
+    password?: string;
+}
