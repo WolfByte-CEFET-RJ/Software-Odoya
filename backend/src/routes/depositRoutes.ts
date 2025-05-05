@@ -32,13 +32,12 @@ depositRouter
      */
     .post('/deposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
 
-
-    //apenas atualiza os estados, somente administradores
     /**
      * @route PATCH /deposit/status
-     * @description Atualiza o status de um depósito
-     * @param {string} id - ID do depósito
-     * @param {string} status - Novo status do depósito
+     * @description  atualiza os estados do deposito, somente administradores
+     * @param {string} collectionPointId
+     * @param {Number} id
+     * @param {string} status
      * @returns { message: string } 
      */
     .patch('/deposit/status', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   

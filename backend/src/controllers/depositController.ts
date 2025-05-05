@@ -6,6 +6,7 @@ import { HttpCode, HttpError } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import { ImprevistError } from '../erros/ImprevistError';
 import { ValidationError } from 'yup';
+
 export default class DepositController{
 
     
@@ -87,7 +88,6 @@ export default class DepositController{
         }
     }
 
-    //cria deposito
     /**
      *@function createDeposit
      * @description cria um deposito
@@ -116,25 +116,32 @@ export default class DepositController{
         }
     }
 
+    /**
+     *@function updateDepositStatus
+     * @description atualiza status do deposito
+     * @param {string} deposit.collectionPointId
+     * @param {string} status
+     * @returns { message: string } 
+     */
     //atualiza deposito, apenas adiministrador
     public static async updateDepositStatus(req: Request, res: Response) : Promise<any>{
-        const id = req.deposit?.id as string;
-        const { status } = req.body;
-
+        const { id, status } = req.body;
         try {
-
-            const response = await DepositService.updateDepositStatus(String(id),status);
+            const response = await DepositService.updateDepositStatus(String(id),String(status));
             return res.status(HttpCode.OK).json({message: response});
-                    
         } catch (e: any) {
             if (e instanceof HttpError){
                 return e.sendMessage(res);
             }
 
+             // Captura o erro de validação do Yup e envia a mensagem diretamente
+        if (e instanceof ValidationError) {
+            return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors[0] });
+        }
+
             const classified_err = new ImprevistError();
             return classified_err.sendMessage(res);
         }
-
     }
     
 
