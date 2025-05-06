@@ -35,5 +35,12 @@ router
      * @returns { message: string }
      */
     .delete('/user', AuthMiddleware.ensureAuthenticated, UserController.deleteUser)
+    /**
+     * @route POST /forgotPassword
+     * @description Recupera a senha do usuario
+     * @param {string} email
+     * @returns { message: string }
+     */
+    .post('/forgotPassword', UserController.forgotPassword)
 
 export default router;
