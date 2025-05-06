@@ -4,9 +4,11 @@ import { hash } from "bcryptjs";
 import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
 import User, { UpdateUser } from "../types/user"
 import UserValidator from '../utils/Yup/userValidator';
+import Mailer from './Mailer';
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
+const mailer = new Mailer();
 
 /**
  * @class UserService
@@ -155,5 +157,41 @@ export default class UserService {
        }
        
     }
+
+    public static async forgotPassword(email: string) {
+        const user = await knex("User").where({email}).first();
+
+        if(!user) {
+            throw new UserNotFound();
+        }
+
+        const password = crypto.randomUUID().replace(/-/g, '').slice(0, 8);
+        const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS))
+        const to = email;
+        const subject = "Recuperação de senha";
+        const text = `
+        Olá,
+
+        Você solicitou a recuperação de senha da sua conta.
+        Aqui está sua nova senha temporária:
+
+        ${password}
+
+        Recomendamos que você acesse sua conta e altere essa senha temporária assim que possível, através da opção de alteração de senha no seu perfil.
+        Se você não solicitou essa alteração, por favor ignore este e-mail.
+
+        Atenciosamente,
+        Software Odoyá
+        `;
+        
+        await knex("User").where({email}).update({
+            password: hashPassword
+        });
+
+        await mailer.sendMail(to, subject, text);
+
+        return "Senha alterada com sucesso"   
+    }
+
 }
 
