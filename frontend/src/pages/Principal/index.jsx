@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 import principal from "./principal.module.scss";
 import { TbArrowRightDashed } from "react-icons/tb";
@@ -16,6 +16,25 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 
 const Principal = () => {
+
+  const imagensCarrossel = [
+    "./ImagemCarrossel1.svg",
+    "./ImagemCarrossel2.png",
+    "./ImagemCarrossel3.png",
+  ];
+
+  const [indiceAtual, setIndiceAtual] = useState(0);
+
+  const proximaImagem = () => {
+    setIndiceAtual((indiceAtual + 1) % imagensCarrossel.length);
+  };
+
+  const imagemAnterior = () => {
+    setIndiceAtual(
+      (indiceAtual - 1 + imagensCarrossel.length) % imagensCarrossel.length
+    );
+  };
+
   return (
     <>
       <Header />
@@ -183,17 +202,15 @@ const Principal = () => {
           </div>  
           <div className={principal.partedebaixo}>
           <div className={principal.slider}>
-            <button className={principal.setas}>
-            <IoIosArrowBack size={100}/>
+            <button className={principal.setas} onClick={imagemAnterior}>
+              <IoIosArrowBack size={100} />
             </button>
             <div className={principal.imagem}>
-              <img src="./ImagemCarrossel1.svg" style={{width:"100%"}}/>
-
+              <img src={imagensCarrossel[indiceAtual]} style={{ width: "100%" }} />
             </div>
-            <button className={principal.setas}>
-            <IoIosArrowForward size={100}/>
+            <button className={principal.setas} onClick={proximaImagem}>
+              <IoIosArrowForward size={100} />
             </button>
-            {/*Criar slider/carrosel aqui*/}
           </div>
           <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
           <div className={principal.ordem}>
@@ -249,7 +266,6 @@ const Principal = () => {
         </div>
           <div className={principal.parceiros}>
             <div className={principal.titulo}>
-            <h2 className={principal.titulo}>Parcerias</h2>
             </div>
             <div className={principal.logos}>
 
@@ -259,6 +275,7 @@ const Principal = () => {
                 <img src="./parceiro3.png" alt="Parceiro 3" />
               </div>
 
+              <h2 className={principal.titulo}>Parcerias</h2>
               <div className={principal.linha}>
                 <img src="./parceiro4.png" alt="Parceiro 4" />
                 <img src="./parceiro5.png" alt="Parceiro 5" />
