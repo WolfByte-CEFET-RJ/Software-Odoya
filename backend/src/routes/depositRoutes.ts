@@ -1,6 +1,10 @@
 import { Router } from "express";
 import DepositController from "../controllers/depositController";
 import AuthMiddleware from "../middlewares/authMiddleware";
+import multer from "multer";
+
+
+const upload = multer({ storage: multer.memoryStorage() }); // Usando armazenamento em memória
 
 const depositRouter = Router();
 
@@ -30,7 +34,7 @@ depositRouter
      * @param {string} imageURL
      * @returns { message: string } 
      */
-    .post('/deposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
+    .post('/deposit',AuthMiddleware.ensureAuthenticated, upload.single("comprovante"), DepositController.createDeposit)
 
     /**
      * @route PATCH /deposit/status
@@ -42,4 +46,10 @@ depositRouter
      */
     .patch('/deposit/status', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
 
+/*
+    if(!(process.env.NODE_ENV === "production")){
+        depositRouter.
+            get('/deposit/image/:id')
+    }
+*/
 export default depositRouter;

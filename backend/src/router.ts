@@ -10,7 +10,6 @@ import collectionPointRouter from './routes/collectionPointRoutes';
 import spongeDepositRouter from './routes/depositRoutes';
 import depositRouter from './routes/depositRoutes';
 
-const bodyParser = require('body-parser');
 /**
  * Define endpoints mapeados
  * 
@@ -28,7 +27,6 @@ export default (app: Express): void => {
     app
 
         .use(rootUser)
-        .use(bodyParser.json())
         .use(user)
         .use(authRouter)
         .use(user)
@@ -38,6 +36,7 @@ export default (app: Express): void => {
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
+        console.log(process.env.NODE_ENV)
         res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
     });
     
