@@ -1,0 +1,27 @@
+.body {
+    width: 15%;
+    background-color: #B1E3FA;
+    border-radius: 10px;
+    margin: 2% 0% 0% 3%;
+    
+    button {
+        width: 100%;
+        font-size: medium;
+        border-radius: 10px;
+    }
+}
+
+.info {
+    display: flex;
+    div {
+        margin: 5% 5% 5% 5%;
+    }
+    p {
+        padding: 2px;
+        font-size: small;
+    }
+}
+
+.icon {
+    margin: 8% 0% 0% 2%;
+}

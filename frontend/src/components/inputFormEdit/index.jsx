@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { MdModeEdit } from "react-icons/md";
 import inputFormProfile from "./inputFormProfile.module.scss"
 
-function InputFormProfile({type, onChange, place}) {
+function InputFormEdit({type, onChange, place}) {
     const [isInputEnabled, setIsInputEnabled] = useState(false);
     console.log(place)
     return (
@@ -22,4 +22,4 @@ function InputFormProfile({type, onChange, place}) {
     )
 }
 
-export default InputFormProfile;
+export default InputFormEdit;
