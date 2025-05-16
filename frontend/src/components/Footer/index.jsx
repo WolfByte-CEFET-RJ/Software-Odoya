@@ -1,16 +1,16 @@
-import React from "react";
 import { AiFillTikTok } from "react-icons/ai"; 
 import { RiInstagramFill } from "react-icons/ri"; 
 import { RxLinkedinLogo } from "react-icons/rx"; 
 import footer from "./footer.module.scss"; 
 
 function redirect(path) {
-    switch(path) { // colocar links pras redes do projeto aqui
-        case "instagram": window.location.href = ""; break;
-        case "linkedin": window.location.href = ""; break; 
-        case "tiktok": window.location.href = ""; break; 
+    switch(path) {
+        case "instagram": window.location.href = "https://www.instagram.com/odoya.projeto/"; break;
+        case "linkedin": window.location.href = "https://www.linkedin.com/in/odoy%C3%A1-projeto-083040291/"; break; 
+        case "tiktok": window.location.href = "https://www.tiktok.com/@odoya.projeto"; break; 
     } 
 } 
+
 const Footer = () => {
     return ( 
     <footer className={footer.body}> 
@@ -33,7 +33,7 @@ const Footer = () => {
                 <a onClick={() => redirect("tiktok")}>@odoya</a> 
             </div> 
         </div> 
-        <img src="/LogoPreta.png" alt="" /> 
+        <img src="/LogoPreta.png" alt="Logotipo Odoya" /> 
     </footer> 
     ); 
 }; 
