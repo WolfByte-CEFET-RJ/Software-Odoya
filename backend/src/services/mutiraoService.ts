@@ -1,17 +1,14 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
 import Mutirao from '../types/mutirao';
-import { DepositStatus } from '../types/mutirao';
 import { v4 } from "uuid";
-
-
-import mutiraoValidator from '../utils/Yup/mutiraoValidator';
-import { CollectionPointNotFound } from '../erros/CollectionPointErros';
-import { MutiraoNotFoundError, UnauthorizedDepositAccessError } from '../erros/MutiraoErrors';
+//import mutiraoValidator from '../utils/Yup/mutiraoValidator';
+//import { CollectionPointNotFound } from '../erros/CollectionPointErros';
+import { MutiraoNotFoundError, UnauthorizedMutiraoAccessError } from '../erros/MutiraoError';
 export default class MutiraoService{
 
     /**
-     * Obtém depósitos de um usuário comum ou todos os depósitos para admin
+     * Obtém mutiroes de um usuário comum ou todos os mutiroes para admin
      * @param userId ID do usuário
      * @param isAdmin Indica se o usuário é administrador
      */
@@ -33,14 +30,20 @@ export default class MutiraoService{
     }
 
     /**
-     * Obtém um depósito específico
-     * @param id ID do depósito
+     * Obtém um mutirao específico
+     * @param id ID do mutirao
      * @param userId ID do usuário solicitante
      * @param isAdmin Indica se o usuário é administrador
      */
-    public static async getOneDeposit(id: string, userId: string, isAdmin: boolean): Promise<Mutirao> {
+    public static async getOneMutirao(id: string, userId: string, isAdmin: boolean): Promise<Mutirao> {
         const mutirao = await knex('Mutirao')
-            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at')
+            .select('userId',
+            'name',
+            'location',
+            'data',
+            'horario',
+            'pontoEncontro',
+            'duracao')
             .where({ id })
             .first();
 
@@ -48,16 +51,16 @@ export default class MutiraoService{
             throw new MutiraoNotFoundError();
         }
 
-        // Verifica se o usuário tem permissão para acessar o depósito
-        if (!isAdmin && deposit.userId !== userId) {
-            throw new UnauthorizedDepositAccessError();
+        // Verifica se o usuário tem permissão para acessar o mutirao
+        if (!isAdmin && mutirao.userId !== userId) {
+            throw new UnauthorizedMutiraoAccessError();
         }
 
         return mutirao;
     }
     
     /**
-     * @description Busca um Deposito
+     * @description Busca um Mutirao
      * @param {string} id
      * @returns {Promise<Mutirao>}
      */
@@ -78,31 +81,39 @@ export default class MutiraoService{
      * @param {string | NULL} imageURL
      * @returns {Promise<string>}
      */
-    public static async createMutirao(collectionPointId: string, userId: string, amountSponges: number, imageURL: string): Promise<string>{
-        await depositValidator.validateCreateMutirao({amountSponges,imageURL});
+    public static async createMutirao(  id: string,
+    userId: string,
+    name: string,
+    location: string,
+    data: Date,
+    horario: number,
+    pontoEncontro: string,
+    duracao: number): Promise<string>{
+
+        /*
+        await mutiraoValidator.validateCreateMutirao({amountSponges,imageURL});
         const existCollectionPoint = await knex("collection_point").where({ id: collectionPointId }).first();
         
         if (!existCollectionPoint) {
             throw new CollectionPointNotFound();
         }
-        
+        */
         try{
-            var today = new Date;
         const mutirao: Mutirao = {
             id: v4(),
-            collectionPointId,
             userId,
-            amountSponges,
-            imageURL,
-            status: DepositStatus.PENDENTE,
-            created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() ) ,               
-            updated_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() ) ,
+            name,
+            location,
+            data,
+            horario,
+            pontoEncontro,
+            duracao,
         }
 
         await knex('Mutirao').insert(mutirao);
-        return "Mutirao realizado";
+        return "Mutirao criado";
         } catch (error){
-            console.log("erro ao fazer o mutirao \ndetalhamento do erro:" + error);
+            console.log("erro ao criar o mutirao \ndetalhamento do erro:" + error);
             return("Erro ao fazer o mutirao " + error);
         }
     }
