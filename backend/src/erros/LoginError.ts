@@ -12,10 +12,20 @@ export class InvalidCredentialsError extends HttpError {
 
 /**
  * @extends HttpError
- * @description Erro lançado quando campos obrigatórios não são fornecidos.
+ * @description Erro lançado quando o token de validação de serviços terceiros não é bem sucedida 
  */
-export class RequiredFieldsError extends HttpError {
-    constructor(message: string = 'Campos obrigatórios não foram fornecidos.') {
+export class InvalidExternalToken extends HttpError {
+    constructor(status: HttpCode = HttpCode.UNAUTHORIZED, message: string = "Token inválido ou usuário sem informações necessárias associadas.") {
+        super({ status, message });
+    }
+}
+
+/**
+ * @extends HttpError
+ * @description Erro lançado quando o token de validação de serviços terceiros não é bem sucedida 
+ */
+export class ExternalAuthRequired extends HttpError {
+    constructor(message: string = "Esse perfil só aceita login com serviços externos. Altere sua senha para logar normalmente") {
         super({ status: HttpCode.BAD_REQUEST, message });
     }
 }

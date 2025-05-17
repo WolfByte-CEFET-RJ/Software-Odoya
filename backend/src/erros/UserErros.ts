@@ -11,6 +11,7 @@ export class EmailDuplicate extends HttpError{
         super({status: HttpCode.CONFLICT, message})
 
     }
+
 }
 
 /**

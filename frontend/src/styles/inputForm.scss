@@ -1,0 +1,32 @@
+.container-inputForm{
+    width: 100%;
+    height: 45px;
+    margin-bottom:15px;
+}
+.inputForm{
+    margin-top:3%;
+    font-size: 15px;
+    border: none;
+    border-radius: 15px;
+    padding: 1px 20px;
+    width: 100%;
+    height: 100%;
+    background-color: #B1E3FA;
+}
+
+.inputForm::placeholder,
+.inputForm::-webkit-input-placeholder{
+    color:black;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.input-eye-btn{
+    background-color: transparent;
+    border: none;
+    // display: flex;
+    position: relative;
+    right: -40%;
+    top:-35px;
+    cursor: pointer;
+}

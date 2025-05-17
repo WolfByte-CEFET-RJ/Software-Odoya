@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { AccessDeniedError, AuthenticationError } from '../erros/AuthErros';
 import { HttpError } from '../erros/erro.config';
 import { ImprevistError } from '../erros/ImprevistError';
+import Deposit from '../types/deposit';
 
 interface TokenPayload {
   id: string;
@@ -97,7 +98,7 @@ class AuthMiddleware {
     }
   }
 
-   /**
+    /**
    * @method authorizeRoot
    * @description Autoriza super-usuários a realizar ações exclusivas.
    */
@@ -136,6 +137,7 @@ declare global {
         name: string;
         admin: boolean;
       };
+      deposit? : Partial<Deposit>
     }
   }
 }
