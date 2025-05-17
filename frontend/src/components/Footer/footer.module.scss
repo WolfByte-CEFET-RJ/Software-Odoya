@@ -1,52 +1,37 @@
-p {
-    color: black;
-} 
-
-img { 
-    margin-bottom: -3rem; 
-    width: 25%; 
-}
-
-a {
-    font-size: larger;
-    color: inherit; 
-} 
-
 .body {
     text-align: center; 
-    padding: 50px; 
+    width: 100%;
     background-color: #F1F1F1; 
+
+    p {
+        color: black;
+    } 
+
+    img { 
+        width: 25%; 
+    }
+
+    a {
+        font-size: larger;
+        color: inherit; 
+    } 
 } 
 
 .copyright { 
-    margin-bottom: -5rem; 
-    margin-top: 1rem; 
-} 
-
-.copyrightLinks { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 10px; 
-} 
-
-.copyrightLinks p {
-    margin-top: 2rem; 
+    padding: 1rem 0rem 1rem 0rem;
 } 
 
 .redes { 
-    margin-top: -2rem; 
-    margin-left: 2rem; 
-    margin-bottom: 2rem; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-} 
+    padding-top: 1rem;
 
-.redes a { 
-    font-size: medium; 
-    padding-left: 5px; 
-    padding-right: 35px; 
-    text-decoration: none; 
-    cursor: pointer; 
-}
+    a {
+        font-size: medium; 
+        padding-left: 5px; 
+        padding-right: 35px; 
+        text-decoration: none; 
+        cursor: pointer; 
+    }
+} 

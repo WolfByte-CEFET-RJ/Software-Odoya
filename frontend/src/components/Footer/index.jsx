@@ -17,11 +17,7 @@ const Footer = () => {
         <div className={footer.copyright}> 
             <p>© 2025 Odoyá. Todos os direitos reservados.</p> 
         </div> 
-        <div className={footer.copyrightLinks}> 
-            <a href="#">Política de Privacidade</a><p>|</p> 
-            <a href="#">Termos e Condições</a><p>|</p> 
-            <a href="#">Link para Contato</a> 
-        </div> 
+        
         <div> 
             <p>Siga-nos em:</p> 
             <div className={footer.redes}> 
