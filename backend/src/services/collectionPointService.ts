@@ -131,16 +131,7 @@ export default class CollectionPointService {
         const usersEmails = emailList.join(", ");
         const { dateNotify, horaryNotify } = await DateFormat.convertLocaleDate(nextCollectionDate);
 
-        const text = `
-        Olá,
-            
-        A próxima coleta do ponto de coleta "${name}", está agendada para o dia ${dateNotify} às ${horaryNotify}.
-            
-        Fique atento(a) para garantir que a coleta ocorra conforme o previsto.
-            
-        Atenciosamente,
-        Software Odoyá
-        `;
+        const text = `${name}, ${dateNotify}, ${horaryNotify}`;
 
         mailer.sendMail(usersEmails, name, text);
         delete scheduledTasks[id];

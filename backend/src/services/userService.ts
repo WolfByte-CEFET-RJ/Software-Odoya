@@ -169,26 +169,12 @@ export default class UserService {
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS))
         const to = email;
         const subject = "Recuperação de senha";
-        const text = `
-        Olá,
-
-        Você solicitou a recuperação de senha da sua conta.
-        Aqui está sua nova senha temporária:
-
-        ${password}
-
-        Recomendamos que você acesse sua conta e altere essa senha temporária assim que possível, através da opção de alteração de senha no seu perfil.
-        Se você não solicitou essa alteração, por favor ignore este e-mail.
-
-        Atenciosamente,
-        Software Odoyá
-        `;
         
         await knex("User").where({email}).update({
             password: hashPassword
         });
 
-        await mailer.sendMail(to, subject, text);
+        await mailer.sendMail(to, subject, password);
 
         return "Senha alterada com sucesso"   
     }
