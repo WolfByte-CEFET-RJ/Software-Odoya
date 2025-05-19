@@ -5,10 +5,10 @@ export const header = `
             <table>
                 <tr>
                     <td>
-                        <img src="https://imgur.com/k1iO9TE.png" style="height: 3rem; vertical-align: middle;" alt="Logo">
+                        <img src="https://res.cloudinary.com/dou9xyiev/image/upload/v1747668769/logo_yy1kcb.png" style="height: 3rem; vertical-align: middle;" alt="Logo">
                     </td>
                     <td>
-                        <img src="https://imgur.com/JOFmDtR.png" style="height: 3rem; vertical-align: middle;" alt="Nome">
+                        <img src="https://res.cloudinary.com/dou9xyiev/image/upload/v1747668755/odoya_vmjj5b.png" style="height: 3rem; vertical-align: middle;" alt="Nome">
                     </td>
                 </tr>
             </table>

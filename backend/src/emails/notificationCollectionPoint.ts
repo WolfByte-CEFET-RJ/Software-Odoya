@@ -15,7 +15,7 @@ export function notificationCollectionPoint(name: string, dateNotify: string, ho
             <!-- Assunto do Email -->
             <tr>
                 <td align="center" style="padding: 3rem;">
-                    <img src="https://imgur.com/kMQorYM.png" style="height: 7.5rem; margin-bottom: 3rem;" alt="Cadeado">
+                    <img src="https://res.cloudinary.com/dou9xyiev/image/upload/v1747668775/logo-azul_fdqfap.png" style="height: 7.5rem; margin-bottom: 3rem;" alt="Logo Azul">
                     <h1 style="color: #269bdf; font-size: 50px; font-weight: 800;">COLETA: ${name}</h1>
                     <p style="color: #269bdf; font-size: 16px; max-width: 600px; padding: 1rem;">
                         Olá, a próxima coleta do ponto de coleta "${name}", está agendada para o dia ${dateNotify} às ${horaryNotify}.

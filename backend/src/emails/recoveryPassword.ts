@@ -15,7 +15,7 @@ export function recoveryPassword(password: string): string {
             <!-- Assunto do Email -->
             <tr>
                 <td align="center" style="padding: 3rem;">
-                    <img src="https://imgur.com/H4jQuF6.png" style="height: 7.5rem; margin-bottom: 3rem;" alt="Cadeado">
+                    <img src="https://res.cloudinary.com/dou9xyiev/image/upload/v1747668749/cadeado_segelm.png" style="height: 7.5rem; margin-bottom: 3rem;" alt="Cadeado">
                     <h1 style="color: #269bdf; font-size: 50px; font-weight: 800;">RECUPERAÇÃO DE SENHA</h1>
                     <p style="color: #269bdf; font-size: 16px;">
                         Olá, você solicitou a recuperação de senha da sua conta.<br>
