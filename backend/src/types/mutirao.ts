@@ -1,10 +1,9 @@
 export default interface Mutirao {
     id: string,
-    userId: string,
     name: string,
     location: string,
-    data: Date,
+    date: Date,
     horario: number,
-    pontoEncontro: string,
-    duracao: number
+    meetingpoint: string,
+    estimatedDuration: number
 }
