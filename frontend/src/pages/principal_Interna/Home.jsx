@@ -9,8 +9,9 @@ import CrowndfundingCard from "../../components/CrowndfundindCard/CrowndfundingC
 import Mapa from "../../components/MapaComponent/Mapa.jsx"
 import {Grid2} from "@mui/material"
 import Calendar from "../../components/Calendar/Calendar.jsx";
+import { toast } from "react-toastify";
 function Home(){
-    const[user, setUser] = useState("user");
+    const[user, setUser] = useState();
     const[esponge, setEsponge] = useState(false);
     const[muti, setMuti] = useState(false);
     const[adress, setAdress] = useState({ street: '', lat: '', long: '' })
@@ -63,8 +64,8 @@ function Home(){
     async function getColectData(){
 
         try{
-            let req = await api.get('/Collection_Point')
-            console.log(req.data)
+            let req = await api.get('/collectionPoints')
+            // console.log(req.data)
             setPoint(req.data)
             
         }
@@ -76,14 +77,28 @@ function Home(){
             }, 1000);
         }
     }
+    
+    async function getUser(){
+        try{
+                let req = await api.get('/user')
+                console.log(req)
+                setUser(req.data)
+        }catch (error){
+            setTimeout(()=>{
+                toast.error('Falha ao capturar os dados do usuário')
+            },1000)
+
+        }
+    }
 
     useEffect(()=>{
         getColectData()
+        getUser()
     },[])
 
     return(
         <>
-            {user ? 
+            {/* {user ?  */}
             <>
                 <HeaderInterno/>
                 <section className="welcome-section">
@@ -130,9 +145,9 @@ function Home(){
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Pontos de Coleta</h1>
                         <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                            {dados ? dados.map((dado)=>(
+                            {point ? point.map((dado)=>(
                                 <>
-                                <DonationCard key={dado.idx}  nome={dado.num} place={dado.place} state={dado.date} setLocation={setAdress}/>
+                                <DonationCard key={dado.id}  nome={dado.name} place={dado.location} state={dado.isInactive} setLocation={setAdress}/>
                                 {/* <button onClick={initMap}></button> */}
                             </>
                             )) : <></>}
@@ -172,7 +187,7 @@ function Home(){
                 <CuriositySection/>
                 <Footer/>
             </> 
-            :<></>}
+            {/* :<></>} */}
             
         </>
     )

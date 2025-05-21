@@ -25,10 +25,6 @@ export class UserNotFound extends HttpError{
         super({status: HttpCode.NOT_FOUND, message})
 
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53
 }
 
 /**

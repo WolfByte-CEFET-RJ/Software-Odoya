@@ -3,10 +3,7 @@ import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
 import User from "../types/user"
-<<<<<<< HEAD
-=======
 import UserValidator from '../utils/Yup/userValidator';
->>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
@@ -16,10 +13,6 @@ const knex = DatabaseConnection.getInstance();
  * @description Serviços para Usuário
  */
 export default class UserService {
-<<<<<<< HEAD
-=======
-
->>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53
     /**
      * @description Busca um Usuário
      * @param {string} id
@@ -70,10 +63,6 @@ export default class UserService {
             throw new EmailDuplicate();
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
             id: v4(),
@@ -84,8 +73,6 @@ export default class UserService {
         await knex('User').insert(user);
         return "Usuário Cadastrado";
     }
-<<<<<<< HEAD
-=======
 
     /**
      * @description Realiza a criação do Usuário sem senha, via serviços de terceiros
@@ -109,7 +96,6 @@ export default class UserService {
         await knex('User').insert(user);
         return true;
     }
->>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53
 
     /**
      * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
@@ -181,9 +167,6 @@ interface UpdateUserData {
     password?: string;
 }   
 
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> aecc7c1a1bc0e338f329bf24105459e11fb84a53

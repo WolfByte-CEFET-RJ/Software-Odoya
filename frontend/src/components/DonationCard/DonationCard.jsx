@@ -99,7 +99,7 @@ function DonationCard(props){
                 <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
                 <div className={cardStyle.infoPonto}>
                     <span className={cardStyle.infoSpan}> {props.place}</span>
-                    <span className={cardStyle.infoSpan} > Situação: {props.state}</span>
+                    <span className={cardStyle.infoSpan} > Situação: {props.state ? "inativo": "ativo"}</span>
                 </div>
             </div>
         }
