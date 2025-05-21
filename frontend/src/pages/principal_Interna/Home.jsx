@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HeaderInterno from "../../components/header_Interno/headerInterno.jsx";
+import Header from "../../components/Header/index.jsx";
 import Footer from "../../components/Footer/index.jsx";
 import "./home.scss";
 import DonationCard from "../../components/DonationCard/DonationCard.jsx";
@@ -100,7 +100,7 @@ function Home(){
         <>
             {/* {user ?  */}
             <>
-                <HeaderInterno/>
+                <Header/>
                 <section className="welcome-section">
                     <h1 className="welcome-titulo"> Bem vindo de volta, {`${user}`}</h1>
                 </section>
@@ -113,6 +113,7 @@ function Home(){
                     </div>
                 </section>
                 { esponge ?
+                    <>
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
                         <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
@@ -121,27 +122,6 @@ function Home(){
                             )) : <></>}
                         </Grid2>
                     </section>
-                    :  muti ? 
-                    <section className="sectionCards">
-                        <h1 className="sectionCards-titulo"> Minhas Inscrições</h1>
-                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                            {dados ? dados.map((dado)=>(
-                            <CrowndfundingCard key={dado.idx}  state={dado.state} nome={dado.num} place={dado.place} date={dado.date} duration={dado.hour}/>
-                            )) : <></>}
-                        </Grid2>
-                    </section>
-                    :
-                    <section className="sectionCards">
-                        <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
-                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                            {dados ? dados.map((dado)=>(
-                            <DonationCard key={dado.idx}  donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
-                            )) : <></>}
-                        </Grid2>
-                    </section>
-                        
-                }
-                { esponge ?
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Pontos de Coleta</h1>
                         <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
@@ -153,24 +133,45 @@ function Home(){
                             )) : <></>}
                         </Grid2>
                     </section>
-                    :  muti ? 
-                    <section className="sectionCards">
-                        <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
-                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+                    </>
+                    :  muti ?
+                    <>
+                        <section className="sectionCards">
+                            <h1 className="sectionCards-titulo"> Minhas Inscrições</h1>
+                            <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+                                {dados ? dados.map((dado)=>(
+                                <CrowndfundingCard key={dado.idx}  state={dado.state} nome={dado.num} place={dado.place} date={dado.date} duration={dado.hour}/>
+                                )) : <></>}
+                            </Grid2>
+                        </section>
+                        <section className="sectionCards">
+                            <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
+                            <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
                             {dados ? dados.map((dado)=>(
                             <CrowndfundingCard key={dado.idx}  crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
                             )) : <></>}
-                        </Grid2>
-                    </section>
+                            </Grid2>
+                        </section>
+                    </> 
                     :
-                    <section className="sectionCards">
-                    <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
-                    <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                        {dados ? dados.map((dado)=>(
-                            <CrowndfundingCard key={dado.idx}  crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
-                        )) : <></>}
-                    </Grid2>
-                </section>
+                    <>
+                        <section className="sectionCards">
+                            <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
+                            <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+                                {dados ? dados.map((dado)=>(
+                                <DonationCard key={dado.idx}  donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
+                                )) : <></>}
+                            </Grid2>
+                        </section>
+                        <section className="sectionCards">
+                            <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
+                            <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+                                {dados ? dados.map((dado)=>(
+                                    <CrowndfundingCard key={dado.idx}  crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
+                                )) : <></>}
+                            </Grid2>
+                        </section>
+                    </>
                         
                 }
                 {

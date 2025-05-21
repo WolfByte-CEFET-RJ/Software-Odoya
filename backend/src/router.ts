@@ -7,6 +7,8 @@ import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
 import user from './routes/userRoutes';
 import collectionPointRouter from './routes/collectionPointRoutes';
+import spongeDepositRouter from './routes/depositRoutes';
+import depositRouter from './routes/depositRoutes';
 
 const bodyParser = require('body-parser');
 /**
@@ -22,6 +24,7 @@ const bodyParser = require('body-parser');
  * router(app)
  */
 export default (app: Express): void => {
+
     app
 
         .use(rootUser)
@@ -30,7 +33,9 @@ export default (app: Express): void => {
         .use(authRouter)
         .use(user)
         .use(collectionPointRouter)
-        
+        .use(depositRouter)
+        .use(spongeDepositRouter)
+
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {
         res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})

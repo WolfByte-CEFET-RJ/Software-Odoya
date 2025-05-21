@@ -3,7 +3,12 @@ import DatabaseConnection from "../database/connection/DatabaseConnection";
 import CollectionPoint, { UpdateCollectionPoint } from "../types/collectionPoint";
 import { CollectionPointNotFound, CollectionPointWithDepositsError, RequiredCollectionPointIdError, RequiredDataError, RequiredFieldsError } from "../erros/CollectionPointErros";
 import { RequiredIdError } from "../erros/UserErros";
+import DateFormat from "../utils/dateFormat";
+import schedule from 'node-schedule';
+import Mailer from "./Mailer";
 const knex = DatabaseConnection.getInstance();
+const mailer = new Mailer();
+let scheduledTasks: Record<string, schedule.Job> = {};
 
 export default class CollectionPointService {
 
@@ -31,8 +36,9 @@ export default class CollectionPointService {
             throw new RequiredFieldsError();
         }
         
+        const id = v4();
         await knex("Collection_Point").insert({
-            id: v4(),
+            id,
             name,
             location,
             amountSponges,
@@ -42,6 +48,8 @@ export default class CollectionPointService {
             isInactive
         })
         
+        await this.collectionPointNotification(id, nextCollectionDate, name);
+
         return {"message": "Ponto de Coleta criado"};
     }
 
@@ -73,6 +81,15 @@ export default class CollectionPointService {
 
         await knex("Collection_Point").where({ id: id }).update(data);
 
+        if (data.nextCollectionDate) {
+            const date = new Date(data.nextCollectionDate);
+            const name = data.name || collectionPoint.name;
+
+            if (date.getTime() != collectionPoint.nextCollectionDate.getTime()) {
+                await this.collectionPointNotification(id, date, name);
+            }
+        }
+
         return `Ponto de Coleta ${collectionPoint.name} atualizado com sucesso.`;
     }
 
@@ -101,7 +118,80 @@ export default class CollectionPointService {
         if (deletedCount === 0) {
             throw new CollectionPointNotFound();
         }
-        
+
+        scheduledTasks[id].cancel();
+        delete scheduledTasks[id];
+
         return true;
+    }
+
+    public static async notifyAdminsAboutNextCollection(id: string, nextCollectionDate: Date, name: string) {
+        const users = await knex("User").where({admin: true}).select("email");
+        const emailList = users.map(user => user.email);
+        const usersEmails = emailList.join(", ");
+        const { dateNotify, horaryNotify } = await DateFormat.convertLocaleDate(nextCollectionDate);
+
+        const text = `
+        Olá,
+            
+        A próxima coleta do ponto de coleta "${name}", está agendada para o dia ${dateNotify} às ${horaryNotify}.
+            
+        Fique atento(a) para garantir que a coleta ocorra conforme o previsto.
+            
+        Atenciosamente,
+        Software Odoyá
+        `;
+
+        mailer.sendMail(usersEmails, name, text);
+        delete scheduledTasks[id];
+    }
+
+    public static async collectionPointNotification(id: string, nextCollectionDate: Date, name: string) {
+    
+        if (scheduledTasks[id]) {
+            scheduledTasks[id].cancel();
+        }
+        
+        if (!nextCollectionDate) {
+            return;
+        }
+ 
+        const date = await DateFormat.validateDate(nextCollectionDate);
+        date.setDate(date.getDate() - 2);
+        
+        if (date < new Date()) {
+            return "Data inválida";
+        }
+
+        
+        const job = schedule.scheduleJob(date, async () => {
+            await this.notifyAdminsAboutNextCollection(id, nextCollectionDate, name);
+        })
+
+        scheduledTasks[id] = job;
+        console.log(scheduledTasks);
+    }
+
+    public static async checkColectionPointNotification() {
+        const collectionPoints = await knex("Collection_Point").select("id", "nextCollectionDate", "name");
+
+        collectionPoints.forEach(async collectionPoint => {
+            if (scheduledTasks[collectionPoint.id]) {
+                scheduledTasks[collectionPoint.id].cancel();
+            }
+
+            const date = await DateFormat.validateDate(collectionPoint.nextCollectionDate);
+            date.setDate(date.getDate() - 2);
+
+            const job = schedule.scheduleJob(date, async () => {
+                await this.notifyAdminsAboutNextCollection(collectionPoint.id, collectionPoint.nextCollectionDate, collectionPoint.name);
+            })
+    
+            scheduledTasks[collectionPoint.id] = job;
+            
+        })
+
+        console.log(scheduledTasks);
+        return scheduledTasks;
     }
 }
