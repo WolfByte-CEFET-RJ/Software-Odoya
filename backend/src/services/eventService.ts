@@ -1,8 +1,8 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
-import { Event, CreateEvent } from '../types/event';
+import { Event, CreateEvent, UpdateEvent } from '../types/event';
 import { v4 } from "uuid";
-import { EventNotFoundError, UnauthorizedEventAccessError } from '../erros/EventError';
+import { EventNotFoundError, RequiredDataError, RequiredEventIdError, UnauthorizedEventAccessError } from '../erros/EventError';
 import EventValidator from '../utils/Yup/eventValidator';
 import e from 'cors';
 
@@ -74,6 +74,34 @@ export default class EventService{
         });
 
         return {"message": "Mutirão criado"};
+
+    }
+
+    public static async updateEvent(id: string, data: UpdateEvent) {
+        
+        if(!id) {
+            throw new RequiredEventIdError();
+        }
+
+        if(!data) {
+            throw new RequiredDataError();
+        }
+
+        const event = await knex("Event").select("*").where({id}).first();
+
+        if(!event) {
+            throw new EventNotFoundError();
+        }
+
+        if(data.date) {
+            data.date = new Date(data.date);
+        }
+
+        await EventValidator.validateUpdateEvent(data);
+
+        await knex("Event").where({id}).update(data);
+
+        return `Mutirão ${event.id} atualizado com sucesso`;
 
     }
 

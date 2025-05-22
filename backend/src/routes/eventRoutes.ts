@@ -31,7 +31,7 @@ eventRouter
 
     /**
      * @route POST /event
-     * @description cria um mutirão, apenas Admin
+     * @description Cria um mutirão, apenas Admin
      * @param {string} name
      * @param {string} location
      * @param {string} date
@@ -40,6 +40,20 @@ eventRouter
      * @returns { message: string } 
      */
     .post('/event',AuthMiddleware.ensureAdmin, EventController.createEvent)
+
+    /**
+     * @route PATCH /event/:id
+     * @description Atualiza um mutirão, apenas Admin
+     * @param {string} id
+     * @param {string} name
+     * @param {string} location
+     * @param {string} date
+     * @param {string} meetingPoint
+     * @param {string} estimatedDuration
+     * @returns { message: string } 
+     */
+    .patch('/event/:id',AuthMiddleware.ensureAdmin, EventController.updateEvent)
+
 
 
 export default eventRouter;

@@ -1,7 +1,7 @@
 import { Request, response, Response } from "express";
 import { HttpCode, HttpError } from "../erros/erro.config";
 import EventService from "../services/eventService"
-import { Event, CreateEvent } from "../types/event";
+import { Event, CreateEvent, UpdateEvent } from "../types/event";
 import { ImprevistError } from "../erros/ImprevistError";
 import { ValidationError } from 'yup';
 
@@ -58,10 +58,28 @@ export default class EventController {
     public static async createEvent(req: Request, res: Response): Promise<any> {
         const requestBody: CreateEvent = req.body;
         try {
-            console.log("Controller OK");
-            
             const response = await EventService.createEvent(requestBody);
             res.status(HttpCode.CREATED).json(response);
+        } catch (e) {
+            if (e instanceof HttpError) {
+                    return e.sendMessage(res);
+            }
+            
+            if (e instanceof ValidationError){
+                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
+            }
+
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
+
+    public static async updateEvent(req: Request, res: Response): Promise<any> {
+        const { id } = req.params;
+        const data: UpdateEvent = req.body;
+        try {
+            const response = await EventService.updateEvent(id, data);
+            res.status(HttpCode.OK).json({"message": response});
         } catch (e) {
             if (e instanceof HttpError) {
                     return e.sendMessage(res);
