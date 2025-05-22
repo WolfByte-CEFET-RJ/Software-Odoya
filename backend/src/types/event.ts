@@ -1,8 +1,16 @@
-export default interface Event {
+export interface Event {
     id: string,
     name: string,
     location: string,
     date: Date,
     meetingPoint: string,
-    estimatedDuration: number
+    estimatedDuration: string
+}
+
+export interface CreateEvent {
+    name: string,
+    location: string,
+    date: Date,
+    meetingPoint: string,
+    estimatedDuration: string
 }
