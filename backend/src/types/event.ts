@@ -14,3 +14,11 @@ export interface CreateEvent {
     meetingPoint: string,
     estimatedDuration: string
 }
+
+export interface UpdateEvent {
+    name?: string,
+    location?: string,
+    date?: Date,
+    meetingPoint?: string,
+    estimatedDuration?: string
+}
