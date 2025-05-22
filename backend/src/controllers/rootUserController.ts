@@ -46,6 +46,26 @@ export default class RootUserController {
         }
     }
 
+    public static async getUsersPagination(req: Request, res: Response): Promise<any>{
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+
+        try{
+            const users: User[] = await UserService.getAllPagination(page, limit);
+            res.status(HttpCode.OK).json({amount: users.length, users});
+
+        }catch(e){
+             console.error(e);
+            
+            if(e instanceof HttpError){
+                return e.sendMessage(res);
+            }
+    
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res); 
+        }
+    }
+
     public static async updateUser(req: Request, res: Response): Promise<any>{
         try{
             const { user_id } = req.params;
