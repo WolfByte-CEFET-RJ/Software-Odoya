@@ -1,10 +1,10 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
-import Event from '../types/event';
+import { Event, CreateEvent } from '../types/event';
 import { v4 } from "uuid";
-//import mutiraoValidator from '../utils/Yup/mutiraoValidator';
-//import { CollectionPointNotFound } from '../erros/CollectionPointErros';
 import { EventNotFoundError, UnauthorizedEventAccessError } from '../erros/EventError';
+import EventValidator from '../utils/Yup/eventValidator';
+import e from 'cors';
 
 export default class EventService{
 
@@ -55,8 +55,26 @@ export default class EventService{
             console.log(error)
             throw new EventNotFoundError();
         }
-        
     }
     
+    public static async createEvent(requestBody: CreateEvent) {
+        const eventData = {
+            ...requestBody,
+            date: new Date(requestBody.date)
+        };
+        await EventValidator.validateCreateEvent(eventData);
+
+        await knex("Event").insert({
+            id: v4(),
+            name: eventData.name,
+            location: eventData.location,
+            date: eventData.date,
+            meetingPoint: eventData.meetingPoint,
+            estimatedDuration: eventData.estimatedDuration
+        });
+
+        return {"message": "Mutirão criado"};
+
+    }
 
 }

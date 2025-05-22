@@ -32,15 +32,14 @@ eventRouter
     /**
      * @route POST /event
      * @description cria um mutirão, apenas Admin
-     * @param {string} nome
-     * @param {string} local
-     * @param {string} data
-     * @param {string} horário
-     * @param {string} pontoDeEncontro
-     * @param {string} duracao
+     * @param {string} name
+     * @param {string} location
+     * @param {string} date
+     * @param {string} meetingPoint
+     * @param {string} estimatedDuration
      * @returns { message: string } 
      */
-    //.post('/event',AuthMiddleware.ensureAdmin, MutiraoController.createMutirao)
+    .post('/event',AuthMiddleware.ensureAdmin, EventController.createEvent)
 
 
 export default eventRouter;
