@@ -1,19 +1,20 @@
 import { Request, Response } from "express";
 import { HttpCode, HttpError } from "../erros/erro.config";
-import MutiraoService from "../services/mutiraoService"
-import Mutirao from "../types/mutirao";
+import EventService from "../services/eventService"
+import Event from "../types/event";
 import { ImprevistError } from "../erros/ImprevistError";
 import { ValidationError } from 'yup';
 
 
 
-export default class MutiraoController {
+export default class EventController {
 
-    public static async getAllMutiroesScheduled(req: Request, res: Response) { 
+    public static async getAllEventScheduled(req: Request, res: Response) { 
+        console.log("Teste");
         
         try {
-                const mutiroes: Partial<Mutirao>[] = await MutiraoService.getAllMutiroesScheduled();
-                res.status(HttpCode.OK).json(mutiroes);
+                const events: Event[] = await EventService.getAllEventScheduled();
+                res.status(HttpCode.OK).json(events);
             } catch (e) {
                 if (e instanceof HttpError) {
                     return e.sendMessage(res);
@@ -24,11 +25,11 @@ export default class MutiraoController {
             }
         }
 
-    public static async getAllMutiroes(req: Request, res: Response) {
+    public static async getAllEvent(req: Request, res: Response) {
         
         try {
-                const mutiroes: Mutirao[] = await MutiraoService.getAllMutiroes();
-                res.status(HttpCode.OK).json(mutiroes);
+                const events: Event[] = await EventService.getAllEvent();
+                res.status(HttpCode.OK).json(events);
             } catch (e) {
                 if (e instanceof HttpError) {
                     return e.sendMessage(res);
@@ -39,11 +40,11 @@ export default class MutiraoController {
             }
         }
     
-    public static async getOneMutirao(req: Request, res: Response) {
+    public static async getOneEvent(req: Request, res: Response) {
         const id  = req.params.id
         try {
-                const multirao: Mutirao = await MutiraoService.getOneMutirao(id);
-                res.status(HttpCode.OK).json(multirao);
+                const event: Event = await EventService.getOneEvent(id);
+                res.status(HttpCode.OK).json(event);
             } catch (e) {
                 if (e instanceof HttpError) {
                     return e.sendMessage(res);

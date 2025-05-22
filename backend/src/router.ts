@@ -5,7 +5,7 @@
 import { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
-import mutiraoRouter from './routes/mutiraoRoutes';
+import eventRouter from './routes/eventRoutes';
 import user from './routes/userRoutes';
 import collectionPointRouter from './routes/collectionPointRoutes';
 import spongeDepositRouter from './routes/depositRoutes';
@@ -36,7 +36,7 @@ export default (app: Express): void => {
         .use(collectionPointRouter)
         .use(depositRouter)
         .use(spongeDepositRouter)
-        .use(mutiraoRouter)
+        .use(eventRouter)
 
     // Rota padrão
     app.get('/', (req: Request, res: Response) => {

@@ -1,0 +1,62 @@
+import DatabaseConnection from '../database/connection/DatabaseConnection';
+const knex = DatabaseConnection.getInstance();
+import Event from '../types/event';
+import { v4 } from "uuid";
+//import mutiraoValidator from '../utils/Yup/mutiraoValidator';
+//import { CollectionPointNotFound } from '../erros/CollectionPointErros';
+import { EventNotFoundError, UnauthorizedEventAccessError } from '../erros/EventError';
+
+export default class EventService{
+
+    /**
+     * Obtém mutirões de um usuário comum ou todos os mutirões para admin
+     * @param userId ID do usuário
+     * @param isAdmin Indica se o usuário é administrador
+     */
+    public static async getAllEventScheduled(): Promise<Event[]> {
+    
+        try {
+            
+            const events: Event[] = await knex("Event").select("*").where("date", ">=", knex.fn.now());
+            
+            if (!events ||  events.length === 0) {
+                return  [];
+            }
+        return events;
+        } catch (error: any) {
+            throw new Error(String(error.message));
+        }
+    }
+
+    public static async getAllEvent(): Promise<Event[]> {
+        const events = await knex("Event").select("*");
+        
+        if (!events ||  events.length === 0) {
+            return  [];
+        }
+
+        return events;
+    }
+
+    /**
+     * Obtém um mutirão específico
+     * @param id ID do mutirão
+     */
+    public static async getOneEvent(id: string): Promise<Event> {
+        try {
+            const event = await knex("Event").select("*").where({ id }).first();
+
+            if (!event) {
+                console.log(event)
+                throw new Error("Mutirão não encontrado");
+            }
+            return event;
+        } catch (error: any) {
+            console.log(error)
+            throw new EventNotFoundError();
+        }
+        
+    }
+    
+
+}
