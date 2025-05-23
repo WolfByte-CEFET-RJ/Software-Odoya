@@ -53,7 +53,14 @@ eventRouter
      * @returns { message: string } 
      */
     .patch('/event/:id',AuthMiddleware.ensureAdmin, EventController.updateEvent)
-
+     
+    /**
+     * @route DELETE /event/delete
+     * @description Deleta um mutirão
+     * @param {string} id
+     * @returns { message: string }
+     */ 
+    .delete("/event/delete/:id", AuthMiddleware.ensureAdmin, EventController.deleteEvent)
 
 
 export default eventRouter;

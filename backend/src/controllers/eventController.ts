@@ -94,4 +94,20 @@ export default class EventController {
         }
     }
 
+    public static async deleteEvent(req: Request, res: Response) {
+            const { id } = req.params;
+    
+            try {
+                await EventService.deleteEvent(id);
+                res.status(HttpCode.NO_CONTENT).send();
+            } catch (e) {
+                if(e instanceof HttpError) {
+                    return e.sendMessage(res);
+                } 
+                
+                const classified_err = new ImprevistError();
+                return classified_err.sendMessage(res);
+            }
+        }
+
 }

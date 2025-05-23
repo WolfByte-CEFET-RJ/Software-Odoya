@@ -105,4 +105,20 @@ export default class EventService{
 
     }
 
+    public static async deleteEvent(id: string) {
+        const event = await knex("Event").where({ id }).first();
+        
+        if (!event) {
+            throw new EventNotFoundError();
+        }
+    
+        const deletedCount = await knex("Event").where({ id }).delete();
+        
+        if (deletedCount === 0) {
+            throw new EventNotFoundError();
+        }
+
+        return true;
+    }
+
 }
