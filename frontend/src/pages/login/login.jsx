@@ -12,7 +12,12 @@ import api from '../../api'
 import React, { useState, useEffect } from 'react'
 import InputForm from '../../components/inputForm/inputForm.jsx'
 import InputFormPassword from '../../components/inputFormPassword/inputFormPassword.jsx'
-import axios from 'axios';
+
+import { useContext } from 'react';
+import { UserContext } from '../../components/Context/userContext.jsx';
+import { User } from 'lucide-react';
+
+
 //import jwt_decode from 'jwt-decode';
 
 function Login(){
@@ -23,6 +28,8 @@ function Login(){
     const [disable, setDisable] = useState(false)
     const [ user2, setUser2 ] = useState([]);
 
+    const {getToken} = useContext(UserContext)
+        
     const navigate = useNavigate();
     const handleChange = (event, setText) => {
         setText(event.target.value);
@@ -48,14 +55,17 @@ function Login(){
         try {
             
             let res = await api.post("/login", userData);
-           
+           console.log(res.data)
             if(res.data.token){
+                 setLoad(false)
+                toast.success('Bem vindo!');
                 setTimeout(() => {
-                    setLoad(false)
-                    toast.success('Bem vindo!');
-                }, 1000);
-
-                localStorage.setItem("token",res.data.token);   
+                   navigate("/profile")
+                    
+                }, 2000);
+                getToken(res.data.token)
+                //localStorage.setItem("token",res.data.token);
+                   
                 
             }
         } catch (error) {
@@ -82,6 +92,7 @@ function Login(){
             setDisable(false)
         }
         if (Object.keys(user2).length > 0) {
+            
             const token = {token: `${user2.access_token}`}
             
            
@@ -95,9 +106,8 @@ function Login(){
                         toast.success('Bem vindo!');
                          
                     }, 1000);
-    
-                    localStorage.setItem("token",res.data.token)
-                    localStorage.setItem("ADM", true)
+                    getToken(res.data.token)
+                  //localStorage.setItem("token",res.data.token);
                    navigate("/home")
                     
                 }}

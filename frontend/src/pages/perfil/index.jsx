@@ -10,6 +10,9 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import api from '../../api'
 
+import { useContext } from "react";
+import { UserContext } from "../../components/Context/userContext";
+
 const Perfil = () => {
     const navigate = useNavigate();
     const [load, setLoad] = useState(false);
@@ -19,18 +22,26 @@ const Perfil = () => {
     const [username, setUser] = useState('')
     const [mail, setEmail] = useState('')
 
+    const {getUser,getPriviliege,token} = useContext(UserContext)
+
     const handleChange = (event, setText) => {
         setText(event.target.value);
     };
    
     async function getUserData(){
-
+        
         try{
-            let req = await api.get('/user')
+            let req = await api.get('/user',  
+                {
+                    headers: { Authorization: `Bearer ${token}`}
+                }
+            )
+            
             console.log(req.data)
             localStorage.setItem("id", req.data.id)
             setUser(req.data.name)
-            setName(req.data.name)
+            getUser(req.data.name)
+            getPriviliege(req.data.admin)
             setEmail(req.data.email)
         }
         catch (error) {
@@ -38,10 +49,7 @@ const Perfil = () => {
             
             
             setLoad(false)
-            toast.error('Falha ao buscar dados do usuário');
-            setTimeout(() => {
-                navigate('/')
-            }, 2000);
+            
     }
     }
     async function deleteUser(){

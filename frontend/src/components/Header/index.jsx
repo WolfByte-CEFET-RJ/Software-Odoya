@@ -1,24 +1,35 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useEffect, useState } from "react";
 
 import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdRestoreFromTrash, MdGroups, MdHomeFilled, MdAccountCircle, MdLogout } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import header from "./header.module.scss";
+
+import { useContext } from "react";
+import { UserContext } from "../Context/userContext";
 
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState("");
+    const [isAdmin, setAdmin] = useState(false)
     const location = useLocation();
     const currentLocation = location.pathname;
     
-    
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        if(localStorage.getItem("id") !== null) {
-            setIsLoggedIn(true);
-        }
-    })
+    const {admin, getUser, getPrivilege, logout} = useContext(UserContext)
+    
+    
+    
+    function clear(){
+        logout
+        setTimeout(() => {
+            navigate("/")
+        }, 1000);
+    }
+    
   
 
     return (
@@ -30,7 +41,7 @@ const Header = () => {
             <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
                 {isLoggedIn ? (
                     <>
-                        {localStorage.getItem("adm") == false ? (
+                        {admin == false ? (
                             <>
                             {currentLocation === "/profile" ? (
                                 <>
@@ -45,8 +56,8 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false); localStorage.clear("id");}}>
-                                <MdLogout color="#114C6D"/>Sair
+                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false);}}>
+                               <MdLogout color="#114C6D" onClick={clear}/>Sair
                             </Link>
                             </>
                         ) : (
@@ -76,8 +87,8 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false); localStorage.clear("id");}}>
-                                <MdLogout color="#114C6D"/>Sair
+                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false);}}>
+                                <MdLogout color="#114C6D" onClick={clear}/>Sair
                             </Link>
                             </>
                         )}
