@@ -76,7 +76,7 @@ export default class DepositService{
      * @param {string | NULL} imageURL
      * @returns {Promise<string>}
      */
-    public static async createDeposit(depositId: string, collectionPointId: string, userId: string, amountSponges: number, imageURL: string): Promise<string>{
+    public static async createDeposit(depositId: string, collectionPointId: string, userId: string, amountSponges: number, imageURL: string | undefined): Promise<string>{
         await depositValidator.validateCreateDeposit({amountSponges});
         const existCollectionPoint = await knex("Collection_Point").where({ id: collectionPointId }).first();
         
@@ -155,7 +155,5 @@ export default class DepositService{
             
         }
     }
-
-
-
+    
 }

@@ -6,7 +6,6 @@ import { HttpCode, HttpError } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import { ImprevistError } from '../erros/ImprevistError';
 import { ValidationError } from 'yup';
-import multer from "multer";
 import FileService from "../services/FileService";
 import { v4 } from "uuid";
 
@@ -103,19 +102,17 @@ export default class DepositController{
     public static async createDeposit(req: Request, res: Response): Promise<any> {
         const userId = req.user?.id;
         const { collectionPointId, amountSponges } = JSON.parse(req.body.depositData);;
-        const image = req.file;  // O arquivo de imagem será armazenado em req.file devido ao multer
-
-        if (!image) {
-            return res.status(HttpCode.BAD_REQUEST).json({ message: "Comprovante de imagem é obrigatório." });
-        }
+        const image = req.file;
 
         try{
 
             const depositId: string = v4()
 
-            FileService.setStrategy(null)
-            const imageUrl = await FileService.upload(image.buffer, depositId);
-            console.log(imageUrl)
+            let imageUrl;
+            if(image){
+                FileService.setStrategy(null)
+                imageUrl = await FileService.upload(image.buffer, depositId);
+            }
 
             // Criação do depósito
             const response = await DepositService.createDeposit(

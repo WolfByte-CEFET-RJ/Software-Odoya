@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import dotenv from 'dotenv';
 import { fileTypeFromBuffer } from "file-type";
+import { FileExtensionError, UploadError } from "../erros/FileError";
 
 dotenv.config();
 
@@ -51,9 +52,9 @@ class CloudinaryStrategy implements UploadStrategy {
       const {secure_url} = await streamUpload();
       return secure_url;
 
-    } catch (error) {
+    } catch (error: any) {
       console.log(error)
-      throw new Error("Falha no upload da imagem.");
+      throw new UploadError("Falha no upload da imagem. " + error.message);
     }
   }
 }
@@ -64,9 +65,9 @@ class CloudinaryStrategy implements UploadStrategy {
  */
 class LocalStrategy implements UploadStrategy {
 
-  public async uploadImage(buffer: Buffer, system_id: string): Promise<string> {
+public async uploadImage(buffer: Buffer, system_id: string): Promise<string> {
+  try {
     const uploadsDir = path.resolve(process.cwd(), "uploads");
-    console.log("Salvando em:", uploadsDir);
 
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true });
@@ -74,7 +75,7 @@ class LocalStrategy implements UploadStrategy {
 
     const fileType = await fileTypeFromBuffer(buffer);
     if (!fileType?.ext) {
-      throw new Error("Não foi possível determinar o tipo do arquivo.");
+      throw new FileExtensionError("Não foi possível determinar o tipo do arquivo.");
     }
 
     const fileName = `${system_id}.${fileType.ext}`;
@@ -82,11 +83,20 @@ class LocalStrategy implements UploadStrategy {
 
     return new Promise((resolve, reject) => {
       fs.writeFile(filePath, buffer, (err) => {
-        if (err) return reject(err);
-        resolve(fileName);
+        if(err){ 
+          return reject(new UploadError());
+        }
+
+        resolve(`http://localhost:${process.env.PORT}/uploads/${fileName}`);
       });
     });
+
+  } catch (error: any) {
+    console.log(error);
+    throw new UploadError("Falha no upload da imagem. " + error.message);
   }
+}
+
 }
 
 export default class FileService {
@@ -103,6 +113,7 @@ export default class FileService {
       return
     }
 
+    // Se a estratégia não for explícita, controla pelo ambiente de execução 
     if (process.env.NODE_ENV === "production") {
       this.strategy = new CloudinaryStrategy();
     } else {
