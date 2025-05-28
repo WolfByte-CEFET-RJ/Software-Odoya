@@ -82,7 +82,7 @@ function Home(){
         try{
                 let req = await api.get('/user')
                 console.log(req)
-                setUser(req.data)
+                setUser(req.data.name)
         }catch (error){
             setTimeout(()=>{
                 toast.error('Falha ao capturar os dados do usuário')
