@@ -37,17 +37,19 @@ export default class UserService {
         const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({email}).first();
         return user;
     }
-
     /**
-     * @description Busca o hash da senha de um usuário dado um e-mail. Hash da senha incluso no objeto de resposta.
+     * @description Busca um Usuário por emaiail. Hash da senha incluso no objeto de resposta.
      * @param {string} email
-     * @returns {Promise<User & { password: string } | null>
+     * @returns {Promise<User & { password: string }>}
      */
-    public static async getUserWithSensitiveData(email: string): Promise<User & { password: string } | null> {
+    public static async getUserSensitiveByEmail(email: string): Promise<User & { password: string }> {
+
         const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
+        if (!user) {
+            throw new UserNotFound();
+        }
         return user;
     }
-
     /**
      * @description Realiza a criação do Usuário
      * @param {string} name
