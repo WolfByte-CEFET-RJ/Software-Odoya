@@ -15,7 +15,7 @@ const HomeAdm = () => {
     const [esponja, setEsponja] = useState(false);
     const [mutirao, setMutirao] = useState(false);
     const [address, setAddress] = useState({street: '', lat: '', long: ''});
-    const [ponto, setPonto] = useState([])
+    const [pontos, setPontos] = useState([])
     const [isModalCreatePointOpen, setModalCreatePoint] = useState(false);
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
     const [isModalCreateEventOpen, setModalCreateEvent] = useState(false);
@@ -29,6 +29,18 @@ const HomeAdm = () => {
         }
     }
 
+    async function getCollectionPoints() {
+        try {
+            let res = await api.get("/collectionPoints");
+            res.status === 200 && setPontos(res.data);
+        } catch(error) {
+            console.log(error);
+            setTimeout(() => {
+                toast.error("Erro ao coletar dados dos pontos de coleta!")
+            }, 500)
+        }
+    }
+
     let dados = [
         {
             idx:1,
@@ -36,7 +48,7 @@ const HomeAdm = () => {
             place:"Rua Gen. Canabarro - Maracanã",
             date: "19/03/2025",
             hour: "14:35",
-            state: "presetne",
+            state: "presente",
         },
         {   
             idx:2,
@@ -64,6 +76,10 @@ const HomeAdm = () => {
         },
     ]
 
+    useEffect(() => {
+        getCollectionPoints();
+    }, []);
+
     return (
         <>
         <Header/>
@@ -82,11 +98,11 @@ const HomeAdm = () => {
         { esponja ?
             <>
              <section className="sectionCards">
-                    <h1 className="sectionCards-titulo"> Pontos de coleta registrado</h1>
+                    <h1 className="sectionCards-titulo"> Pontos de coleta registrados</h1>
                     <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                        {ponto ? ponto.map((dado)=>(
+                        {pontos ? pontos.map((dado)=>(
                             <>
-                            <DonationCard key={dado.id}  nome={dado.name} place={dado.location} state={dado.isInactive} setLocation={setAdress}/>
+                            <DonationCard key={dado.id}  nome={dado.name} place={dado.location} state={dado.isInactive} setLocation={setAddress}/>
                             {/* <button onClick={initMap}></button> */}
                         </>
                         )) : <></>}
@@ -123,11 +139,11 @@ const HomeAdm = () => {
             :
             <>
                 <section className="sectionCards">
-                    <h1 className="sectionCards-titulo"> Pontos de coleta Registrado</h1>
+                    <h1 className="sectionCards-titulo"> Pontos de coleta registrados</h1>
                     <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                        {dados ? dados.map((dado)=>(
-                        <DonationCard key={dado.idx}  num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
-                        )) : <></>}
+                        {pontos && pontos.map((dado)=>(
+                            <DonationCard key={dado.id}  nome={dado.name} place={dado.location} state={dado.isInactive} setLocation={setAddress}/>
+                        ))}
                     </Grid2>
                 </section>
                 <section className="sectionCards">
