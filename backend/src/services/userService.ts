@@ -62,6 +62,33 @@ export default class UserService {
     }
 
     /**
+     * @description Retorna uma lista paginada de usuários, com exceção do super-usuário
+     * @param {number} page
+     * @param {number} limit
+     * @returns {Promise<User[]>}
+     */
+    public static async getAllPagination(page: number, limit: number): Promise<User[]>{
+        const offset = (page - 1) * limit;
+
+        const users: User[] = await knex("User")
+                                .select('id', 'name', 'email', 'admin', 'points')
+                                .whereNot({email: process.env.ROOT_EMAIL})
+                                .limit(limit)
+                                .offset(offset);
+    
+        if(users.length===0){
+            throw new UserNotFound()
+        }
+        
+        // Traduzindo campos booleanos
+        users.forEach(user => {
+            user.admin = Boolean(user.admin);
+        });
+    
+        return users
+    }
+
+    /**
      * @description Realiza a criação do Usuário
      * @param {string} name
      * @param {string} email

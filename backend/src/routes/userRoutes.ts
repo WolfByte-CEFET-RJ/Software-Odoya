@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from 'express';
+import Router from 'express';
 import UserController from '../controllers/userController';
 import AuthMiddleware from '../middlewares/authMiddleware';
 
