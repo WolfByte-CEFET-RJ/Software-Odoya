@@ -98,8 +98,8 @@ export default class EventController {
             const { id } = req.params;
     
             try {
-                await EventService.deleteEvent(id);
-                res.status(HttpCode.NO_CONTENT).send();
+                const response = await EventService.deleteEvent(id);
+                res.status(HttpCode.OK).json({"message": response});
             } catch (e) {
                 if(e instanceof HttpError) {
                     return e.sendMessage(res);

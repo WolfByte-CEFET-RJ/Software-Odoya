@@ -118,7 +118,7 @@ export default class EventService{
             throw new EventNotFoundError();
         }
 
-        return true;
+        return `Mutirão deletado com sucesso`;
     }
 
 }

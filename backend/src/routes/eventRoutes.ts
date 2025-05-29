@@ -60,7 +60,7 @@ eventRouter
      * @param {string} id
      * @returns { message: string }
      */ 
-    .delete("/event/delete/:id", AuthMiddleware.ensureAdmin, EventController.deleteEvent)
+    .delete("/event/:id", AuthMiddleware.ensureAdmin, EventController.deleteEvent)
 
 
 export default eventRouter;
