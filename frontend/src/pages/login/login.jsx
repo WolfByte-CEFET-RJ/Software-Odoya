@@ -63,8 +63,8 @@ function Login(){
                    navigate("/profile")
                     
                 }, 2000);
-                getToken(res.data.token)
-                //localStorage.setItem("token",res.data.token);
+                //getToken(res.data.token)
+                localStorage.setItem("token",res.data.token);
                    
                 
             }
@@ -106,8 +106,8 @@ function Login(){
                         toast.success('Bem vindo!');
                          
                     }, 1000);
-                    getToken(res.data.token)
-                  //localStorage.setItem("token",res.data.token);
+                    //getToken(res.data.token)
+                  localStorage.setItem("token",res.data.token);
                    navigate("/home")
                     
                 }}

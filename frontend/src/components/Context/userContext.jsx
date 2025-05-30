@@ -1,38 +1,69 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { Children } from "react";
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import api from '../../api'
 
 export const UserContext = createContext()
 
 const UserProvider = ({children}) => {
 
     const [client, setUser] = useState("")
+    const [mail, setMail] = useState("")
     const [admin, setAdmin] = useState()
-    const [token, setToken] = useState("")
+    const nav = useNavigate()
+    const token = localStorage.getItem("token")
+     useEffect(()=>{
+      
+      async function getUser(){
+        
+        let req = await api.get('/user',  
+                {
+                    headers: { Authorization: `Bearer ${token}`}
+                }
+            )
 
-    const getUser = (client) =>{
+        setUserName(req.data.name, req.data.email)
+        
+
+        getPrivilege(req.data.admin)
+        
+      }
+      if(!client && token){
+        getUser()
+      }
+      else if(!client && !token){
+        nav("/")
+      }
+      
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[client])
+
+    const setUserName = (client,mail) =>{
       
       if(client){setUser(client)}
+      if(mail){setMail(mail)}
       
     } 
     const getPrivilege = (admin) =>{
-        if(admin && admin == 1 ){
+        if(admin == 1 ){
         setAdmin(true)
       }
       else{
         setAdmin(false)
       }
     }
-    const getToken = (code) => {
-      if(code){setToken(code)}
-    }
+    
     const logout = () => {
+      
+      
       setAdmin(false)
-      setToken("")
       setUser("")
+      
     }
   
-  return <UserContext.Provider value={{client, admin, token, getUser, getPrivilege, getToken, logout}}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{client, mail, admin, token, setUserName, getPrivilege, logout}}>{children}</UserContext.Provider>
 }
 
 export default UserProvider

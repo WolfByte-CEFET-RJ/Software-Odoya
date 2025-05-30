@@ -10,26 +10,37 @@ import { useContext } from "react";
 import { UserContext } from "../Context/userContext";
 
 
+
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState("");
-    const [isAdmin, setAdmin] = useState(false)
+    //const [isAdmin, setAdmin] = useState(false)
     const location = useLocation();
     const currentLocation = location.pathname;
     
     const navigate = useNavigate()
 
-    const {admin, getUser, getPrivilege, logout} = useContext(UserContext)
+    const {admin, logout, token} = useContext(UserContext)
     
     
+    useEffect(() =>{
+        
+        if(token){
+            setIsLoggedIn(true)
+        }
+        else{
+             setIsLoggedIn(false)
+        }
+       
+    },[token])
     
-    function clear(){
-        logout
+    function out(){
+        localStorage.removeItem("token")
         setTimeout(() => {
             navigate("/")
-        }, 1000);
+        }, 5000);
+        
     }
-    
   
 
     return (
@@ -57,7 +68,7 @@ const Header = () => {
                                 </>
                             )}
                             <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false);}}>
-                               <MdLogout color="#114C6D" onClick={clear}/>Sair
+                               <MdLogout color="#114C6D" onClick={out}/>Sair
                             </Link>
                             </>
                         ) : (
@@ -88,7 +99,7 @@ const Header = () => {
                                 </>
                             )}
                             <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false);}}>
-                                <MdLogout color="#114C6D" onClick={clear}/>Sair
+                                <MdLogout color="#114C6D" onClick={out}/>Sair
                             </Link>
                             </>
                         )}

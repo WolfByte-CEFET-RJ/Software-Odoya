@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -19,39 +20,17 @@ const Perfil = () => {
     const [lock, setLock] = useState(false)
     //const [text, setText] = useState('')
     const [name, setName] = useState('')
-    const [username, setUser] = useState('')
-    const [mail, setEmail] = useState('')
+    
+    const [email, setEmail] = useState('')
 
-    const {getUser,getPriviliege,token} = useContext(UserContext)
-
+    const {client, mail} = useContext(UserContext)
+    console.log(client, mail)
+    
     const handleChange = (event, setText) => {
         setText(event.target.value);
     };
    
-    async function getUserData(){
-        
-        try{
-            let req = await api.get('/user',  
-                {
-                    headers: { Authorization: `Bearer ${token}`}
-                }
-            )
-            
-            console.log(req.data)
-            localStorage.setItem("id", req.data.id)
-            setUser(req.data.name)
-            getUser(req.data.name)
-            getPriviliege(req.data.admin)
-            setEmail(req.data.email)
-        }
-        catch (error) {
-            console.log(error)
-            
-            
-            setLoad(false)
-            
-    }
-    }
+    
     async function deleteUser(){
         
 
@@ -80,7 +59,7 @@ const Perfil = () => {
     }
     async function updateUser(){
         //let tokenId = localStorage.getItem("id")
-        const userData = {name: name, email: mail}
+        const userData = {name: name, email: email}
         
 
         try{
@@ -92,7 +71,7 @@ const Perfil = () => {
                                     setLoad(false)
                                     toast.success('Usuário atualizado!');
                                 }, 1000);
-                                getUserData()
+                                
             }
         }
         catch (error) {
@@ -119,6 +98,7 @@ const Perfil = () => {
         
     }
     useEffect(() =>{
+            
             if(load == true){
                 setLock(true)
                
@@ -141,9 +121,11 @@ const Perfil = () => {
 
             
     },[load])
-    useEffect(()=>{
-        getUserData()
-    },[])
+    useEffect(() =>{
+        setEmail(mail)
+        setName(client)
+    },[client])
+    
 
     
     return (
@@ -152,12 +134,12 @@ const Perfil = () => {
             <img src="./Ondinhas.svg" className={perfil.separador}/>
             <div className={perfil.container}>
             <img src="../public/LogoAzul.svg" className={perfil.logoazul} alt="Logo Azul da ENACTUS"/>
-                <h1>Seja bem vindo {username}</h1>
+                <h1>Seja bem vindo {client}</h1>
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
                     <InputFormProfile   onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormProfile>
                     <label>E-mail</label>
-                    <InputFormProfile onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="email"></InputFormProfile>
+                    <InputFormProfile onChange={(event) => handleChange(event, setEmail)}  place={email} disable={lock} type="email"></InputFormProfile>
 
                     <label>Pontos</label>
                     <div className={perfil.divPoints}>
