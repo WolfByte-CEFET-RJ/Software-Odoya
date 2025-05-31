@@ -99,7 +99,7 @@ function Login(){
             try {
                 
                 let res = await api.post("/auth/google", token)
-                console.log(res.data)
+                
                 if(res.data.token){
                     setTimeout(() => {
                         setLoad(false)

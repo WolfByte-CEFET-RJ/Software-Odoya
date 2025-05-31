@@ -13,12 +13,12 @@ import { UserContext } from "../Context/userContext";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     //const [isAdmin, setAdmin] = useState(false)
     const location = useLocation();
     const currentLocation = location.pathname;
     
-    const navigate = useNavigate()
+    
 
     const {admin, logout, token} = useContext(UserContext)
     
@@ -28,19 +28,13 @@ const Header = () => {
         if(token){
             setIsLoggedIn(true)
         }
-        else{
-             setIsLoggedIn(false)
-        }
+        
        
     },[token])
     
-    function out(){
-        localStorage.removeItem("token")
-        setTimeout(() => {
-            navigate("/")
-        }, 5000);
-        
-    }
+   const handleLogout = () => {
+        logout(); 
+      };
   
 
     return (
@@ -67,15 +61,15 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false);}}>
-                               <MdLogout color="#114C6D" onClick={out}/>Sair
+                            <Link to={"/"} className={header.link} onClick={handleLogout}>
+                               <MdLogout color="#114C6D" />Sair
                             </Link>
                             </>
                         ) : (
                             <>
                             {currentLocation === "/profile" ? ( 
                                 <>
-                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>RH
                                 </Link>
                                 <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
@@ -98,8 +92,8 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link to={"/"} className={header.link} onClick={() => {setMenuOpen(false);}}>
-                                <MdLogout color="#114C6D" onClick={out}/>Sair
+                            <Link to={"/"} className={header.link} onClick={handleLogout}>
+                                <MdLogout color="#114C6D" />Sair
                             </Link>
                             </>
                         )}
