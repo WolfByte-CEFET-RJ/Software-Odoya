@@ -5,6 +5,7 @@
 import express, { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
+import eventRouter from './routes/eventRoutes';
 import user from './routes/userRoutes';
 import collectionPointRouter from './routes/collectionPointRoutes';
 import spongeDepositRouter from './routes/depositRoutes';
@@ -34,6 +35,7 @@ export default (app: Express): void => {
         .use(collectionPointRouter)
         .use(depositRouter)
         .use(spongeDepositRouter)
+        .use(eventRouter)
 
 
     // Rota padrão
@@ -48,5 +50,5 @@ export default (app: Express): void => {
         app.use('/uploads', 
                 express.static(path.resolve(process.cwd(), 'uploads')));
     }
-}
+}       
 
