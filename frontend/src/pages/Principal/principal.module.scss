@@ -44,7 +44,7 @@
     .titulo {
         margin-top: 10%;
         text-align: center;
-        font-size: 1.8rem;
+        font-size: 1.9rem;
         margin-bottom: 3%;
         font-family: 'Tankindred', sans-serif;
         color: var(--secondary-color);
@@ -80,9 +80,9 @@
     }
 
     .texto {
-
-        font-size: 1.3rem;
-        margin-bottom: 3%;
+        color: #000000;
+        font-size: 1.5rem;
+        margin-bottom: 2%;
 
         @media (max-width: 910px) {
             font-size: 1.3rem;
@@ -298,20 +298,16 @@
     .field{
         display:flex;
         padding-left: 30rem;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         margin: 8% 0 10% 0;
         font-family: 'Tankindred', sans-serif;
         color: #269BDF;  
     }
     
     .cards{
-        width: 250px;
-        height: 200px;
+        width: 200px;
+        height: 250px;
         text-align: center;
-        background-color: #A3CBB6;
-        border: 0.2rem solid;
-        border-radius: 0.5rem;
-        border-color: #195D39;
         gap: 10px;
         margin: 5% 2% 10% 2%;
         
@@ -352,7 +348,6 @@
         align-items: center;
         overflow: hidden;
         border-radius: 1rem;
-        //transition: 1s ease;
       }
       
       .imagem img {
@@ -419,8 +414,8 @@
           font-family: 'Tankindred', sans-serif;
           color: var(--secondary-color);
           text-decoration: underline;
-          width: 100%;
-          padding-right: 18rem; 
+          width: 100%; 
+          padding-right: 35rem; 
         }
       
         .logos {
@@ -439,7 +434,7 @@
             padding: 0 1rem; 
       
             img {
-              width: 180px;
+              width: 200px;
               height: 120px;
               object-fit: contain;
             }

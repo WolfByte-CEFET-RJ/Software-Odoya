@@ -66,7 +66,7 @@ const Principal = () => {
                 <strong>O que é o Odoyá: </strong>
               </h2>
             </div>
-            <p>
+            <p className={principal.texto}>
               Projeto composto por estudantes de graduação do CEFET/RJ
               determinados em trazer soluções para o meio ambiente e gerar ações
               que causem um impacto positivo e sustentável para o nosso planeta.
@@ -78,12 +78,12 @@ const Principal = () => {
               </h2>
             </div>
 
-            <p>
+            <p className={principal.texto}>
               <strong>• Doe Esponjas: </strong>Se você tem esponjas usadas em
               casa e não sabe o que fazer com elas, nós podemos ajudar!
               Cadastre-se para doar e faremos a coleta.
             </p>
-            <p>
+            <p className={principal.texto}>
               <strong>• Participe de Mutirões:</strong>Venha fazer parte dos
               nossos mutirões de coleta! Uma ótima oportunidade para ajudar a
               natureza e conhecer novas pessoas.
@@ -96,10 +96,10 @@ const Principal = () => {
               </strong>
             </p>
             <div className={principal.botao_container}>
-              {/*
+              
               <Link className={principal.botao} to="/register">
                 Cadastre-se
-              </Link>*/}
+              </Link>
             </div>
           </div>
           <img
@@ -116,7 +116,7 @@ const Principal = () => {
           <div>
             <div className={principal.card}>
               <h2>Missão</h2>
-              <p>
+              <p className={principal.texto}>
                 Promover a conservação do meio ambiente e dos recursos hídricos,
                 através da conscientização da população e do desenvolvimento de
                 soluções de destinação e reaproveitamento de esponjas plásticas,
@@ -127,7 +127,7 @@ const Principal = () => {
             </div>
             <div className={principal.card}>
               <h2>Objetivos Específicos</h2>
-              <p>
+              <p className={principal.texto}>
                 Promover o letramento ambiental nas comunidades locais focando
                 no público jovem Introduzir a esponja plástica na economia
                 circular criando meios de coleta e reutilização do material
@@ -141,7 +141,7 @@ const Principal = () => {
           <div>
             <div className={principal.card}>
               <h2>Visão</h2>
-              <p>
+              <p className={principal.texto}>
                 Ser um negócio de impacto socioambiental, de referência na
                 cidade do Rio de Janeiro, no desenvolvimento de produtos e
                 serviços inovadores, que promovam o reaproveitamento de esponjas
@@ -214,35 +214,22 @@ const Principal = () => {
           </div>
           <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
           <div className={principal.ordem}>
-
-          <div className={principal.cards}>
-              <div className={principal.field2}>
-                <RiGraduationCapLine size={55} color="195D39"/>
-                <h2 className={principal.objetivos}>Educação de Qualidade</h2>
+              <div className={principal.cards}>
+                <img src="Obj13.svg"/>
               </div>
-            </div>
             
-        
-          <div className={principal.cards}>
-              <div className={principal.field2}>
-                <RiInfinityLine size={55} color="195D39"/>
-                <h2 className={principal.objetivos}>Consumo e Produção Saudável</h2>
-              </div>
-          </div>
-      
           
-          <div className={principal.cards}>
-              <div className={principal.field2}>
-                <MdOutlineWaterDrop size={55} color="195D39"/>
-                <h2 className={principal.objetivos}>Água Potável e Saneamento</h2>
+              <div className={principal.cards}>
+                <img src="Obj6.svg"/>
               </div>
-            </div>
-            <div className={principal.cards}>
-              <div className={principal.field2}>
-                <FaTemperatureArrowDown size={55} color="195D39"/>
-                <h2 className={principal.objetivos}>Ação contra a mudança Global do clima </h2>
+        
+            
+              <div className={principal.cards}>
+                <img src="Obj12.svg"/>
               </div>
-            </div>
+              <div className={principal.cards}>
+                  <img src="Obj4.svg"/>
+              </div>
             </div>
           </div>
         </div>
@@ -265,8 +252,6 @@ const Principal = () => {
           </div>
         </div>
           <div className={principal.parceiros}>
-            <div className={principal.titulo}>
-            </div>
             <div className={principal.logos}>
 
               <div className={principal.linha}>
