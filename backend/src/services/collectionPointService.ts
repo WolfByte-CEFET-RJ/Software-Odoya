@@ -121,7 +121,7 @@ export default class CollectionPointService {
             throw new CollectionPointNotFound();
         }
 
-        scheduledTasks[id].cancel();
+        scheduledTasks[id]?.cancel();
         delete scheduledTasks[id];
 
         return true;
