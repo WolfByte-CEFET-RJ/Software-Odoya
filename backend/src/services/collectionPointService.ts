@@ -6,6 +6,7 @@ import { RequiredIdError } from "../erros/UserErros";
 import DateFormat from "../utils/dateFormat";
 import schedule from 'node-schedule';
 import Mailer from "./Mailer";
+import CollectionPointValidator from "../utils/Yup/collectionPointValidator";
 const knex = DatabaseConnection.getInstance();
 const mailer = new Mailer();
 let scheduledTasks: Record<string, schedule.Job> = {};
@@ -32,9 +33,7 @@ export default class CollectionPointService {
     public static async createCollectionPoint(requestBody: CollectionPoint) {
         const { name, location, amountSponges, capacitySponges, lastCollectionDate, nextCollectionDate, isInactive } = requestBody;
 
-        if(!name || !location) {
-            throw new RequiredFieldsError();
-        }
+        await CollectionPointValidator.validateCreate({name, location, amountSponges, capacitySponges, lastCollectionDate, nextCollectionDate, isInactive });
         
         const id = v4();
         await knex("Collection_Point").insert({
@@ -63,6 +62,9 @@ export default class CollectionPointService {
      * @throws {RequiredDataError} se dados não forem fornecidos no corpo da requisição (body).
      */
     public static async updateCollectionPoint(id: string, data: UpdateCollectionPoint){
+        
+        await CollectionPointValidator.validateUpdate(data)
+
         if(!id){
             throw new RequiredCollectionPointIdError();
         }
@@ -119,7 +121,7 @@ export default class CollectionPointService {
             throw new CollectionPointNotFound();
         }
 
-        scheduledTasks[id].cancel();
+        scheduledTasks[id]?.cancel();
         delete scheduledTasks[id];
 
         return true;

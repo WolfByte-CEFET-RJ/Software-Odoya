@@ -2,8 +2,6 @@ import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
 import Deposit from '../types/deposit';
 import { DepositStatus } from '../types/deposit';
-import { v4 } from "uuid";
-
 
 import depositValidator from '../utils/Yup/depositValidator';
 import { CollectionPointNotFound } from '../erros/CollectionPointErros';
@@ -78,9 +76,9 @@ export default class DepositService{
      * @param {string | NULL} imageURL
      * @returns {Promise<string>}
      */
-    public static async createDeposit(collectionPointId: string, userId: string, amountSponges: number, imageURL: string): Promise<string>{
-        await depositValidator.validateCreateDeposit({amountSponges,imageURL});
-        const existCollectionPoint = await knex("collection_point").where({ id: collectionPointId }).first();
+    public static async createDeposit(depositId: string, collectionPointId: string, userId: string, amountSponges: number, imageURL: string | undefined): Promise<string>{
+        await depositValidator.validateCreateDeposit({amountSponges});
+        const existCollectionPoint = await knex("Collection_Point").where({ id: collectionPointId }).first();
         
         if (!existCollectionPoint) {
             throw new CollectionPointNotFound();
@@ -89,7 +87,7 @@ export default class DepositService{
         try{
             var today = new Date;
         const deposit: Deposit = {
-            id: v4(),
+            id: depositId,
             collectionPointId,
             userId,
             amountSponges,
@@ -157,7 +155,5 @@ export default class DepositService{
             
         }
     }
-
-
-
+    
 }

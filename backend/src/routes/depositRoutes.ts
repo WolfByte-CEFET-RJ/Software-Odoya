@@ -1,7 +1,9 @@
 import { Router } from "express";
 import DepositController from "../controllers/depositController";
 import AuthMiddleware from "../middlewares/authMiddleware";
+import UploadImageConfig from "../middlewares/uploadImage";
 
+const upload  = UploadImageConfig.getUploader();
 const depositRouter = Router();
 
 depositRouter
@@ -30,7 +32,7 @@ depositRouter
      * @param {string} imageURL
      * @returns { message: string } 
      */
-    .post('/deposit',AuthMiddleware.ensureAuthenticated, DepositController.createDeposit)
+    .post('/deposit',AuthMiddleware.ensureAuthenticated, upload.single("comprovante"), DepositController.createDeposit)
 
     /**
      * @route PATCH /deposit/status

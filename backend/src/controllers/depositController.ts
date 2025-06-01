@@ -6,6 +6,8 @@ import { HttpCode, HttpError } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import { ImprevistError } from '../erros/ImprevistError';
 import { ValidationError } from 'yup';
+import FileService from "../services/FileService";
+import { v4 } from "uuid";
 
 export default class DepositController{
 
@@ -64,7 +66,7 @@ export default class DepositController{
             return classified_err.sendMessage(res);
         }
     }
-    //retorna todos os dados de um deposito dado seu id
+
     /**
      * @function getDeposit
      * @description Retorna todos os dados de um depósito dado seu ID
@@ -89,7 +91,7 @@ export default class DepositController{
     }
 
     /**
-     *@function createDeposit
+     * @function createDeposit
      * @description cria um deposito
      * @param {string} deposit.collectionPointId
      * @param {string} user.id
@@ -97,33 +99,53 @@ export default class DepositController{
      * @param {string} deposit.imageURL
      * @returns { message: string } 
      */
-    public static async createDeposit(req: Request, res: Response): Promise<any>{
+    public static async createDeposit(req: Request, res: Response): Promise<any> {
         const userId = req.user?.id;
-        const deposit  = req.body;
-        try{
-            const response = await DepositService.createDeposit(String(deposit.collectionPointId), String(userId), Number(deposit.amountSponges), String(deposit.imageURL)); //passar melhor isso depois
-            return res.status(HttpCode.CREATED).json({message: response});
-        }catch(e: any){
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
+        const { collectionPointId, amountSponges } = JSON.parse(req.body.depositData);;
+        const image = req.file;
 
-            if (e instanceof ValidationError){
+        try{
+
+            const depositId: string = v4()
+
+            let imageUrl;
+            if(image){
+                FileService.setStrategy(null)
+                imageUrl = await FileService.upload(image.buffer, depositId);
+            }
+
+            // Criação do depósito
+            const response = await DepositService.createDeposit(
+                String(depositId),
+                String(collectionPointId),
+                String(userId),
+                Number(amountSponges),
+                imageUrl
+            );
+
+            return res.status(HttpCode.CREATED).json({ message: response });
+
+        } catch (e: any) {
+            if (e instanceof HttpError) {
+                return e.sendMessage(res);
+            }
+
+            if (e instanceof ValidationError) {
                 return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
             }
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+
+            const classifiedErr = new ImprevistError();
+            return classifiedErr.sendMessage(res);
         }
     }
 
     /**
-     *@function updateDepositStatus
+     * @function updateDepositStatus
      * @description atualiza status do deposito
      * @param {string} deposit.collectionPointId
      * @param {string} status
      * @returns { message: string } 
      */
-    //atualiza deposito, apenas adiministrador
     public static async updateDepositStatus(req: Request, res: Response) : Promise<any>{
         const { id, status } = req.body;
         try {
@@ -143,7 +165,4 @@ export default class DepositController{
             return classified_err.sendMessage(res);
         }
     }
-    
-
-    
 }

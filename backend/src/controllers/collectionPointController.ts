@@ -3,6 +3,7 @@ import { HttpCode, HttpError } from "../erros/erro.config";
 import CollectionPointService from "../services/collectionPointService";
 import CollectionPoint from "../types/collectionPoint";
 import { ImprevistError } from "../erros/ImprevistError";
+import { ValidationError } from "yup";
 
 
 export default class CollectionPointController {
@@ -39,7 +40,7 @@ export default class CollectionPointController {
 
     }
 
-    public static async createCollectionPoint(req: Request, res: Response) {
+    public static async createCollectionPoint(req: Request, res: Response): Promise<any> {
         const requestBody: CollectionPoint = req.body;
 
         try {
@@ -49,7 +50,11 @@ export default class CollectionPointController {
             if(e instanceof HttpError) {
                 return e.sendMessage(res);
             } 
-            
+
+            if (e instanceof ValidationError){
+                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
+            }
+
             const classified_err = new ImprevistError();
             return classified_err.sendMessage(res);
         }
@@ -66,6 +71,11 @@ export default class CollectionPointController {
             if(e instanceof HttpError){   
                 return e.sendMessage(res);
             }
+
+            if (e instanceof ValidationError){
+                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
+            }
+
             const classified_err = new ImprevistError();
             return classified_err.sendMessage(res);
         }
