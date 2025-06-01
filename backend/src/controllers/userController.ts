@@ -78,4 +78,20 @@ export default class UserController {
             return classified_err.sendMessage(res);
         }
     }
+
+    public static async forgotPassword(req: Request, res: Response): Promise<any> {
+        const { email } = req.body;
+        try {
+            const response = await UserService.forgotPassword(email);
+
+            return res.status(HttpCode.OK).json({message: response});
+        } catch (e) {
+            if(e instanceof HttpError){
+                return e.sendMessage(res);
+            }
+
+            const classified_err = new ImprevistError();
+            return classified_err.sendMessage(res);
+        }
+    }
 }

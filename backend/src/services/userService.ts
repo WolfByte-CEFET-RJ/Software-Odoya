@@ -2,11 +2,13 @@ import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
-import User from "../types/user"
+import User, { UpdateUser } from "../types/user"
 import UserValidator from '../utils/Yup/userValidator';
+import Mailer from './Mailer';
 
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 const knex = DatabaseConnection.getInstance();
+const mailer = new Mailer();
 
 /**
  * @class UserService
@@ -141,10 +143,10 @@ export default class UserService {
     /**
      * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
      * @param {string} id
-     * @param {UpdateUserData} data
+     * @param {UpdateUser} data
      * @returns {Promise<string>}
      */
-    public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+    public static async updateUser(id: string, data: UpdateUser): Promise<string> {
         await UserValidator.validateUpdateUser(data);
 
         const user = await knex('User').where({ id }).first();
@@ -182,13 +184,27 @@ export default class UserService {
        }
        
     }
+
+    public static async forgotPassword(email: string) {
+        const user = await knex("User").where({email}).first();
+
+        if(!user) {
+            throw new UserNotFound();
+        }
+
+        const password = crypto.randomUUID().replace(/-/g, '').slice(0, 8);
+        const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS))
+        const to = email;
+        const subject = "Recuperação de senha";
+        
+        await knex("User").where({email}).update({
+            password: hashPassword
+        });
+
+        await mailer.sendMail(to, subject, password);
+
+        return "Senha alterada com sucesso"   
+    }
+
 }
-
-interface UpdateUserData {
-    name?: string;
-    password?: string;
-}   
-
-
-
 
