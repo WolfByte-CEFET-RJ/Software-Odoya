@@ -1,15 +1,20 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
-const knex = DatabaseConnection.getInstance();
 import Deposit from '../types/deposit';
 import { DepositStatus } from '../types/deposit';
-
 import depositValidator from '../utils/Yup/depositValidator';
 import { CollectionPointNotFound } from '../erros/CollectionPointErros';
 import { DepositNotFoundError, UnauthorizedDepositAccessError } from '../erros/DepositErrors';
+
+const knex = DatabaseConnection.getInstance();
+
+/**
+ * @class DepositService
+ * @description Serviço para Depósitos.
+ */
 export default class DepositService{
 
     /**
-     * Obtém depósitos de um usuário comum ou todos os depósitos para admin
+     * @description Obtém depósitos de um usuário comum ou todos os depósitos para admin
      * @param userId ID do usuário
      * @param isAdmin Indica se o usuário é administrador
      */
@@ -31,7 +36,7 @@ export default class DepositService{
     }
 
     /**
-     * Obtém um depósito específico
+     * @description Obtém um depósito específico
      * @param id ID do depósito
      * @param userId ID do usuário solicitante
      * @param isAdmin Indica se o usuário é administrador
@@ -59,17 +64,18 @@ export default class DepositService{
      * @param {string} id
      * @returns {Promise<Deposit>}
      */
-    public static async getDeposit(id: string): Promise<Deposit> {
-    
-            const deposit: Deposit = await knex('Deposit').select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'createdAt', 'updatedAt').where({id}).first();
-            if (!deposit) {
-                throw new Error("Deposito não encontrado");
-            }
-            return deposit;
+    public static async getDeposit(id: string): Promise<Deposit> {    
+        const deposit: Deposit = await knex('Deposit')
+            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at').where({id}).first();
+        
+        if (!deposit) {
+            throw new DepositNotFoundError()
         }
+        return deposit;
+    }
 
     /**
-     * @description Cria um Usuário
+     * @description Cria um depósito
      * @param {string} collectionPointId
      * @param {string} userId
      * @param {number} amountSponges
@@ -84,8 +90,8 @@ export default class DepositService{
             throw new CollectionPointNotFound();
         }
         
-        try{
-            var today = new Date;
+
+        var today = new Date;
         const deposit: Deposit = {
             id: depositId,
             collectionPointId,
@@ -99,22 +105,20 @@ export default class DepositService{
 
         await knex('Deposit').insert(deposit);
         return "Deposito realizado";
-        } catch (error){
-            console.log("erro ao fazer o deposito \ndetalhamento do erro:" + error);
-            return("Erro ao fazer o deposito " + error);
-        }
     }
 
-    //atualiza somente o status de um deposito dado a sua ID
-    public static async updateDepositStatus(id: string, status: string){
+    /**
+     * @description Atualiza o status de um depósito
+     * @param {string} id
+     * @param {string} status
+     */
+    public static async updateDepositStatus(id: string, status: string): Promise<String | undefined>{
         await depositValidator.validateUpdateDepositStatus({status});
-
-        try{
 
         const depositData = await knex("Deposit").where({ id }).select("amountSponges", "collectionPointId","status").first();
 
         if (!depositData) {
-            throw new Error("valor do Depósito não encontrado.");
+            throw new DepositNotFoundError()
         }
 
         // Verifica se o status no banco é o que o status enviado 
@@ -123,9 +127,9 @@ export default class DepositService{
         }
 
          // Verificar se o status já estava previamente aprovado, se sim, ele decrementa da tabela collectionPoint as esponjas que foram adicionadas
-            if (depositData.status === DepositStatus.APROVADO) {
-                await knex('collection_point').where({id: depositData.collectionPointId}).decrement('amountSponges', depositData.amountSponges);  
-            }
+        if (depositData.status === DepositStatus.APROVADO) {
+            await knex('Collection_Point').where({id: depositData.collectionPointId}).decrement('amountSponges', depositData.amountSponges);  
+        }
 
         const deposit: Partial<Deposit> = {
             status:  status as DepositStatus ,
@@ -135,25 +139,19 @@ export default class DepositService{
 
         if(status == DepositStatus.APROVADO){
             const awaitTransactions = await knex.transaction();
-                try{
+            try{
                 await awaitTransactions('Deposit').where({ id }).update(deposit);
-                await awaitTransactions('collection_point').where({id: deposit.collectionPointId}).increment('amountSponges', deposit.amountSponges);
+                await awaitTransactions('Collection_Point').where({id: deposit.collectionPointId}).increment('amountSponges', deposit.amountSponges);
                 await awaitTransactions.commit();
-            return "Status de Deposito atualizado. Deposito " + deposit.status + "!";
-                } catch (error){
-                    console.log("erro ao atualizar o status dentro do banco \ndetalhamento do erro:" + error);
-                    await awaitTransactions.rollback();
-                }
+                return "Status de Deposito atualizado. Deposito " + deposit.status + "!";
+            } catch (error){        
+                await awaitTransactions.rollback();
+                throw error;
+            }
                 
         }else{
             await knex('Deposit').where({ id }).update(deposit);
             return "Status de Deposito atualizado. Deposito " + deposit.status  + "!";
         }
-        
-        } catch (error){
-            console.log("erro ao atualizar o status do deposito \ndetalhamento do erro:" + error);
-            
-        }
     }
-    
 }

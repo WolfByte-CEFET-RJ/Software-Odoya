@@ -1,97 +1,65 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/userService';
-import { HttpCode, HttpError } from '../erros/erro.config';
-import { ImprevistError } from '../erros/ImprevistError';
-import { ValidationError } from 'yup';
-
+import { HttpCode } from '../erros/erro.config';
 
 export default class UserController {
-    public static async getUser(req: Request, res: Response): Promise<any>{
-        const id = req.user?.id;
-
+    public static async getUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
+            const id = req.user?.id;
+
             const user = await UserService.getUser(String(id));
             return res.status(HttpCode.OK).json(user);
-        }catch(e: any){
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
 
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        } catch(e: any){
+            next(e);
         }
     }
-    public static async createUser(req: Request, res: Response): Promise<any>{
-        const {name, email, password} = req.body;
-
+    public static async createUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
+            const {name, email, password} = req.body;
+            
             const response = await UserService.createUser(name, email, password);
             return res.status(HttpCode.CREATED).json({message: response});
-        }catch(e: any){
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
 
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        } catch(e: any){
+            next(e);
         }
     }
 
-    public static async updateUser(req: Request, res: Response): Promise<any>{
-        const id = req.user?.id;
-        const data = req.body;
-        
+    public static async updateUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
+            const id = req.user?.id;
+            const data = req.body;
+            
             const response = await UserService.updateUser(String(id),data);
             return res.status(HttpCode.OK).json({message: response});
-        }catch(e: any){
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            }
-
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        
+        } catch(e: any){
+            next(e);
         }
     }
     
-    public static async deleteUser(req: Request, res: Response): Promise<any>{
+    public static async deleteUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
             const id = req.user?.id;
             
             const response = await UserService.deleteUser(id);
+            return res.status(HttpCode.NO_CONTENT).json({message: response});
 
-            return res.status(HttpCode.OK).json({message: response});
-        }catch(e: any){
-            if(e instanceof HttpError){
-                return e.sendMessage(res);
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        } catch(e: any){
+            next(e);
         }
     }
 
-    public static async forgotPassword(req: Request, res: Response): Promise<any> {
-        const { email } = req.body;
+    public static async forgotPassword(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
+            const { email } = req.body;
+
             const response = await UserService.forgotPassword(email);
-
             return res.status(HttpCode.OK).json({message: response});
-        } catch (e) {
-            if(e instanceof HttpError){
-                return e.sendMessage(res);
-            }
 
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        } catch (e: any) {
+            next(e);
         }
     }
 }

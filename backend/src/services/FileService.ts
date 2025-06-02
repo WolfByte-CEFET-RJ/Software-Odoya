@@ -53,7 +53,6 @@ class CloudinaryStrategy implements UploadStrategy {
       return secure_url;
 
     } catch (error: any) {
-      console.log(error)
       throw new UploadError("Falha no upload da imagem. " + error.message);
     }
   }
@@ -92,7 +91,6 @@ public async uploadImage(buffer: Buffer, system_id: string): Promise<string> {
     });
 
   } catch (error: any) {
-    console.log(error);
     throw new UploadError("Falha no upload da imagem. " + error.message);
   }
 }

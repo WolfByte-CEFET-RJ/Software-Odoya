@@ -1,10 +1,11 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
-const knex = DatabaseConnection.getInstance();
 import { Event, CreateEvent, UpdateEvent } from '../types/event';
 import { v4 } from "uuid";
-import { EventNotFoundError, RequiredDataError, RequiredEventIdError, UnauthorizedEventAccessError } from '../erros/EventError';
+import { EventNotFoundError } from '../erros/EventError';
 import EventValidator from '../utils/Yup/eventValidator';
-import e from 'cors';
+import { MissinngDataError } from '../erros/CommonErros';
+
+const knex = DatabaseConnection.getInstance();
 
 export default class EventService{
 
@@ -48,7 +49,7 @@ export default class EventService{
 
             if (!event) {
                 console.log(event)
-                throw new Error("Mutirão não encontrado");
+                throw new EventNotFoundError()
             }
             return event;
         } catch (error: any) {
@@ -80,11 +81,11 @@ export default class EventService{
     public static async updateEvent(id: string, data: UpdateEvent) {
         
         if(!id) {
-            throw new RequiredEventIdError();
+            throw new MissinngDataError("Id do depósito não informado")
         }
 
         if(!data) {
-            throw new RequiredDataError();
+            throw new MissinngDataError("Dados para atualização não fornecidos")
         }
 
         const event = await knex("Event").select("*").where({id}).first();

@@ -22,7 +22,7 @@ export enum HttpCode {
 
 /**
  * @interface
- * @description Representa os campos das respostas http quando m erro ocorre
+ * @description Representa os campos das respostas http quando um erro ocorre
  * @see HttpCode
  */
 export interface HttpErrorFields {
