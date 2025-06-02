@@ -4,10 +4,17 @@
     flex-direction: column;
     align-items: center;
     background-color: #B1E3FA;
+    font-family: 'Abel', sans-serif;
+
+    input {
+        font-family: 'Abel', sans-serif;
+        font-weight: bold;
+    }
 }
 
 h1 {
     margin: -2% 0% 2% 0%;
+    font-family: 'Tankindred', sans-serif;
 }
 
 .formProfile {
@@ -29,9 +36,8 @@ h1 {
     width: 35%;
     border: none;
     border-radius: 3px;
-    background-color: #269BDF;
-    opacity: 50%;
-    color: white;
+    background-color: #6bbfed;
+    color: black;
     font-weight: bold;
 }
 
@@ -61,6 +67,7 @@ label {
 
 button {
     font-size: 20px;
+    font-family: 'Abel', sans-serif;
     border: none;
     border-radius: 30px;
     width: 20%;

@@ -59,6 +59,7 @@ const UserProvider = ({children}) => {
        localStorage.clear()
         setAdmin(false)
         setUser("")
+        window.location.reload()
        
         
 

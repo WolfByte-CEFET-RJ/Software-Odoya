@@ -133,8 +133,8 @@ const Perfil = () => {
             <Header/>
             <img src="./Ondinhas.svg" className={perfil.separador}/>
             <div className={perfil.container}>
-            <img src="../public/LogoAzul.svg" className={perfil.logoazul} alt="Logo Azul da ENACTUS"/>
-                <h1>Seja bem vindo {client}</h1>
+                <img src="../public/LogoAzul.svg" className={perfil.logoazul} alt="Logo Azul da ENACTUS"/>
+                <h1>Seja bem-vindo, {client}!</h1>
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
                     <InputFormProfile   onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormProfile>
@@ -145,7 +145,7 @@ const Perfil = () => {
                     <div className={perfil.divPoints}>
                         <p className={perfil.points}>0</p>
                         <div className={perfil.pointsInfo}>
-                            <MdInfo/>
+                            <MdInfo size={20}/>
                             <p>Faça depósitos de esponjas para conseguir mais pontos!</p>
                         </div>
                     </div>

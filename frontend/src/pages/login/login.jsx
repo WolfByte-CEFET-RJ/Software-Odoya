@@ -61,9 +61,8 @@ function Login(){
                 toast.success('Bem vindo!');
                 setTimeout(() => {
                    navigate("/profile")
-                    
+                    window.location.reload()
                 }, 2000);
-                //getToken(res.data.token)
                 localStorage.setItem("token",res.data.token);
                    
                 
