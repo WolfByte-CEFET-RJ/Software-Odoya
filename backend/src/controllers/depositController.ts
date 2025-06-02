@@ -1,7 +1,5 @@
-
-
-import Deposit from "../types/deposit";
 import { Request, Response } from 'express';
+import Deposit from "../types/deposit";
 import { HttpCode, HttpError } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import { ImprevistError } from '../erros/ImprevistError';
@@ -101,7 +99,7 @@ export default class DepositController{
      */
     public static async createDeposit(req: Request, res: Response): Promise<any> {
         const userId = req.user?.id;
-        const { collectionPointId, amountSponges } = JSON.parse(req.body.depositData);;
+        const { collectionPointId, amountSponges } = req.body;
         const image = req.file;
 
         try{

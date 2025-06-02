@@ -111,7 +111,7 @@ export default class DepositService{
 
         try{
 
-        const depositData = await knex("Deposit").where({ id }).select("amountSponges", "collectionPointId","status").first();
+        const depositData = await knex("Deposit").where({ id }).select("amountSponges", "collectionPointId","status","userId","imageURL").first();
 
         if (!depositData) {
             throw new Error("valor do Depósito não encontrado.");
@@ -122,12 +122,15 @@ export default class DepositService{
             return ("O depósito já se encontra no estado de " + status);
         }
 
-         // Verificar se o status já estava previamente aprovado, se sim, ele decrementa da tabela collectionPoint as esponjas que foram adicionadas
+         // Verificar se o status já estava previamente aprovado, se sim, ele decrementa da tabela collectionPoint as esponjas que foram adicionadas e os pontos do usuario
             if (depositData.status === DepositStatus.APROVADO) {
-                await knex('collection_point').where({id: depositData.collectionPointId}).decrement('amountSponges', depositData.amountSponges);  
+                const user_points =  depositData.imageURL ? 2 * depositData.amountSponges! : depositData.amountSponges;
+                await knex('user').where({id: depositData.userId}).decrement('points', user_points);
+                await knex('collection_point').where({id: depositData.collectionPointId}).decrement('amountSponges', depositData.amountSponges);
+                
             }
 
-        const deposit: Partial<Deposit> = {
+        const deposit: Partial<Deposit> = { 
             status:  status as DepositStatus ,
             amountSponges:  depositData.amountSponges,
             collectionPointId: depositData.collectionPointId
@@ -135,11 +138,13 @@ export default class DepositService{
 
         if(status == DepositStatus.APROVADO){
             const awaitTransactions = await knex.transaction();
+            const user_points =  depositData.imageURL ? 2 * deposit.amountSponges! : deposit.amountSponges;
                 try{
-                await awaitTransactions('Deposit').where({ id }).update(deposit);
-                await awaitTransactions('collection_point').where({id: deposit.collectionPointId}).increment('amountSponges', deposit.amountSponges);
-                await awaitTransactions.commit();
-            return "Status de Deposito atualizado. Deposito " + deposit.status + "!";
+                    await awaitTransactions('user').where({id: depositData.userId}).increment('points', user_points);
+                    await awaitTransactions('deposit').where({ id }).update(deposit);
+                    await awaitTransactions('collection_point').where({id: deposit.collectionPointId}).increment('amountSponges', deposit.amountSponges);
+                    await awaitTransactions.commit();
+                    return "Status de Deposito atualizado. Deposito " + deposit.status + "!";
                 } catch (error){
                     console.log("erro ao atualizar o status dentro do banco \ndetalhamento do erro:" + error);
                     await awaitTransactions.rollback();
@@ -152,7 +157,7 @@ export default class DepositService{
         
         } catch (error){
             console.log("erro ao atualizar o status do deposito \ndetalhamento do erro:" + error);
-            
+            throw new Error("Erro ao atualizar o status do deposito");
         }
     }
     
