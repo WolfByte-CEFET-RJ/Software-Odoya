@@ -16,33 +16,85 @@
     border-radius: 2% 0 0 2%;
     margin: 2% 0 5% 5%;
     align-items: center;
-    
+   
     display:flex;
     flex-direction: column;
     background-color: #F1F1F1;
     height: 90%;
     width:50%;    
 }
+.div_forms_login{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+}
 .forms .logoazul{
     margin-top: 10%;
-    width: 130px;
-    height: 130px;
+    width: 201px;
+    height: 156px;
+    // width: 130px;
+    // height: 130px;
 }
+.forms .logoazul{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    transition: transform 1s linear;
+}
+
+.forms .logoazul2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+}
+.forms .logoazul2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    animation: rotacionar 1s linear infinite;
+}
+
+@keyframes rotacionar{
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 // .forms input{
     
 //     margin-top:3%;
 //     width: 50%;
 //     height: 7%;
+//     border: none;
 //     border-radius: 10px;
 //     background-color: #B1E3FA;
 // }
 
 .forms a{
-    margin-top:1%;
-    margin-right: 23%;
+    margin-top:3%;
+    cursor: pointer;
+    margin-right: 80%;
+    width: 100%;
     font-size: 10px;
     opacity: 60%;
     font-style: italic;
+}
+
+.button-login-form{
+    all: unset;
+    margin-top:3%;
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #269BDF;
+    color: #F1F1F1;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 // .forms button{
@@ -60,21 +112,128 @@
     background-color: #00B8F1;
     border-radius: 0 2% 2% 0;
     align-items: center;
+    justify-content: center;
     width:50%;
     height: 90%;
     margin: 2% 5% 5% 0;
 }
-.logo .logobranca{
+.logo-logomarca{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    margin: 2% 5% 5% 0;
+}
+.logo-logomarca .logobranca{
     margin-top: 20%;
-    height: 200px;
-    width: 320px;
+    height: 218px;
+    width: 447px;
     
 }
-.logo h3{
-    
+.logo-logomarca h3{
     color:white;
-    margin-top: -5%;
+    margin-top:-2%;
     font-style:italic;
+    width: 70%;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 1rem;
+}
+
+@media(max-width: 1020px){
+    .forms{
+        margin: 4% -0.5% 5% 5%;   
+    }
+    .forms .logoazul{
+        margin-top: 8%;
+    }
+    .div_forms_login{
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        align-items: center;
+        justify-content: center;
+    }
+    .forms a{
+        margin-right: 50%;
+        margin-bottom: 5%;
+        width: 100%;
+        font-size: 10px;
+        opacity: 60%;
+        font-style: italic;
+    }
+    .button-login-form{
+        width: 250px;
+    }
+    .logo{
+        margin: 4% 5% 5% 0;
+    }
+    
+}
+@media(max-width: 820px){
+    .button-login-form{
+        width: 150px;
+    }
+    .logo{
+        width:50%;
+        height: 90%;
+    }
+    .logo-logomarca{
+        width:100%;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+    .logo-logomarca .logobranca{
+        margin-top: 20%;
+        height: 140px;
+        width: 300px;
+    }
+    .logo-logomarca h3{
+        font-size: 1rem;
+    }
+}
+@media(max-width: 640px){
+    .body{
+        flex-direction: column;
+    }
+    .forms{
+        width: 85%;
+        height: 100%;
+        margin: 5% 5% 5% 5%;
+        padding-bottom: 5%;   
+    }
+    .forms .logoazul{
+        margin-top: 8%;
+    }
+    .button-login-form{
+        width: 250px;
+    }
+    .logo{
+        margin: -7.5% 5% 5% 5%;
+        width:85%;
+        height: 30%;
+    }
+    .logo-logomarca{
+        top: -25%;
+    }
+}
+@media(max-width: 480px){
+    .body{
+        flex-direction: column;
+    }
+    .forms{
+        width: 85%;
+        height: 100%;
+        margin: 5% 5% 5% 5%;
+        padding-bottom: 5%;   
+    }
+    .forms .logoazul{
+        margin-top: 8%;
+    }
+    .div_forms_login{
+        width: 80%;
+    }
+    .button-login-form{
+        width: 200px;
+    }
 }

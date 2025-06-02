@@ -11,7 +11,7 @@ export class EmailDuplicate extends HttpError{
         super({status: HttpCode.CONFLICT, message})
 
     }
-<<<<<<< HEAD
+
 }
 
 /**
@@ -25,6 +25,16 @@ export class UserNotFound extends HttpError{
         super({status: HttpCode.NOT_FOUND, message})
 
     }
-=======
->>>>>>> feature/login-front
+}
+
+/**
+ * @extends HttpError
+ * @description Erro de id não inserido
+ */
+export class RequiredIdError extends HttpError {
+    constructor(
+        message: string = 'Id não fornecido'
+    ){
+        super({status: HttpCode.BAD_REQUEST, message});
+    }
 }

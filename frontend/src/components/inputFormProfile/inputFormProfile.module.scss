@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    justify-items: flex-end;
+}
+
+.input {
+    width: 150%;
+    margin: 0% 0% 2% 2%;
+    padding: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: none;
+    border-radius: 3px;
+    background-color: #6bbfed;
+    color: black;
+    font-size: medium;
+}
+
+.buttonEditar {
+    position: relative;
+    right: 2rem;
+    bottom: .5rem;
+    background: none;
+    border: none;
+    width: 0%;
+    font-size: 20px;
+    cursor: pointer;
+}

@@ -1,12 +1,12 @@
 import React from "react";
 import "../../styles/inputForm.scss";
 
-function InputForm({type, onChange, placeholder}){
+function InputForm({type, onChange, placeholder, off}){
 
 return(
-<>
-    <input className= "inputForm" type={type} onChange={onChange} placeholder={placeholder}/>
-</> 
+<div className="container-inputForm">
+    <input className= "inputForm" type={type} disable={off} onChange={onChange} placeholder={placeholder}/>
+</div> 
 )
 }
 
