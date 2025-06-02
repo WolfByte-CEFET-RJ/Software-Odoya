@@ -44,7 +44,7 @@
     .titulo {
         margin-top: 10%;
         text-align: center;
-        font-size: 1.8rem;
+        font-size: 1.9rem;
         margin-bottom: 3%;
         font-family: 'Tankindred', sans-serif;
         color: var(--secondary-color);
@@ -80,9 +80,9 @@
     }
 
     .texto {
-
-        font-size: 1.3rem;
-        margin-bottom: 3%;
+        color: #000000;
+        font-size: 1.5rem;
+        margin-bottom: 2%;
 
         @media (max-width: 910px) {
             font-size: 1.3rem;
@@ -249,3 +249,204 @@
 
     
 }
+
+.secao3{
+    background-color: #B1E3FA;
+    margin-top: -3.5%;
+    
+    .titulo {
+        // display: flex;
+        position: relative;
+        top: 30%;
+        text-align: center;
+        font-size: 1.8rem;
+        // margin-top: 3%;
+        font-family: 'Tankindred', sans-serif;
+        color: var(--secondary-color);
+
+        @media (max-width: 910px) {
+            font-size: 1.5rem;
+        }   
+    }
+
+    .objetivos{
+        text-align: center;
+        font-size: 1rem;
+        font-family: 'Abel', sans-serif;
+        margin-top: 10%;
+    }
+    .titulo2{
+        text-align: center;
+        //padding-left: 8rem;
+        font-size: 1.8rem;
+        margin-bottom: 3%;
+        margin-top: 25%;
+        font-family: 'Tankindred', sans-serif;
+        color: #195D39;
+        
+    }
+    .line{
+        display:flex;
+    }
+    .listaActions{
+        margin-top: 4rem;
+        display:flex;
+        flex-direction: column;
+        
+        
+    }
+    .field{
+        display:flex;
+        padding-left: 30rem;
+        font-size: 0.9rem;
+        margin: 8% 0 10% 0;
+        font-family: 'Tankindred', sans-serif;
+        color: #269BDF;  
+    }
+    
+    .cards{
+        width: 200px;
+        height: 250px;
+        text-align: center;
+        gap: 10px;
+        margin: 5% 2% 10% 2%;
+        
+    }
+    .partedebaixo{
+        display:flex;
+        flex-direction: column;
+        margin-top: 2.5%;
+        
+       
+    }
+    .ordem{
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        
+    }
+    .field2{
+        margin: 20% 20% 20% 20%;
+        
+    }
+    .slider{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #F1F1F1;
+        padding: 5% 0%;
+        border-radius: 1rem;
+        margin: 5% 0% 0 20%;
+       
+    }
+    .imagem {
+        width: 500px;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+      
+      .imagem img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 1rem;
+      }
+    .setas{
+        display: flex;
+        justify-content: space-between;
+        background: none;
+        border: none;
+        outline: none;
+        transition: color 0.3s ease;
+        padding: 0;
+        margin-top: -1.0rem;
+    }
+    .setas:hover{
+        color: gray;
+        cursor: pointer;
+    }
+}
+
+.secao4{
+    .resultados{
+        display: flex;
+        justify-content: center;
+        gap: 400px;
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
+    
+    .resultados2{
+        display: grid;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .titulo {
+        text-align: left;
+        font-size: 40px;
+        margin-top: 5%;
+        margin-bottom: 1.5rem;
+        font-family: 'Tankindred', sans-serif;
+        text-decoration: underline;
+        color: var(--secondary-color);
+
+        @media (max-width: 910px) {
+            font-size: 1.5rem;
+        }
+    }
+    .parceiros {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; 
+        width: 100%; 
+        padding: 0 5%; 
+      
+        .titulo {
+          text-align: right;
+          font-size: 40px;
+          width: 100%;
+          margin: 2rem 0; 
+          font-family: 'Tankindred', sans-serif;
+          color: var(--secondary-color);
+          text-decoration: underline;
+          width: 100%; 
+          padding-right: 35rem; 
+        }
+      
+        .logos {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+          width: 100%;
+          padding-left: 28rem;
+          padding-bottom: 300px;
+      
+          .linha {
+            display: flex;
+            justify-content: flex-start; 
+            gap: 4rem;
+            flex-wrap: wrap;
+            padding: 0 1rem; 
+      
+            img {
+              width: 200px;
+              height: 120px;
+              object-fit: contain;
+            }
+          }
+        }
+      } 
+    }
+
+    p{
+        font-size: 1.3rem;
+        font-family: 'Abel', sans-serif;
+        margin-bottom: 3%;
+        padding: 0.5rem 0;
+        color: var(--secondary-color);
+    }
