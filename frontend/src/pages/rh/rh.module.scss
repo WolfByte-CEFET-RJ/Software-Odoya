@@ -65,7 +65,8 @@
 }
 
 .results {
-    margin: 1% 0% 0% 5%;
+    margin: 0% 0% 0% 5%;
+    font-size: medium;
     color: gray;
 }
 
@@ -86,6 +87,11 @@
     color: white;
     background-color: #269BDF;
 
+    p {
+        color: white;
+        width: 80%;
+    }
+
     h1 {
         margin: auto;
         padding-bottom: 2rem;
@@ -98,5 +104,6 @@
 
 .accountInfoIcon {
     margin-left: auto;
-    margin-top: -8vh;
+    margin-top: -5vh;
+    margin-right: 2vw;
 }

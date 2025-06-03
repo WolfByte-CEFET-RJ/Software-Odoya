@@ -1,4 +1,4 @@
-import { Router } from "express";
+import Router from "express";
 import RootUserController from "../controllers/rootUserController";
 import AuthMiddleware from "../middlewares/authMiddleware";
 
@@ -19,6 +19,14 @@ rootUserRouter
     * @returns { amount: number, user: User[] } 
     */
     .get("/root/user/all", AuthMiddleware.authorizeRoot, RootUserController.getAllUsers)
+
+    /**
+    * @route GET root/user?page=xx&limit=xx
+    * @description Fornece os usuários paginados (com exceção do super-usuário)
+    * @default (1,10) (página,itens)
+    * @returns { amount: number, user: User[] } 
+    */
+    .get("/root/user", AuthMiddleware.authorizeRoot, RootUserController.getUsersPagination)
 
     /**
      * @route /root/user/user_id

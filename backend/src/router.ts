@@ -2,13 +2,17 @@
  * @file Mapeamento dos endpoints
 */
 
-import { Express, Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 import rootUser from './routes/rootUserRoutes';
 import authRouter from './routes/authRoutes';
+import eventRouter from './routes/eventRoutes';
 import user from './routes/userRoutes';
 import collectionPointRouter from './routes/collectionPointRoutes';
+import spongeDepositRouter from './routes/depositRoutes';
+import depositRouter from './routes/depositRoutes';
+import path from 'path';
+import ErrorHandler from './middlewares/errorHandler';
 
-const bodyParser = require('body-parser');
 /**
  * Define endpoints mapeados
  * 
@@ -22,20 +26,35 @@ const bodyParser = require('body-parser');
  * router(app)
  */
 export default (app: Express): void => {
-    app
 
+    // Serviços
+    app
         .use(rootUser)
-        .use(bodyParser.json())
         .use(user)
         .use(authRouter)
         .use(user)
         .use(collectionPointRouter)
-        
-    // Rota padrão
-    app.get('/', (req: Request, res: Response) => {
-        res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
-    });
-    
+        .use(depositRouter)
+        .use(spongeDepositRouter)
+        .use(eventRouter)
 
-}
+
+    // Rota padrão
+    app.get('/', 
+        (req: Request, res: Response) => {
+            res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
+        });
+    
+    // Arquivos locais
+    if(process.env.NODE_ENV == "development"){
+        app.use('/uploads', 
+                express.static(path.resolve(process.cwd(), 'uploads')));
+    }
+
+    // Tratamento de erros
+    app
+        .use(ErrorHandler.handleNotFound)
+        .use(ErrorHandler.sendError)
+
+}       
 

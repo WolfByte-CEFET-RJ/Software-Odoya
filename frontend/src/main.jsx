@@ -6,13 +6,17 @@ import { ToastContainer } from 'react-toastify';
 
 import {BrowserRouter} from 'react-router-dom'
 
+import UserContext from './components/Context/userContext.jsx'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
+    <UserContext>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENTID} >
       
       <Routing/>
       </GoogleOAuthProvider>
+    </UserContext>
     
       <ToastContainer position="top-center"
         hideProgressBar={false}

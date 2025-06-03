@@ -1,12 +1,15 @@
 import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
-import User from "../types/user"
+import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
+import User, { UpdateUser } from "../types/user"
 import UserValidator from '../utils/Yup/userValidator';
-
+import Mailer from './Mailer';
 import DatabaseConnection from '../database/connection/DatabaseConnection';
+import { MissinngDataError } from '../erros/CommonErros';
+import { RootUserModificationError } from '../erros/AuthErros';
 const knex = DatabaseConnection.getInstance();
+const mailer = new Mailer();
 
 /**
  * @class UserService
@@ -29,24 +32,64 @@ export default class UserService {
     }
 
     /**
-     * @description Busca um Usuário por email
-     * @param {string} id
-     * @returns {Promise<User>}
+     * @warning
+     * @description Busca um Usuário por emaiil. Hash da senha incluso no objeto de resposta.
+     * @param {string} email
+     * @returns {Promise<User & { password: string }>}
      */
-    public static async getUserByEmail(email: string): Promise<User> {
+    public static async getUserSensitiveByEmail(email: string): Promise<User & { password: string }> {
 
-        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({email}).first();
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
+        if (!user) {
+            throw new UserNotFound();
+        }
         return user;
     }
 
     /**
-     * @description Busca o hash da senha de um usuário dado um e-mail. Hash da senha incluso no objeto de resposta.
-     * @param {string} email
-     * @returns {Promise<User & { password: string } | null>
+     * @description Busca todos os usuários, com exceção do super-usuário
+     * @returns {Promise<User[]>}
      */
-    public static async getUserWithSensitiveData(email: string): Promise<User & { password: string } | null> {
-        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
-        return user;
+    public static async getAll(): Promise<User[]>{
+        const users: User[] = await knex("User").select('id', 'name', 'email', 'admin', 'points').whereNot({email: process.env.ROOT_EMAIL});
+    
+        if(users.length===0){
+            throw new UserNotFound()
+        }
+        
+        // Traduzindo campos booleanos
+        users.forEach(user => {
+            user.admin = Boolean(user.admin);
+        });
+    
+        return users
+    }
+
+    /**
+     * @description Retorna uma lista paginada de usuários, com exceção do super-usuário
+     * @param {number} page
+     * @param {number} limit
+     * @returns {Promise<User[]>}
+     */
+    public static async getAllPagination(page: number, limit: number): Promise<User[]>{
+        const offset = (page - 1) * limit;
+
+        const users: User[] = await knex("User")
+                                .select('id', 'name', 'email', 'admin', 'points')
+                                .whereNot({email: process.env.ROOT_EMAIL})
+                                .limit(limit)
+                                .offset(offset);
+    
+        if(users.length===0){
+            throw new UserNotFound()
+        }
+        
+        // Traduzindo campos booleanos
+        users.forEach(user => {
+            user.admin = Boolean(user.admin);
+        });
+    
+        return users
     }
 
     /**
@@ -63,7 +106,6 @@ export default class UserService {
         if (existingUser) {
             throw new EmailDuplicate();
         }
-
 
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
@@ -88,7 +130,7 @@ export default class UserService {
         if (existingUser) {
             throw new EmailDuplicate();
         }
-
+        
         const user = {
             id: v4(),
             name,
@@ -102,16 +144,20 @@ export default class UserService {
     /**
      * @description Realiza a atualização do Usuário (apenas name e password pode ser alterado)
      * @param {string} id
-     * @param {UpdateUserData} data
+     * @param {UpdateUser} data
      * @returns {Promise<string>}
      */
-    public static async updateUser(id: string, data: UpdateUserData): Promise<string> {
+    public static async updateUser(id: string, data: UpdateUser): Promise<string> {
         await UserValidator.validateUpdateUser(data);
 
         const user = await knex('User').where({ id }).first();
         if (!user) {
             throw new UserNotFound();
         }
+
+        if(user.email === process.env.ROOT_EMAIL){
+            throw new RootUserModificationError("Usuário root não pode ter seus dados cadastrais atualizados");
+        } 
 
         if (data.password) {
             const hashPassword = await hash(data.password, Number(process.env.SALT_ROUNDS));
@@ -126,31 +172,12 @@ export default class UserService {
     }
 
     /**
-     * @description Busca todos os usuários, com exceção do super-usuário
-     * @returns {Promise<User[]>}
-     */
-    public static async getAll(): Promise<User[]>{
-        const users: User[] = await knex("User").select('id', 'name', 'email', 'admin', 'points').whereNot({email: process.env.ROOT_EMAIL});
-    
-        if(users.length===0){
-            throw new UserNotFound()
-        }
-        
-        // Traduzindo campos booleanos
-        users.forEach(user => {
-            user.admin = Boolean(user.admin);
-        });
-    
-        return users
-    }
-
-    /**
      * @description Delete o usuário do id seleccionado
      * @returns {Promise<string>}
      */
     public static async deleteUser(id: string | undefined): Promise<string>{
         if(!id){
-            throw new RequiredIdError();
+            throw new MissinngDataError("Usuário não informado")
         }
 
        const linesAffected = await knex("User").where({id: id}).del();
@@ -162,13 +189,26 @@ export default class UserService {
        }
        
     }
+
+    public static async forgotPassword(email: string) {
+        const user = await knex("User").where({email}).first();
+
+        if(!user) {
+            throw new UserNotFound();
+        }
+
+        const password = crypto.randomUUID().replace(/-/g, '').slice(0, 8);
+        const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS))
+        const to = email;
+        const subject = "Recuperação de senha";
+        
+        await knex("User").where({email}).update({
+            password: hashPassword
+        });
+
+        await mailer.sendMail(to, subject, password);
+
+        return "Senha alterada com sucesso"   
+    }
 }
-
-interface UpdateUserData {
-    name?: string;
-    password?: string;
-}   
-
-
-
 

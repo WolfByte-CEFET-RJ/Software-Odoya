@@ -7,6 +7,7 @@ import express from 'express';
 import cors from 'cors';
 import routes from './router'
 import DatabaseConnection from './database/connection/DatabaseConnection';
+import CollectionPointService from './services/collectionPointService';
 
 const app: express.Express = express();
 
@@ -28,8 +29,12 @@ async function startServer(): Promise<void> {
   const PORT: number = process.env.PORT ? Number(process.env.PORT) : 5000;
   const HOST: string = process.env.HOST || "0.0.0.0";
   
-  app.listen(PORT, HOST, () => {
+  app.listen(PORT, HOST, async () => {
     console.log(`🔥 \tServidor ativo em: http://localhost:${PORT}`);
+    console.log(`🌱 \tExecutando em: ${process.env.NODE_ENV}`)
+
+    await CollectionPointService.checkColectionPointNotification();
+    
   });
 }
 

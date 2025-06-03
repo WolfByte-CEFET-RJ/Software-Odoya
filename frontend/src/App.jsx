@@ -11,11 +11,13 @@ const Routing = () =>{
         <>
         
             <Routes>
+                
                 <Route path="/" element={<Principal/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Cadastro/>}/>
                 <Route path="/profile" element={<Perfil/>}/>
                 <Route path="/rh" element={<RH/>}/>
+
             </Routes>
         
         </>

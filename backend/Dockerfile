@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["npm", "run", "dev"]
+CMD npx knex migrate:latest && npm run knex:seed && npm run dev
