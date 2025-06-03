@@ -1,19 +1,21 @@
 import userbutton from "./userbutton.module.scss";
 import { MdPerson } from "react-icons/md";
 
-const RHUserButton = ({openModal}) => {
+const RHUserButton = ({user, onClick}) => {
+    const {name, email, points} = user
+
     return (
         <>
         <div className={userbutton.body}>
             <div className={userbutton.info}>
                 <MdPerson className={userbutton.icon} size={40}/>
                 <div>
-                    <p>Nome: </p>
-                    <p>Email: </p>
-                    <p>Pontos: </p>
+                    <p>Nome: {name}</p>
+                    <p>Email: {email}</p>
+                    <p>Pontos: {points}</p>
                 </div>
             </div>
-            <button onClick={openModal}>Inspecionar</button>
+            <button onClick={onClick}>Inspecionar</button>
         </div>
         </>
     )

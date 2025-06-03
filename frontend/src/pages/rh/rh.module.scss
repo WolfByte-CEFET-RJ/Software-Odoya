@@ -1,3 +1,13 @@
+.body {
+    p, a, button, input, label {
+        font-family: 'Abel', sans-serif;
+    }
+
+    h1 {
+        font-family: 'Tankindred', sans-serif;
+    }
+}
+
 .title {
     margin: auto;
     text-align: center;
@@ -6,7 +16,7 @@
 }
 
 .titleUserList {
-    margin: 1% 0% 0% 5%
+    margin: 1% 0% 0% 5%;
 }
 
 .separator {
@@ -18,16 +28,12 @@
     display: flex;
 
     .searchUserSwitches {
-        margin: .5% 0% 0% 4%;
+        margin: .5% 0% 0% 10%;
+        display: flex;
+        gap: 5%;
+        text-wrap-mode: nowrap;
         label {
             display: flex;
-
-            span {
-                display: inline-block;
-                width: 15rem;
-                margin-top: 1.5%;
-                font-size: medium;
-            }
 
             .searchUserSwitch {
                 margin: 0% 2% 3% 2%
@@ -59,15 +65,19 @@
 }
 
 .results {
-    margin-left: 5%;
+    margin: 1% 0% 0% 5%;
     color: gray;
 }
 
-.userList {
+.container {
+    margin: 0% 0% 3% 2%;
+    display: flex;
+}
+
+.cardGrid {
     display: flex;
     flex-wrap: wrap;
-    margin: 0% -3% 2% 2%;
-    overflow-x: auto;
+    width: 100%;
 }
 
 .accountInfo {
@@ -75,6 +85,7 @@
     padding-left: 6rem;
     color: white;
     background-color: #269BDF;
+
     h1 {
         margin: auto;
         padding-bottom: 2rem;
@@ -86,6 +97,6 @@
 }
 
 .accountInfoIcon {
-    margin-left: 12%;
-    margin-top: -4%;
+    margin-left: auto;
+    margin-top: -8vh;
 }
