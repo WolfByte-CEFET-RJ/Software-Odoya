@@ -30,9 +30,11 @@ async function startServer(): Promise<void> {
   const HOST: string = process.env.HOST || "0.0.0.0";
   
   app.listen(PORT, HOST, async () => {
-    const data = await CollectionPointService.checkColectionPointNotification();
-    console.log(data);
     console.log(`🔥 \tServidor ativo em: http://localhost:${PORT}`);
+    console.log(`🌱 \tExecutando em: ${process.env.NODE_ENV}`)
+
+    await CollectionPointService.checkColectionPointNotification();
+    
   });
 }
 

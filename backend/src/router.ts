@@ -11,6 +11,7 @@ import collectionPointRouter from './routes/collectionPointRoutes';
 import spongeDepositRouter from './routes/depositRoutes';
 import depositRouter from './routes/depositRoutes';
 import path from 'path';
+import ErrorHandler from './middlewares/errorHandler';
 
 /**
  * Define endpoints mapeados
@@ -39,9 +40,8 @@ export default (app: Express): void => {
 
 
     // Rota padrão
-    app
-        .get('/', (req: Request, res: Response) => {
-            console.log(process.env.NODE_ENV)
+    app.get('/', 
+        (req: Request, res: Response) => {
             res.status(200).json({status: true, message: "✔ Connection sucessfully stablished!"})
         });
     
@@ -50,5 +50,11 @@ export default (app: Express): void => {
         app.use('/uploads', 
                 express.static(path.resolve(process.cwd(), 'uploads')));
     }
+
+    // Tratamento de erros
+    app
+        .use(ErrorHandler.handleNotFound)
+        .use(ErrorHandler.sendError)
+
 }       
 

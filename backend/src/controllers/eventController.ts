@@ -1,113 +1,76 @@
-import { Request, response, Response } from "express";
-import { HttpCode, HttpError } from "../erros/erro.config";
+import { NextFunction, Request, response, Response } from "express";
+import { HttpCode } from "../erros/erro.config";
 import EventService from "../services/eventService"
 import { Event, CreateEvent, UpdateEvent } from "../types/event";
-import { ImprevistError } from "../erros/ImprevistError";
-import { ValidationError } from 'yup';
-
-
 
 export default class EventController {
 
-    public static async getAllEventScheduled(req: Request, res: Response) { 
-        console.log("Teste");
+    public static async getAllEventScheduled(req: Request, res: Response, next: NextFunction) { 
+        try {
+            const events: Event[] = await EventService.getAllEventScheduled();
+            res.status(HttpCode.OK).json(events);
         
-        try {
-                const events: Event[] = await EventService.getAllEventScheduled();
-                res.status(HttpCode.OK).json(events);
-            } catch (e) {
-                if (e instanceof HttpError) {
-                    return e.sendMessage(res);
-                }
-    
-                const classified_err = new ImprevistError();
-                return classified_err.sendMessage(res);
-            }
+        } catch (e: any) {
+            next(e);
         }
+    }
 
-    public static async getAllEvent(req: Request, res: Response) {
+    public static async getAllEvent(req: Request, res: Response, next: NextFunction) {
+        try {
+            const events: Event[] = await EventService.getAllEvent();
+            res.status(HttpCode.OK).json(events);
+
+        } catch (e) {
+            next(e);
+        }
+    }
+    
+    public static async getOneEvent(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id  = req.params.id
+            
+            const event: Event = await EventService.getOneEvent(id);
+            res.status(HttpCode.OK).json(event);
         
-        try {
-                const events: Event[] = await EventService.getAllEvent();
-                res.status(HttpCode.OK).json(events);
-            } catch (e) {
-                if (e instanceof HttpError) {
-                    return e.sendMessage(res);
-                }
-    
-                const classified_err = new ImprevistError();
-                return classified_err.sendMessage(res);
-            }
+        } catch (e) {
+            next(e);
         }
-    
-    public static async getOneEvent(req: Request, res: Response) {
-        const id  = req.params.id
-        try {
-                const event: Event = await EventService.getOneEvent(id);
-                res.status(HttpCode.OK).json(event);
-            } catch (e) {
-                if (e instanceof HttpError) {
-                    return e.sendMessage(res);
-                }
-    
-                const classified_err = new ImprevistError();
-                return classified_err.sendMessage(res);
-            }
-        }
+    }
 
-    public static async createEvent(req: Request, res: Response): Promise<any> {
-        const requestBody: CreateEvent = req.body;
+    public static async createEvent(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
+            const requestBody: CreateEvent = req.body;
+            
             const response = await EventService.createEvent(requestBody);
             res.status(HttpCode.CREATED).json(response);
+        
         } catch (e) {
-            if (e instanceof HttpError) {
-                    return e.sendMessage(res);
-            }
-            
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+            next(e);
         }
     }
 
-    public static async updateEvent(req: Request, res: Response): Promise<any> {
-        const { id } = req.params;
-        const data: UpdateEvent = req.body;
+    public static async updateEvent(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
+            const { id } = req.params;
+            const data: UpdateEvent = req.body;
+        
             const response = await EventService.updateEvent(id, data);
             res.status(HttpCode.OK).json({"message": response});
+        
         } catch (e) {
-            if (e instanceof HttpError) {
-                    return e.sendMessage(res);
-            }
-            
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+            next(e);
         }
     }
 
-    public static async deleteEvent(req: Request, res: Response) {
+    public static async deleteEvent(req: Request, res: Response, next: NextFunction) {
+        try {
             const { id } = req.params;
-    
-            try {
-                await EventService.deleteEvent(id);
-                res.status(HttpCode.NO_CONTENT).send();
-            } catch (e) {
-                if(e instanceof HttpError) {
-                    return e.sendMessage(res);
-                } 
-                
-                const classified_err = new ImprevistError();
-                return classified_err.sendMessage(res);
-            }
+            
+            await EventService.deleteEvent(id);
+            res.status(HttpCode.NO_CONTENT).send();
+        
+        } catch (e) {
+            next(e);
         }
-
+    }
 }

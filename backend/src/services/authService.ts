@@ -89,6 +89,11 @@ export class AuthService {
         return system_token;
     }
 
+    /**
+     * Gera token de autenticação do usuário
+     * @param {User} user 
+     * @returns {String} token de autenticação
+     */
     private static generateToken(user: User): string{
         return jsonwebtoken.sign(
             {

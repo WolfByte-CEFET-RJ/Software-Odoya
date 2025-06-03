@@ -1,12 +1,13 @@
 import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
-import { EmailDuplicate, RequiredIdError, UserNotFound } from "../erros/UserErros";
+import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
 import User, { UpdateUser } from "../types/user"
 import UserValidator from '../utils/Yup/userValidator';
 import Mailer from './Mailer';
-
 import DatabaseConnection from '../database/connection/DatabaseConnection';
+import { MissinngDataError } from '../erros/CommonErros';
+import { RootUserModificationError } from '../erros/AuthErros';
 const knex = DatabaseConnection.getInstance();
 const mailer = new Mailer();
 
@@ -31,7 +32,8 @@ export default class UserService {
     }
 
     /**
-     * @description Busca um Usuário por emaiail. Hash da senha incluso no objeto de resposta.
+     * @warning
+     * @description Busca um Usuário por emaiil. Hash da senha incluso no objeto de resposta.
      * @param {string} email
      * @returns {Promise<User & { password: string }>}
      */
@@ -105,7 +107,6 @@ export default class UserService {
             throw new EmailDuplicate();
         }
 
-
         const hashPassword = await hash(password, Number(process.env.SALT_ROUNDS));
         const user = {
             id: v4(),
@@ -154,6 +155,10 @@ export default class UserService {
             throw new UserNotFound();
         }
 
+        if(user.email === process.env.ROOT_EMAIL){
+            throw new RootUserModificationError("Usuário root não pode ter seus dados cadastrais atualizados");
+        } 
+
         if (data.password) {
             const hashPassword = await hash(data.password, Number(process.env.SALT_ROUNDS));
             data.password = hashPassword;
@@ -172,7 +177,7 @@ export default class UserService {
      */
     public static async deleteUser(id: string | undefined): Promise<string>{
         if(!id){
-            throw new RequiredIdError();
+            throw new MissinngDataError("Usuário não informado")
         }
 
        const linesAffected = await knex("User").where({id: id}).del();
@@ -205,6 +210,5 @@ export default class UserService {
 
         return "Senha alterada com sucesso"   
     }
-
 }
 
