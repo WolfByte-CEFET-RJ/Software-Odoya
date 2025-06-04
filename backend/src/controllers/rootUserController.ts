@@ -4,6 +4,7 @@ import RootUserService from "../services/rootUserService";
 import { RootUserModificationError } from "../erros/AuthErros";
 import UserService from "../services/userService";
 import User from "../types/user"
+import { InvalidSearch } from "../erros/CommonErros";
 export default class RootUserController {   
     public static async changeRole(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
@@ -35,8 +36,15 @@ export default class RootUserController {
         try {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
+            const order = req.query.order as string || "id";
 
-            const users: User[] = await UserService.getAllPagination(page, limit);
+            const possible_fields = ["id", "name", "email", "admin", "points"];
+
+            if(!possible_fields.includes(order)){
+                throw new InvalidSearch(`${order} não é válidos como parâmetro de ordenação. Experimente: ${possible_fields.join(" / ")}`)
+            }
+
+            const users: User[] = await UserService.getAllPagination(page, limit, order);
             res.status(HttpCode.OK).json({amount: users.length, users});
 
         } catch(e: any){

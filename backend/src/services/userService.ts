@@ -71,12 +71,13 @@ export default class UserService {
      * @param {number} limit
      * @returns {Promise<User[]>}
      */
-    public static async getAllPagination(page: number, limit: number): Promise<User[]>{
+    public static async getAllPagination(page: number, limit: number, order: string): Promise<User[]>{
         const offset = (page - 1) * limit;
 
         const users: User[] = await knex("User")
                                 .select('id', 'name', 'email', 'admin', 'points')
                                 .whereNot({email: process.env.ROOT_EMAIL})
+                                .orderBy(order)
                                 .limit(limit)
                                 .offset(offset);
     

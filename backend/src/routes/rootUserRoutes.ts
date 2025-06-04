@@ -21,9 +21,9 @@ rootUserRouter
     .get("/root/user/all", AuthMiddleware.authorizeRoot, RootUserController.getAllUsers)
 
     /**
-    * @route GET root/user?page=xx&limit=xx
+    * @route GET root/user?page=xx&limit=xx&order=***
     * @description Fornece os usuários paginados (com exceção do super-usuário)
-    * @default (1,10) (página,itens)
+    * @default (1,10,"id") (página,itens,ordem,0)
     * @returns { amount: number, user: User[] } 
     */
     .get("/root/user", AuthMiddleware.authorizeRoot, RootUserController.getUsersPagination)
