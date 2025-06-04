@@ -9,8 +9,9 @@ import ModalInspectUser from "../../components/ModalInspectUser";
 import Switch from "react-switch";
 import { toast } from "react-toastify";
 import rh from "./rh.module.scss";
-import { MdPersonSearch, MdQuestionMark } from "react-icons/md";
+import { MdPersonSearch, MdQuestionMark, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import api from "../../api"
+
 
 const RH = () => {
     const [searchValue, setSearchValue] = useState('')
@@ -20,9 +21,8 @@ const RH = () => {
     const [checkedAdm, setCheckedAdm] = useState(false);
     const [usersList, setList] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [selectedUser, setSelectedUser] = useState(null);
-    
-    const nav = useNavigate();
 
     const handleSearchChange = (event) => {
         setSearchValue(event.target.value);
@@ -54,14 +54,11 @@ const RH = () => {
 
     async function getUsersData() {
         try {
-            let req = await api.get("/root/user/all");
+            let req = await api.get(`/root/user?page=${currentPage}`);
             setList(req.data.users);
             setFilteredList(req.data.users);
         } catch(error) {
             console.log(error);
-            toast.error("Usuário não autorizado!", {
-                onClose: () => nav('/')
-            })
         }
     }
 
@@ -72,9 +69,19 @@ const RH = () => {
         setFilteredList(results);
     }
 
+    const goToNextPage = () => {
+        setCurrentPage(currentPage+1);
+    }
+
+    const goToPreviousPage = () => {
+        if(currentPage != 1) {
+            setCurrentPage(currentPage-1);
+        }
+    }
+
     useEffect(() => {
         getUsersData();
-    }, [])
+    }, [currentPage])
     
     return (
         <> 
@@ -133,10 +140,18 @@ const RH = () => {
                 <div className={rh.container}>
                   <div className={rh.cardGrid}>
                     {filteredList.map((user) => {
-                      if(checkedAdm && user.admin) {
-                        return <RHAdmButton key={user.id} user={user} onClick={() => handleInspect(user)}/>
-                      } else if(checkedUser && !user.admin) {
-                        return <RHUserButton key={user.id} user={user} onClick={() => handleInspect(user)}/>
+                      if(checkedAdm) {
+                            return user.admin ? (
+                                <RHAdmButton key={user.id} user={user} onClick={() => handleInspect(user)}/>
+                            ) : (
+                                <></>
+                            )
+                      } else if(checkedUser) {
+                        return !(user.admin) ? (
+                                <RHUserButton key={user.id} user={user} onClick={() => handleInspect(user)}/>
+                            ) : (
+                                <></>
+                            )
                       } else if(!checkedUser && !checkedAdm) {
                         return user.admin ? (
                           <RHAdmButton key={user.id} user={user} onClick={() => handleInspect(user)}/>
@@ -145,7 +160,16 @@ const RH = () => {
                         )
                       } else return null;
                     })}
-                  </div>
+                    </div>
+
+                  <div>
+                        <button onClick={() => goToPreviousPage()}>
+                            <MdArrowBackIos/>
+                        </button>
+                        <button onClick={() => goToNextPage()}>
+                            <MdArrowForwardIos/>
+                        </button>
+                    </div>
                 </div>
 
                 {isModalAdmOpen === true ? (
