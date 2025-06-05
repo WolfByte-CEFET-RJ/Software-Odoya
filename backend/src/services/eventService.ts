@@ -6,6 +6,7 @@ import { EventNotFoundError, RequiredDataError, RequiredEventIdError, Unauthoriz
 import EventValidator from '../utils/Yup/eventValidator';
 import e from 'cors';
 
+
 export default class EventService{
 
     /**
@@ -107,18 +108,26 @@ export default class EventService{
 
     public static async deleteEvent(id: string) {
         const event = await knex("Event").where({ id }).first();
-        
+        const currentDate = new Date();
+
         if (!event) {
             throw new EventNotFoundError();
         }
     
-        const deletedCount = await knex("Event").where({ id }).delete();
-        
-        if (deletedCount === 0) {
-            throw new EventNotFoundError();
+        if(event.date < currentDate){
+            return `Mutirão já ocorreu!`;
+        }
+        else{
+            const deletedCount = await knex("Event").where({ id }).delete();
+    
+            if (deletedCount === 0) {
+                throw new EventNotFoundError();
+            }
+
+            return `Mutirão deletado com sucesso`;
         }
 
-        return `Mutirão deletado com sucesso`;
+       
     }
 
 }
