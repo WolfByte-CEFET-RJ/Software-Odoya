@@ -1,3 +1,6 @@
+.body{
+    overflow-x: hidden;
+}
 .ondas_background{
     background-color: #B1E3FA;
     
@@ -11,4 +14,143 @@
 .divPrincipal {
     padding: 5% 15%;
     
+}
+
+.retangulo{
+    width: 833px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    background-color: #F1F1F1;
+    border-color: #767676;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.input{
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 20px;
+    margin-left: 2%;
+    flex: 1;
+    color: #121212;
+}
+.input::placeholder{
+        color: #121212;;
+    }
+
+.registros{
+    min-height: 50vh;
+    padding-top: 5%;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem;
+    list-style: none;
+}
+
+.card{
+    height: 300px;
+    width: 382px;
+    border-radius: 10px;
+    background-color: #B1E3FA;
+    .line{
+        display: flex;
+        align-items: center;
+        margin: 4% 5%;
+        .text{
+            margin: 0px;
+            margin-left: 2%;
+            color: #121212;
+        }
+        
+    }
+    .buttons{
+        display: flex;
+        margin: 4% 5%;
+        gap: 5%;
+        .valida{
+            width: 160px;
+            height: 53px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #A3CBB6;
+            cursor: pointer;
+            .text{
+                text-align: center;
+                margin: 0;
+                color: #121212;
+            }
+        }
+        .reprova{
+            width: 160px;
+            height: 53px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #F35B5B;
+            cursor: pointer;
+            .text{
+                text-align: center;
+                margin: 0;
+                color: #121212;
+            }
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .retangulo{
+    width: auto;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    background-color: #F1F1F1;
+    border-color: #767676;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.input{
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    margin-left: 2%;
+    flex: 1;
+}
+    .grid{
+    grid-template-columns: repeat(1, 1fr); 
+    gap: 1rem;
+    }
+    .card {
+        width: 100%; 
+        height: auto;
+
+        .text {
+        margin-left: 0;
+        margin-top: 8px;
+        font-size: 16px; 
+        }
+        .buttons{
+            .valida{
+                width: 120px;
+                height: 45px;
+            }
+            .reprova{
+                width: 120px;
+                height: 45px;
+            }
+        }
+    }
 }
