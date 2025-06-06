@@ -6,7 +6,7 @@ export async function up(knex: Knex): Promise<void> {
         table.integer("climateInitiatives").defaultTo(0);
         table.integer("livesImpacteds").defaultTo(0);
         table.integer("kgRecycled").defaultTo(0);
-        table.json("partness");
+        table.json("partners");
     });
 }
 
