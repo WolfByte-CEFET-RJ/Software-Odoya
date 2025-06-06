@@ -9,6 +9,6 @@ export default interface Metrics {
 };
 
 export interface Partners{
-    name: string;
-    logo: string;
+  name: string;
+  logo: string;
 }
