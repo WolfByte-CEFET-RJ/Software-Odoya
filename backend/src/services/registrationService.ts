@@ -3,7 +3,7 @@ import { UserNotFound } from '../erros/UserErros';
 import Registration from '../types/registration';
 import User from '../types/user';
 //fazer yup
-//fazer tratamento de erro
+import { RegistrationNotFound } from '../erros/RegistrationErros';
 const knex = DatabaseConnection.getInstance();
 
 export default class RegistrationService {
@@ -19,7 +19,7 @@ export default class RegistrationService {
                                     .offset(offset);
         
             if(registrations.length===0){
-                throw new Error("nenhum registro encontrado")
+                throw new RegistrationNotFound()
             }
             
             return registrations
