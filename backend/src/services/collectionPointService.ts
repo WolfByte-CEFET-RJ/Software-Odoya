@@ -44,6 +44,18 @@ export default class CollectionPointService {
     }
     
     /**
+     * @description Fornece o total de esponjas coletadas
+     * @returns {Promise<number>} Pontos de coleta buscado
+     */
+    public static async getTotalSponges(): Promise<number> {
+
+        const [{ totalSponges }] = await knex("Collection_Point")
+            .sum("amountSponges as totalSponges");
+
+        return Number(totalSponges)
+    }
+
+    /**
      * @description Cria um ponto de coleta
      * @param {CollectionPoint} requestBody Informações do ponto de coleta
      * @returns {Promise<String>} Resposta de sucesso

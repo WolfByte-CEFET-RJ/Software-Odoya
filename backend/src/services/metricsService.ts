@@ -21,12 +21,7 @@ export class MetricsService {
         
         const events = await EventService.getAllEvent();
 
-        let spongesCollected = 0;
-        const collectionPoints = await CollectionPointService.getAllCollectionPoint();
-
-        collectionPoints.forEach((point)=>{
-            spongesCollected += point.amountSponges;
-        });
+        const spongesCollected = await CollectionPointService.getTotalSponges()
 
         const metrics = await database("Metrics").select("*").first();
 
