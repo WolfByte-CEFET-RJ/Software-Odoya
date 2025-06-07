@@ -15,5 +15,13 @@ registrationRouter
 
 .get("/admin/registration", AuthMiddleware.ensureAdmin, RegistrationController.getRegistrationAll)
 
+ /**
+    * @route GET /user/registration?page=xx&limit=xx
+    * @description Retorna as páginas de registros do usuário
+    * @default (1,10) (página,itens)
+    * @returns { amount: number, registration: Registration[] } 
+    */
+.get("/user/registration", AuthMiddleware.ensureAuthenticated, RegistrationController.getRegistrationByUser)
+
 
 export default registrationRouter;
