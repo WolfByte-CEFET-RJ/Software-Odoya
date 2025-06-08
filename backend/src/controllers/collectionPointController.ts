@@ -1,106 +1,66 @@
-import { Request, Response } from "express";
-import { HttpCode, HttpError } from "../erros/erro.config";
+import { NextFunction, Request, Response } from "express";
+import { HttpCode } from "../erros/erro.config";
 import CollectionPointService from "../services/collectionPointService";
 import CollectionPoint from "../types/collectionPoint";
-import { ImprevistError } from "../erros/ImprevistError";
-import { ValidationError } from "yup";
-
 
 export default class CollectionPointController {
 
-    public static async getAllCollectionPoint(req: Request, res: Response) {
+    public static async getAllCollectionPoint(req: Request, res: Response, next: NextFunction) {
         try {
             const collectionPoints: CollectionPoint[] = await CollectionPointService.getAllCollectionPoint();
             res.status(HttpCode.OK).json(collectionPoints);
-        } catch (e: any) {
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
             
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        } catch (e: any) {
+            next(e);
         }
     }
 
-    public static async getOneCollectionPoint(req: Request, res: Response) {
-        const { id } = req.params;
-
+    public static async getOneCollectionPoint(req: Request, res: Response, next: NextFunction) {
         try {
+            const { id } = req.params;
+            
             const collectionPoint: CollectionPoint = await CollectionPointService.getOneCollectionPoint(id);
             res.status(HttpCode.OK).json(collectionPoint);
 
         } catch (e: any) {
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
-            
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+            next(e);
         }
-
     }
 
-    public static async createCollectionPoint(req: Request, res: Response): Promise<any> {
-        const requestBody: CollectionPoint = req.body;
-
+    public static async createCollectionPoint(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
+            const requestBody: CollectionPoint = req.body;
+            
             const response = await CollectionPointService.createCollectionPoint(requestBody);
-            res.status(HttpCode.CREATED).json(response);
-        } catch (e) {
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
-
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+            res.status(HttpCode.CREATED).json({message: response});
+        
+        } catch (e: any) {
+            next(e);
         }
     }
-    public static async updateCollectionPoint(req: Request, res: Response): Promise<any> {
-        const { id } = req.params;
-
-        try{
+    
+    public static async updateCollectionPoint(req: Request, res: Response, next: NextFunction): Promise<any> {
+        try {
+            const { id } = req.params;
             const data = req.body;
             
             const response = await CollectionPointService.updateCollectionPoint(id, data);
             return res.status(HttpCode.OK).send({ message : response });
-        }catch(e){
-            if(e instanceof HttpError){   
-                return e.sendMessage(res);
-            }
-
-            if (e instanceof ValidationError){
-                return res.status(HttpCode.BAD_REQUEST).json({ message: e.errors });
-            }
-
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+        
+        }catch(e: any){
+            next(e);
         }
     }
 
-    /**
-     * @method deleteCollectionPoint
-     * @description Remove um ponto de coleta específico pelo ID
-     * @param {Request} req - Objeto de requisição Express
-     * @param {Response} res - Objeto de resposta Express
-     */
-    public static async deleteCollectionPoint(req: Request, res: Response) {
-        const { id } = req.params;
-
+    public static async deleteCollectionPoint(req: Request, res: Response, next: NextFunction) {
         try {
+            const { id } = req.params;
+            
             await CollectionPointService.deleteCollectionPoint(id);
             res.status(HttpCode.NO_CONTENT).send();
-        } catch (e) {
-            if(e instanceof HttpError) {
-                return e.sendMessage(res);
-            } 
-            
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res);
+
+        } catch (e: any) {
+            next(e);
         }
     }
-
 }

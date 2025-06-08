@@ -11,19 +11,3 @@ export class UnauthorizedEventAccessError extends HttpError {
         super({ status: HttpCode.FORBIDDEN, message });
     }
 }
-
-export class RequiredEventIdError extends HttpError {
-    constructor(
-        message: string = 'Id do mutirão não fornecido'
-    ){
-        super({status: HttpCode.BAD_REQUEST, message});
-    }
-}
-
-export class RequiredDataError extends HttpError {
-    constructor(
-        message: string = 'Dados para atualização de mutirão não fornecidos'
-    ){
-        super({status: HttpCode.BAD_REQUEST, message});
-    }
-}

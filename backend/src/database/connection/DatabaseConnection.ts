@@ -26,10 +26,10 @@ class DatabaseConnection {
     try {
       const connection = this.getInstance();
       await connection.raw('SELECT 1');
-      console.log('🎲 \tDatabase connection successful!');
+      console.log('🎲 \tConexão com banco de dados estabelecida!!');
       return true;
     } catch (error) {
-      console.error('❌ \tDatabase connection failed:', error);
+      console.error('❌ \tErro ao se conectar ao banco de dados:', error);
       return false;
     }
   }

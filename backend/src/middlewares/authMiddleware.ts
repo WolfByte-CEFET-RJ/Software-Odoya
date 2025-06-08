@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AccessDeniedError, AuthenticationError } from '../erros/AuthErros';
-import { HttpError } from '../erros/erro.config';
-import { ImprevistError } from '../erros/ImprevistError';
 import Deposit from '../types/deposit';
+import { MissinngDataError } from '../erros/CommonErros';
 
 interface TokenPayload {
   id: string;
@@ -42,14 +41,25 @@ class AuthMiddleware {
         throw new AuthenticationError("Token mal formatado");
       }
 
-    
       const jwtSecret = process.env.JWT_SECRET;
       
       if (!jwtSecret) {
-        throw new ImprevistError('JWT_SECRET não está definido no ambiente');
+        throw new MissinngDataError('JWT_SECRET não está definido no ambiente');
       }
 
-      const decoded = jwt.verify(token, jwtSecret) as TokenPayload;
+      let decoded: TokenPayload;
+      
+      try{
+        decoded = jwt.verify(token, jwtSecret) as TokenPayload;
+
+      } catch(e: any){
+        
+        if(e instanceof jwt.JsonWebTokenError){
+            throw new AuthenticationError("Token inválido ou expirado");
+        }
+        
+        throw e
+      }
       
       req.user = {
         id: decoded.id,
@@ -60,17 +70,7 @@ class AuthMiddleware {
 
       return next();
     } catch (error) {
-      if (error instanceof HttpError) {
-        return error.sendMessage(res);
-      }
-      
-      if (error instanceof jwt.JsonWebTokenError) {
-        const authError = new AuthenticationError("Token inválido ou expirado");
-        return authError.sendMessage(res);
-      }
-      
-      const classifiedError = new ImprevistError();
-      return classifiedError.sendMessage(res);
+        next(error);
     }
   }
 
@@ -89,12 +89,7 @@ class AuthMiddleware {
         return next();
       });
     } catch (error) {
-      if (error instanceof HttpError) {
-        return error.sendMessage(res);
-      }
-      
-      const classifiedError = new ImprevistError();
-      return classifiedError.sendMessage(res);
+        next(error)
     }
   }
 
@@ -112,15 +107,8 @@ class AuthMiddleware {
         
         return next();
   
-      } catch (e) {
-        console.error(e);
-
-        if (e instanceof HttpError) {
-          return e.sendMessage(res);
-        }
-  
-        const classifiedError = new ImprevistError();
-        return classifiedError.sendMessage(res);
+      } catch (error) {
+          next(error);
       }
     });
   }

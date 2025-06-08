@@ -7,7 +7,6 @@ const upload  = UploadImageConfig.getUploader();
 const depositRouter = Router();
 
 depositRouter
-    //retorna um deposito dado id do deposito, verifica se o usuário está logado
     .get('/deposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
     /**
@@ -16,6 +15,7 @@ depositRouter
      * @returns { Deposit[] } 
      */
     .get("/deposits", AuthMiddleware.ensureAuthenticated, DepositController.getAllDeposits)
+    
     /**
      * @route GET /deposit/:id
      * @description Retorna um depósito dado o ID do depósito
@@ -32,16 +32,16 @@ depositRouter
      * @param {string} imageURL
      * @returns { message: string } 
      */
-    .post('/deposit',AuthMiddleware.ensureAuthenticated, upload.single("comprovante"), DepositController.createDeposit)
+    .post('/deposit/:collection_id',AuthMiddleware.ensureAuthenticated, upload.single("comprovante"), DepositController.createDeposit)
 
     /**
      * @route PATCH /deposit/status
      * @description  atualiza os estados do deposito e distribui os devidos pontos, somente administradores
      * @param {string} collectionPointId
-     * @param {Number} id
+     * @param {Number} collection_id
      * @param {string} status
      * @returns { message: string } 
      */
-    .patch('/deposit/status', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
+    .patch('/deposit/status/:collection_id', AuthMiddleware.ensureAdmin, DepositController.updateDepositStatus)   
 
 export default depositRouter;
