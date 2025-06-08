@@ -1,8 +1,10 @@
-import { NextFunction, Request, response, Response } from "express";
-import { HttpCode } from "../erros/erro.config";
+import { NextFunction, Request, Response } from "express";
 import RegistrationService from "../services/registrationService";
 import Registration from "../types/registration";
-import AuthMiddleware from "../middlewares/authMiddleware";
+
+import { HttpCode } from "../erros/erro.config";
+import { AuthenticationError } from "../erros/AuthErros";
+import { MissinngDataError } from "../erros/CommonErros";
 
 export default class RegistrationController {
     public static async getRegistrationAll(req: Request, res: Response,  next: NextFunction): Promise<any>{
@@ -30,6 +32,28 @@ export default class RegistrationController {
             res.status(HttpCode.OK).json({amount: Registrations.length, Registrations});
 
         } catch(e: any){
+            next(e);
+        }
+    }
+
+    public static async createRegistration( req: Request, res: Response, next: NextFunction): Promise<any> {
+        try{
+            const userId = req.user?.id;
+
+            if(!userId){
+                throw new AuthenticationError();
+            }
+
+            const eventId = req.params.id_event;
+
+            if(!eventId){
+                throw new MissinngDataError("ID do evento não fornecido");
+            }
+
+            const response = await RegistrationService.createRegistration(userId, eventId);
+
+            res.status(HttpCode.OK).json(response);
+        }catch(e: any){
             next(e);
         }
     }
