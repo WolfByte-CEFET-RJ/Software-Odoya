@@ -1,7 +1,5 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
-import { UserNotFound } from '../erros/UserErros';
 import Registration from '../types/registration';
-import User from '../types/user';
 //fazer yup
 import { RegistrationNotFound } from '../erros/RegistrationErros';
 const knex = DatabaseConnection.getInstance();
@@ -43,14 +41,5 @@ export default class RegistrationService {
         
         return registrations
     }
-
-     public static async getUserSensitiveByEmail(email: string): Promise<User & { password: string }> {
-    
-            const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
-            if (!user) {
-                throw new UserNotFound();
-            }
-            return user;
-        }
     
 }
