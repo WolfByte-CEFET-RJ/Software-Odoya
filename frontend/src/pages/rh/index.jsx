@@ -7,9 +7,13 @@ import RHAdmButton from "../../components/RHAdmButton";
 import ModalInspectAdm from "../../components/ModalInspectAdm";
 import ModalInspectUser from "../../components/ModalInspectUser";
 import Switch from "react-switch";
-
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../components/Context/userContext";
 import rh from "./rh.module.scss";
 import { MdPersonSearch, MdQuestionMark, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import api from "../../api"
 
 
@@ -19,10 +23,18 @@ const RH = () => {
     const [isModalAdmOpen, setModalAdmOpen] = useState(false);
     const [checkedUser, setCheckedUser] = useState(false);
     const [checkedAdm, setCheckedAdm] = useState(false);
-    const [usersList, setList] = useState([]);
-    const [filteredList, setFilteredList] = useState([]);
+    const [totalUsers, setTotalUsers] = useState(0);
+    const [usersList, setUsersList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [load, setLoad] = useState(false);
+    const [lock, setLock] = useState(false);
+
+    const admin = useContext(UserContext);
+    const nav = useNavigate();
+
+    const USERS_PER_PAGE = 16;
 
     const handleSearchChange = (event) => {
         setSearchValue(event.target.value);
@@ -52,40 +64,61 @@ const RH = () => {
         setModalAdmOpen(false);
     }
 
-    async function getUsersData() {
+    async function getTotalUsers() {
         try {
-            let req = await api.get(`/root/user?page=${currentPage}`);
-            setList(req.data.users);
-            setFilteredList(req.data.users);
+            let req = await api.get("/root/user/all");
+            if(req.status === 200) {
+                setTotalUsers(req.data.users.length);
+            }
         } catch(error) {
             console.log(error);
         }
     }
 
-    const handleSearch = (search) => {
-        const results = usersList.filter(user => {
-          return user.name.toLowerCase().includes(search.toLowerCase());
-        });
-        setFilteredList(results);
-    }
+    async function getUsersData() {
+        try {
+            let query = `/root/user?page=${currentPage}&limit=${USERS_PER_PAGE}`;
+            
+            if(checkedAdm) {
+                query += '&isadm=1';
+            } else if(checkedUser) {
+                query += '&isadm=0';
+            }
 
-    const goToNextPage = () => {
-        setCurrentPage(currentPage+1);
-    }
+            const req = await api.get(query);
+            if(req.status === 200) {
+                if(searchValue != "") {
+                    const list = req.data.users.filter((user) => {
+                        return user.name.toLowerCase().includes(searchValue.toLowerCase());
+                    })
 
-    const goToPreviousPage = () => {
-        if(currentPage != 1) {
-            setCurrentPage(currentPage-1);
+                    setUsersList(list);
+                } else {
+                    setUsersList(req.data.users);
+                }
+                setTotalPages(req.data.totalPages);
+            }
+        } catch(error) {
+            console.log(error);
         }
     }
 
     useEffect(() => {
-        getUsersData();
-    }, [currentPage])
-    console.log((filteredList.filter((user) => user.admin)).length)
+        if(admin) {
+            getTotalUsers();
+            getUsersData();
+        } else {
+            setTimeout(() => {
+                toast.error("Usuário não autenticado! Saindo...");
+                nav('/');
+            }, 2000);
+        }
+    }, [admin, checkedUser, checkedAdm, searchValue, currentPage])
+
     return (
         <> 
             <Header/>
+
             <div className={rh.body}>
                 <h1 className={rh.title}>Portal de Recursos Humanos</h1>
                 <img src="./Ondinhas.svg" className={rh.separator}/>
@@ -95,7 +128,6 @@ const RH = () => {
                 <div className={rh.searchUser}>
                     <MdPersonSearch className={rh.iconSearchUser} color="#5686e1" size={25}/>
                     <input type="search" className={rh.inputSearchUser} placeholder="Buscar por usuários" value={searchValue} onChange={(event) => handleSearchChange(event)}/>
-                    <button onClick={() => handleSearch(searchValue)} className={rh.buttonSearchUserSubmit}>Pesquisar</button>
 
                     <div className={rh.searchUserSwitches}>
                         <label>
@@ -128,18 +160,18 @@ const RH = () => {
                 </div>
 
                 {checkedAdm ? (
-                  <p className={rh.results}>Mostrando {(filteredList.filter((user) => user.admin)).length} de {(filteredList.filter((user) => user.admin)).length} resultados</p>
+                  <p className={rh.results}>Mostrando {(usersList.filter((user) => user.admin)).length} de {totalUsers} resultados</p>
                 ) : (
                   checkedUser ? (
-                    <p className={rh.results}>Mostrando {(filteredList.filter((user) => !user.admin)).length} de {(filteredList.filter((user) => !user.admin)).length} resultados</p>
+                    <p className={rh.results}>Mostrando {(usersList.filter((user) => !user.admin)).length} de {totalUsers} resultados</p>
                   ) : (
-                    <p className={rh.results}>Mostrando {filteredList.length} de {usersList.length} resultados</p>
+                    <p className={rh.results}>Mostrando {usersList.length} de {totalUsers} resultados</p>
                   )
                 )}
 
                 <div className={rh.container}>
                   <div className={rh.cardGrid}>
-                    {filteredList.map((user) => {
+                    {usersList.map((user) => {
                       if(checkedAdm) {
                             return user.admin ? (
                                 <RHAdmButton key={user.id} user={user} onClick={() => handleInspect(user)}/>
@@ -160,20 +192,38 @@ const RH = () => {
                         )
                       } else return null;
                     })}
+
+                    {usersList.length === 0 &&
+                        <p className={rh.resultsError}>Não há resultados nesta página para os filtros utilizados.</p>
+                    }
                     </div>
 
                   <div className={rh.buttons}>
-                        {currentPage == 1 ? 
-                        (<><button className={rh.disabled} disabled onClick={() => goToPreviousPage()}>
-                            <MdArrowBackIos/>
-                        </button></>): 
-                        (<><button  onClick={() => goToPreviousPage()}>
-                            <MdArrowBackIos/>
-                        </button></>)}
-                        
-                        {usersList.length < 8
-                         ? (<><button className={rh.disabled} disabled onClick={() => goToNextPage()}><MdArrowForwardIos/></button></>) : 
-                         (<><button onClick={() => goToNextPage()}><MdArrowForwardIos/></button></>)}
+                        {!(totalPages == 1) &&
+                            <>
+                            {currentPage == 1 ? (
+                                <button className={rh.disabled} disabled>
+                                    <MdArrowBackIos size={25} color="grey"/>
+                                </button>
+                            ) : (
+                                <button onClick={() => setCurrentPage(currentPage-1)}>
+                                    <MdArrowBackIos size={25} color="black"/>
+                                </button>
+                            )}
+                            
+                            <p>{currentPage} / {totalPages}</p>
+
+                            {currentPage == totalPages ? (
+                                <button className={rh.disabled} disabled>
+                                    <MdArrowForwardIos size={25} color="grey"/>
+                                </button>
+                            ) : (
+                                <button onClick={() => setCurrentPage(currentPage+1)}>
+                                    <MdArrowForwardIos size={25} color="black"/>
+                                </button>
+                            )}
+                            </>
+                        }
                         
                     </div>
                 </div>
@@ -186,13 +236,13 @@ const RH = () => {
                     )
                 )}
 
-                <div className={rh.accountInfo}>
+                <section className={rh.accountInfo}>
                     <h1>O que é esta conta?</h1>
                     <div className={rh.accountInfoDescription}>
                         <p>Nesse perfil, você pode tornar usuários administradores, gerenciar acessos e atualizar dados importantes do sistema. Use com responsabilidade para manter o controle e a segurança da plataforma!</p>
-                        <MdQuestionMark size={120} className={rh.accountInfoIcon}/>
+                        <MdQuestionMark size={180} className={rh.accountInfoIcon}/>
                     </div>
-                </div>
+                </section>
             </div>
 
             <Footer/>
