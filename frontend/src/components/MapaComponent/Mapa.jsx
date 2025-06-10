@@ -20,8 +20,8 @@ function MapComponent({ location }) {
     <div className={style.mapa}>
       {dado ? <iframe 
             src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.VITE_GOOGLE_MAPS}&q=${lati},${longi}`} 
-            width="600" 
-            height="450" 
+            width="1200" 
+            height="680" 
             allowfullscreen="" 
             loading="lazy">
         </iframe>: <></>}
