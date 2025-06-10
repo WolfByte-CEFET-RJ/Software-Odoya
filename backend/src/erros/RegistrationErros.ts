@@ -5,10 +5,13 @@ import { HttpCode, HttpError } from "./erro.config";
  * @description Erro nenhuma entrada encontrada
  */
 export class RegistrationNotFound extends HttpError{
-    constructor(message: string 
-            = 'nenhum registro encontrado'){
-
+    constructor(message: string = 'Usuário não cadastrado no mutirão'){
         super({status: HttpCode.NOT_FOUND, message})
+    }
+}
 
+export class RegistrationDuplicate extends HttpError{
+    constructor(message: string = 'Usuário já cadastrado no mutirão'){
+        super({status: HttpCode.CONFLICT, message})
     }
 }

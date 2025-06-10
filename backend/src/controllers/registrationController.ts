@@ -1,21 +1,24 @@
-import { NextFunction, Request,  Response } from "express";
-import { HttpCode } from "../erros/erro.config";
+import { NextFunction, Request, Response } from "express";
 import RegistrationService from "../services/registrationService";
 import Registration from "../types/registration";
 
+import { HttpCode } from "../erros/erro.config";
+import { AuthenticationError } from "../erros/AuthErros";
+import { MissinngDataError } from "../erros/CommonErros";
+
 export default class RegistrationController {
     public static async getRegistrationAll(req: Request, res: Response,  next: NextFunction): Promise<any>{
-            try {
-                const page = parseInt(req.query.page as string) || 1;
-                const limit = parseInt(req.query.limit as string) || 10;
+        try {
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
     
-                const Registrations: Registration[] = await RegistrationService.getRegistrationAll(page, limit);
-                res.status(HttpCode.OK).json({amount: Registrations.length, Registrations});
+            const Registrations: Registration[] = await RegistrationService.getRegistrationAll(page, limit);
+            res.status(HttpCode.OK).json({amount: Registrations.length, Registrations});
     
-            } catch(e: any){
-                next(e);
-            }
+        } catch(e: any){
+            next(e);
         }
+    }
 
     public static async getRegistrationByUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
@@ -29,6 +32,28 @@ export default class RegistrationController {
             res.status(HttpCode.OK).json({amount: Registrations.length, Registrations});
 
         } catch(e: any){
+            next(e);
+        }
+    }
+
+    public static async createRegistration( req: Request, res: Response, next: NextFunction): Promise<any> {
+        try{
+            const userId = req.user?.id;
+
+            if(!userId){
+                throw new AuthenticationError();
+            }
+
+            const eventId = req.params.id_event;
+
+            if(!eventId){
+                throw new MissinngDataError("ID do mutirão não fornecido");
+            }
+
+            const response = await RegistrationService.createRegistration(userId, eventId);
+
+            res.status(HttpCode.OK).json(response);
+        }catch(e: any){
             next(e);
         }
     }
