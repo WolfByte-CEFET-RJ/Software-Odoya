@@ -21,7 +21,7 @@ export class MetricsService {
         
         const events = await EventService.getAllEvent();
 
-        const spongesCollected = await CollectionPointService.getTotalSponges()
+        const spongesCollected = await CollectionPointService.getTotalSpongesInPoints()
 
         const metrics = await database("Metrics").select("*").first();
 
