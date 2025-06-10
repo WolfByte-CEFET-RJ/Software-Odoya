@@ -48,19 +48,10 @@ export default class DepositController{
         }
     }
 
-    /**
-     * @function createDeposit
-     * @description cria um deposito
-     * @param {string} deposit.collectionPointId
-     * @param {string} user.id
-     * @param {Number} deposit.amountSponges
-     * @param {string} deposit.imageURL
-     * @returns { message: string } 
-     */
-    public static async createDeposit(req: Request, res: Response): Promise<any> {
-        const userId = req.user?.id;
-        const { collectionPointId, amountSponges } = req.body;
-        const image = req.file;
+    public static async createDeposit(req: Request, res: Response, next: NextFunction): Promise<any> {
+        
+        let imageUrl;
+        const depositId: string = v4()
 
         try{
             const userId = req.user?.id;
@@ -68,9 +59,6 @@ export default class DepositController{
             const collectionPointId = req.params.collection_id;
             const image = req.file;
 
-            const depositId: string = v4()
-
-            let imageUrl;
             if(image){
                 FileService.setStrategy(null)
                 imageUrl = await FileService.upload(image.buffer, depositId);
@@ -88,6 +76,12 @@ export default class DepositController{
             return res.status(HttpCode.CREATED).json({ message: response });
 
         } catch (e: any) {
+
+            // Desfaz o upload caso tenha acontecido problemas no registro
+            if(imageUrl){
+                await FileService.remove(depositId);
+            }
+
             next(e);
         }
     }
