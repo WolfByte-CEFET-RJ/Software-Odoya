@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import RegistrationService from "../services/registrationService";
-import Registration from "../types/registration";
+import { GroupedRegistration, Registration } from "../types/registration";
 
 import { HttpCode } from "../erros/erro.config";
 import { AuthenticationError } from "../erros/AuthErros";
@@ -12,8 +12,8 @@ export default class RegistrationController {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
     
-            const Registrations: Registration[] = await RegistrationService.getRegistrationAll(page, limit);
-            res.status(HttpCode.OK).json({amount: Registrations.length, Registrations});
+            const registrations: GroupedRegistration[] = await RegistrationService.getRegistrationAll(page, limit);
+            res.status(HttpCode.OK).json({amount: registrations.length, registrations});
     
         } catch(e: any){
             next(e);

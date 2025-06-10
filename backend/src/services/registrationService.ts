@@ -1,15 +1,15 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
-import Registration, { RegistrationStatus } from '../types/registration';
+import { GroupedRegistration, Registration, RegistrationStatus } from '../types/registration';
 import { RegistrationDuplicate, RegistrationNotFound } from '../erros/RegistrationErros';
 import { EventNotFoundError } from '../erros/EventError';
 
 const knex = DatabaseConnection.getInstance();
 
 export default class RegistrationService {
-    public static async getRegistrationAll(page: number, limit: number): Promise<Registration[]>{
+    public static async getRegistrationAll(page: number, limit: number): Promise<GroupedRegistration[]>{
         const offset = (page - 1) * limit;
     
-        const registrations: Registration[] = await knex("Registration")
+        const registrations = await knex("Registration")
             .join("User", "Registration.userId", "User.id")
             .join("Event", "Registration.eventId", "Event.id")
             .select('eventId', 'userId', 'Event.name as eventName', 'User.name as userName' , 'status', 'created_at', 'updated_at')
@@ -20,8 +20,31 @@ export default class RegistrationService {
             if(registrations.length===0){
                 throw new RegistrationNotFound()
             }
-            
-            return registrations
+
+            const grouped: GroupedRegistration[] = Object.values(
+                registrations.reduce((acc, registrationRow) => {
+                    const { eventId, eventName, userId, userName, status, created_at, updated_at } = registrationRow;
+                    
+                    if (!acc[eventId]) {
+                        acc[eventId] = {
+                            eventId,
+                            eventName,
+                            users: []
+                        }
+                    }
+
+                    acc[eventId].users.push({
+                        userId,
+                        userName,
+                        status,
+                        created_at,
+                        updated_at
+                    });
+                    
+                    return acc;
+                }, {} as Record<string, GroupedRegistration>));
+
+            return grouped;
     }
 
     public static async getRegistrationByUser(page: number, limit: number, userId: string): Promise<Registration[]>{
