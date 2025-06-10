@@ -394,11 +394,20 @@
         font-family: 'Tankindred', sans-serif;
         text-decoration: underline;
         color: var(--secondary-color);
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
         @media (max-width: 910px) {
             font-size: 1.5rem;
         }
     }
+
+    .parlog{
+        display: flex;
+        gap: 10%
+    }
+
     .parceiros {
         display: flex;
         flex-direction: column;
@@ -426,12 +435,24 @@
           padding-left: 28rem;
           padding-bottom: 300px;
       
-          .linha {
-            display: flex;
-            justify-content: flex-start; 
+        .linha {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Máximo de 3 colunas */
             gap: 4rem;
-            flex-wrap: wrap;
-            padding: 0 1rem; 
+            padding: 0 1rem;
+            }
+
+            @media (max-width: 900px) {
+            .linha {
+                grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas médias */
+            }
+            }
+
+            @media (max-width: 600px) {
+            .linha {
+                grid-template-columns: 1fr; /* 1 coluna em telas pequenas */
+            }
+
       
             img {
               width: 200px;
