@@ -1,6 +1,6 @@
+import { HttpCode, HttpError } from '../erros/erro.config';
 import Deposit from "../types/deposit";
 import { NextFunction, Request, Response } from 'express';
-import { HttpCode } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import FileService from "../services/FileService";
 import { v4 } from "uuid";
@@ -98,4 +98,8 @@ export default class DepositController{
             next(e);
         }
     }
+}
+
+function next(e: any) {
+    throw new Error('Function not implemented.');
 }
