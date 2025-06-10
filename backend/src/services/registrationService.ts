@@ -7,7 +7,7 @@ const knex = DatabaseConnection.getInstance();
 export default class RegistrationService {
     public static async getRegistrationAll(page: number, limit: number): Promise<Registration[]>{
             const offset = (page - 1) * limit;
-    
+            
             const registrations: Registration[] = await knex("registration")
                                     .join("user", "Registration.userId", "User.id")
                                     .join("event", "Registration.eventId", "Event.id")

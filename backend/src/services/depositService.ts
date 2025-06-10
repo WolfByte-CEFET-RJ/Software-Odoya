@@ -18,13 +18,12 @@ export default class DepositService{
      * @param userId ID do usuário
      * @param isAdmin Indica se o usuário é administrador
      */
-    public static async getAllDeposits(userId: string, isAdmin: boolean): Promise<Deposit[]> {
+    public static async getAllDeposits(): Promise<Deposit[]> {
         let query = knex('Deposit')
+            .join("event", "Registration.eventId", "Event.id")
+            .join("event", "Registration.eventId", "Event.id")
             .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at');
 
-        if (!isAdmin) {
-            query = query.where({ userId });
-        }
 
         const deposits = await query;
 

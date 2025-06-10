@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpCode } from "../erros/erro.config";
 import RootUserService from "../services/rootUserService";
-import { RootUserModificationError } from "../erros/AuthErros";
+import { RootUserModificationError , WrongFlag } from "../erros/AuthErros";
 import UserService from "../services/userService";
 import User from "../types/user"
+import { Flag } from "../types/user";
 export default class RootUserController {   
     public static async changeRole(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
@@ -33,10 +34,16 @@ export default class RootUserController {
 
     public static async getUsersPagination(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
+
+            if(req.query.isadm){ //validação da flag, caso o parametro tenha sido passado
+                if(req.query.isadm !== '1' && req.query.isadm !== '0' && req.query.isadm !== '2')
+                throw new WrongFlag
+            }
+
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
-
-            const data: (User & { total: number })[] = await  UserService.getAllPagination(page, limit);
+            const isAdm: Flag = (req.query.isadm as Flag) || Flag.UNDEFINIED;
+            const data: (User & { total: number })[] = await  UserService.getAllPagination(page, limit, isAdm);
 
             const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias
             const users: User[] = data.map(({ total, ...user }) => user); //retira o total dos usuários

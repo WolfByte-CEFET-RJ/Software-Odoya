@@ -7,14 +7,19 @@ const upload  = UploadImageConfig.getUploader();
 const depositRouter = Router();
 
 depositRouter
-    .get('/deposit', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
+    /**
+     * @route GET /deposits
+     * @description Retorna todos os depositos de um usuario
+     * @returns { Deposit[] } 
+     */
+    .get('/deposits', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
     /**
      * @route GET /deposits
-     * @description Retorna todos os depósitos (todos para admin, somente do usuário para usuário comum)
+     * @description Retorna todos os depósitos
      * @returns { Deposit[] } 
      */
-    .get("/deposits", AuthMiddleware.ensureAuthenticated, DepositController.getAllDeposits)
+    .get("/deposits/adm", AuthMiddleware.ensureAdmin, DepositController.getAllDeposits)
     
     /**
      * @route GET /deposit/:id
@@ -22,7 +27,7 @@ depositRouter
      * @param {string} id - ID do depósito
      * @returns { message: string } 
      */
-    .get("/deposit/:id", AuthMiddleware.ensureAuthenticated, DepositController.getOneDeposit)
+    .get("/deposit/:id", AuthMiddleware.ensureAdmin, DepositController.getOneDeposit)
 
     /**
      * @route POST /deposit
