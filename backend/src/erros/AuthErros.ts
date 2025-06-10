@@ -32,3 +32,14 @@ export class AccessDeniedError extends HttpError {
         super({ status: HttpCode.FORBIDDEN, message });
     }
 }
+
+/**
+ * @extends HttpError
+ * @description Valor da Flag invalido
+ */
+export class WrongFlag extends HttpError {
+    constructor(message: string 
+            = "O valor da Flag é invalido") {
+        super({ status: HttpCode.BAD_REQUEST, message });
+    }
+}

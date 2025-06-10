@@ -1,6 +1,6 @@
+import { HttpCode, HttpError } from '../erros/erro.config';
 import Deposit from "../types/deposit";
 import { NextFunction, Request, Response } from 'express';
-import { HttpCode } from '../erros/erro.config';
 import DepositService from "../services/depositService";
 import FileService from "../services/FileService";
 import { v4 } from "uuid";
@@ -9,11 +9,8 @@ export default class DepositController{
 
     public static async getAllDeposits(req: Request, res: Response, next: NextFunction) {
         try {
-            // Verifica se o usuário é admin através do middleware
-            const isAdmin = req.user?.admin || false;
-            const userId = req.user?.id as string;
 
-            const deposits: Deposit[] = await DepositService.getAllDeposits(userId, isAdmin);
+            const deposits: Deposit[] = await DepositService.getAllDeposits();
             res.status(HttpCode.OK).json(deposits);
 
         } catch (e: any) {
@@ -48,8 +45,20 @@ export default class DepositController{
         }
     }
 
-    public static async createDeposit(req: Request, res: Response, next: NextFunction): Promise<any> {
-        
+    /**
+     * @function createDeposit
+     * @description cria um deposito
+     * @param {string} deposit.collectionPointId
+     * @param {string} user.id
+     * @param {Number} deposit.amountSponges
+     * @param {string} deposit.imageURL
+     * @returns { message: string } 
+     */
+    public static async createDeposit(req: Request, res: Response): Promise<any> {
+        const userId = req.user?.id;
+        const { collectionPointId, amountSponges } = req.body;
+        const image = req.file;
+
         try{
             const userId = req.user?.id;
             const { amountSponges } = JSON.parse(req.body.depositData);
@@ -92,4 +101,8 @@ export default class DepositController{
             next(e);
         }
     }
+}
+
+function next(e: any) {
+    throw new Error('Function not implemented.');
 }
