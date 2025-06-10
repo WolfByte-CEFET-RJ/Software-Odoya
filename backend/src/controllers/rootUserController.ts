@@ -36,8 +36,11 @@ export default class RootUserController {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
 
-            const users: User[] = await UserService.getAllPagination(page, limit);
-            res.status(HttpCode.OK).json({amount: users.length, users});
+            const data: (User & { total: number })[] = await  UserService.getAllPagination(page, limit);
+
+            const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias
+            const users: User[] = data.map(({ total, ...user }) => user); //retira o total dos usuários
+            res.status(HttpCode.OK).json({amount: users.length, totalPages: totalPages, users});
 
         } catch(e: any){
             next(e);

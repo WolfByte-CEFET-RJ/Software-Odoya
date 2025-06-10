@@ -71,11 +71,11 @@ export default class UserService {
      * @param {number} limit
      * @returns {Promise<User[]>}
      */
-    public static async getAllPagination(page: number, limit: number): Promise<User[]>{
+    public static async getAllPagination(page: number, limit: number): Promise<(User & { total: number })[]>{
         const offset = (page - 1) * limit;
 
-        const users: User[] = await knex("User")
-                                .select('id', 'name', 'email', 'admin', 'points')
+        const users = await knex("User") //imprimindo o total em todas as entradas porque parece ser mais rápido do que fazer duas consultas ao banco
+                                .select('id', 'name', 'email', 'admin', 'points', knex.raw('COUNT(name) OVER() as total'))
                                 .whereNot({email: process.env.ROOT_EMAIL})
                                 .limit(limit)
                                 .offset(offset);

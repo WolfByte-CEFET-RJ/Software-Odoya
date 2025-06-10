@@ -22,9 +22,9 @@ rootUserRouter
 
     /**
     * @route GET root/user?page=xx&limit=xx
-    * @description Fornece os usuários paginados (com exceção do super-usuário)
+    * @description Fornece os usuários paginados (com exceção do super-usuário) e a quantidade de paginas necessárias para caber todas as entradas
     * @default (1,10) (página,itens)
-    * @returns { amount: number, user: User[] } 
+    * @returns { amount: number, totalPages: number, user: User[] } 
     */
     .get("/root/user", AuthMiddleware.authorizeRoot, RootUserController.getUsersPagination)
 
