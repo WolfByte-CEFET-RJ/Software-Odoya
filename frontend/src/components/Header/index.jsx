@@ -69,7 +69,7 @@ const Header = () => {
                             <>
                             {currentLocation === "/profile" && ( 
                                 <>
-                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                <Link to={"/rh"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>RH
                                 </Link>
                                 <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
@@ -80,7 +80,7 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                             {currentLocation === "/RH" && ( 
+                             {currentLocation === "/rh" && ( 
                                 <>
                                 <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>Perfil
