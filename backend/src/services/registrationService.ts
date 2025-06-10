@@ -1,9 +1,6 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 import Registration, { RegistrationStatus } from '../types/registration';
-import User from '../types/user';
-//fazer yup
-import { UserNotFound } from '../erros/UserErros';
-import { RegistrationNotFound } from '../erros/RegistrationErros';
+import { RegistrationDuplicate, RegistrationNotFound } from '../erros/RegistrationErros';
 import { EventNotFoundError } from '../erros/EventError';
 
 const knex = DatabaseConnection.getInstance();
@@ -38,30 +35,21 @@ export default class RegistrationService {
                                 .orderBy('eventName', 'asc')
                                 .limit(limit)
                                 .offset(offset);
-
+        
         if(registrations.length===0){
-            throw new Error("nenhum registro encontrado")
+            throw new RegistrationNotFound()
         }
         
         return registrations
     }
-
-     public static async getUserSensitiveByEmail(email: string): Promise<User & { password: string }> {
-    
-            const user = await knex('User').select('id', 'name', 'email', 'admin', 'points', 'password').where({email}).first();
-            if (!user) {
-                throw new UserNotFound();
-            }
-            return user;
-        }
     
     public static async createRegistration(userId: string, eventId: string): Promise<any> {
-        const status = RegistrationStatus.PENDENTE;
+        const status = RegistrationStatus.PENDING;
 
         const event = await knex('Event').where({ id: eventId }).first();
 
         if (!event) {
-            throw new EventNotFoundError("Evento não encontrado");
+            throw new EventNotFoundError();
         }
         
         const registrationData = {
@@ -70,13 +58,17 @@ export default class RegistrationService {
             status
         };
 
-        await knex('Registration').insert({
-            userId: registrationData.userId,
-            eventId: registrationData.eventId,
-            status: registrationData.status
-        });
-
-        return {"message":"Registro em multirão realizado com sucesso"};
+        try {
+            await knex('Registration').insert({
+                userId: registrationData.userId,
+                eventId: registrationData.eventId,
+                status: registrationData.status
+            });
+            
+            return {"message":"Registro em mutirão realizado com sucesso"};
+        } catch (error) {
+            throw new RegistrationDuplicate();
+        }
     }
     
 }

@@ -47,7 +47,7 @@ export default class RegistrationController {
             const eventId = req.params.id_event;
 
             if(!eventId){
-                throw new MissinngDataError("ID do evento não fornecido");
+                throw new MissinngDataError("ID do mutirão não fornecido");
             }
 
             const response = await RegistrationService.createRegistration(userId, eventId);
