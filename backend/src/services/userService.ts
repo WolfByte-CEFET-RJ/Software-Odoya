@@ -87,6 +87,7 @@ export default class UserService {
                                     //puxa geral
                                 }
                                 })
+                                .orderBy('name')
                                 .limit(limit)
                                 .offset(offset);
     
