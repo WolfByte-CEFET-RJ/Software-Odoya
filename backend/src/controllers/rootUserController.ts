@@ -36,7 +36,7 @@ export default class RootUserController {
         try {
 
             if(req.query.isadm){ //validação da flag, caso o parametro tenha sido passado
-                if(req.query.isadm !== '1' && req.query.isadm !== '0' && req.query.isadm !== '2')
+                if(req.query.isadm !== '1' && req.query.isadm !== '0')
                 throw new WrongFlag
             }
 
