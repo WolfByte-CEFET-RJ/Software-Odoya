@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import RHUserButton from "../../components/RHUserButton";
@@ -7,7 +7,7 @@ import RHAdmButton from "../../components/RHAdmButton";
 import ModalInspectAdm from "../../components/ModalInspectAdm";
 import ModalInspectUser from "../../components/ModalInspectUser";
 import Switch from "react-switch";
-import { toast } from "react-toastify";
+
 import rh from "./rh.module.scss";
 import { MdPersonSearch, MdQuestionMark, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import api from "../../api"
@@ -82,7 +82,7 @@ const RH = () => {
     useEffect(() => {
         getUsersData();
     }, [currentPage])
-    
+    console.log((filteredList.filter((user) => user.admin)).length)
     return (
         <> 
             <Header/>
@@ -128,10 +128,10 @@ const RH = () => {
                 </div>
 
                 {checkedAdm ? (
-                  <p className={rh.results}>Mostrando {(filteredList.filter((user) => user.admin)).length} de {usersList.length} resultados</p>
+                  <p className={rh.results}>Mostrando {(filteredList.filter((user) => user.admin)).length} de {(filteredList.filter((user) => user.admin)).length} resultados</p>
                 ) : (
                   checkedUser ? (
-                    <p className={rh.results}>Mostrando {(filteredList.filter((user) => !user.admin)).length} de {usersList.length} resultados</p>
+                    <p className={rh.results}>Mostrando {(filteredList.filter((user) => !user.admin)).length} de {(filteredList.filter((user) => !user.admin)).length} resultados</p>
                   ) : (
                     <p className={rh.results}>Mostrando {filteredList.length} de {usersList.length} resultados</p>
                   )
@@ -162,13 +162,19 @@ const RH = () => {
                     })}
                     </div>
 
-                  <div>
-                        <button onClick={() => goToPreviousPage()}>
+                  <div className={rh.buttons}>
+                        {currentPage == 1 ? 
+                        (<><button className={rh.disabled} disabled onClick={() => goToPreviousPage()}>
                             <MdArrowBackIos/>
-                        </button>
-                        <button onClick={() => goToNextPage()}>
-                            <MdArrowForwardIos/>
-                        </button>
+                        </button></>): 
+                        (<><button  onClick={() => goToPreviousPage()}>
+                            <MdArrowBackIos/>
+                        </button></>)}
+                        
+                        {usersList.length < 8
+                         ? (<><button className={rh.disabled} disabled onClick={() => goToNextPage()}><MdArrowForwardIos/></button></>) : 
+                         (<><button onClick={() => goToNextPage()}><MdArrowForwardIos/></button></>)}
+                        
                     </div>
                 </div>
 

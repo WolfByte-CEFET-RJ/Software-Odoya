@@ -6,6 +6,8 @@
     h1 {
         font-family: 'Tankindred', sans-serif;
     }
+    justify-content: center;
+    align-items: center;
 }
 
 .title {
@@ -74,6 +76,8 @@
     margin: 0% 0% 3% 2%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .cardGrid {
@@ -107,4 +111,21 @@
     margin-left: auto;
     margin-top: -5vh;
     margin-right: 2vw;
+}
+
+.buttons{
+    margin-top:5%;
+    width: 100%;    
+    text-align: center;
+
+    button:first-child{
+        margin-right: 5%;
+    }
+    
+}
+
+.disabled{
+    background: gray;
+    color: white;
+    cursor: not-allowed;
 }

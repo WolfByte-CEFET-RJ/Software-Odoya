@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 
 import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdRestoreFromTrash, MdGroups, MdHomeFilled, MdAccountCircle, MdLogout } from "react-icons/md";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import header from "./header.module.scss";
 
 import { useContext } from "react";
@@ -14,7 +14,7 @@ import { UserContext } from "../Context/userContext";
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    //const [isAdmin, setAdmin] = useState(false)
+    
     const location = useLocation();
     const currentLocation = location.pathname;
     
@@ -61,13 +61,13 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link to={"/"} className={header.link} onClick={handleLogout}>
+                            <Link  className={header.link} onClick={handleLogout}>
                                <MdLogout color="#114C6D" />Sair
                             </Link>
                             </>
                         ) : (
                             <>
-                            {currentLocation === "/profile" ? ( 
+                            {currentLocation === "/profile" && ( 
                                 <>
                                 <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>RH
@@ -79,20 +79,21 @@ const Header = () => {
                                     <MdHomeFilled color="#114C6D"/>Tela inicial
                                 </Link>
                                 </>
-                            ) : (
+                            )}
+                             {currentLocation === "/RH" && ( 
                                 <>
-                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
-                                    <MdHomeFilled color="#114C6D"/>RH
+                                <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>Perfil
                                 </Link>
-                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>Relatórios
                                 </Link>
-                                <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
-                                    <MdAccountCircle color="#114C6D"/>Perfil
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdHomeFilled color="#114C6D"/>Tela inicial
                                 </Link>
                                 </>
                             )}
-                            <Link to={"/"} className={header.link} onClick={handleLogout}>
+                            <Link  className={header.link} onClick={handleLogout}>
                                 <MdLogout color="#114C6D" />Sair
                             </Link>
                             </>
