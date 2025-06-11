@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import RHUserButton from "../../components/RHUserButton";
@@ -8,12 +7,10 @@ import ModalInspectAdm from "../../components/ModalInspectAdm";
 import ModalInspectUser from "../../components/ModalInspectUser";
 import Switch from "react-switch";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../components/Context/userContext";
 import rh from "./rh.module.scss";
 import { MdPersonSearch, MdQuestionMark, MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import api from "../../api"
 
 
@@ -28,11 +25,8 @@ const RH = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [load, setLoad] = useState(false);
-    const [lock, setLock] = useState(false);
 
-    const admin = useContext(UserContext);
-    const nav = useNavigate();
+    const {admin} = useContext(UserContext);
 
     const USERS_PER_PAGE = 16;
 
@@ -72,6 +66,7 @@ const RH = () => {
             }
         } catch(error) {
             console.log(error);
+            toast.error("Erro ao obter número total de usuários!")
         }
     }
 
@@ -100,6 +95,7 @@ const RH = () => {
             }
         } catch(error) {
             console.log(error);
+            toast.error("Erro ao obter dados dos usuários!")
         }
     }
 
@@ -107,13 +103,8 @@ const RH = () => {
         if(admin) {
             getTotalUsers();
             getUsersData();
-        } else {
-            setTimeout(() => {
-                toast.error("Usuário não autenticado! Saindo...");
-                nav('/');
-            }, 2000);
         }
-    }, [admin, checkedUser, checkedAdm, searchValue, currentPage])
+    }, [checkedUser, checkedAdm, searchValue, currentPage])
 
     return (
         <> 
