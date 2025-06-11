@@ -106,6 +106,46 @@
     }
 }
 
+.cardAprova{
+    @extend .card;
+    background-color: rgb(4, 177, 4);
+    .buttons{
+        width: auto;
+        display: block;
+        .valida{
+            cursor: auto;
+            width: auto;
+            background-color: transparent;
+            .text{
+                font-size:xx-large;
+            }
+        }
+        .reprova{
+            display: none;
+        }
+    }
+}
+
+.cardReprova{
+    @extend .card;
+    background-color: rgb(162, 18, 18);
+    .buttons{
+        width: auto;
+        display: block;
+        .valida{
+            display: none;
+        }
+        .reprova{
+            cursor: auto;
+            width: auto;
+            background-color: transparent;
+            .text{
+                font-size:xx-large;
+            }
+        }
+    }
+}
+
 
 @media (max-width: 768px) {
 
