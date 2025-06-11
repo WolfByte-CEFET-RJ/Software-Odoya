@@ -10,10 +10,10 @@ const DepositoAdm = (colectionPointId) => {
     const [paginaAtual, setPaginaAtual] = useState(1)
     const [users, setUSer] = useState([])
     const [totalPages, setTotalPages] = useState('0');
-
     useEffect(() => {
     getDepositos();
     }, [paginaAtual]);
+
 
     /*async function getDepositos() {
         try{
@@ -63,7 +63,7 @@ const DepositoAdm = (colectionPointId) => {
         }
     }
 
-    async function patchStatus(id, status) {
+    async function patchStatus(id,status) {
         try {
             const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk1OTg2NjQsImV4cCI6MTc0OTY4NTA2NH0.M1h-x53zLtVtxZyuBdds2v4SCmjdkBVy-aRcCrz9Wv0';
 
@@ -84,6 +84,35 @@ const DepositoAdm = (colectionPointId) => {
 
             const data = await response.json();
             getDepositos()
+        } catch (error) {
+            console.error(error);
+
+            setTimeout(() => {
+                Error('Falha ao mudar o status');
+            }, 1000);
+        }
+    }
+
+    async function searchDeposit(name) {
+        try {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk1OTg2NjQsImV4cCI6MTc0OTY4NTA2NH0.M1h-x53zLtVtxZyuBdds2v4SCmjdkBVy-aRcCrz9Wv0';
+
+            const response = await fetch(`http://localhost:5000/deposits/adm/search${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao buscar dados');
+            }
+
+            const data = await response.json();
+            setTotalPages(data.totalPages);
+            setUSer(data.deposits);
+            setPaginaAtual(1);
         } catch (error) {
             console.error(error);
 
@@ -125,11 +154,12 @@ const DepositoAdm = (colectionPointId) => {
             <div className={styles.divPrincipal}>
                 <h1 style={{textAlign: "center", marginBottom: "5%"}}>Ponto de coleta {pontoNome}</h1>
                 <p>Registro de depósitos</p>
-                <div style={{cursor: "pointer"}} onClick={() => getDepositos()} className={styles.retangulo}>
+                <form onSubmit={(e) => {e.preventDefault(); searchDeposit(e.target.elements.search.value)}} style={{cursor: "pointer"}}  className={styles.retangulo}>
                     <img style={{paddingLeft: "2%"}} src="../public/SearchClient.png" alt="" />
-                    <input className={styles.input} type="text" placeholder="Buscar por depósitos" />
-                </div>
+                    <input name="search" className={styles.input} type="text" placeholder="Buscar por depósitos" />
+                </form>
                 <div className={styles.registros}>
+                    <h2 style={{display: users.length === 0 ? "flex" : "none"}}>Sem Registros</h2>
                     <ul className={styles.grid}>
                         {users.map((user, index) => (
                             <li key={index}  className={user.status == "APROVADO"? styles.cardAprova: user.status == "REPROVADO"? styles.cardReprova : styles.card}>
@@ -160,7 +190,7 @@ const DepositoAdm = (colectionPointId) => {
                             </li>
                         ))}
                     </ul>
-                    <div style={{textAlign: "center", marginTop: "5%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{textAlign: "center", marginTop: "5%", display: users.length === 0 ? "none" : "flex", alignItems: "center", justifyContent: "center"}}>
                         <img onClick={() => goBack()} style={{cursor: "pointer"}} src="../public/ChevronRight.png" alt="" />
                         <p style={{color: "black", margin: "0px"}}>{paginaAtual.toString().padStart(2,'0')}/{totalPages.toString().padStart(2,'0')}</p>
                         <img onClick={() => goUp()} style={{transform: "rotate(180deg)", cursor: "pointer"}}  src="../public/ChevronRight.png" alt="" />
