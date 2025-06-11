@@ -15,12 +15,24 @@ depositRouter
     .get('/deposits', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
     /**
-     * @route GET /deposits
-     * @description Retorna todos os depósitos
-     * @returns { Deposit[] } 
+     * @route GET /deposits/adm:id?page=xx&limit=xx
+     * @description Retorna todos os depósitos e o número de págianas totais dado o id de um colection point 
+     * @default (1,9) (página,itens)
+     * @param {string} id - ID do colection point 
+     * @returns { amount: number, totalPages: number, deposit: Deposit[] } 
      */
-    .get("/deposits/adm", AuthMiddleware.ensureAdmin, DepositController.getAllDeposits)
+    .get("/deposits/adm:id", AuthMiddleware.ensureAdmin, DepositController.getAllDeposits)
     
+    /**
+     * @route GET /deposits/adm/search:id?page=xx&limit=xx&name=xx
+     * @description Retorna todos os depósitos dado um nome
+     * @default (1,9) (página,itens)
+     * @param {string} id - ID do colection point 
+     * @param {string} name - nome ou parte de um nome
+     * @returns { amount: number, totalPages: number, deposit: Deposit[] } 
+     */
+    .get("/deposits/adm/search:id", AuthMiddleware.ensureAdmin, DepositController.getSearchDeposit)
+
     /**
      * @route GET /deposit/:id
      * @description Retorna um depósito dado o ID do depósito
@@ -43,7 +55,6 @@ depositRouter
      * @route PATCH /deposit/status
      * @description  atualiza os estados do deposito e distribui os devidos pontos, somente administradores
      * @param {string} collectionPointId
-     * @param {Number} collection_id
      * @param {string} status
      * @returns { message: string } 
      */
