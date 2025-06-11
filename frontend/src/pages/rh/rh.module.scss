@@ -129,12 +129,8 @@
     }
 
     display: flex;
-    margin-top:2%;
-    text-align: center;
-
-    button:first-child{
-        margin-right: 5%;
-    }
+    gap: 1vw;
+    margin-top: 2%;
 }
 
 .disabled{
