@@ -104,7 +104,7 @@ const RH = () => {
             getTotalUsers();
             getUsersData();
         }
-    }, [checkedUser, checkedAdm, searchValue, currentPage])
+    }, [admin, checkedUser, checkedAdm, searchValue, currentPage])
 
     return (
         <> 
@@ -150,15 +150,17 @@ const RH = () => {
 
                 </div>
 
-                {checkedAdm ? (
-                  <p className={rh.results}>Mostrando {(usersList.filter((user) => user.admin)).length} de {totalUsers} resultados</p>
-                ) : (
-                  checkedUser ? (
-                    <p className={rh.results}>Mostrando {(usersList.filter((user) => !user.admin)).length} de {totalUsers} resultados</p>
-                  ) : (
-                    <p className={rh.results}>Mostrando {usersList.length} de {totalUsers} resultados</p>
-                  )
-                )}
+                {!(usersList.length === 0) &&
+                    checkedAdm ? (
+                        <p className={rh.results}>Mostrando {(usersList.filter((user) => user.admin)).length} de {totalUsers} resultados</p>
+                    ) : (
+                    checkedUser ? (
+                        <p className={rh.results}>Mostrando {(usersList.filter((user) => !user.admin)).length} de {totalUsers} resultados</p>
+                    ) : (
+                        <p className={rh.results}>Mostrando {usersList.length} de {totalUsers} resultados</p>
+                    )
+                    )
+                }
 
                 <div className={rh.container}>
                   <div className={rh.cardGrid}>
