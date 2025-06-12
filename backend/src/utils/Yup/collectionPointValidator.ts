@@ -14,11 +14,6 @@ const createCollectionPointSchema = Yup.object({
         .positive('A capacidade deve ser um número positivo')
         .integer('A capacidade deve ser um número inteiro'),
 
-    amountSponges: Yup.number()
-        .required('A quantidade de esponjas é obrigatória')
-        .min(0, 'A quantidade não pode ser negativa')
-        .integer('A quantidade deve ser um número inteiro'),
-
     lastCollectionDate: Yup.date()
         .required('A data da última coleta é obrigatória'),
 
@@ -58,7 +53,7 @@ const updateCollectionPointSchema = Yup.object({
  */
 export default class CollectionPointValidator {
 
-  public static async validateCreate(data: Omit<CollectionPoint, 'id'>) {
+  public static async validateCreate(data: Omit<CollectionPoint, 'id' | 'amountSponges'>) {
     await createCollectionPointSchema.validate(data, { abortEarly: false });
   }
 

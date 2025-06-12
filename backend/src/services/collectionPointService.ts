@@ -7,6 +7,7 @@ import schedule from 'node-schedule';
 import Mailer from "./Mailer";
 import CollectionPointValidator from "../utils/Yup/collectionPointValidator";
 import { MissinngDataError } from "../erros/CommonErros";
+import { DepositNotAllowed } from "../erros/DepositErrors";
 
 const knex = DatabaseConnection.getInstance();
 const mailer = new Mailer();
@@ -61,16 +62,15 @@ export default class CollectionPointService {
      * @returns {Promise<String>} Resposta de sucesso
      */
     public static async createCollectionPoint(requestBody: CollectionPoint): Promise<String> {
-        const { name, location, amountSponges, capacitySponges, lastCollectionDate, nextCollectionDate, isInactive } = requestBody;
+        const { name, location, capacitySponges, lastCollectionDate, nextCollectionDate, isInactive } = requestBody;
 
-        await CollectionPointValidator.validateCreate({name, location, amountSponges, capacitySponges, lastCollectionDate, nextCollectionDate, isInactive });
+        await CollectionPointValidator.validateCreate({name, location, capacitySponges, lastCollectionDate, nextCollectionDate, isInactive });
         
         const id = v4();
         await knex("Collection_Point").insert({
             id,
             name,
             location,
-            amountSponges,
             capacitySponges,
             lastCollectionDate,
             nextCollectionDate,
@@ -97,7 +97,6 @@ export default class CollectionPointService {
 
         if(!id){
             throw new MissinngDataError("Id do ponto de coleta não informado")
-
         }
         
         const isDataEmpty = !data || Object.entries(data).length === 0;
@@ -110,6 +109,10 @@ export default class CollectionPointService {
         
         if(!collectionPoint){
             throw new CollectionPointNotFound();
+        }
+
+        if (data.amountSponges !== undefined && data.amountSponges > collectionPoint.amountSponges) {
+            throw new DepositNotAllowed("Incrementos de esponjas devem ser feitos através de depósitos diretos")
         }
 
         await knex("Collection_Point").where({ id: id }).update(data);

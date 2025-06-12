@@ -20,9 +20,17 @@ depositRouter
      * @route GET /deposit/:id
      * @description Retorna um depósito dado o ID do depósito
      * @param {string} id - ID do depósito
-     * @returns { message: string } 
+     * @returns { Deposit } 
      */
     .get("/deposit/:id", AuthMiddleware.ensureAuthenticated, DepositController.getOneDeposit)
+
+    /**
+     * @route GET /deposit/collection/:collection_id
+     * @description Retorna os depósitos em um ponto de coleta
+     * @param {string} collection_id - ID do ponto de coleta
+     * @returns { Deposit[] } 
+     */
+    .get("/deposit/collection/:collection_id", AuthMiddleware.ensureAuthenticated, DepositController.getByCollection)
 
     /**
      * @route POST /deposit

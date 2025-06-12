@@ -3,7 +3,9 @@ import Deposit from '../types/deposit';
 import { DepositStatus } from '../types/deposit';
 import depositValidator from '../utils/Yup/depositValidator';
 import { CollectionPointNotFound } from '../erros/CollectionPointErros';
-import { DepositNotFoundError, UnauthorizedDepositAccessError } from '../erros/DepositErrors';
+import { DepositNotAllowed, DepositNotFoundError, UnauthorizedDepositAccessError } from '../erros/DepositErrors';
+import CollectionPointService from './collectionPointService';
+import Mailer from './Mailer';
 
 const knex = DatabaseConnection.getInstance();
 
@@ -58,6 +60,34 @@ export default class DepositService{
 
         return deposit;
     }
+
+    /**
+     * @description Obtém os depósitos em um ponto de coleta
+     * @param collection_id ID do ponto de coleta
+     * @param userId ID do usuário solicitante
+     * @param isAdmin Indica se o usuário é administrador
+     */
+    public static async getByCollection(collection_id: string, userId: string, isAdmin: boolean): Promise<Deposit[]> {
+        
+        // Verifica se o ponto existe
+        await CollectionPointService.getOneCollectionPoint(collection_id)
+        
+        let query = knex('Deposit')
+            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at')
+            .where({ collectionPointId: collection_id });
+
+        if (!isAdmin) {
+            query = query.andWhere({ userId });
+        }
+
+        const deposits = await query;
+
+        if (!deposits || deposits.length === 0) {
+            throw new DepositNotFoundError();
+        }
+
+        return deposits;
+    }
     
     /**
      * @description Busca um Deposito
@@ -83,11 +113,36 @@ export default class DepositService{
      * @returns {Promise<string>}
      */
     public static async createDeposit(depositId: string, collectionPointId: string, userId: string, amountSponges: number, imageURL: string | undefined): Promise<string>{
-        await depositValidator.validateCreateDeposit({amountSponges});
-        const existCollectionPoint = await knex("Collection_Point").where({ id: collectionPointId }).first();
         
-        if (!existCollectionPoint) {
+        await depositValidator.validateCreateDeposit({amountSponges});
+        
+        const collectionPoint = await CollectionPointService.getOneCollectionPoint(collectionPointId)
+        
+        if (!collectionPoint) {
             throw new CollectionPointNotFound();
+        }
+        
+        if(collectionPoint.isInactive){
+            throw new DepositNotAllowed("Receptor inativo")
+        }
+
+        if(amountSponges > collectionPoint.capacitySponges){
+            throw new DepositNotAllowed("Quatidade de esponjas maior que a permitida")
+        }
+
+        const sumPendentes = await knex("Deposit")
+            .where({collectionPointId})
+            .andWhere({status: DepositStatus.PENDENTE})
+            .sum("amountSponges as total")
+
+        const possibleAmount = collectionPoint.amountSponges + (Number(sumPendentes[0].total) || 0)
+
+        if (possibleAmount + amountSponges > collectionPoint.capacitySponges){
+            // Enviar email pros administradores avisando que alguem tentou registrar o deposito mas nn conseguiu
+            //const mail = new Mailer()
+            //mail.sendMail()
+            throw new DepositNotAllowed(
+                `Limite excedido. Tente novamente após a coleta. Espaço disponível: ${collectionPoint.capacitySponges - possibleAmount}`);
         }
         
 
@@ -104,6 +159,13 @@ export default class DepositService{
         }
 
         await knex('Deposit').insert(deposit);
+
+        if (amountSponges+collectionPoint.amountSponges === collectionPoint.capacitySponges){
+            // Enviar email pros administradores avisando que encheu
+            //const mail = new Mailer()
+            //mail.sendMail()
+        }    
+
         return "Deposito realizado";
     }
 

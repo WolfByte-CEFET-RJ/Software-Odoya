@@ -36,6 +36,20 @@ export default class DepositController{
         }
     }
 
+    public static async getByCollection(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { collection_id } = req.params;
+            const isAdmin = req.user?.admin || false;
+            const userId = req.user?.id as string;
+
+            const deposit: Deposit[] = await DepositService.getByCollection(collection_id, userId, isAdmin);
+            res.status(HttpCode.OK).json(deposit);
+
+        } catch (e: any) {
+            next(e);
+        }
+    }
+
     public static async getDeposit(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
             const id = req.deposit?.id;
