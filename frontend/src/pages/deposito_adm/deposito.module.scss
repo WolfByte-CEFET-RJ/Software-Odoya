@@ -146,6 +146,79 @@
     }
 }
 
+@media screen and (max-width: 1366px){
+    .retangulo{
+    width: auto;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    background-color: #F1F1F1;
+    border-color: #767676;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.input{
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    margin-left: 2%;
+    flex: 1;
+}
+    
+    .card {
+        width: 100%; 
+        height: auto;
+
+        .text {
+        margin-left: 0;
+        margin-top: 8px;
+        font-size: 16px; 
+        }
+        .buttons{
+            .valida{
+                width: 120px;
+                height: 45px;
+                .text{
+                    font-size: larger;
+                }
+            }
+            .reprova{
+                width: 120px;
+                height: 45px;
+                .text{
+                    font-size: larger;
+                }
+            }
+        }
+    }
+
+    .cardAprova{
+        .buttons{
+        .valida{
+            width: auto;
+            height: auto;
+            .text{
+                font-size: x-large;
+            }
+        }
+        }
+    }
+    .cardReprova{
+        .buttons{
+        .reprova{
+            width: auto;
+            height: auto;
+            .text{
+                font-size: x-large;
+            }
+        }
+        }
+    }
+}
+
 
 @media (max-width: 768px) {
 

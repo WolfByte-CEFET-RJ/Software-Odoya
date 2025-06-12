@@ -186,15 +186,15 @@ const DepositoAdm = (colectionPointId) => {
                         {users.map((user, index) => (
                             <li key={index}  className={user.status == "APROVADO"? styles.cardAprova: user.status == "REPROVADO"? styles.cardReprova : styles.card}>
                                 <div className={styles.line}>
-                                <img src="/user.png" alt="Usuário"/>
-                                <p className={styles.text}>{user.name}</p>
+                                <img src="../public/user.png" alt="Usuário"/>
+                                <p className={styles.text}>Nome: {user.name}</p>
                                 </div>
                                 <div className={styles.line}>
                                 <img src="/DownloadingUpdates.png" alt="Quantidade" />
-                                <p className={styles.text}>{user.amountSponges}</p>
+                                <p className={styles.text}>Quantidade: {user.amountSponges}</p>
                                 </div>
                                 <div style={{ cursor: "pointer" }} className={styles.line}>
-                                <img src="/picture.png" alt="Comprovante" />
+                                <img src="../public/picture.png" alt="Comprovante" />
                                 <p className={styles.text}>Clique para ver comprovante</p>
                                 </div>
                                 <div className={styles.buttons}>
