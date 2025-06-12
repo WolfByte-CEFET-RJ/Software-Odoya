@@ -10,8 +10,16 @@ const DepositoAdm = (colectionPointId) => {
     const [paginaAtual, setPaginaAtual] = useState(1)
     const [users, setUSer] = useState([])
     const [totalPages, setTotalPages] = useState('0');
+    const [isSearching, setIsSearching] = useState(false);
+    const [name, setName] = useState('');
+
     useEffect(() => {
-    getDepositos();
+        if(!isSearching){
+            getDepositos();
+            
+        }else{
+            searchDeposit(name,false)
+        }
     }, [paginaAtual]);
 
 
@@ -36,7 +44,7 @@ const DepositoAdm = (colectionPointId) => {
     // temporario apenas para teste sem login
     async function getDepositos() {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk1OTg2NjQsImV4cCI6MTc0OTY4NTA2NH0.M1h-x53zLtVtxZyuBdds2v4SCmjdkBVy-aRcCrz9Wv0';
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk2ODg4NzEsImV4cCI6MTc0OTc3NTI3MX0.7zY3mX-jpxAJOYI6lN9IStzHMXySKROywAM0hVrnpEQ';
 
             const response = await fetch(`http://localhost:5000/deposits/adm${colectionPointId}?page=${paginaAtual}`, {
                 method: 'GET',
@@ -54,6 +62,7 @@ const DepositoAdm = (colectionPointId) => {
             setTotalPages(data.totalPages);
             setUSer(data.deposits);
             setPontoNome(data.deposits[0].point_name)
+            setIsSearching(false)
         } catch (error) {
             console.error(error);
 
@@ -65,7 +74,7 @@ const DepositoAdm = (colectionPointId) => {
 
     async function patchStatus(id,status) {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk1OTg2NjQsImV4cCI6MTc0OTY4NTA2NH0.M1h-x53zLtVtxZyuBdds2v4SCmjdkBVy-aRcCrz9Wv0';
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk2ODg4NzEsImV4cCI6MTc0OTc3NTI3MX0.7zY3mX-jpxAJOYI6lN9IStzHMXySKROywAM0hVrnpEQ';
 
             const response = await fetch(`http://localhost:5000/deposit/status/${id}`, {
                 method: 'PATCH',
@@ -82,8 +91,11 @@ const DepositoAdm = (colectionPointId) => {
                 throw new Error('Erro ao buscar dados');
             }
 
-            const data = await response.json();
-            getDepositos()
+            if(!isSearching){
+            getDepositos();
+        }else{
+            searchDeposit(name,false)
+        }
         } catch (error) {
             console.error(error);
 
@@ -93,9 +105,9 @@ const DepositoAdm = (colectionPointId) => {
         }
     }
 
-    async function searchDeposit(name) {
+    async function searchDeposit(name,isFirstSearch) {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk1OTg2NjQsImV4cCI6MTc0OTY4NTA2NH0.M1h-x53zLtVtxZyuBdds2v4SCmjdkBVy-aRcCrz9Wv0';
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk2ODg4NzEsImV4cCI6MTc0OTc3NTI3MX0.7zY3mX-jpxAJOYI6lN9IStzHMXySKROywAM0hVrnpEQ';
 
             const response = await fetch(`http://localhost:5000/deposits/adm/search${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`, {
                 method: 'GET',
@@ -112,7 +124,13 @@ const DepositoAdm = (colectionPointId) => {
             const data = await response.json();
             setTotalPages(data.totalPages);
             setUSer(data.deposits);
+            if(isFirstSearch){
             setPaginaAtual(1);
+            }else{
+
+            }
+            setName(name)
+            setIsSearching(true)
         } catch (error) {
             console.error(error);
 
@@ -135,6 +153,7 @@ const DepositoAdm = (colectionPointId) => {
     function goBack(){
         if(paginaAtual > 1){
             setPaginaAtual(paginaAtual-1)
+            document.getElementById("TITLE").scrollIntoView({ behavior: "smooth" });
         }
     }
 
@@ -142,37 +161,40 @@ const DepositoAdm = (colectionPointId) => {
     function goUp(){
         if(paginaAtual < totalPages){
             setPaginaAtual(paginaAtual+1)
+            document.getElementById("TITLE").scrollIntoView({ behavior: "smooth" });
         }
     }
+
+
 
     return(
         <div className={styles.body}>
             <Header/>
             <div className={styles.ondas_background}>
-                <img src="../public/Ondinhas.svg" className={styles.separador} />
+                <img src="/Ondinhas.svg" className={styles.separador} />
             </div>
             <div className={styles.divPrincipal}>
-                <h1 style={{textAlign: "center", marginBottom: "5%"}}>Ponto de coleta {pontoNome}</h1>
+                <h1 id="TITLE" style={{textAlign: "center", marginBottom: "5%"}}>Ponto de coleta {pontoNome}</h1>
                 <p>Registro de depósitos</p>
-                <form onSubmit={(e) => {e.preventDefault(); searchDeposit(e.target.elements.search.value)}} style={{cursor: "pointer"}}  className={styles.retangulo}>
-                    <img style={{paddingLeft: "2%"}} src="../public/SearchClient.png" alt="" />
+                <form  onSubmit={(e) => {e.preventDefault(); searchDeposit(e.target.elements.search.value, true)}} style={{cursor: "pointer"}}  className={styles.retangulo}>
+                    <img style={{paddingLeft: "2%"}} src="/SearchClient.png" alt="" />
                     <input name="search" className={styles.input} type="text" placeholder="Buscar por depósitos" />
                 </form>
                 <div className={styles.registros}>
                     <h2 style={{display: users.length === 0 ? "flex" : "none"}}>Sem Registros</h2>
-                    <ul className={styles.grid}>
+                    <ul  className={styles.grid}>
                         {users.map((user, index) => (
                             <li key={index}  className={user.status == "APROVADO"? styles.cardAprova: user.status == "REPROVADO"? styles.cardReprova : styles.card}>
                                 <div className={styles.line}>
-                                <img src="../public/user.png" alt="Usuário"/>
+                                <img src="/user.png" alt="Usuário"/>
                                 <p className={styles.text}>{user.name}</p>
                                 </div>
                                 <div className={styles.line}>
-                                <img src="../public/DownloadingUpdates.png" alt="Quantidade" />
+                                <img src="/DownloadingUpdates.png" alt="Quantidade" />
                                 <p className={styles.text}>{user.amountSponges}</p>
                                 </div>
                                 <div style={{ cursor: "pointer" }} className={styles.line}>
-                                <img src="../public/picture.png" alt="Comprovante" />
+                                <img src="/picture.png" alt="Comprovante" />
                                 <p className={styles.text}>Clique para ver comprovante</p>
                                 </div>
                                 <div className={styles.buttons}>
@@ -191,9 +213,9 @@ const DepositoAdm = (colectionPointId) => {
                         ))}
                     </ul>
                     <div style={{textAlign: "center", marginTop: "5%", display: users.length === 0 ? "none" : "flex", alignItems: "center", justifyContent: "center"}}>
-                        <img onClick={() => goBack()} style={{cursor: "pointer"}} src="../public/ChevronRight.png" alt="" />
+                        <img onClick={() => goBack()} style={{cursor: "pointer"}} src="/ChevronRight.png" alt="" />
                         <p style={{color: "black", margin: "0px"}}>{paginaAtual.toString().padStart(2,'0')}/{totalPages.toString().padStart(2,'0')}</p>
-                        <img onClick={() => goUp()} style={{transform: "rotate(180deg)", cursor: "pointer"}}  src="../public/ChevronRight.png" alt="" />
+                        <img onClick={() => goUp()} style={{transform: "rotate(180deg)", cursor: "pointer"}}  src="/ChevronRight.png" alt="" />
                     </div>
 
                 </div>
