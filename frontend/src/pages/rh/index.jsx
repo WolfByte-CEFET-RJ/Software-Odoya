@@ -150,7 +150,7 @@ const RH = () => {
 
                 </div>
 
-                {!(usersList.length === 0) &&
+                {usersList.length !== 0 ? (
                     checkedAdm ? (
                         <p className={rh.results}>Mostrando {(usersList.filter((user) => user.admin)).length} de {totalUsers} resultados</p>
                     ) : (
@@ -160,6 +160,9 @@ const RH = () => {
                         <p className={rh.results}>Mostrando {usersList.length} de {totalUsers} resultados</p>
                     )
                     )
+                ) : (
+                    <></>
+                )
                 }
 
                 <div className={rh.container}>
