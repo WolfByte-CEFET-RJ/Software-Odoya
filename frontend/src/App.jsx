@@ -3,7 +3,7 @@ import '../src/styles/global.scss'
 import Login from './pages/login/login.jsx'
 import Cadastro from './pages/cadastro/cadastro.jsx'
 import Principal from './pages/Principal/index.jsx'
-
+import Depositos from './pages/depositos/index.jsx'
 import Home from './pages/principal_Interna/Home.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -23,6 +23,7 @@ const Routing = () =>{
                 <Route path="/register" element={<Cadastro/>}/>
                 <Route path='/home' element={<Home/>}/>
                 <Route path="/profile" element={<Perfil/>}/>
+                <Route path="/deposit" element={<Depositos/>}/>
                 <Route path="/rh" element={<RH/>}/>
 
             </Routes>
