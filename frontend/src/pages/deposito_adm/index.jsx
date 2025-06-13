@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import api from '../../api'
 
 const DepositoAdm = (colectionPointId) => {
-    colectionPointId =1
     const [pontoNome, setPontoNome] = useState('')
     const [paginaAtual, setPaginaAtual] = useState(1)
     const [users, setUSer] = useState([])
@@ -23,13 +22,15 @@ const DepositoAdm = (colectionPointId) => {
     }, [paginaAtual]);
 
 
-    /*async function getDepositos() {
+    async function getDepositos() {
         try{
-            let req = await api.get('/admin/registration')           
+            let req = await api.get(`/deposits/adm${colectionPointId}?page=${paginaAtual}`)           
             
             if(req.status == 200){
-                
-                setPaginas(req.data)
+            setTotalPages(req.totalPages);
+            setUSer(req.deposits);
+            setPontoNome(req.deposits[0].point_name)
+            setIsSearching(false)
             }
         }
         catch (error) {
@@ -40,88 +41,36 @@ const DepositoAdm = (colectionPointId) => {
                 toast.error('Falha ao recuperar as páginas de registro');
             }, 1000);
     }
-    }*/
-    // temporario apenas para teste sem login
-    async function getDepositos() {
-        try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk2ODg4NzEsImV4cCI6MTc0OTc3NTI3MX0.7zY3mX-jpxAJOYI6lN9IStzHMXySKROywAM0hVrnpEQ';
-
-            const response = await fetch(`http://localhost:5000/deposits/adm${colectionPointId}?page=${paginaAtual}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Erro ao buscar dados');
-            }
-
-            const data = await response.json();
-            setTotalPages(data.totalPages);
-            setUSer(data.deposits);
-            setPontoNome(data.deposits[0].point_name)
-            setIsSearching(false)
-        } catch (error) {
-            console.error(error);
-
-            setTimeout(() => {
-                Error('Falha ao recuperar as páginas de registro');
-            }, 1000);
-        }
     }
 
     async function patchStatus(id,status) {
-        try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk2ODg4NzEsImV4cCI6MTc0OTc3NTI3MX0.7zY3mX-jpxAJOYI6lN9IStzHMXySKROywAM0hVrnpEQ';
-
-            const response = await fetch(`http://localhost:5000/deposit/status/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    status: status
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Erro ao buscar dados');
-            }
-
-            if(!isSearching){
-            getDepositos();
-        }else{
+        const dataStatus = {status: status}
+        try{
+            let req = await api.patch(`/deposit/status/${id}`,dataStatus)           
+            
+            if(req.status == 200){
+                if(!isSearching){
+                getDepositos();
+            }else{
             searchDeposit(name,false)
         }
-        } catch (error) {
-            console.error(error);
-
-            setTimeout(() => {
-                Error('Falha ao mudar o status');
-            }, 1000);
+            }
         }
+        catch (error) {
+            console.log(error)
+            
+            setTimeout(() => {
+                setLoad(false)
+                toast.error('Falha ao mudar o status');
+            }, 1000);
+    }
     }
 
     async function searchDeposit(name,isFirstSearch) {
-        try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Njc2OGQ1LWIwNWQtNDFiOC04YmFkLWYyNmQwNTA3MGUwZSIsImVtYWlsIjoidGVzdGVAZW1haWwuY29tIiwibmFtZSI6ImVtaWxpYSIsImFkbWluIjoxLCJpYXQiOjE3NDk2ODg4NzEsImV4cCI6MTc0OTc3NTI3MX0.7zY3mX-jpxAJOYI6lN9IStzHMXySKROywAM0hVrnpEQ';
-
-            const response = await fetch(`http://localhost:5000/deposits/adm/search${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Erro ao buscar dados');
-            }
-
-            const data = await response.json();
+        try{
+            let req = await api.get(`/deposits/adm/search${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`)           
+            
+            if(req.status == 200){
             setTotalPages(data.totalPages);
             setUSer(data.deposits);
             if(isFirstSearch){
@@ -131,13 +80,16 @@ const DepositoAdm = (colectionPointId) => {
             }
             setName(name)
             setIsSearching(true)
-        } catch (error) {
-            console.error(error);
-
-            setTimeout(() => {
-                Error('Falha ao mudar o status');
-            }, 1000);
+            }
         }
+        catch (error) {
+            console.log(error)
+            
+            setTimeout(() => {
+                setLoad(false)
+                toast.error('Falha ao recuperar as páginas de registro');
+            }, 1000);
+    }
     }
 
     function changeStatus(index,status){
