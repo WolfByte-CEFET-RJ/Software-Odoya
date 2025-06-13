@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
-import { HttpCode, HttpError } from "../erros/erro.config";
-import { ImprevistError } from "../erros/ImprevistError";
+import { NextFunction, Request, Response } from "express";
+import { HttpCode } from "../erros/erro.config";
 import RootUserService from "../services/rootUserService";
-import { RootUserModificationError } from "../erros/AuthErros";
+import { RootUserModificationError , WrongFlag } from "../erros/AuthErros";
 import UserService from "../services/userService";
 import User from "../types/user"
+import { Flag } from "../types/user";
 export default class RootUserController {   
-    public static async changeRole(req: Request, res: Response): Promise<any>{
-        try{
+    public static async changeRole(req: Request, res: Response, next: NextFunction): Promise<any>{
+        try {
             const { user_id } = req.params;
             if(req.user?.id === user_id){
                 throw new RootUserModificationError("Usuário root não pode ter suas permissões alteradas.")
@@ -17,83 +17,67 @@ export default class RootUserController {
 
             res.status(HttpCode.OK).json({message: response});
 
-        }catch(e){
-             console.error(e);
-            
-            if(e instanceof HttpError){
-                return e.sendMessage(res);
-            }
-    
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res); 
+        } catch(e: any){
+            next(e);
         }
     }
 
-    public static async getAllUsers(req: Request, res: Response): Promise<any>{
-        try{
+    public static async getAllUsers(req: Request, res: Response, next: NextFunction): Promise<any>{
+        try {
             const users: User[] = await UserService.getAll()
             res.status(HttpCode.OK).json({amount: users.length, users});
 
-        }catch(e){
-             console.error(e);
-            
-            if(e instanceof HttpError){
-                return e.sendMessage(res);
-            }
-    
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res); 
+        } catch(e: any){
+            next(e);
         }
     }
 
-    public static async updateUser(req: Request, res: Response): Promise<any>{
+    public static async getUsersPagination(req: Request, res: Response, next: NextFunction): Promise<any>{
+        try {
+
+            if(req.query.isadm){ //validação da flag, caso o parametro tenha sido passado
+                if(req.query.isadm !== '1' && req.query.isadm !== '0')
+                throw new WrongFlag
+            }
+
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+            const isAdm: Flag = (req.query.isadm as Flag) || Flag.UNDEFINIED;
+            const data: (User & { total: number })[] = await  UserService.getAllPagination(page, limit, isAdm);
+
+            const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias
+            const users: User[] = data.map(({ total, ...user }) => user); //retira o total dos usuários
+            res.status(HttpCode.OK).json({amount: users.length, totalPages: totalPages, users});
+
+        } catch(e: any){
+            next(e);
+        }
+    }
+
+    public static async updateUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
             const { user_id } = req.params;
             const { ...data } = req.body
-
-            if(req.user?.id === user_id){
-                throw new RootUserModificationError(
-                    "Usuário root não pode ter seus dados cadastrais atualizados. Contate os desenvolvedores para alteraçõess específicas");
-            }
 
             const response: string = await UserService.updateUser(user_id, data);
 
             res.status(HttpCode.OK).json({message: response});
 
-        }catch(e){
-             console.error(e);
-            
-            if(e instanceof HttpError){
-                return e.sendMessage(res);
-            }
-    
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res); 
+        } catch(e: any){
+            next(e);
         }
     }
 
-    public static async deleteUser(req: Request, res: Response): Promise<any>{
-        try{
+    public static async deleteUser(req: Request, res: Response, next: NextFunction): Promise<any>{
+        try {
             const { user_id } = req.params;
-
-            if(req.user?.id === user_id){
-                throw new RootUserModificationError(
-                    "Usuário root não pode ter seus dados cadastrais excluídos. Contate os desenvolvedores para alterações específicas");
-            }
 
             const response: string = await UserService.deleteUser(user_id);
 
             res.status(HttpCode.OK).json({message: response});
 
-        }catch(e){
-             console.error(e);
-            
-            if(e instanceof HttpError){
-                return e.sendMessage(res);
-            }
-    
-            const classified_err = new ImprevistError();
-            return classified_err.sendMessage(res); 
+        } catch(e: any){
+            next(e);
         }
     }
 }

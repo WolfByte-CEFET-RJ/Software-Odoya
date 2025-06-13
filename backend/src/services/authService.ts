@@ -1,13 +1,10 @@
-import DatabaseConnection from "../database/connection/DatabaseConnection";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { ExternalAuthRequired, InvalidCredentialsError, InvalidExternalToken } from "../erros/LoginError";
-import { v4 } from "uuid";
 import User from "../types/user";
 import AuthValidator from "../utils/Yup/authValidator";
 import UserService from "./userService";
-
-const database = DatabaseConnection.getInstance();
+import { UserNotFound } from "../erros/UserErros";
 
 /**
  * @class AuthService
@@ -22,26 +19,31 @@ export class AuthService {
      */
     public static async login(email: string, password: string): Promise<string>{
 
-        await AuthValidator.validateLogin({email, password})
+        await AuthValidator.validateLogin({email, password});
 
-        const user = await UserService.getUserWithSensitiveData(email)
+        let user;
+        try{
+            user = await UserService.getUserSensitiveByEmail(email);
+        } catch(e: any){
 
-        if(!user){
-            throw new InvalidCredentialsError();
+            if(e instanceof UserNotFound){
+                throw new InvalidCredentialsError();
+            }
+            // Propagando o erro inesperado caso não seja a falta do usuário
+            throw e;
         }
 
         if(!user.password){
-            throw new ExternalAuthRequired()
+            throw new ExternalAuthRequired();
         }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
-        console.log(passwordMatch)
 
         if(!passwordMatch){
             throw new InvalidCredentialsError();
         }
 
-        const token = this.generateToken(user)
+        const token = this.generateToken(user);
 
         return token;
     }
@@ -63,22 +65,35 @@ export class AuthService {
             throw new InvalidExternalToken(Number(googleUserInfo.error.code), `Google API retornou: ${googleUserInfo.error.message}`);
         }
         
-        // Buscando informações do usuário
-        let user = await UserService.getUserByEmail(googleUserInfo.email)
-        
-        if (!user) {
-            // Cria usuário sem senha, se ele não existir
-            await UserService.createUserWithoutPassword(googleUserInfo.name, googleUserInfo.email);
-            
-            // Busca as informações do usuário novamente
-            user = await UserService.getUserByEmail(googleUserInfo.email);
-        } 
+        let user; 
+        try{
+            user = await UserService.getUserSensitiveByEmail(googleUserInfo.email);
+
+        } catch(e:any){
+
+            if (e instanceof UserNotFound) {
+                // Cria usuário sem senha, se ele não existir
+                await UserService.createUserWithoutPassword(googleUserInfo.name, googleUserInfo.email);
+                
+                // Busca as informações do usuário novamente (que acabou de ser criado)
+                user = await UserService.getUserSensitiveByEmail(googleUserInfo.email);
+
+            } else{
+                // Propagando o erro inesperado caso não seja a falta do usuário
+                throw e;
+            } 
+        }
         
         const system_token = this.generateToken(user);
 
         return system_token;
     }
 
+    /**
+     * Gera token de autenticação do usuário
+     * @param {User} user 
+     * @returns {String} token de autenticação
+     */
     private static generateToken(user: User): string{
         return jsonwebtoken.sign(
             {

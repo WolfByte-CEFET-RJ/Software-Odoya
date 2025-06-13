@@ -9,4 +9,14 @@ export default interface User {
     admin: boolean;
     points: number;
 }
-  
+
+export interface UpdateUser {
+    name?: string;
+    password?: string;
+}
+
+export enum Flag {
+                TRUE = "1",
+                FALSE = "0",
+                UNDEFINIED = "2"
+            }

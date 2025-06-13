@@ -1,14 +1,18 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import InputFormProfile from "../../components/inputFormProfile";
+import InputFormEdit from "../../components/inputFormEdit";
 import { MdInfo } from "react-icons/md";
 import perfil from "./perfil.module.scss"
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import api from '../../api'
+
+import { useContext } from "react";
+import { UserContext } from "../../components/Context/userContext";
 
 const Perfil = () => {
     const navigate = useNavigate();
@@ -16,34 +20,17 @@ const Perfil = () => {
     const [lock, setLock] = useState(false)
     //const [text, setText] = useState('')
     const [name, setName] = useState('')
-    const [username, setUser] = useState('')
-    const [mail, setEmail] = useState('')
+    
+    const [email, setEmail] = useState('')
 
+    const {client, mail} = useContext(UserContext)
+    console.log(client, mail)
+    
     const handleChange = (event, setText) => {
         setText(event.target.value);
     };
    
-    async function getUserData(){
-
-        try{
-            let req = await api.get('/user')
-            console.log(req.data)
-            localStorage.setItem("id", req.data.id)
-            setUser(req.data.name)
-            setName(req.data.name)
-            setEmail(req.data.email)
-        }
-        catch (error) {
-            console.log(error)
-            
-            
-            setLoad(false)
-            toast.error('Falha ao buscar dados do usuário');
-            setTimeout(() => {
-                navigate('/')
-            }, 2000);
-    }
-    }
+    
     async function deleteUser(){
         
 
@@ -72,7 +59,7 @@ const Perfil = () => {
     }
     async function updateUser(){
         //let tokenId = localStorage.getItem("id")
-        const userData = {name: name, email: mail}
+        const userData = {name: name, email: email}
         
 
         try{
@@ -84,7 +71,7 @@ const Perfil = () => {
                                     setLoad(false)
                                     toast.success('Usuário atualizado!');
                                 }, 1000);
-                                getUserData()
+                                
             }
         }
         catch (error) {
@@ -111,6 +98,7 @@ const Perfil = () => {
         
     }
     useEffect(() =>{
+            
             if(load == true){
                 setLock(true)
                
@@ -133,9 +121,11 @@ const Perfil = () => {
 
             
     },[load])
-    useEffect(()=>{
-        getUserData()
-    },[])
+    useEffect(() =>{
+        setEmail(mail)
+        setName(client)
+    },[client])
+    
 
     
     return (
@@ -143,19 +133,19 @@ const Perfil = () => {
             <Header/>
             <img src="./Ondinhas.svg" className={perfil.separador}/>
             <div className={perfil.container}>
-            <img src="../public/LogoAzul.svg" className={perfil.logoazul} alt="Logo Azul da ENACTUS"/>
-                <h1>Seja bem vindo {username}</h1>
+                <img src="../public/LogoAzul.svg" className={perfil.logoazul} alt="Logo Azul da ENACTUS"/>
+                <h1>Seja bem-vindo, {client}!</h1>
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
-                    <InputFormProfile   onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormProfile>
+                    <InputFormEdit onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormEdit>
                     <label>E-mail</label>
-                    <InputFormProfile onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="email"></InputFormProfile>
+                    <InputFormEdit onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="email"></InputFormEdit>
 
                     <label>Pontos</label>
                     <div className={perfil.divPoints}>
                         <p className={perfil.points}>0</p>
                         <div className={perfil.pointsInfo}>
-                            <MdInfo/>
+                            <MdInfo size={20}/>
                             <p>Faça depósitos de esponjas para conseguir mais pontos!</p>
                         </div>
                     </div>

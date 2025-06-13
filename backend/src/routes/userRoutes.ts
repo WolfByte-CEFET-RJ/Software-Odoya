@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from 'express';
+import Router from 'express';
 import UserController from '../controllers/userController';
 import AuthMiddleware from '../middlewares/authMiddleware';
 
@@ -11,6 +11,7 @@ router
      * @returns { User }
      */
     .get('/user', AuthMiddleware.ensureAuthenticated, UserController.getUser)
+
     /**
      * @route POST /user
      * @description Cria um usuário.
@@ -20,6 +21,7 @@ router
      * @returns { message: string } 
      */
     .post('/user', UserController.createUser)
+    
     /**
      * @route PATCH /user
      * @description Altera um usuário.
@@ -28,12 +30,21 @@ router
      * @returns { message: string } 
      */
     .patch('/user', AuthMiddleware.ensureAuthenticated, UserController.updateUser)
+    
     /**
      * @route DELETE /user
      * @description Deleta um usuario
      * @param {string} id
-     * @returns { message: string }
+     * @returns { void }
      */
     .delete('/user', AuthMiddleware.ensureAuthenticated, UserController.deleteUser)
+    
+    /**
+     * @route POST /forgotPassword
+     * @description Recupera a senha do usuario
+     * @param {string} email
+     * @returns { message: string }
+     */
+    .post('/forgotPassword', UserController.forgotPassword)
 
 export default router;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 import principal from "./principal.module.scss";
 import { TbArrowRightDashed } from "react-icons/tb";
@@ -8,8 +8,33 @@ import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import Footer from "../../components/Footer";
+import { RiInfinityLine } from "react-icons/ri";
+import { RiGraduationCapLine } from "react-icons/ri";
+import { MdOutlineWaterDrop } from "react-icons/md";
+import { FaTemperatureArrowDown } from "react-icons/fa6";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Principal = () => {
+
+  const imagensCarrossel = [
+    "./ImagemCarrossel1.svg",
+    "./ImagemCarrossel2.png",
+    "./ImagemCarrossel3.png",
+  ];
+
+  const [indiceAtual, setIndiceAtual] = useState(0);
+
+  const proximaImagem = () => {
+    setIndiceAtual((indiceAtual + 1) % imagensCarrossel.length);
+  };
+
+  const imagemAnterior = () => {
+    setIndiceAtual(
+      (indiceAtual - 1 + imagensCarrossel.length) % imagensCarrossel.length
+    );
+  };
+
   return (
     <>
       <Header />
@@ -41,7 +66,7 @@ const Principal = () => {
                 <strong>O que é o Odoyá: </strong>
               </h2>
             </div>
-            <p>
+            <p className={principal.texto}>
               Projeto composto por estudantes de graduação do CEFET/RJ
               determinados em trazer soluções para o meio ambiente e gerar ações
               que causem um impacto positivo e sustentável para o nosso planeta.
@@ -53,12 +78,12 @@ const Principal = () => {
               </h2>
             </div>
 
-            <p>
+            <p className={principal.texto}>
               <strong>• Doe Esponjas: </strong>Se você tem esponjas usadas em
               casa e não sabe o que fazer com elas, nós podemos ajudar!
               Cadastre-se para doar e faremos a coleta.
             </p>
-            <p>
+            <p className={principal.texto}>
               <strong>• Participe de Mutirões:</strong>Venha fazer parte dos
               nossos mutirões de coleta! Uma ótima oportunidade para ajudar a
               natureza e conhecer novas pessoas.
@@ -71,6 +96,7 @@ const Principal = () => {
               </strong>
             </p>
             <div className={principal.botao_container}>
+              
               <Link className={principal.botao} to="/register">
                 Cadastre-se
               </Link>
@@ -90,7 +116,7 @@ const Principal = () => {
           <div>
             <div className={principal.card}>
               <h2>Missão</h2>
-              <p>
+              <p className={principal.texto}>
                 Promover a conservação do meio ambiente e dos recursos hídricos,
                 através da conscientização da população e do desenvolvimento de
                 soluções de destinação e reaproveitamento de esponjas plásticas,
@@ -101,7 +127,7 @@ const Principal = () => {
             </div>
             <div className={principal.card}>
               <h2>Objetivos Específicos</h2>
-              <p>
+              <p className={principal.texto}>
                 Promover o letramento ambiental nas comunidades locais focando
                 no público jovem Introduzir a esponja plástica na economia
                 circular criando meios de coleta e reutilização do material
@@ -115,7 +141,7 @@ const Principal = () => {
           <div>
             <div className={principal.card}>
               <h2>Visão</h2>
-              <p>
+              <p className={principal.texto}>
                 Ser um negócio de impacto socioambiental, de referência na
                 cidade do Rio de Janeiro, no desenvolvimento de produtos e
                 serviços inovadores, que promovam o reaproveitamento de esponjas
@@ -153,6 +179,96 @@ const Principal = () => {
           </div>
         </div>
       </section>
+
+      <img src="./Ondinhas.svg" className={principal.separador} />
+
+      <section className={principal.secao3}>
+        <div style={{height:"130px"}}></div>
+        <h1 className={principal.titulo}>Nossas Ações </h1>
+        <div className={principal.line}>
+          <div className={principal.listaActions}>
+            <div className={principal.field}>
+              <TbArrowRightDashed size={30} color="269BDF" />
+              <h2>Coleta de Esponjas</h2>
+            </div>
+            <div className={principal.field}>
+              <TbArrowRightDashed size={30} color="269BDF" />
+              <h2>Letramento Ambiental</h2>
+            </div>
+            <div className={principal.field}>
+              <TbArrowRightDashed size={30} color="269BDF" />
+              <h2>Mutirões de Limpeza</h2>
+            </div>
+          </div>  
+          <div className={principal.partedebaixo}>
+          <div className={principal.slider}>
+            <button className={principal.setas} onClick={imagemAnterior}>
+              <IoIosArrowBack size={100} />
+            </button>
+            <div className={principal.imagem}>
+              <img src={imagensCarrossel[indiceAtual]} style={{ width: "100%" }} />
+            </div>
+            <button className={principal.setas} onClick={proximaImagem}>
+              <IoIosArrowForward size={100} />
+            </button>
+          </div>
+          <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
+          <div className={principal.ordem}>
+              <div className={principal.cards}>
+                <img src="Obj13.svg"/>
+              </div>
+            
+          
+              <div className={principal.cards}>
+                <img src="Obj6.svg"/>
+              </div>
+        
+            
+              <div className={principal.cards}>
+                <img src="Obj12.svg"/>
+              </div>
+              <div className={principal.cards}>
+                  <img src="Obj4.svg"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+      </section>
+      <img src="./Ondinhas.svg" className={principal.separador} />
+
+      <section className={principal.secao4}>
+        <div className={principal.resultados}>
+          <div className={principal.titulo}>
+            <h2>Nossos</h2> 
+            <h2>Principais</h2>
+            <h2>Resultados</h2> 
+          </div>
+          <div className={principal.resultados2}> 
+            <p>x esponjas coletadas</p>
+            <p>x pessoas alcançadas online</p>
+            <p>x KG de lixo reciclável coletado</p>
+            <p>x pessoas certificadas nas atividades</p>
+          </div>
+        </div>
+          <div className={principal.parceiros}>
+            <div className={principal.logos}>
+
+              <div className={principal.linha}>
+                <img src="./parceiro1.png" alt="Parceiro 1" />
+                <img src="./parceiro2.png" alt="Parceiro 2" />
+                <img src="./parceiro3.png" alt="Parceiro 3" />
+              </div>
+
+              <h2 className={principal.titulo}>Parcerias</h2>
+              <div className={principal.linha}>
+                <img src="./parceiro4.png" alt="Parceiro 4" />
+                <img src="./parceiro5.png" alt="Parceiro 5" />
+                <img src="./parceiro6.png" alt="Parceiro 6" />
+              </div>
+            </div>
+          </div>
+        </section>
       <Footer />
     </>
   );

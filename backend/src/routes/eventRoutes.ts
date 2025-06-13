@@ -1,0 +1,66 @@
+import { Router } from "express";
+import EventController from "../controllers/eventController";
+import AuthMiddleware from "../middlewares/authMiddleware";
+
+const eventRouter = Router();
+
+eventRouter
+    /**
+     * @route GET /event
+     * @description Retorna todos os mutirões que estejam com datas marcadas para acontecer. se não tiver nenhum retorna um array vazio
+     * @decription date está retornando no formato yyyy-mm-ddThh:00:000Z por enquanto
+     * @returns { Event[] }
+     * @Multiroes [] { name , location, date, meetingpoint, estimatedDuration}
+     */
+    .get("/events/scheduled", AuthMiddleware.ensureAuthenticated, EventController.getAllEventScheduled)
+
+    /**
+     * @route GET /event/admin
+     * @description Retorna todos os mutirões do banco. somente admin
+     * @returns { Event[] } 
+     */
+    .get("/events", AuthMiddleware.ensureAdmin, EventController.getAllEvent)
+
+    /**
+     * @route GET /event/:id
+     * @description Retorna um mutirão dado o ID
+     * @param {string} id - ID do mutirão
+     * @returns { Event } 
+     */
+    .get("/event/:id", AuthMiddleware.ensureAdmin, EventController.getOneEvent)
+
+    /**
+     * @route POST /event
+     * @description Cria um mutirão, apenas Admin
+     * @param {string} name
+     * @param {string} location
+     * @param {string} date
+     * @param {string} meetingPoint
+     * @param {string} estimatedDuration
+     * @returns { message: string } 
+     */
+    .post('/event',AuthMiddleware.ensureAdmin, EventController.createEvent)
+
+    /**
+     * @route PATCH /event/:id
+     * @description Atualiza um mutirão, apenas Admin
+     * @param {string} id
+     * @param {string} name
+     * @param {string} location
+     * @param {string} date
+     * @param {string} meetingPoint
+     * @param {string} estimatedDuration
+     * @returns { message: string } 
+     */
+    .patch('/event/:id',AuthMiddleware.ensureAdmin, EventController.updateEvent)
+    
+    /**
+     * @route DELETE /event/delete
+     * @description Deleta um mutirão
+     * @param {string} id
+     * @returns { message: string }
+     */ 
+    .delete("/event/delete/:id", AuthMiddleware.ensureAdmin, EventController.deleteEvent)
+
+
+export default eventRouter;
