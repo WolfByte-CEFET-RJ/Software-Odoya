@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import HeaderInterno from "../../components/header_Interno/headerInterno.jsx";
 import Footer from "../../components/Footer/index.jsx";
@@ -10,12 +11,17 @@ import Mapa from "../../components/MapaComponent/Mapa.jsx"
 import {Grid2} from "@mui/material"
 import Calendar from "../../components/Calendar/Calendar.jsx";
 import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../components/Context/userContext";
+
 function Home(){
-    const[user, setUser] = useState();
+    
     const[esponge, setEsponge] = useState(false);
     const[muti, setMuti] = useState(false);
     const[adress, setAdress] = useState({ street: '', lat: '', long: '' })
     const[point, setPoint] = useState([]);
+    const [donations, SetDon] = useState([])
+    const {client} = useContext(UserContext)
 
     function changePageEsponge(e){
         e.preventDefault()
@@ -61,11 +67,22 @@ function Home(){
             state: "faltou"
         },
     ]
+    async function dadosDeps(){
+        try{
+            let req = await api.get("/deposits")
+            if(req.status == 200){
+                console.log(req.data)
+                SetDon(req.data)
+            }
+        }
+        catch(err){
+            toast.error(err)
+        }
+    }
     async function getColectData(){
 
         try{
             let req = await api.get('/collectionPoints')
-            // console.log(req.data)
             setPoint(req.data)
             
         }
@@ -78,31 +95,21 @@ function Home(){
         }
     }
     
-    async function getUser(){
-        try{
-                let req = await api.get('/user')
-                console.log(req)
-                setUser(req.data)
-        }catch (error){
-            setTimeout(()=>{
-                toast.error('Falha ao capturar os dados do usuário')
-            },1000)
-
-        }
-    }
+   
 
     useEffect(()=>{
         getColectData()
-        getUser()
+        dadosDeps()
+   
     },[])
 
     return(
         <>
-            {/* {user ?  */}
+           
             <>
                 <HeaderInterno/>
                 <section className="welcome-section">
-                    <h1 className="welcome-titulo"> Bem vindo de volta, {`${user}`}</h1>
+                    <h1 className="welcome-titulo"> Bem vindo de volta, {`${client}`}</h1>
                 </section>
                 <img src="./Ondinhas.svg" className="separador" />
                 <section className="escolhas-section">
@@ -115,10 +122,18 @@ function Home(){
                 { esponge ?
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
-                        <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                            {dados ? dados.map((dado)=>(
-                            <DonationCard key={dado.idx} donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
-                            )) : <></>}
+                         <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
+                            {donations.length > 0 ? donations.map((dado)=>{
+                                const date = new Date(dado.created_at)
+                                const brasiliaDate = date.toLocaleDateString('pt-BR', {
+                                day: '2-digit',   // Dia com dois dígitos (ex: "01", "15")
+                                month: '2-digit', // Mês com dois dígitos (ex: "01", "12")
+                                year: 'numeric',  // Ano completo (ex: "2025")
+                                timeZone: 'America/Sao_Paulo' // Fuso horário de Brasília
+                                });
+                                
+                            return <DonationCard key={dado.id}  donate={true} num={dado.amountSponges} place={dado.location} date={brasiliaDate} hour={dado.created_at.split("T")[1].replace(/Z$/, '').substring(0, 5)} />
+}) : <></>}
                         </Grid2>
                     </section>
                     :  muti ? 
@@ -134,9 +149,17 @@ function Home(){
                     <section className="sectionCards">
                         <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
                         <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-                            {dados ? dados.map((dado)=>(
-                            <DonationCard key={dado.idx}  donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour}/>
-                            )) : <></>}
+                            {donations.length > 0 ? donations.map((dado)=>{
+                                const date = new Date(dado.created_at)
+                                const brasiliaDate = date.toLocaleDateString('pt-BR', {
+                                day: '2-digit',   // Dia com dois dígitos (ex: "01", "15")
+                                month: '2-digit', // Mês com dois dígitos (ex: "01", "12")
+                                year: 'numeric',  // Ano completo (ex: "2025")
+                                timeZone: 'America/Sao_Paulo' // Fuso horário de Brasília
+                                });
+                                
+                            return <DonationCard key={dado.id}  donate={true} num={dado.amountSponges} place={dado.location} date={brasiliaDate} hour={dado.created_at.split("T")[1].replace(/Z$/, '').substring(0, 5)} />
+}) : <></>}
                         </Grid2>
                     </section>
                         
