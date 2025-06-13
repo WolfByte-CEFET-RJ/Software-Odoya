@@ -20,18 +20,41 @@ export default class DepositService{
      * @param userId ID do usuário
      * @param isAdmin Indica se o usuário é administrador
      */
-    public static async getAllDeposits(userId: string, isAdmin: boolean): Promise<Deposit[]> {
-        let query = knex('Deposit')
-            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at');
+    public static async getAllDeposits(page: number, limit: number, id: string): Promise<(Deposit & {total : number})[]> {
+        const offset = (page - 1) * limit;
 
-        if (!isAdmin) {
-            query = query.where({ userId });
-        }
-
-        const deposits = await query;
+        const  deposits = await knex('Deposit')
+            .join("collection_point", "deposit.collectionPointId", "collection_point.id")
+            .join("user", "deposit.userId", "user.id")
+            .select('deposit.id', 'collectionPointId', 'collection_point.name as point_name' ,'userId', 'user.name as name' , 
+            'deposit.amountSponges', 'imageURL', 'status', 'created_at', 'updated_at', knex.raw('COUNT(user.name) OVER() as total'))
+            .where('collectionPointId', id)
+            .orderBy([{ column: 'deposit.created_at', order: 'desc' }, { column: 'deposit.id', order: 'asc' }])
+            .limit(limit)
+            .offset(offset);
 
         if (!deposits || deposits.length === 0) {
-            return [];
+            throw new DepositNotFoundError();
+        }
+
+        return deposits;
+    }
+
+    public static async getSearchDeposit(page: number, limit: number, id: string, name:string): Promise<(Deposit & {total : number})[]> {
+        const offset = (page - 1) * limit;
+        const  deposits = await knex('Deposit')
+            .join("collection_point", "deposit.collectionPointId", "collection_point.id")
+            .join("user", "deposit.userId", "user.id")
+            .select('deposit.id', 'collectionPointId', 'collection_point.name as point_name' ,'userId', 'user.name as name' , 
+            'deposit.amountSponges', 'imageURL', 'status', 'created_at', 'updated_at', knex.raw('COUNT(user.name) OVER() as total'))
+            .where('collectionPointId', id)
+            .andWhere('user.name', 'like', `%${name}%`)
+            .orderBy([{ column: 'deposit.created_at', order: 'desc' }, { column: 'deposit.id', order: 'asc' }])
+            .limit(limit)
+            .offset(offset);
+
+        if (!deposits || deposits.length === 0) {
+            return []
         }
 
         return deposits;

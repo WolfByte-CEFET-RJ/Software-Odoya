@@ -1,0 +1,32 @@
+.body {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-color: #B1E3FA;
+    border-radius: 10px;
+    margin: 2% 0% 0% 3%;
+
+    button {
+        width: 100%;
+        font-size: medium;
+        border-radius: 10px;
+        margin-top: auto;
+    }
+}
+
+.info {
+    display: flex;
+    div {
+        margin: 5%;
+    }
+    
+    p {
+        color: black;
+        margin-bottom: -2%;
+        font-size: small;
+    }
+}
+
+.icon {
+    margin: 8% 0% 0% 5%;
+}
