@@ -43,7 +43,8 @@ const Header = () => {
             <button className={header.menuButton} onClick={() => setMenuOpen(!menuOpen)}>
                 {menuOpen ? <MdClose size={30} color="#fff" /> : <MdMenu size={30} color="#fff" />}
             </button>
-            <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
+                {menuOpen ? 
+                     <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
                 {isLoggedIn ? (
                     <>
                         {admin == false ? (
@@ -108,7 +109,8 @@ const Header = () => {
                         </Link>
                     </>
                 )}
-            </nav>
+            </nav> : <></>    
+            }
         </header>
     );
 };

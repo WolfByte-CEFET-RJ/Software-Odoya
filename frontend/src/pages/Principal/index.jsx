@@ -197,7 +197,7 @@ const Principal = () => {
       <img src="./Ondinhas.svg" className={principal.separador} />
 
       <section className={principal.secao3}>
-        <div style={{height:"130px"}}></div>
+        
         <h1 className={principal.titulo}>Nossas Ações </h1>
         <div className={principal.line}>
           <div className={principal.listaActions}>
@@ -226,6 +226,7 @@ const Principal = () => {
               <IoIosArrowForward size={100} />
             </button>
           </div>
+          <div className={principal.healthIssues}>
           <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
           <div className={principal.ordem}>
               <div className={principal.cards}>
@@ -244,7 +245,9 @@ const Principal = () => {
               <div className={principal.cards}>
                   <img src="Obj4.svg"/>
               </div>
+            
             </div>
+          </div>
           </div>
         </div>
       
@@ -254,9 +257,7 @@ const Principal = () => {
       <section className={principal.secao4}>
         <div className={principal.resultados}>
           <div className={principal.titulo}>
-            <h2>Nossos</h2> 
-            <h2>Principais</h2>
-            <h2>Resultados</h2> 
+            <h2>Nossos Principais Resultados</h2>
           </div>
           <div className={principal.resultados2}> 
             <p>{metrics.climateInitiatives} ações contra mudança climática</p>
