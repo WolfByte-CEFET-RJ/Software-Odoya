@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpCode } from "../erros/erro.config";
 import CollectionPointService from "../services/collectionPointService";
-import CollectionPoint from "../types/collectionPoint";
+import CollectionPoint, { UpdateCollectionPoint } from "../types/collectionPoint";
 
 export default class CollectionPointController {
 
@@ -42,9 +42,12 @@ export default class CollectionPointController {
     public static async updateCollectionPoint(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
             const { id } = req.params;
-            const data = req.body;
+            const { name, location, capacitySponges, amountSponges, lastCollectionDate, nextCollectionDate, isInactive }: UpdateCollectionPoint = req.body;
             
-            const response = await CollectionPointService.updateCollectionPoint(id, data);
+            const response = await CollectionPointService.updateCollectionPoint(
+                id, 
+                { name, location, capacitySponges, amountSponges, lastCollectionDate, nextCollectionDate, isInactive }
+            );
             return res.status(HttpCode.OK).send({ message : response });
         
         }catch(e: any){

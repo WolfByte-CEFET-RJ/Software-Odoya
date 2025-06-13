@@ -12,6 +12,8 @@ import spongeDepositRouter from './routes/depositRoutes';
 import depositRouter from './routes/depositRoutes';
 import path from 'path';
 import ErrorHandler from './middlewares/errorHandler';
+import metricsRouter from './routes/metricsRoutes';
+import registrationRouter from './routes/registrationRoutes';
 
 /**
  * Define endpoints mapeados
@@ -37,6 +39,8 @@ export default (app: Express): void => {
         .use(depositRouter)
         .use(spongeDepositRouter)
         .use(eventRouter)
+        .use(metricsRouter)
+        .use(registrationRouter)
 
 
     // Rota padrão

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import InputFormProfile from "../../components/inputFormProfile";
+import InputFormEdit from "../../components/inputFormEdit";
 import { MdInfo } from "react-icons/md";
 import perfil from "./perfil.module.scss"
 import { toast } from 'react-toastify';
@@ -137,9 +137,9 @@ const Perfil = () => {
                 <h1>Seja bem-vindo, {client}!</h1>
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
-                    <InputFormProfile   onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormProfile>
+                    <InputFormEdit onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormEdit>
                     <label>E-mail</label>
-                    <InputFormProfile onChange={(event) => handleChange(event, setEmail)}  place={email} disable={lock} type="email"></InputFormProfile>
+                    <InputFormEdit onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="email"></InputFormEdit>
 
                     <label>Pontos</label>
                     <div className={perfil.divPoints}>

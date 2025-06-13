@@ -11,3 +11,9 @@ export class UnauthorizedDepositAccessError extends HttpError {
         super({ status: HttpCode.FORBIDDEN, message });
     }
 }
+
+export class DepositNotAllowed extends HttpError {
+    constructor(message: string = 'Depósito não permitido') {
+        super({ status: HttpCode.BAD_REQUEST, message });
+    }
+}
