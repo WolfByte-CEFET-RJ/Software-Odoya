@@ -43,6 +43,7 @@ export default class RootUserController {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 9;
             const isAdm: Flag = (req.query.isadm as Flag) || Flag.UNDEFINIED;
+            
             const data: (User & { total: number })[] = await  UserService.getAllPagination(page, limit, isAdm);
 
             const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias

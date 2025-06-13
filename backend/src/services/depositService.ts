@@ -3,7 +3,9 @@ import Deposit from '../types/deposit';
 import { DepositStatus } from '../types/deposit';
 import depositValidator from '../utils/Yup/depositValidator';
 import { CollectionPointNotFound } from '../erros/CollectionPointErros';
-import { DepositNotFoundError, UnauthorizedDepositAccessError } from '../erros/DepositErrors';
+import { DepositNotAllowed, DepositNotFoundError, UnauthorizedDepositAccessError } from '../erros/DepositErrors';
+import CollectionPointService from './collectionPointService';
+import Mailer from './Mailer';
 
 const knex = DatabaseConnection.getInstance();
 
@@ -14,22 +16,26 @@ const knex = DatabaseConnection.getInstance();
 export default class DepositService{
 
     /**
-     * @description Obtém depósitos de um usuário comum ou todos os depósitos para admin
-     * @param userId ID do usuário
-     * @param isAdmin Indica se o usuário é administrador
-     */
+     * @description Obtém os depósitos em um ponto de coleta
+     * @param userId ID do ponto de coleta
+     * @param page Página buscada
+     * @param limit Tamanho da página
+    */
     public static async getAllDeposits(page: number, limit: number, id: string): Promise<(Deposit & {total : number})[]> {
         const offset = (page - 1) * limit;
 
+        console.log(id, page, limit)
         const  deposits = await knex('Deposit')
-            .join("collection_point", "deposit.collectionPointId", "collection_point.id")
-            .join("user", "deposit.userId", "user.id")
-            .select('deposit.id', 'collectionPointId', 'collection_point.name as point_name' ,'userId', 'user.name as name' , 
-            'deposit.amountSponges', 'imageURL', 'status', 'created_at', 'updated_at', knex.raw('COUNT(user.name) OVER() as total'))
+            .join("Collection_Point", "Deposit.collectionPointId", "Collection_Point.id")
+            .join("User", "Deposit.userId", "User.id")
+            .select('Deposit.id', 'collectionPointId', 'Collection_Point.name as point_name' ,'userId', 'User.name as name' , 
+            'Deposit.amountSponges', 'imageURL', 'status', 'created_at', 'updated_at', knex.raw('COUNT(User.name) OVER() as total'))
             .where('collectionPointId', id)
-            .orderBy([{ column: 'deposit.created_at', order: 'desc' }, { column: 'deposit.id', order: 'asc' }])
+            .orderBy([{ column: 'Deposit.created_at', order: 'desc' }, { column: 'Deposit.id', order: 'asc' }])
             .limit(limit)
             .offset(offset);
+
+        console.log(deposits)
 
         if (!deposits || deposits.length === 0) {
             throw new DepositNotFoundError();
@@ -40,16 +46,17 @@ export default class DepositService{
 
     public static async getSearchDeposit(page: number, limit: number, id: string, name:string): Promise<(Deposit & {total : number})[]> {
         const offset = (page - 1) * limit;
-        const  deposits = await knex('Deposit')
-            .join("collection_point", "deposit.collectionPointId", "collection_point.id")
-            .join("user", "deposit.userId", "user.id")
-            .select('deposit.id', 'collectionPointId', 'collection_point.name as point_name' ,'userId', 'user.name as name' , 
-            'deposit.amountSponges', 'imageURL', 'status', 'created_at', 'updated_at', knex.raw('COUNT(user.name) OVER() as total'))
-            .where('collectionPointId', id)
-            .andWhere('user.name', 'like', `%${name}%`)
-            .orderBy([{ column: 'deposit.created_at', order: 'desc' }, { column: 'deposit.id', order: 'asc' }])
-            .limit(limit)
-            .offset(offset);
+        
+        const deposits = await knex('Deposit')
+                .join("Collection_Point", "Deposit.collectionPointId", "Collection_Point.id")
+                .join("User", "Deposit.userId", "User.id")
+                .select('Deposit.id', 'collectionPointId', 'Collection_Point.name as point_name', 'userId', 'User.name as name', 
+                        'Deposit.amountSponges', 'imageURL', 'status', 'created_at', 'updated_at', knex.raw('COUNT(User.name) OVER() as total'))
+                .where('collectionPointId', id)
+                .andWhere('User.name', 'like', `%${name}%`)
+                .orderBy([{ column: 'Deposit.created_at', order: 'desc' }, { column: 'Deposit.id', order: 'asc' }])
+                .limit(limit)
+                .offset(offset);
 
         if (!deposits || deposits.length === 0) {
             return []
@@ -83,18 +90,21 @@ export default class DepositService{
     }
     
     /**
-     * @description Busca um Deposito
-     * @param {string} id
-     * @returns {Promise<Deposit>}
+     * @description Busca os depósitos de um usuário
+     * @param {string} id ID do usuário
+     * @returns {Promise<Deposit[]>}
      */
-    public static async getDeposit(id: string): Promise<Deposit> {    
-        const deposit: Deposit = await knex('Deposit')
-            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at').where({id}).first();
+    public static async getDeposit(id: string): Promise<Deposit[]> {    
+        const deposits: Deposit[] = await knex('Deposit')
+            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at')
+            .where({userId: id})
+            .orderBy("created_at", "desc");
         
-        if (!deposit) {
+        if (!deposits || deposits.length === 0) {
             throw new DepositNotFoundError()
         }
-        return deposit;
+
+        return deposits;
     }
 
     /**
@@ -106,27 +116,57 @@ export default class DepositService{
      * @returns {Promise<string>}
      */
     public static async createDeposit(depositId: string, collectionPointId: string, userId: string, amountSponges: number, imageURL: string | undefined): Promise<string>{
-        await depositValidator.validateCreateDeposit({amountSponges});
-        const existCollectionPoint = await knex("Collection_Point").where({ id: collectionPointId }).first();
         
-        if (!existCollectionPoint) {
+        await depositValidator.validateCreateDeposit({amountSponges});
+        
+        const collectionPoint = await CollectionPointService.getOneCollectionPoint(collectionPointId)
+        
+        if (!collectionPoint) {
             throw new CollectionPointNotFound();
+        }
+        
+        if(collectionPoint.isInactive){
+            throw new DepositNotAllowed("Receptor inativo")
+        }
+
+        if(amountSponges > collectionPoint.capacitySponges){
+            throw new DepositNotAllowed("Quatidade de esponjas maior que a permitida")
+        }
+
+        const sumPendentes = await knex("Deposit")
+            .where({collectionPointId})
+            .andWhere({status: DepositStatus.PENDENTE})
+            .sum("amountSponges as total")
+
+        const possibleAmount = collectionPoint.amountSponges + (Number(sumPendentes[0].total) || 0)
+
+        if (possibleAmount + amountSponges > collectionPoint.capacitySponges){
+            // Enviar email pros administradores avisando que alguem tentou registrar o deposito mas nn conseguiu
+            //const mail = new Mailer()
+            //mail.sendMail()
+            throw new DepositNotAllowed(
+                `Limite excedido. Tente novamente após a coleta. Espaço disponível: ${collectionPoint.capacitySponges - possibleAmount}`);
         }
         
 
         var today = new Date;
-        const deposit: Deposit = {
+        const deposit: Partial<Deposit> = {
             id: depositId,
             collectionPointId,
             userId,
             amountSponges,
             imageURL,
-            status: DepositStatus.PENDENTE,
-            created_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() ) ,               
-            updated_at: new Date(today.getFullYear(), today.getMonth(), today.getDate() ) ,
+            status: DepositStatus.PENDENTE
         }
 
         await knex('Deposit').insert(deposit);
+
+        if (amountSponges+collectionPoint.amountSponges === collectionPoint.capacitySponges){
+            // Enviar email pros administradores avisando que encheu
+            //const mail = new Mailer()
+            //mail.sendMail()
+        }    
+
         return "Deposito realizado";
     }
 

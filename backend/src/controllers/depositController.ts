@@ -9,7 +9,7 @@ export default class DepositController{
 
     public static async getDeposit(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
-            const id = req.deposit?.id;
+            const id = req.user?.id;
 
             const deposit = await DepositService.getDeposit(String(id));
             return res.status(HttpCode.OK).json(deposit);
@@ -28,6 +28,7 @@ export default class DepositController{
 
             const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias
             const deposits: Deposit[] = data.map(({ total, ...deposit }) => deposit); //retira o total dos usuários
+            
             res.status(HttpCode.OK).json({amount: deposits.length, totalPages: totalPages, deposits});
 
         } catch (e: any) {
@@ -41,13 +42,16 @@ export default class DepositController{
             const name  = req.query.name as string;
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 9;
+
             const data: (Deposit & {total : number})[] = await DepositService.getSearchDeposit(page, limit, id, name);
+            
             if(data.length === 0){
                 res.status(HttpCode.OK).json({amount: 0, totalPages: 0, deposits: []});
-            }else{
-            const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias
-            const deposits: Deposit[] = data.map(({ total, ...deposit }) => deposit); //retira o total dos usuários
-            res.status(HttpCode.OK).json({amount: deposits.length, totalPages: totalPages, deposits});
+            }
+            else{
+                const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit); //Calcula o Total de páginas necessárias
+                const deposits: Deposit[] = data.map(({ total, ...deposit }) => deposit); //retira o total dos usuários
+                res.status(HttpCode.OK).json({amount: deposits.length, totalPages: totalPages, deposits});
             }
             
 
@@ -134,8 +138,4 @@ export default class DepositController{
             next(e);
         }
     }
-}
-
-function next(e: any) {
-    throw new Error('Function not implemented.');
 }

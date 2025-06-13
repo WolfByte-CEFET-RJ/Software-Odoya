@@ -16,28 +16,28 @@ depositRouter
 
     /**
      * @route GET /deposits/adm:id?page=xx&limit=xx
-     * @description Retorna todos os depósitos e o número de págianas totais dado o id de um colection point 
+     * @description Retorna todos os depósitos e o número de páginas totais dado o id de um colection point 
      * @default (1,9) (página,itens)
      * @param {string} id - ID do colection point 
      * @returns { amount: number, totalPages: number, deposit: Deposit[] } 
      */
-    .get("/deposits/adm:id", AuthMiddleware.ensureAdmin, DepositController.getAllDeposits)
+    .get("/deposit/adm/:id", AuthMiddleware.ensureAdmin, DepositController.getAllDeposits)
     
     /**
      * @route GET /deposits/adm/search:id?page=xx&limit=xx&name=xx
-     * @description Retorna todos os depósitos dado um nome
+     * @description Retorna todos os depósitos dado um nome de usuário
      * @default (1,9) (página,itens)
      * @param {string} id - ID do colection point 
      * @param {string} name - nome ou parte de um nome
      * @returns { amount: number, totalPages: number, deposit: Deposit[] } 
      */
-    .get("/deposits/adm/search:id", AuthMiddleware.ensureAdmin, DepositController.getSearchDeposit)
+    .get("/deposit/adm/search/:id", AuthMiddleware.ensureAdmin, DepositController.getSearchDeposit)
 
     /**
      * @route GET /deposit/:id
      * @description Retorna um depósito dado o ID do depósito
      * @param {string} id - ID do depósito
-     * @returns { message: string } 
+     * @returns { Deposit } 
      */
     .get("/deposit/:id", AuthMiddleware.ensureAdmin, DepositController.getOneDeposit)
 
