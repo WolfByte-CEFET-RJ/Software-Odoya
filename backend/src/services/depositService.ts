@@ -98,7 +98,7 @@ export default class DepositService{
         const deposits: Deposit[] = await knex('Deposit')
             .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at')
             .where({userId: id})
-            .orderBy("created_at", "asc");
+            .orderBy("created_at", "desc");
         
         if (!deposits || deposits.length === 0) {
             throw new DepositNotFoundError()
