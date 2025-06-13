@@ -1,4 +1,5 @@
 .body {
+    min-height: 75dvh;
     h1 {
         margin: 5% 0% 0% 3%;
     }
@@ -9,11 +10,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 3%;
+    margin-top: 7%;
     
     p {
         margin: auto;
-        font-family: 'Tankindred', sans-serif;
         color: black;
     }
 }
@@ -22,14 +22,20 @@
     padding-top: 5%;
 }
 
-.btnRegisterDeposit {
+.infoSection p, .btnRegisterDeposit, .modalBody label, .modalImagePreviewContainer p, .modalSubmit {
     font-family: 'Tankindred', sans-serif;
+}
+
+.btnRegisterDeposit {
     font-size: medium;
     border-radius: 5px;
     color: black;
     background-color: #8cc6e8;
     width: 15%;
-    margin: 2% 0% 3% 0%;
+}
+
+.btnRegisterDeposit, .pointFullError {
+    margin: 5% 0% 3% 0%;
 }
 
 .modalOverlay {
@@ -52,10 +58,6 @@
     left: 50%; 
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-
-    label {
-        font-family: 'Tankindred', sans-serif;
-    }
 }
 
 .modalForm {
@@ -96,8 +98,30 @@
     cursor: pointer;
 }
 
+.modalImagePreviewContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+
+    p {
+        margin: 2%;
+    }
+
+    img {
+        max-width: 45%;
+    }
+
+    button {
+        margin-top: 2%;
+        background-color: rgb(238, 64, 64);
+        border-radius: 5px;
+        padding: 1%;
+    }
+}
+
 .modalSubmit {
-    font-family: 'Tankindred', sans-serif;
     font-size: medium;
     border-radius: 5px;
     color: black;
