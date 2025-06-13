@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { v4 } from "uuid";
 import { hash } from "bcryptjs";
 import { EmailDuplicate, UserNotFound } from "../erros/UserErros";
-import User, { Flag, UpdateUser } from "../types/user"
+import User, { UpdateUser } from "../types/user"
 import UserValidator from '../utils/Yup/userValidator';
 import Mailer from './Mailer';
 import DatabaseConnection from '../database/connection/DatabaseConnection';
@@ -71,23 +71,12 @@ export default class UserService {
      * @param {number} limit
      * @returns {Promise<User[]>}
      */
-    public static async getAllPagination(page: number, limit: number, isAdm: Flag): Promise<(User & { total: number })[]>{
+    public static async getAllPagination(page: number, limit: number): Promise<User[]>{
         const offset = (page - 1) * limit;
-        
-        const users = await knex("User")
-                                .select('id', 'name', 'email', 'admin', 'points', knex.raw('COUNT(name) OVER() as total'))
-                                .where( consulta => {
-                                consulta.whereNot({email: process.env.ROOT_EMAIL});
-                                if (isAdm === Flag.FALSE){
-                                    consulta.andWhere({ admin: 0})
-                                } 
-                                else if(isAdm === Flag.TRUE){
-                                    consulta.andWhere({ admin: 1})
-                                }else{
-                                    //puxa geral
-                                }
-                                })
-                                .orderBy('name')
+
+        const users: User[] = await knex("User")
+                                .select('id', 'name', 'email', 'admin', 'points')
+                                .whereNot({email: process.env.ROOT_EMAIL})
                                 .limit(limit)
                                 .offset(offset);
     

@@ -51,4 +51,28 @@
         text-decoration: none; 
         cursor: pointer; 
     }
+} 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F1F1F1;
 }
+
+.body p {
+    font-size: 20px;
+    margin: 2% 0% 1% 0%;
+}
+
+.links {
+    display: flex;
+    gap: 5px;
+    font-size: 20px;
+}
+
+.links p {
+    margin: 0%;
+}
+
+

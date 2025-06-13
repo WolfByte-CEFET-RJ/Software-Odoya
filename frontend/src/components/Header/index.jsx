@@ -1,29 +1,41 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useEffect, useState } from "react";
-import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdHomeFilled, MdAccountCircle, MdLogout } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+
+import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdRestoreFromTrash, MdGroups, MdHomeFilled, MdAccountCircle, MdLogout } from "react-icons/md";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import header from "./header.module.scss";
+
 import { useContext } from "react";
 import { UserContext } from "../Context/userContext";
+
+
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    //const [isAdmin, setAdmin] = useState(false)
     const location = useLocation();
     const currentLocation = location.pathname;
     
+    
+
     const {admin, logout, token} = useContext(UserContext)
     
+    
     useEffect(() =>{
+        
         if(token){
             setIsLoggedIn(true)
         }
+        
+       
     },[token])
     
-    const handleLogout = () => {
+   const handleLogout = () => {
         logout(); 
-    };
+      };
+  
 
     return (
         <header className={header.container}>
@@ -49,15 +61,15 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link  className={header.link} onClick={handleLogout}>
+                            <Link to={"/"} className={header.link} onClick={handleLogout}>
                                <MdLogout color="#114C6D" />Sair
                             </Link>
                             </>
                         ) : (
                             <>
-                            {currentLocation === "/profile" && ( 
+                            {currentLocation === "/profile" ? ( 
                                 <>
-                                <Link to={"/rh"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>RH
                                 </Link>
                                 <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
@@ -67,26 +79,12 @@ const Header = () => {
                                     <MdHomeFilled color="#114C6D"/>Tela inicial
                                 </Link>
                                 </>
-                            )}
-                             {currentLocation === "/rh" && ( 
+                            ) : (
                                 <>
-                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
-                                    <MdHomeFilled color="#114C6D"/>Relatórios
-                                </Link>
-                                <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
-                                    <MdAccountCircle color="#114C6D"/>Perfil
-                                </Link>
                                 <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
-                                    <MdHomeFilled color="#114C6D"/>Tela inicial
-                                </Link>
-                                </>
-                            )}
-                            {currentLocation === "/" && (
-                                <>
-                                <Link to={"/rh"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>RH
                                 </Link>
-                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                <Link to={"/"}className={header.link} onClick={() => setMenuOpen(false)}>
                                     <MdHomeFilled color="#114C6D"/>Relatórios
                                 </Link>
                                 <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
@@ -94,7 +92,7 @@ const Header = () => {
                                 </Link>
                                 </>
                             )}
-                            <Link  className={header.link} onClick={handleLogout}>
+                            <Link to={"/"} className={header.link} onClick={handleLogout}>
                                 <MdLogout color="#114C6D" />Sair
                             </Link>
                             </>
@@ -103,10 +101,10 @@ const Header = () => {
                 ) : (
                     <>
                         <Link to="/login" className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdOutlineLogin color="#114C6D"/>Entrar
+                            <MdOutlineLogin color="#114C6D" />Entrar
                         </Link>
                         <Link to="/register" className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdAssignmentInd color="#114C6D"/> Cadastro
+                            <MdAssignmentInd color="#114C6D" /> Cadastro
                         </Link>
                     </>
                 )}

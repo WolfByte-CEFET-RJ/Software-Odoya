@@ -14,16 +14,3 @@ export class MissinngDataError extends HttpError{
 
     }
 }
-
-/**
- * @extends HttpError
- * @description Dado necessário não inserido
- */
-export class InvalidSearch extends HttpError{
-    constructor(message: string 
-            = 'Parâmetros de busca inválidos'){
-
-        super({status: HttpCode.BAD_REQUEST, message})
-
-    }
-}
