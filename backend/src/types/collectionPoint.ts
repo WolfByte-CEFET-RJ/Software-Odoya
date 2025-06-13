@@ -11,7 +11,6 @@ export default interface CollectionPoint {
 }
 
 export type UpdateCollectionPoint = {
-    id: string;
     name?: string;
     location?: string;
     capacitySponges?: number;
