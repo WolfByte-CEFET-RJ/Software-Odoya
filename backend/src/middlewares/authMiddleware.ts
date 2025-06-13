@@ -82,8 +82,7 @@ class AuthMiddleware {
     try {
       AuthMiddleware.ensureAuthenticated(req, res, () => {
         if (!req.user?.admin) {
-          const error = new AccessDeniedError("Acesso negado. Permissão de administrador necessária.");
-          return error.sendMessage(res);
+          throw new AccessDeniedError("Acesso negado. Permissão de administrador necessária.");
         }
         
         return next();

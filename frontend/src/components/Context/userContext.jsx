@@ -22,7 +22,6 @@ const UserProvider = ({children}) => {
                     headers: { Authorization: `Bearer ${token}`}
                 }
             )
-        console.log(req.data)
         setUserName(req.data.name, req.data.email)
         
 
