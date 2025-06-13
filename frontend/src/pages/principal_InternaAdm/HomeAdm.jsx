@@ -10,6 +10,10 @@ import {Grid2} from "@mui/material"
 import Calendar from "../../components/Calendar/Calendar.jsx";
 import { toast } from "react-toastify";
 import { MdOutlineAdd } from "react-icons/md";
+import CreatePointModal from "../../components/Modals/CreatePointModal.jsx";
+import UpdatePointModal from "../../components/Modals/UpdatePointModal.jsx";
+import CreateEventModal from "../../components/Modals/CreateEventModal.jsx";
+
 
 const HomeAdm = () => {
     const [esponja, setEsponja] = useState(false);
@@ -19,15 +23,6 @@ const HomeAdm = () => {
     const [isModalCreatePointOpen, setModalCreatePoint] = useState(false);
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
     const [isModalCreateEventOpen, setModalCreateEvent] = useState(false);
-
-    const handleClose = (modal) => {
-        switch(modal) {
-            case 'createPoint': setModalCreatePoint(false); break;
-            case 'updatePoint': setModalUpdatePoint(false); break;
-            case 'createEvent': setModalCreateEvent(false); break;
-            default: break;
-        }
-    }
 
     async function getCollectionPoints() {
         try {
@@ -110,7 +105,7 @@ const HomeAdm = () => {
                 </section>
                 <section className="sectionCards">
                     <h1 className="sectionCards-titulo">Adicionar Ponto de Coleta</h1>
-                    <button className="addCollectionPoint"><MdOutlineAdd className="plusIcon"/></button>
+                    <button className="addCollectionPoint" onClick={() => setModalCreatePoint(true)}><MdOutlineAdd className="plusIcon"/></button>
                 </section>
             </>
             : mutirao ?
@@ -133,7 +128,7 @@ const HomeAdm = () => {
                 </section>
                 <section className="sectionCards">
                     <h1 className="sectionCards-titulo">Agendar Mutirão</h1>
-                    <button className="addMutirao"><MdOutlineAdd className="plusIcon"/></button>
+                    <button className="addMutirao" onClick={() => setModalCreateEvent(true)}><MdOutlineAdd className="plusIcon"/></button>
                 </section>    
             </>
             :
@@ -168,6 +163,25 @@ const HomeAdm = () => {
             </section>
             : <></>
         }
+
+            <CreatePointModal 
+            open={isModalCreatePointOpen}
+            onClose={() => setModalCreatePoint(false)}
+            onConfirm={(dados)} 
+            />
+
+            <UpdatePointModal 
+            open={isModalUpdatePointOpen}
+            onClose={() => setModalUpdatePoint(false)}
+            onConfirm={(dados)} 
+            />
+
+            <CreateEventModal
+            open={isModalCreateEventOpen}
+            onClose={() => setModalCreateEvent(false)}
+            onConfirm={(dados)}
+            />
+
 
         <Footer/>
         </>
