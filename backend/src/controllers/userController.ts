@@ -61,6 +61,7 @@ export default class UserController {
             return classified_err.sendMessage(res);
         }
     }
+    
     public static async deleteUser(req: Request, res: Response): Promise<any>{
         try{
             const id = req.user?.id;
