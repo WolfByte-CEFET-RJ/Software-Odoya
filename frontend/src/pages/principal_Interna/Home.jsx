@@ -72,7 +72,7 @@ function Home(){
             let req = await api.get("/deposits")
             if(req.status == 200){
                 console.log(req.data)
-                SetDon(req.data)
+                SetDon(req.data.deposits)
             }
         }
         catch(err){
@@ -132,7 +132,7 @@ function Home(){
                                 timeZone: 'America/Sao_Paulo' // Fuso horário de Brasília
                                 });
                                 
-                            return <DonationCard key={dado.id}  donate={true} num={dado.amountSponges} place={dado.location} date={brasiliaDate} hour={dado.created_at.split("T")[1].replace(/Z$/, '').substring(0, 5)} />
+                            return <DonationCard key={dado.id}  donate={true} num={dado.amountSponges} place={dado.point_name} date={brasiliaDate} hour={dado.created_at.split("T")[1].replace(/Z$/, '').substring(0, 5)} />
 }) : <></>}
                         </Grid2>
                     </section>
@@ -158,7 +158,7 @@ function Home(){
                                 timeZone: 'America/Sao_Paulo' // Fuso horário de Brasília
                                 });
                                 
-                            return <DonationCard key={dado.id}  donate={true} num={dado.amountSponges} place={dado.location} date={brasiliaDate} hour={dado.created_at.split("T")[1].replace(/Z$/, '').substring(0, 5)} />
+                            return <DonationCard key={dado.id}  donate={true} num={dado.amountSponges} place={dado.point_name} date={brasiliaDate} hour={dado.created_at.split("T")[1].replace(/Z$/, '').substring(0, 5)} />
 }) : <></>}
                         </Grid2>
                     </section>

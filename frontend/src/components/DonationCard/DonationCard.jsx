@@ -17,7 +17,12 @@ function DonationCard(props){
       const handleSearch = () => {
         setLoad(true)
         setStreetName(props.place);
-        if(/[a-zA-Z]/.test(streetName)){
+        
+        
+      };
+      useEffect(()=>{
+       if(streetName != ''){
+         if(/[a-zA-Z]/.test(streetName)){
             console.log(streetName)
             const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(streetName)}&format=json`;
             fetch(nominatimUrl)
@@ -42,7 +47,7 @@ function DonationCard(props){
             fetch(viaCepUrl)
               .then((response) => response.json())
               .then((data) => {
-                setDado(true);
+                
                 const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(data.logradouro+"-"+data.bairro)}&format=json`;
                 fetch(nominatimUrl)
                 .then((response)=>response.json())
@@ -60,9 +65,10 @@ function DonationCard(props){
               })
               .catch((error) => console.error('Erro ao buscar o cep:', error))
         }
-      };
-
+       }
+      },[streetName, lati, longi, props])
       useEffect(() =>{
+        
               if(load == true){
                       toast.info(
                       <div className='loadingDiv'>
