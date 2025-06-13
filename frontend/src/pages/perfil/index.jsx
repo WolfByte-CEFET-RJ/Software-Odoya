@@ -29,7 +29,6 @@ const Perfil = () => {
     const handleChange = (event, setText) => {
         setText(event.target.value);
     };
-   
     
     async function deleteUser(){
         
@@ -41,7 +40,7 @@ const Perfil = () => {
             if(req.status == 200){
                 
                 setLoad(false)
-                 setTimeout(() => {
+                setTimeout(() => {
                                     setLoad(false)
                                     toast.success('Usuário deletado!');
                                 }, 1000);
@@ -57,6 +56,7 @@ const Perfil = () => {
             }, 1000);
     }
     }
+
     async function updateUser(){
         //let tokenId = localStorage.getItem("id")
         const userData = {name: name, email: email}
