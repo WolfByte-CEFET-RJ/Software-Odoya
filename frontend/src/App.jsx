@@ -11,6 +11,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import Perfil from './pages/perfil/index.jsx'
 import RH from './pages/rh/index.jsx'
+import HomeAdm from './pages/principal_InternaAdm/HomeAdm.jsx'
+
+
 
 const Routing = () =>{
     return(
@@ -25,6 +28,7 @@ const Routing = () =>{
                 <Route path="/profile" element={<Perfil/>}/>
 
                 <Route path="/deposit/adm" element={<DepositoAdm/>}/>
+                <Route path='/homeAdm' element={<HomeAdm/>}/>
                 
                 
                 <Route path="/deposit" element={<Depositos/>}/>
