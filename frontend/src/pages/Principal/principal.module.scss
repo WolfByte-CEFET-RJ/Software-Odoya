@@ -1,36 +1,116 @@
-.container {
-    display: flex;
-    justify-content: center;
-    height: 50%;
-    
-    
-    .banner {
-        width: 100%;
+
+@media screen and (max-width: 1024px) {
+       body{
+       width:100vw; 
+       font-size: 80%;  
+       .container {
+           display: flex;
+           justify-content: center;
+           height: 50%;
+           width: 100%;
+        }
+        .separador{
+            width:100%;
+        }
         
-        @media (min-width: 1300px) {
-            width: 60%;
-            border: 4px solid var(--primary-color);
+        
+        
+           
+                      
+            .caracteristicas{
+                width: 60%;
+                .card{
+                    width: 80%;
+                    margin-left: 60%;
+                    .icone {
+                        width: 80%;
+                margin:-25% 0% 0% 35%;
+                height: 10rem;
+            }
+                 .icone_olho {
+                    width: 80%;
+                margin:-25% 0% 0% 15%;
+                height: 10rem;
+
+            }
+        }
+            
+            
+            }
+           
+        .secao3{
+            h1{
+                font-size: 300%;
+            }
+            align-items: center;
+            width: 100%;
+            font-size:50%;
+            .line{
+                width: 100%;
+            }
+            
+            .listaActions{
+                margin-left: 7%;
+                display:flex;
+                flex-direction: column;
+                .field{
+                    width: 100%;
+                 margin: 0.5%;
+                 font-size:160%;
+            }   svg{
+                    width: 100%;
+                }
+                }
+            
+            .partedebaixo{
+                .healthIssues{
+                    .cards{
+                width:60%;
+             img{
+                    width: 90%;
+                }
+            
+            }
+                }
+                width:40%;
+                .slider{
+                width: 100%;
+                
+            }
+            }      
+
+            
+         
+        }
+        .secao4{
+            width:20%;
+            .parceiros{
+                width: 20%;
+                padding: 1rem;
+                .titulo{
+                padding-right:0;
+            }
+            }
             
         }
     }
-
-    @media (min-width: 1300px) {
-        background-color: #F1F1F1;
-        background-image: url('../../public/fundobanner.png');
-        background-repeat: no-repeat; /* Do not repeat the image */
-        background-size:cover;
-        
-    }
+    
+}
+.banner {
+    width: 100%;
+    
     
 }
 
+
 .separador {
-    width: 100%;
+    width: 100vw;
     margin-top: -3%;
 
 }
 
 .secao, .secao2 {
+    
     display: flex;
     justify-content: center;
 
@@ -40,6 +120,7 @@
     font-size: 1.2rem;
     background-color: var(--tertiary-color);
     padding: 0 5% 0 5%;
+    
 
     .titulo {
         margin-top: 10%;
@@ -49,9 +130,7 @@
         font-family: 'Tankindred', sans-serif;
         color: var(--secondary-color);
 
-        @media (max-width: 910px) {
-            font-size: 1.5rem;
-        }
+       
     }
 
     .textos_conteudo {
@@ -60,12 +139,7 @@
         gap: 10rem;
         align-items: center;
 
-        
-        @media (max-width: 910px) {
-            flex-direction: column;
-            gap: 0rem;
-            font-size: 1.1rem;
-        }
+       
         
         }
 
@@ -74,7 +148,7 @@
     }
 
     h2 {
-        @media (max-width: 910px) {
+        @media (max-width: 100%) {
             font-size: 1.2rem;
         }
     }
@@ -84,9 +158,7 @@
         font-size: 1.5rem;
         margin-bottom: 2%;
 
-        @media (max-width: 910px) {
-            font-size: 1.3rem;
-        }
+       
     }
 
     .subtitulo {
@@ -102,10 +174,7 @@
         margin-top: 3rem;
         margin-bottom: 5rem;
 
-        @media (max-width: 910px) {
-            margin-bottom: 3rem;
-          
-        }
+        
         
             .botao {
                 text-align: center;
@@ -135,12 +204,10 @@
 
     img {
         height: 50%;
-        @media (max-width: 910px) {
-            margin-bottom: 5rem;
-        }
+       
     }
 
-    .imagemEquipe {
+    .imagem {
         border: 4px solid var(--primary-color);
         border-radius: 10px;
         margin-bottom: 5rem;
@@ -156,69 +223,28 @@
         display: flex;
         align-items: baseline;
         justify-content: center;
-        gap: 1rem;
+        gap: 8rem;
 
-        @media (max-width: 910px) {
-            flex-direction: column;
-        }
+       
 
         .card {
             margin: 1rem 5rem 7rem 5rem;
-            display: flex;
-            flex-direction: column;
+              justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            
+            
             .icone {
-                margin:-50% 0% 0% 100%;
+                margin:-50% 0% 0% 70%;
                 height: 15rem;
 
-                @media (min-width: 1500px) {
-                    margin:-30% 0% 0% 100%;
-                }
-                @media (min-width: 1780px) {
-                    margin:-20% 0% 0% 100%;
-                }
-                @media (max-width: 1499px) {
-                    margin:-30% 0% 0% 100%;
-                }
-                @media (max-width: 1880px) {
-                    margin:-40% 0% 0% 100%;
-                }
-                @media (max-width: 1080px) {
-                    margin:-60% 0% 0% 100%;
-                }
-                @media (max-width: 990px) {
-                    margin:-100% 0% 0% 100%;
-                }
-                @media (max-width: 910px) {
-                    // margin:-25% 0% 0% 100%;
-                    // height: 10rem;
-                    display: none;
-                }
+               
             }
             
             .icone_olho {
-                margin:-70% 0% 0% 100%;
+                margin:-70% 0% 0% 40%;
                 height: 10rem;
 
-                @media (max-width: 910px) {
-                    // margin:-10% 0% 0% 10%;
-                    // height: 7rem;
-                    display: none;
-                }
-
-                @media (min-width: 1500px) {
-                    margin:-35% 0% 0% 100%;
-                }
-                @media (min-width: 1780px) {
-                    margin:-20% 0% 0% 100%;
-                }
-                @media (max-width: 1499px) {
-                    margin:-35% 0% 0% 100%;
-                }
-                @media (max-width: 1880px) {
-                    margin:-60% 0% 0% 100%;
-                }
+                
                 
             }
             h2 {
@@ -231,10 +257,12 @@
         
     .valores {
         display: flex;
-        gap: 5rem;
+        position: relative;
+        top:5%;
+        gap: 20%;
         align-items: center;
         justify-content: baseline;
-        margin-bottom: 3rem;
+        margin-top: 5%;
         
        
     }
@@ -253,20 +281,22 @@
 .secao3{
     background-color: #B1E3FA;
     margin-top: -3.5%;
+    display: flex;
+   align-items: center;
+
+    flex-direction: column;
+    
     
     .titulo {
         // display: flex;
-        position: relative;
-        top: 30%;
+        padding-top:5%;
         text-align: center;
-        font-size: 1.8rem;
+       
         // margin-top: 3%;
         font-family: 'Tankindred', sans-serif;
         color: var(--secondary-color);
 
-        @media (max-width: 910px) {
-            font-size: 1.5rem;
-        }   
+         
     }
 
     .objetivos{
@@ -277,10 +307,10 @@
     }
     .titulo2{
         text-align: center;
-        //padding-left: 8rem;
+        
         font-size: 1.8rem;
         margin-bottom: 3%;
-        margin-top: 25%;
+        margin-top: 15%;
         font-family: 'Tankindred', sans-serif;
         color: #195D39;
         
@@ -297,9 +327,14 @@
     }
     .field{
         display:flex;
-        padding-left: 30rem;
+        
         font-size: 0.9rem;
-        margin: 8% 0 10% 0;
+    }
+    .field{
+        display:flex;
+        
+        font-size: 0.9rem;
+        margin: 8% 0 10% 5%;
         font-family: 'Tankindred', sans-serif;
         color: #269BDF;  
     }
@@ -315,19 +350,34 @@
     .partedebaixo{
         display:flex;
         flex-direction: column;
-        margin-top: 2.5%;
+            
+        margin-top: 1.5%;
         
        
     }
-    .ordem{
+    .healthIssues{
+        width: 100%;
+        position: relative;
+        left: -20%;
+        display: flex;
+        flex-direction: column;
+
+        
+        
+    }
+
+        .ordem{
         display:flex;
-        align-items: center;
+        
         justify-content: center;
+        text-align: center;        
         text-align: center;
+          
+        
         
     }
     .field2{
-        margin: 20% 20% 20% 20%;
+        margin: 3%;
         
     }
     .slider{
@@ -376,20 +426,22 @@
     .resultados{
         display: flex;
         justify-content: center;
-        gap: 400px;
+        gap: 15%;
         margin-top: 5%;
         margin-bottom: 5%;
     }
     
     .resultados2{
+        
         display: grid;
         justify-content: center;
         gap: 1rem;
     }
     .titulo {
         text-align: left;
-        font-size: 40px;
-        margin-top: 5%;
+        font-size: 35px;
+        width:15%;
+        margin-top: 3%;
         margin-bottom: 1.5rem;
         font-family: 'Tankindred', sans-serif;
         text-decoration: underline;
@@ -424,7 +476,7 @@
           color: var(--secondary-color);
           text-decoration: underline;
           width: 100%; 
-          padding-right: 35rem; 
+           
         }
       
         .logos {
