@@ -16,7 +16,6 @@ const mailer = new Mailer();
  * @description Serviços para Usuário
  */
 export default class UserService {
-
     /**
      * @description Busca um Usuário
      * @param {string} id
