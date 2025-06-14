@@ -4,6 +4,8 @@ import Login from './pages/login/login.jsx'
 import Cadastro from './pages/cadastro/cadastro.jsx'
 import Principal from './pages/Principal/index.jsx'
 
+import DepositoAdm from './pages/deposito_adm/index.jsx'
+
 import Perfil from './pages/perfil/index.jsx'
 
 
@@ -21,6 +23,12 @@ const Routing = () =>{
 
                 
                 
+                <Route path="/deposit/adm" element={<DepositoAdm/>}/>
+                
+                
+
+                <Route path="/rh" element={<RH/>}/>
+
 
             </Routes>
         
