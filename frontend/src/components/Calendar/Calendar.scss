@@ -1,0 +1,139 @@
+.calendario{
+    height: 90vh;
+    width: 100vw;
+    // background-color: #262626;
+    margin-bottom: 5%;
+}
+.calendar{
+    margin: 5% 5%;
+    padding: 1%;
+    // height: 60vh;
+    // width: 90vw;
+    background-color: #262626;
+    // color: #c2c2c2;
+    border-radius: 4px;
+}
+
+.calendar button{
+    // color:#c2c2c2;
+}
+/*header modificado*/
+.toolbar-container{
+    display: flex;
+    height: 12vh;
+    align-items: center;
+    padding-left: 50px;
+}
+.mesAno{
+    width: 50%;
+    color: #f3f3f3;
+    justify-content: flex-start;
+}
+.dirtop{
+    width: 50%;
+    justify-content: end;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+}
+.rbc-toolbar{
+    height: 10vh;
+    color: #bbb;
+    font-size: 20px;
+}
+
+.rbc-btn-group > button{
+    border: 0;
+}
+
+.rbc-toolbar button{
+    color:#cecece;
+    border: 1px solid #cccccc4f;
+}
+
+.rbc-toolbar button:active, 
+.rbc-toolbar button.rbc-active{
+    background-color: #565656;
+    border-color:#bbbb
+}
+
+/*Corpo*/
+/*linhas*/
+
+.rbc-month-view{
+    border-color: #eeeeee5f;
+}
+.rbc-month-row + .rbc-month-row {
+    border-color: #dddddd73;
+}
+
+.rbc-day-bg + .rbc-day-bg{
+    border-color: #dddddd73;
+}
+
+/*Mês*/
+
+.rbc-header{
+    color:#eeeeeeee;
+    border-color: #dddddd73;
+}
+
+.rbc-header + .rbc-header{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: #dddddd73;
+}
+
+.rbc-off-range-bg{
+    background-color: #313131; 
+}
+
+.rbc-today{
+    background-color: #1a1a1a;
+}
+
+.rbc-button-link{
+    margin: 2px;
+    font-size: 15px;
+    color: #eeeeeee5;
+}
+
+.rbc-off-range .rbc-button-link{
+    color: #eeeeee37;
+}
+
+.rbc-now .rbc-button-link{
+    background-color: #B1E3FA;
+    color: #114C6D;
+    border-radius: 2px;
+    padding: 0px 2px;
+    margin: 2px;
+    font-size: 16px;
+}
+
+.rbc-time-content, .rbc-time-content > .rbc-day-slot, 
+.rbc-timeslot-group, .rbc-time-slot{
+    color: #bbb;
+    border-color: #b0b0b036;
+}
+
+.rbc-day-slot .rbc-time-slot{
+    border-top:1px solid #c8c8c80a;
+}
+
+/*Agenda*/
+
+.rbc-agenda-content, .rbc-agenda-view{
+    color: #aaa;
+}
+
+.rbc-agenda-date-cell, .rbc-agenda-time-cell{
+    background-color: #262626;
+}
+
+.rbc-agenda-event-cell{
+    border-radius: 20px;
+    font-weight: bold;
+    color: #e0e0e0;
+}

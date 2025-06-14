@@ -1,0 +1,137 @@
+.container,.container2{
+    width: 242px;
+    height: 267px;
+    border-radius: 10px;
+    align-items: center;
+    transition: transform 0.3s linear;
+    position: relative;
+
+    .titulo{
+        margin-top: 10%;
+        margin-bottom: 3%;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 550;
+        font-family: 'Abel', sans-serif;
+        color: rgb(0, 0, 0);
+
+    }
+    .titulo2{
+        margin-top: 10%;
+        margin-bottom: 3%;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 550;
+        font-family: 'Abel', sans-serif;
+        color: rgb(255, 255, 255);
+
+    }
+
+    .info{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 20px;
+        .infoSpan{
+            color: rgb(0, 0, 0);
+        }
+        .infoSpan2{
+            color: rgb(255, 255, 255);
+        }
+
+        .infoSpan, .infoSpan2{
+            font-family: 'Abel', sans-serif;
+            display: flex;
+            gap: .6rem;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin: 5.5px 3px;
+        }
+        .infoSpan .icon, .infoSpan2.icon{
+            color:#195D39;
+            // font-size: 22px;
+            flex-shrink: 0;
+        }
+        .infoSpan .presente{
+            color: black;
+            // font-size: 22px;
+            flex-shrink: 0;
+        }
+        .infoSpan2 .em_analise, .infoSpan2 .faltou{
+            color:#ffffff;
+            flex-shrink: 0;
+        }
+    }
+    .iconCard{
+        color:#195D39;
+    }
+    .iconCardStar{
+        color: #114C6D;
+    }
+    .iconCard2{
+        color:#ffffff;
+    }
+    .iconCard, .iconCardStar, .iconCard2 {
+        position: absolute;
+        bottom: 10px; // Ajuste conforme necessário
+        right: 10px;
+        font-size: 70px; // Reduza se necessário
+        max-width: 80%;
+    }
+}
+
+.container{
+    background-color: #A3CBB6;
+}
+
+.container:hover, .container2:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.container_presente{
+    background-color: #B1E3FA;
+    font-size: 22px;
+}
+.container_em_analise{
+    background-color: #FFB300;
+    font-size: 22px;
+}
+.container_faltou{
+    background-color: #D32F2F;
+    font-size: 22px;
+}
+
+@media(max-width: 590px){
+    .container,.container2{
+        width: 170px;
+        height: 187px;
+        .info{
+            margin-left: 10px;
+    
+            .infoSpan,.infoSpan2{
+                gap: .6rem;
+                font-size: 0.9rem;
+                margin: 5.5px 3px;
+            }
+        }
+        .infoPonto{
+            margin-left: 10px;
+            margin-top: 30px;
+    
+            .infoSpan,.infoSpan2{
+                gap: .6rem;
+                font-size: 0.9rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .iconCard, .iconCardStar, .iconCard2 {
+            position: absolute;
+            bottom: 10px; // Ajuste conforme necessário
+            right: 10px;
+            font-size: 40px; // Reduza se necessário
+            max-width: 80%;
+        }
+    }
+}

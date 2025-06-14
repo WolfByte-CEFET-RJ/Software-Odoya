@@ -1,0 +1,216 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem 5rem;
+    background-color: var(--primary-color);
+    height: 440px;
+}
+
+.infoDiv{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .titulo{
+        font-size: 2.0rem;
+        font-family: 'Tankindred', sans-serif;
+        color: rgb(255, 255, 255);
+    }
+    .estrofe{
+        font-size: 1.4rem;
+        margin-top: 2%;
+        font-family: 'Abel', sans-serif;
+        // font-weight: 500;
+        color: rgb(255, 255, 255);
+        width: 45rem;
+    }
+}
+
+.iconDiv{
+    display: flex;
+    margin-left: -60% ; 
+    .icon{
+        display: flex;
+        transform: scaleX(-1);
+        font-size:405px;
+    }
+    .iconQ{
+        display: flex;
+        position: relative;
+        color: var(--primary-color);
+        background-color: white;
+        top: 115px;
+        left: -275px;
+        font-size:125px;
+
+    }
+    
+}
+@media (max-width: 1350px) {
+    .iconDiv{
+        margin-left: -1% ; 
+    }
+}
+
+@media (max-width: 1140px) {
+    .container{
+        padding: 5% 3%;
+        height: 440px;
+    }
+    .iconDiv{
+        display: flex;
+        margin-left: 5% ; 
+        .icon{
+            font-size:380px;
+        }
+        .iconQ{
+            font-size: 130px;
+            top: 110px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 1.8rem;
+        }
+        .estrofe{
+            font-size: 1.3rem;
+            width: 40rem;
+        }
+    }
+}
+@media (max-width: 1040px) {
+    .iconDiv{
+        display: flex;
+        margin-left: -6% ; 
+        
+    }
+}
+
+@media (max-width: 950px) {
+    .container{
+        padding: 5% 3%;
+        height: 340px;
+    }
+    .iconDiv{
+        display: flex;
+        margin-left:-10% ; 
+        .icon{
+            font-size:320px;
+        }
+        .iconQ{
+            font-size: 120px;
+            left: -225px;
+            top: 90px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 1.6rem;
+        }
+        .estrofe{
+            font-size: 1.1rem;
+            width: 30rem;
+        }
+    }
+}
+@media (max-width: 720px) {
+    .iconDiv{
+        display: flex;
+        margin-left:-7% ; 
+        .icon{
+            font-size:270px;
+        }
+        .iconQ{
+            font-size: 95px;
+            left: -190px;
+            top: 70px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 1.5rem;
+        }
+        .estrofe{
+            font-size: 1.0rem;
+            width: 25rem;
+        }
+    }
+}
+@media (max-width: 615px) {
+    .iconDiv{
+        display: flex;
+        margin-left:-7% ; 
+        .icon{
+            font-size:220px;
+        }
+        .iconQ{
+            font-size: 65px;
+            left: -150px;
+            top: 63px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 1.5rem;
+        }
+        .estrofe{
+            font-size: 1.0rem;
+            width: 25rem;
+        }
+    }
+}
+@media (max-width: 580px) {
+    .container{
+        height: 240px;
+    }
+    .iconDiv{
+        display: flex;
+        margin-left:0% ; 
+        .icon{
+            font-size:170px;
+        }
+        .iconQ{
+            font-size: 55px;
+            left: -120px;
+            top: 45px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 1.2rem;
+        }
+        .estrofe{
+            font-size: 0.8rem;
+            width: 20rem;
+        }
+    }
+}
+@media (max-width: 490px) {
+    .container{
+        padding: 5% 3%;
+        height: 220px;
+    }
+    .iconDiv{
+        display: flex;
+        margin-left:0% ;
+        margin-right: -10% ; 
+        .icon{
+            font-size:150px;
+        }
+        .iconQ{
+            font-size: 45px;
+            left: -100px;
+            top: 42px;
+        }
+    }
+    .infoDiv{
+        .titulo{
+            font-size: 0.9rem;
+        }
+        .estrofe{
+            font-size: 0.6rem;
+            width: 13rem;
+        }
+    }
+}

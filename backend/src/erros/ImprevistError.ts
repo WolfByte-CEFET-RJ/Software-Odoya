@@ -1,4 +1,4 @@
-import { HttpCode, HttpError } from "./erro.config";
+import { HttpCode, HttpError } from "./erro.config"
 
 /**
  * @extends HttpError

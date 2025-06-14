@@ -3,8 +3,12 @@ import '../src/styles/global.scss'
 import Login from './pages/login/login.jsx'
 import Cadastro from './pages/cadastro/cadastro.jsx'
 import Principal from './pages/Principal/index.jsx'
-
 import DepositoAdm from './pages/deposito_adm/index.jsx'
+import Depositos from './pages/depositos/index.jsx'
+import Home from './pages/principal_Interna/Home.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 import Perfil from './pages/perfil/index.jsx'
 
@@ -19,6 +23,7 @@ const Routing = () =>{
                 <Route path="/" element={<Principal/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Cadastro/>}/>
+                <Route path='/home' element={<Home/>}/>
                 <Route path="/profile" element={<Perfil/>}/>
 
                 
@@ -27,6 +32,7 @@ const Routing = () =>{
                 
                 
 
+                <Route path="/deposit" element={<Depositos/>}/>
                 <Route path="/rh" element={<RH/>}/>
 
 
