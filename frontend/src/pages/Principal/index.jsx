@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import principal from "./principal.module.scss";
 import { TbArrowRightDashed } from "react-icons/tb";
@@ -8,20 +8,34 @@ import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import Footer from "../../components/Footer";
-import { RiInfinityLine } from "react-icons/ri";
-import { RiGraduationCapLine } from "react-icons/ri";
-import { MdOutlineWaterDrop } from "react-icons/md";
-import { FaTemperatureArrowDown } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import api from "../../api";
+import {toast} from "react-toastify"
 
 const Principal = () => {
+
+  const [metrics, setMetrics] = useState({});
 
   const imagensCarrossel = [
     "./ImagemCarrossel1.svg",
     "./ImagemCarrossel2.png",
     "./ImagemCarrossel3.png",
   ];
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const metrics = await api.get("/metrics")
+        console.log(metrics)
+        setMetrics(metrics.data)
+      } catch (e) {
+        toast.error(e)
+      }
+    }
+
+    fetchMetrics();
+  }, [])
 
   const [indiceAtual, setIndiceAtual] = useState(0);
 
@@ -183,7 +197,7 @@ const Principal = () => {
       <img src="./Ondinhas.svg" className={principal.separador} />
 
       <section className={principal.secao3}>
-        <div style={{height:"130px"}}></div>
+        
         <h1 className={principal.titulo}>Nossas Ações </h1>
         <div className={principal.line}>
           <div className={principal.listaActions}>
@@ -212,6 +226,7 @@ const Principal = () => {
               <IoIosArrowForward size={100} />
             </button>
           </div>
+          <div className={principal.healthIssues}>
           <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
           <div className={principal.ordem}>
               <div className={principal.cards}>
@@ -230,7 +245,9 @@ const Principal = () => {
               <div className={principal.cards}>
                   <img src="Obj4.svg"/>
               </div>
+            
             </div>
+          </div>
           </div>
         </div>
       
@@ -240,32 +257,28 @@ const Principal = () => {
       <section className={principal.secao4}>
         <div className={principal.resultados}>
           <div className={principal.titulo}>
-            <h2>Nossos</h2> 
-            <h2>Principais</h2>
-            <h2>Resultados</h2> 
+            <h2>Nossos Principais Resultados</h2>
           </div>
           <div className={principal.resultados2}> 
-            <p>x esponjas coletadas</p>
-            <p>x pessoas alcançadas online</p>
-            <p>x KG de lixo reciclável coletado</p>
-            <p>x pessoas certificadas nas atividades</p>
+            <p>{metrics.climateInitiatives} ações contra mudança climática</p>
+            <p>{metrics.kgRecycled} KG de lixo reciclável coletado</p>
+            <p>{metrics.spongesCollected} esponjas coletadas</p>
+            <p>{metrics.totalEvents} mutirões bem-sucessedidos</p>
           </div>
         </div>
           <div className={principal.parceiros}>
             <div className={principal.logos}>
 
-              <div className={principal.linha}>
-                <img src="./parceiro1.png" alt="Parceiro 1" />
-                <img src="./parceiro2.png" alt="Parceiro 2" />
-                <img src="./parceiro3.png" alt="Parceiro 3" />
+              <div className={principal.parlog}>
+                <div className={principal.linha}>
+                  {metrics?.partners?.map((p, i)=>{
+                    return <img key={i} src={p.logo} alt={p.name} />
+                  })}
+                </div>
+
+                <h2 className={principal.titulo}>Parcerias</h2>
               </div>
 
-              <h2 className={principal.titulo}>Parcerias</h2>
-              <div className={principal.linha}>
-                <img src="./parceiro4.png" alt="Parceiro 4" />
-                <img src="./parceiro5.png" alt="Parceiro 5" />
-                <img src="./parceiro6.png" alt="Parceiro 6" />
-              </div>
             </div>
           </div>
         </section>
