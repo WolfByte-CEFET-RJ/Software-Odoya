@@ -19,7 +19,7 @@ function Home() {
   const [adress, setAdress] = useState({ street: '', lat: '', long: '' });
   const [point, setPoint] = useState([]);
   const [donations, setDonations] = useState([]);
-  const { client } = useContext(UserContext);
+  const { client, token } = useContext(UserContext);
 
   function changePageEsponge(e) {
     e.preventDefault();
@@ -92,9 +92,11 @@ function Home() {
   }
 
   useEffect(() => {
-    getColectData();
-    dadosDeps();
-  }, []);
+    if(token){
+      getColectData();
+      dadosDeps();
+    }
+  }, [client]);
 
   return (
     <>

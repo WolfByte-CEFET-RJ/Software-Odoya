@@ -16,13 +16,15 @@ const Header = () => {
     const location = useLocation();
     const currentLocation = location.pathname;
     
-    const {admin, logout, token, root} = useContext(UserContext)
+    
+    const {admin, logout, token, root, client} = useContext(UserContext)
     
     useEffect(() =>{
-        if(token){
+        console.log(client)
+        if(token && client){
             setIsLoggedIn(true)
         }
-    },[token])
+    },[client])
     
     const handleLogout = () => {
         logout(); 
@@ -30,11 +32,11 @@ const Header = () => {
 
     return (
         <>
-                    <header className={header.container}>
+            <header className={header.container}>
             
-            <Link to={"/"}>
-                <img src="/LogoBranca.svg" alt="Logo Odoyá" />
-            </Link>
+            
+            <img src="/LogoBranca.svg" alt="Logo Odoyá" />
+            
             
             <button className={header.menuButton} onClick={() => setMenuOpen(!menuOpen)}>
                 {menuOpen ? <MdClose size={30} color="#fff" /> : <MdMenu size={30} color="#fff" />}
@@ -42,30 +44,24 @@ const Header = () => {
             <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
                 {isLoggedIn ? (
                 <>
-                    {admin == false ? (
-                    <>
-                        {/* USUÁRIO PADRÃO */}
+                {currentLocation !== '/home' ? (
+                    <Link to={"/home"} className={header.link} onClick={() => setMenuOpen(false)}>
+                            <MdHomeFilled color="#114C6D" />Tela inicial
+                        </Link>): (<></>)}
                         
-                        <Link to={"/home"} className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdHomeFilled color="#114C6D" />Tela inicial
-                        </Link>
   
-                        <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdAccountCircle color="#114C6D" />Perfil
-                        </Link>
-  
-                    </>
-                    ) : (
+                        {currentLocation !== '/profile' ? (
+                    <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
+                            <MdHomeFilled color="#114C6D" />Perfil
+                        </Link>): (<></>)}
+                         
+                    {admin == true ? (
                     <>
-                        {/* ADMINISTRADOR */}
-                        <Link to={"/home"} className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdHomeFilled color="#114C6D" />Tela inicial
-                        </Link>
-                        <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
+                       
+                         <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
                             <MdCollectionsBookmark color="#114C6D" />Relatórios
                         </Link>
-
-                        {root === true ? (
+                       {root === true ? (
 
                             <>
                                 <Link to={"/rh"} className={header.link} onClick={() => setMenuOpen(false)}>
@@ -73,21 +69,29 @@ const Header = () => {
                                 </Link>
                             </>
                             ) : (
-                            <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
-                                <MdAccountCircle color="#114C6D" />Perfil
-                            </Link>
-                        )}
-
-                            <div className={header.link} onClick={() => {setShowMetrics(true)}}>
+                            <></>
+                        )} 
+                        <div className={header.link} onClick={() => {setShowMetrics(true)}}>
                                 <FaLeaf color="#114C6D" />
                                 Métricas
-                            </div>
+                            </div> 
+                        
+  
+                    </>
+                    ) : (
+                    <>
+                        
 
-                        <Link className={header.link} onClick={handleLogout}>
-                            <MdLogout color="#114C6D" />Sair
-                        </Link>
+                        
+
+                            
+
+                     
                     </>
                     )}
+                    <Link className={header.link} onClick={handleLogout}>
+                            <MdLogout color="#114C6D" />Sair
+                        </Link>
                 </>
                 ) : (
                 <>

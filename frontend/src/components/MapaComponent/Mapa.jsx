@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState, use } from 'react';
+import React, {useEffect, useState } from 'react';
 import style from "./Mapa.module.scss"
 function MapComponent({ location }) {
 
-  const [streetName, setStreetName] = useState('');
+  
   const [ lati, setLati] = useState('');
   const [ longi, setLongi] = useState('');
   const[ dado, setDado] = useState(false);
@@ -12,7 +12,7 @@ function MapComponent({ location }) {
       setLati(location.lat);
       setLongi(location.long);
       setDado(true)
-      console.log(`Atualizando mapa para: ${location}`);
+      
       // Aqui você pode chamar a API do mapa para centralizar no novo local
     }
   }, [location]);

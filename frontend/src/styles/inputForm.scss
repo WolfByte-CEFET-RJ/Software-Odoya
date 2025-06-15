@@ -2,6 +2,7 @@
     width: 100%;
     height: 45px;
     margin-bottom:15px;
+     
 }
 .inputForm{
     margin-top:3%;
@@ -24,9 +25,10 @@
 .input-eye-btn{
     background-color: transparent;
     border: none;
-    // display: flex;
+    
     position: relative;
+    transform: (translateY(-95%));
     right: -40%;
-    top:-35px;
+    
     cursor: pointer;
 }

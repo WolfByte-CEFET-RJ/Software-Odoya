@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, use } from 'react';
+import React, {useEffect, useState } from 'react';
 import cardStyle from "./DonationCard.module.scss"
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -23,7 +23,7 @@ function DonationCard(props){
       useEffect(()=>{
        if(streetName != ''){
          if(/[a-zA-Z]/.test(streetName)){
-            console.log(streetName)
+
             const nominatimUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(streetName)}&format=json`;
             fetch(nominatimUrl)
             .then((response)=>response.json())

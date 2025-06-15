@@ -15,9 +15,7 @@ const UserProvider = ({children}) => {
 
     const nav = useNavigate()
     const token = localStorage.getItem("token")
-     useEffect(()=>{
-      
-      async function getUser(){
+    async function getUser(){
         
         let req = await api.get('/user',  
                 {
@@ -29,8 +27,13 @@ const UserProvider = ({children}) => {
 
         getPrivilege(req.data.admin, req.data.isRoot)
         
+        
       }
+     useEffect(()=>{
+      
+      
       if(!client && token){
+        
         getUser()
       }
       else if(!client && !token){
@@ -39,7 +42,7 @@ const UserProvider = ({children}) => {
       
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[client])
+    },[client, token])
 
     const setUserName = (client,mail) =>{
       

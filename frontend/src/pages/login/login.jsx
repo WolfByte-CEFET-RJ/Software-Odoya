@@ -13,8 +13,8 @@ import React, { useState, useEffect } from 'react'
 import InputForm from '../../components/inputForm/inputForm.jsx'
 import InputFormPassword from '../../components/inputFormPassword/inputFormPassword.jsx'
 
-import { useContext } from 'react';
-import { UserContext } from '../../components/Context/userContext.jsx';
+
+
 import { User } from 'lucide-react';
 
 
@@ -28,7 +28,7 @@ function Login(){
     const [disable, setDisable] = useState(false)
     const [ user2, setUser2 ] = useState([]);
 
-    const {getToken} = useContext(UserContext)
+    
         
     const navigate = useNavigate();
     const handleChange = (event, setText) => {
@@ -36,7 +36,7 @@ function Login(){
     };
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser2(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => toast.error('Problema no login:', error)
     });
     function Forgot(){
         //nav('insira a rota de esquecimento')
@@ -55,24 +55,42 @@ function Login(){
         try {
             
             let res = await api.post("/login", userData);
-           console.log(res.data)
+           
             if(res.data.token){
                  setLoad(false)
                 toast.success('Bem vindo!');
-                setTimeout(() => {
-                   navigate("/profile")
-                    window.location.reload()
-                }, 2000);
+
+                
                 localStorage.setItem("token",res.data.token);
-                   
+                let req = await api.get('/user',  
+                {
+                    headers: { Authorization: `Bearer ${res.data.token}`}
+                }
+            )
+                if(req.data.admin == true){
+                setTimeout(() => {
+                   navigate("/homeAdm")
+                    
+                }, 2000);}
+                else if(req.data.root == true){
+                setTimeout(() => {
+                   navigate("/rh")
+                    
+                }, 2000);}
+                else{
+                    setTimeout(() => {
+                   navigate("/home")
+                    
+                }, 2000);
+                }
                 
             }
         } catch (error) {
-            console.log(error)
+            
             
             setTimeout(() => {
                 setLoad(false)
-                toast.error('Falha ao fazer login!!!');
+                toast.error('Falha ao fazer login!');
             }, 1000);
             
            
