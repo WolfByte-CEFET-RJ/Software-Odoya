@@ -6,9 +6,12 @@ import depositos from './depositos.module.scss'
 import { MdClose } from "react-icons/md";
 import api from "../../api.js"
 import { toast } from "react-toastify"
+import { useLocation } from "react-router-dom";
 
-const Depositos = (collectionPointId) => {
-    
+const Depositos = () => {
+    const loc = useLocation()
+    const id = loc.state.id
+ 
     const [pointData, setPointData] = useState({
         name: "",
         location: "",
@@ -47,7 +50,7 @@ const Depositos = (collectionPointId) => {
 
     async function getCollectionPointData() {
         try {
-            let req = await api.get(`/collectionPoint/${collectionPointId}`);
+            let req = await api.get(`/collectionPoint/${id}`);
 
             if(req.status == 200) {
                 setPointData({
@@ -70,28 +73,44 @@ const Depositos = (collectionPointId) => {
         } else toast.error("Insira um valor de depósito válido!")
     }
 
-    async function registerDeposit() {
-        const depositData = {collectionPointId, depositAmount, imageURL}
+    async function registerDeposit() {  
+        const formData = new FormData();
+        formData.append("depositData", JSON.stringify({ amountSponges: depositAmount }));
+        formData.append('imageUrl', imageURL);
 
         try {
-            let req = await api.post("/deposit", depositData);
+            
+            let req = await api.post(`/deposit/${id}`, formData );
+            
 
-            if(req.status === 200) {
-                toast.success("Depósito registrado com sucesso!");
-                setTimeout(() => {
-                    // mudar pra mandar o usuário de volta pra home user
-                    nav('/');
-                }, 2000)
-            }
+                if(req.status == 200 || req.status == 201){
+                if(req.data.message == 'Deposito realizado'){
+                                    toast.success("Depósito registrado com sucesso!");
+                                setTimeout(() => {
+                                    
+                                    // mudar pra mandar o usuário de volta pra home user
+                     nav('/home');
+                 }, 2000)
+                 
+                }
+                else{
+                    toast.warn(`${req.data.message}`)
+                }
+                }
+                else{
+                    toast.error(`Problemas de comunicação com o servidor: ${req.status}`)
+                }
+               
+                
         } catch(error) {
-            console.log(error);
-            toast.error("Erro ao registrar depósito!");
+            
+            toast.error(`Erro ao registrar depósito: ${error}`);
         }
     }
 
     useEffect(() => {
         getCollectionPointData();
-    })
+    },[])
 
     return (
         <>
@@ -132,12 +151,12 @@ const Depositos = (collectionPointId) => {
                             </div>
                         ) : (
                             <div>
-                                <label for="inputImage" className={depositos.modalLabelInputImage}>Insira sua imagem aqui!</label>
+                                <label htmlFor="inputImage" className={depositos.modalLabelInputImage}>Insira sua imagem aqui!</label>
                                 <input className={depositos.modalInputImage} type="file" id="inputImage" accept="image/*" onChange={(event) => handleImageUpload(event)}></input>
                             </div>
                         )}
 
-                        <button className={depositos.modalSubmit} onClick={() => handleSubmit()}>Enviar</button>
+                        <button className={depositos.modalSubmit} type="button" onClick={() => handleSubmit()}>Enviar</button>
                     </form>
                 </div>
             </div>

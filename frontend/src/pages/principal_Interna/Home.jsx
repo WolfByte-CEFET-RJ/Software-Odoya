@@ -71,7 +71,7 @@ function Home() {
   async function dadosDeps() {
     try {
       const req = await api.get("/deposits");
-      console.log(req.data)
+      
       if (req.status === 200) {
         setDonations(req.data);
       }
@@ -155,11 +155,12 @@ function Home() {
             <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
               {point.map((dado) => (
                 <DonationCard
-                  key={dado.id}
+                  id={dado.id}
                   nome={dado.name}
                   place={dado.location}
                   state={dado.isInactive}
                   setLocation={setAdress}
+                  open={true}
                 />
               ))}
             </Grid2>

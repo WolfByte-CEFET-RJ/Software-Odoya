@@ -20,7 +20,7 @@ const Header = () => {
     const {admin, logout, token, root, client} = useContext(UserContext)
     
     useEffect(() =>{
-        console.log(client)
+        
         if(token && client){
             setIsLoggedIn(true)
         }
@@ -44,7 +44,7 @@ const Header = () => {
             <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
                 {isLoggedIn ? (
                 <>
-                {currentLocation !== '/home' ? (
+                {currentLocation !== '/home' && currentLocation !== '/homeAdm' ? (
                     <Link to={"/home"} className={header.link} onClick={() => setMenuOpen(false)}>
                             <MdHomeFilled color="#114C6D" />Tela inicial
                         </Link>): (<></>)}
@@ -58,9 +58,9 @@ const Header = () => {
                     {admin == true ? (
                     <>
                        
-                         <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
+                         {/* <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
                             <MdCollectionsBookmark color="#114C6D" />Relatórios
-                        </Link>
+                        </Link> */}
                        {root === true ? (
 
                             <>

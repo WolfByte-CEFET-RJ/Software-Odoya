@@ -2,22 +2,27 @@ import React, { useState } from "react";
 import "./CreatePointModal.scss";
 import api from "../../api.js";
 
-function CreatePointModal({ open, onClose, onConfirm }) {
+function CreatePointModal({ open, onClose }) {
   const [nome, setNome] = useState("");
   const [endereco, setEndereco] = useState("");
   const [limite, setLimite] = useState("");
 
   const handleConfirm = () => {
-    onConfirm({ nome, endereco, limite });
-    createCollectionPoint();
+    
+    if(nome,endereco, limite){createCollectionPoint();}
+    
   };
 
   async function createCollectionPoint() {
     try {
       const req = await api.post("/collectionPoint/", {
         name: nome,
-        address: endereco,
-        storage_limit: limite
+        location: endereco,
+        capacitySponges: limite,
+        
+        lastCollectionDate: "",
+        nextCollectionDate: "",
+        isInactive: false
       });
 
       if(req.status === 201) {

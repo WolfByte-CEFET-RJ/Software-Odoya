@@ -66,13 +66,16 @@ function Login(){
                 {
                     headers: { Authorization: `Bearer ${res.data.token}`}
                 }
+                
             )
-                if(req.data.admin == true){
-                setTimeout(() => {
-                   navigate("/homeAdm")
+            
+                 if(req.data.admin == true){
+                 setTimeout(() => {
+                    navigate("/homeAdm")
                     
-                }, 2000);}
-                else if(req.data.root == true){
+                 }, 2000);}
+                
+                if(req.data.isRoot == true){
                 setTimeout(() => {
                    navigate("/rh")
                     
@@ -129,7 +132,7 @@ function Login(){
                     
                 }}
             catch (error) {
-            console.log(error)
+            toast.error(error)
             
             setTimeout(() => {
                 setLoad(false)
