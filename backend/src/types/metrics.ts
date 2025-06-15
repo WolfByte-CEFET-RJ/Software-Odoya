@@ -5,6 +5,9 @@ export default interface Metrics {
   spongesCollected: number;
   livesImpacteds: number;
   kgRecycled: number;
+  sanitationInstalled: number;
+  bets: number;
+  litersTreatedWater: number;
   partners: Partners[]
 };
 

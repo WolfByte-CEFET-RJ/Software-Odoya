@@ -1,0 +1,207 @@
+.metrics-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .metrics-modal {
+    background-color: white;
+    border-radius: 8px;
+    width: 70%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    max-height: 90vh;
+    overflow-y: auto;
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+      background-color: #f8f9fa;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #333;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.2s;
+
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 20px;
+
+      h3 {
+        margin-top: 0;
+        color: #2c3e50;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+      }
+
+      .metric-group {
+        margin-bottom: 25px;
+      }
+
+      .metric-input, .partner-input {
+        margin-bottom: 15px;
+
+        label {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 8px;
+          font-weight: 500;
+          color: #444;
+        }
+
+        input {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 0.95rem;
+
+          &:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+          }
+        }
+      }
+
+      .partners-section {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+
+        .section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 15px;
+
+          h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            color: #2c3e50;
+            font-size: 1.1rem;
+          }
+
+          .add-partner-btn {
+            display: flex;
+            align-items: center;
+            width: 30%;
+            gap: 5px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: black;
+
+            &:hover {
+              background-color: #e9ecef;
+            }
+          }
+        }
+
+        .partner-group {
+          position: relative;
+          padding: 15px;
+          background-color: #f8f9fa;
+          border-radius: 4px;
+          margin-bottom: 15px;
+
+          .remove-partner-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 0.9rem;
+
+            &:hover {
+              color: #a71d2a;
+            }
+          }
+        }
+      }
+    }
+
+    .modal-footer {
+      padding: 15px 20px;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      background-color: #f8f9fa;
+      position: sticky;
+      bottom: 0;
+
+      .secondary-btn {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #5a6268;
+        }
+      }
+
+      .save-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #28a745;
+        color: white;
+        width: 60%;
+        justify-content: center;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #218838;
+        }
+      }
+    }
+  }
+}

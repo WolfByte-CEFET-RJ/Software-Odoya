@@ -1,13 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/userService';
 import { HttpCode } from '../erros/erro.config';
+import RootUserService from '../services/rootUserService';
 
 export default class UserController {
     public static async getUser(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{
             const id = req.user?.id;
 
-            const user = await UserService.getUser(String(id));
+            const data = await UserService.getUser(String(id));
+            const user = {
+                ...data,
+                isRoot: RootUserService.checkRootUser(data)
+            }
+
             return res.status(HttpCode.OK).json(user);
 
         } catch(e: any){

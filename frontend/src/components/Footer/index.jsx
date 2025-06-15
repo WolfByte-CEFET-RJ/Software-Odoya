@@ -16,11 +16,10 @@ const Footer = () => {
     return ( 
     <footer className={footer.body}> 
         <div className={footer.copyright}> 
-            <p>© 2025 Odoyá. Todos os direitos reservados.</p> 
+            <p>© 2025 Odoyá. Todos os direitos reservados.</p>
         </div> 
         
         <div> 
-            <p>Siga-nos em:</p> 
             <div className={footer.redes}> 
                 <RiInstagramFill color="#4d4d4d" size={35} /> 
                 <a onClick={() => redirect("instagram")}>@odoya</a> 
@@ -31,6 +30,11 @@ const Footer = () => {
             </div> 
         </div> 
         <img src="/LogoPreta.png" alt="Logotipo Odoya" /> 
+        
+        <a href="https://cs-cefetrj.com.br" style={{ textDecoration: "none" }} target="_blank" rel="noopener noreferrer">
+        <p>@ Desenvolvido por IEEE - Cefet/RJ - Computer Society</p>
+        </a>
+
     </footer> 
     ); 
 }; 

@@ -35,9 +35,11 @@ function DonationCard(props){
                 props.setLocation({stret: streetName, lat: lati, long: longi})
                 } else {
                 alert('Rua não encontrada.');
+                setLoad(false)    
+
                 }
             })
-            .catch((error) => console.error('Erro ao buscar a rua:', error))
+            .catch((error) => toast.error('Erro ao buscar a rua:', error))
         }
         else{
 
@@ -61,10 +63,13 @@ function DonationCard(props){
                     alert('Rua não encontrada.');
                     }
                 })
-                .catch((error) => console.error('Erro ao buscar a rua:', error))
+                .catch((error) => toast.error('Erro ao buscar a rua:', error))
               })
-              .catch((error) => console.error('Erro ao buscar o cep:', error))
+              .catch((error) => toast.error('Erro ao buscar o cep:', error))
         }
+
+        setLoad(false)
+
        }
       },[streetName, lati, longi, props])
       useEffect(() =>{

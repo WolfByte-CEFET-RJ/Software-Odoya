@@ -27,7 +27,7 @@ function Home() {
     setMuti(false);
   }
 
-  function changePageMuti(e) {
+  /*function changePageMuti(e) {
     e.preventDefault();
     setEsponge(false);
     setMuti(true);
@@ -66,13 +66,14 @@ function Home() {
       hour: "14:35",
       state: "faltou"
     },
-  ];
+  ];*/
 
   async function dadosDeps() {
     try {
       const req = await api.get("/deposits");
+      console.log(req.data)
       if (req.status === 200) {
-        setDonations(req.data.deposits);
+        setDonations(req.data);
       }
     } catch (err) {
       toast.error(err);
@@ -106,7 +107,7 @@ function Home() {
         <h1 className="escolha-titulo"> Escolha o que deseja fazer a seguir:</h1>
         <div className="escolha-buttons">
           <button className="opcao1-escolha" onClick={changePageEsponge}> Depositar esponjas</button>
-          <button className="opcao2-escolha" onClick={changePageMuti}> Participar de multirões</button>
+          <button className="opcao2-escolha" onClick={()=>{toast.info("Tente novamente em breve!")}}> Participar de multirões</button>
         </div>
       </section>
 
@@ -115,27 +116,35 @@ function Home() {
           <section className="sectionCards">
             <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
             <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-              {donations.length > 0 && donations.map((dado) => {
-                const date = new Date(dado.created_at);
-                const brasiliaDate = date.toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                  timeZone: 'America/Sao_Paulo'
-                });
-                const hour = dado.created_at.split("T")[1]?.replace(/Z$/, '').substring(0, 5);
 
-                return (
-                  <DonationCard
-                    key={dado.id}
-                    donate={true}
-                    num={dado.amountSponges}
-                    place={dado.point_name}
-                    date={brasiliaDate}
-                    hour={hour}
-                  />
-                );
-              })}
+            {donations?.length > 0 ? (
+              <>
+                {donations.map((dado) => {
+                  const date = new Date(dado.created_at);
+                  const brasiliaDate = date.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    timeZone: 'America/Sao_Paulo',
+                  });
+                  const hour = dado.created_at.split("T")[1]?.replace(/Z$/, '').substring(0, 5);
+
+                  return (
+                    <DonationCard
+                      key={dado.id}
+                      donate={true}
+                      num={dado.amountSponges}
+                      place={dado.point_name}
+                      date={brasiliaDate}
+                      hour={hour}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <p>Nenhuma doação encontrada.</p>
+            )}
+
             </Grid2>
           </section>
 
@@ -160,7 +169,9 @@ function Home() {
         </>
       )}
 
-      {muti && (
+      {/**
+       * 
+       *       {muti && (
         <>
           <section className="sectionCards">
             <h1 className="sectionCards-titulo"> Minhas Inscrições</h1>
@@ -186,25 +197,50 @@ function Home() {
         </>
       )}
 
+       */}
       {!esponge && !muti && (
         <>
           <section className="sectionCards">
             <h1 className="sectionCards-titulo"> Minhas doações recentes</h1>
             <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
-              {dados.map((dado) => (
-                <DonationCard key={dado.idx} donate={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour} />
-              ))}
+            {donations?.length > 0 ? (
+              <>
+                {donations.map((dado) => {
+                  const date = new Date(dado.created_at);
+                  const brasiliaDate = date.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    timeZone: 'America/Sao_Paulo',
+                  });
+                  const hour = dado.created_at.split("T")[1]?.replace(/Z$/, '').substring(0, 5);
+
+                  return (
+                    <DonationCard
+                      key={dado.id}
+                      donate={true}
+                      num={dado.amountSponges}
+                      place={dado.point_name}
+                      date={brasiliaDate}
+                      hour={hour}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <p>Nenhuma doação encontrada.</p>
+            )}
             </Grid2>
           </section>
 
-          <section className="sectionCards">
+          {/**<section className="sectionCards">
             <h1 className="sectionCards-titulo"> Próximos mutirões</h1>
             <Grid2 container rowSpacing={{ xs: 2, sm: 5, md: 10 }} columnSpacing={{ xs: 1, sm: 5, md: 10 }}>
               {dados.map((dado) => (
                 <CrowndfundingCard key={dado.idx} crownd={true} num={dado.num} place={dado.place} date={dado.date} hour={dado.hour} />
               ))}
             </Grid2>
-          </section>
+          </section> */}
         </>
       )}
 

@@ -1,16 +1,20 @@
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import styles from "./deposito.module.scss"
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import api from '../../api'
+import { toast } from "react-toastify";
 
 const DepositoAdm = (colectionPointId) => {
+    colectionPointId="1ab381f1-8869-4351-ab5e-2f74c1a6cc6c"
+
     const [pontoNome, setPontoNome] = useState('')
     const [paginaAtual, setPaginaAtual] = useState(1)
     const [users, setUSer] = useState([])
     const [totalPages, setTotalPages] = useState('0');
     const [isSearching, setIsSearching] = useState(false);
     const [name, setName] = useState('');
+    
 
     useEffect(() => {
         if(!isSearching){
@@ -24,12 +28,13 @@ const DepositoAdm = (colectionPointId) => {
 
     async function getDepositos() {
         try{
-            let req = await api.get(`/deposits/adm${colectionPointId}?page=${paginaAtual}`)           
+            let req = await api.get(`/deposit/adm/${colectionPointId}?page=${paginaAtual}`)  
+            console.log(req)       
             
             if(req.status == 200){
-            setTotalPages(req.totalPages);
-            setUSer(req.deposits);
-            setPontoNome(req.deposits[0].point_name)
+            setTotalPages(req.data.totalPages);
+            setUSer(req.data.deposits);
+            setPontoNome(req.data.deposits[0].point_name)
             setIsSearching(false)
             }
         }
@@ -37,7 +42,6 @@ const DepositoAdm = (colectionPointId) => {
             console.log(error)
             
             setTimeout(() => {
-                setLoad(false)
                 toast.error('Falha ao recuperar as páginas de registro');
             }, 1000);
     }
@@ -60,7 +64,6 @@ const DepositoAdm = (colectionPointId) => {
             console.log(error)
             
             setTimeout(() => {
-                setLoad(false)
                 toast.error('Falha ao mudar o status');
             }, 1000);
     }
@@ -68,15 +71,13 @@ const DepositoAdm = (colectionPointId) => {
 
     async function searchDeposit(name,isFirstSearch) {
         try{
-            let req = await api.get(`/deposits/adm/search${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`)           
+            let req = await api.get(`/deposit/adm/search/${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`)           
             
             if(req.status == 200){
-            setTotalPages(data.totalPages);
-            setUSer(data.deposits);
-            if(isFirstSearch){
-            setPaginaAtual(1);
-            }else{
-
+                setTotalPages(req.data.totalPages);
+                setUSer(req.data.deposits);
+                if(isFirstSearch){
+                setPaginaAtual(1);
             }
             setName(name)
             setIsSearching(true)
@@ -86,7 +87,6 @@ const DepositoAdm = (colectionPointId) => {
             console.log(error)
             
             setTimeout(() => {
-                setLoad(false)
                 toast.error('Falha ao recuperar as páginas de registro');
             }, 1000);
     }

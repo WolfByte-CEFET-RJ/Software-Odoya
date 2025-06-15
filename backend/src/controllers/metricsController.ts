@@ -17,10 +17,10 @@ export default class MetricsController{
 
     public static async updateMetrics(req: Request, res: Response, next: NextFunction) {
         try{
-            const { climateInitiatives, livesImpacteds, kgRecycled, partners }
+            const { climateInitiatives, livesImpacteds, kgRecycled, litersTreatedWater, bets, sanitationInstalled, partners }
                 : Partial<Metrics> = req.body;
 
-            const message = await MetricsService.updateMetrics({ climateInitiatives, livesImpacteds, kgRecycled, partners });
+            const message = await MetricsService.updateMetrics({ climateInitiatives, livesImpacteds, kgRecycled, partners, litersTreatedWater, bets, sanitationInstalled });
 
             res.status(HttpCode.OK).json({message});
 

@@ -27,7 +27,6 @@ const Principal = () => {
     const fetchMetrics = async () => {
       try {
         const metrics = await api.get("/metrics")
-        console.log(metrics)
         setMetrics(metrics.data)
       } catch (e) {
         toast.error(e)
@@ -263,7 +262,11 @@ const Principal = () => {
             <p>{metrics.climateInitiatives} ações contra mudança climática</p>
             <p>{metrics.kgRecycled} KG de lixo reciclável coletado</p>
             <p>{metrics.spongesCollected} esponjas coletadas</p>
-            <p>{metrics.totalEvents} mutirões bem-sucessedidos</p>
+            <p>{metrics.totalEvents} mutirões bem-sucedidos</p>
+            <p>{metrics.livesImpacteds} vidas impactadas</p>
+            <p>{metrics.sanitationInstalled} instalações de saneamento</p>
+            <p>{metrics.bets} BETs construídos</p>
+            <p>{metrics.litersTreatedWater} litros de água tratada</p>
           </div>
         </div>
           <div className={principal.parceiros}>

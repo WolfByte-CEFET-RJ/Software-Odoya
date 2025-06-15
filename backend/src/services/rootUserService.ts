@@ -1,5 +1,6 @@
 import DatabaseConnection from "../database/connection/DatabaseConnection";
 import { UserNotFound } from "../erros/UserErros";
+import User from "../types/user";
 
 const database = DatabaseConnection.getInstance();
 
@@ -30,4 +31,14 @@ export default class RootUserService {
 
         return "Cargo atualizado com sucesso!";
     }
+
+        /**
+         * @description Verifica se um usuário é um super-usuário
+         * @param {User} user
+         * @returns {boolean}
+         */
+        public static checkRootUser(user: User): boolean {
+            const isRoot: boolean = (user.email === process.env.ROOT_EMAIL);
+            return isRoot;
+        }   
 }
