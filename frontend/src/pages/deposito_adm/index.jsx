@@ -4,9 +4,13 @@ import styles from "./deposito.module.scss"
 import { useState, useEffect} from "react";
 import api from '../../api'
 import { toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
-const DepositoAdm = (colectionPointId) => {
-    colectionPointId="1ab381f1-8869-4351-ab5e-2f74c1a6cc6c"
+const DepositoAdm = () => {
+    
+    const loc = useLocation()
+    const id = loc.state.idPoint
+    
 
     const [pontoNome, setPontoNome] = useState('')
     const [paginaAtual, setPaginaAtual] = useState(1)
@@ -28,8 +32,8 @@ const DepositoAdm = (colectionPointId) => {
 
     async function getDepositos() {
         try{
-            let req = await api.get(`/deposit/adm/${colectionPointId}?page=${paginaAtual}`)  
-            console.log(req)       
+            let req = await api.get(`/deposit/adm/${id}?page=${paginaAtual}`)  
+                   
             
             if(req.status == 200){
             setTotalPages(req.data.totalPages);
@@ -69,11 +73,14 @@ const DepositoAdm = (colectionPointId) => {
     }
     }
 
+   
+
     async function searchDeposit(name,isFirstSearch) {
         try{
-            let req = await api.get(`/deposit/adm/search/${colectionPointId}?page=${paginaAtual}&name=${encodeURIComponent(name)}`)           
+            let req = await api.get(`/deposit/adm/search/${id}?page=${paginaAtual}&name=${encodeURIComponent(name)}`)           
             
             if(req.status == 200){
+                console.log(req.data)
                 setTotalPages(req.data.totalPages);
                 setUSer(req.data.deposits);
                 if(isFirstSearch){
@@ -84,10 +91,10 @@ const DepositoAdm = (colectionPointId) => {
             }
         }
         catch (error) {
-            console.log(error)
+            
             
             setTimeout(() => {
-                toast.error('Falha ao recuperar as páginas de registro');
+                toast.error('Falha ao recuperar as páginas de registro', error);
             }, 1000);
     }
     }
@@ -152,14 +159,25 @@ const DepositoAdm = (colectionPointId) => {
                                 <div className={styles.buttons}>
                                 <div className={styles.valida}>
                                     <p onClick={() => {if (user.status === "APROVADO") return; else changeStatus(index, "APROVADO");}} className={styles.text}>
-                                        {user.status == "APROVADO"? "Aprovado" : "Aprovar"}
+                                        {user.status == "APROVADO"? 
+                                        <div onClick={() => {if (user.status === "PENDENTE") return; else changeStatus(index, "PENDENTE");}} className={styles.pend}>
+                                    <p className={styles.text}>
+                                        {user.status == "PENDENTE"? "Pentente" : "Pendente"}
+                                    </p>
+                                </div> : "Aprovar"}
                                     </p>
                                 </div>
                                 <div onClick={() => {if (user.status === "REPROVADO") return; else changeStatus(index, "REPROVADO");}} className={styles.reprova}>
                                     <p className={styles.text}>
-                                        {user.status == "REPROVADO"? "Reprovado" : "Reprovar"}
+                                        {user.status == "REPROVADO"? 
+                                        <div onClick={() => {if (user.status === "PENDENTE") return; else changeStatus(index, "PENDENTE");}} className={styles.pend}>
+                                    <       p className={styles.text}>
+                                        {user.status == "PENDENTE"? "Pentente" : "Pendente"}
+                                    </p>
+                                </div> : "Reprovar"}
                                     </p>
                                 </div>
+                                
                                 </div>
                             </li>
                         ))}

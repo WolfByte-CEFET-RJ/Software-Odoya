@@ -87,6 +87,16 @@
                 margin: 0;
                 color: #121212;
             }
+            .pend{
+                width: 160px;
+                height: 53px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #FFDBBB;
+                cursor: pointer;
+            }
         }
         .reprova{
             width: 160px;
@@ -145,6 +155,11 @@
         }
     }
 }
+
+.pend{
+
+}
+
 
 @media screen and (max-width: 1366px){
     .retangulo{

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import { toast } from 'react-toastify';
-//import {useNavigate} from 'react-router-dom'
+
 import "react-toastify/dist/ReactToastify.css";
 import '../../styles/login.scss';
 import { useNavigate } from 'react-router-dom'
@@ -15,13 +15,10 @@ import InputFormPassword from '../../components/inputFormPassword/inputFormPassw
 
 
 
-import { User } from 'lucide-react';
 
-
-//import jwt_decode from 'jwt-decode';
 
 function Login(){
-    //const nav = useNavigate()
+    
     const [user, setUser] = useState('')
     const [password, setPass] = useState('')
     const [load, setLoad]  = useState()
@@ -39,8 +36,8 @@ function Login(){
         onError: (error) => toast.error('Problema no login:', error)
     });
     function Forgot(){
-        //nav('insira a rota de esquecimento')
-        alert('inserir pagina')
+        navigate('/forgot')
+        
     };
     
     function loading(){
@@ -157,10 +154,10 @@ function Login(){
                         <div className="div_forms_login">
                             <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
                             <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
-                            <a >Esqueci minha senha</a>
+                            <a onClick={Forgot}>Esqueci minha senha</a>
                             <GoogleButton type="light" label="Login com o Google" onClick={login}></GoogleButton>
                             
-                            <button className="button-login-form" onClick={loading}>Entrar</button>
+                            <button className="button-login-form" onClick={loading}>Redefinir senha</button>
                             <button className="button-login-form" onClick={()=>navigate("/register")}>Criar conta</button>
 
                         </div>

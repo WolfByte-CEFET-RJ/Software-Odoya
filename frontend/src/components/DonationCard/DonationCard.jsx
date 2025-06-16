@@ -16,19 +16,23 @@ function DonationCard(props){
     const [ longi, setLongi] = useState('');
     const [load, setLoad] = useState(false)
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
-    const [click, setClick] = useState(0)
+
     
     const nav = useNavigate()
         
       const handleSearch = () => {
         setLoad(true)
         setStreetName(props.place);
-        setClick(prevClick => prevClick + 1)
+       
       };
 
       const handleEdit =() =>{
         setModalUpdatePoint(true)
       }
+      const handleDepo = () =>{
+        nav("/deposit", { state: { id: props.id } });
+      }
+      
       
       useEffect(()=>{
        if(streetName != ''){
@@ -103,11 +107,7 @@ function DonationCard(props){
       
                   
       },[load])
-      useEffect(()=>{
-        if(click == 2){
-        nav("/deposit", { state: { id: props.id } });
-      }
-      },[click])
+      
 
     return(
         <>{props.donate ? (
@@ -124,12 +124,15 @@ function DonationCard(props){
 ) : (
     props.open ? (
     
-        <div onClick={handleSearch} className={cardStyle.container}>
+        <div className={cardStyle.container}>
+            <div onClick={handleSearch} >
             <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
             <div className={cardStyle.infoPonto}>
                 <span className={cardStyle.infoSpan}> {props.place}</span>
                 <span className={cardStyle.infoSpan}> Situação: {props.state ? "inativo" : "ativo"}</span>
             </div>
+        </div>
+        <button onClick={handleDepo}>Fazer depósito</button>
         </div>
     ) : (
        

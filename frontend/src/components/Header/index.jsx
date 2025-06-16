@@ -2,7 +2,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdHomeFilled, MdAccountCircle, MdLogout, MdEngineering, MdCollectionsBookmark } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import header from "./header.module.scss";
 import { useContext } from "react";
 import { UserContext } from "../Context/userContext";
@@ -13,8 +13,7 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showMetrics, setShowMetrics] = useState(false);
-    const location = useLocation();
-    const currentLocation = location.pathname;
+    
     
     
     const {admin, logout, token, root, client} = useContext(UserContext)
@@ -44,16 +43,16 @@ const Header = () => {
             <nav className={`${header.links} ${menuOpen ? header.open : ""}`}>
                 {isLoggedIn ? (
                 <>
-                {currentLocation !== '/home' && currentLocation !== '/homeAdm' ? (
+                
                     <Link to={"/home"} className={header.link} onClick={() => setMenuOpen(false)}>
                             <MdHomeFilled color="#114C6D" />Tela inicial
-                        </Link>): (<></>)}
+                        </Link>
                         
   
-                        {currentLocation !== '/profile' ? (
+                    
                     <Link to={"/profile"} className={header.link} onClick={() => setMenuOpen(false)}>
-                            <MdHomeFilled color="#114C6D" />Perfil
-                        </Link>): (<></>)}
+                            <MdAccountCircle color="#114C6D" />Perfil
+                        </Link>
                          
                     {admin == true ? (
                     <>

@@ -2,11 +2,13 @@ import React, {useState } from "react";
 import "./UpdatePointModal.scss";
 import api from "../../api.js";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 function UpdatePointModal({open, onClose,name,address, idPoint, amount}) {
   const [nome, setNome] = useState(name || "");
   const [endereco, setEndereco] = useState(address || "");
+  const nav = useNavigate();
  let quantidade = amount
   
  
@@ -25,12 +27,16 @@ const id = idPoint;
         setTimeout(() => {
           window.location.reload()
         }, 3000);
+      } else{
+        toast.error(req.data.message)
       }
     } catch(error) {
       toast.error(error);
     }
   }
-
+  function depoAdm(){
+    nav("/deposit/adm", { state: { idPoint: id } });
+  }
 
 
   if(open){
@@ -66,6 +72,7 @@ const id = idPoint;
               value={quantidade}
               disabled={true}
             />
+            <button onClick={depoAdm}>Visualizar depósitos</button>
           </div>
 
           <div className="modal-actions">

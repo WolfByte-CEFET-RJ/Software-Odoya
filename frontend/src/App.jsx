@@ -12,6 +12,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import Perfil from './pages/perfil/index.jsx'
 import RH from './pages/rh/index.jsx'
 import HomeAdm from './pages/principal_InternaAdm/HomeAdm.jsx'
+import Forgot from './pages/forgotPassword/forgot.jsx'
 
 
 
@@ -26,6 +27,7 @@ const Routing = () =>{
                 <Route path="/register" element={<Cadastro/>}/>
                 <Route path='/home' element={<Home/>}/>
                 <Route path="/profile" element={<Perfil/>}/>
+                <Route path="/forgot" element={<Forgot/>}/>
 
                 <Route path="/deposit/adm" element={<DepositoAdm/>}/>
                 <Route path='/homeAdm' element={<HomeAdm/>}/>
