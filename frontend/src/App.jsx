@@ -13,6 +13,8 @@ import Perfil from './pages/perfil/index.jsx'
 import RH from './pages/rh/index.jsx'
 import HomeAdm from './pages/principal_InternaAdm/HomeAdm.jsx'
 import Forgot from './pages/forgotPassword/forgot.jsx'
+import NotFoundPage from './pages/notFound/notFound.jsx'; 
+
 
 
 
@@ -35,6 +37,7 @@ const Routing = () =>{
                 
                 <Route path="/deposit" element={<Depositos/>}/>
                 <Route path="/rh" element={<RH/>}/>
+                <Route path="*" element={<NotFoundPage />} /> 
 
             </Routes>
         </>
