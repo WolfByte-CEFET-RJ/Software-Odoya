@@ -1,53 +1,37 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-
 import { toast } from 'react-toastify';
-
 import "react-toastify/dist/ReactToastify.css";
 import '../../styles/login.scss';
 import { useNavigate } from 'react-router-dom'
-import { useGoogleLogin } from '@react-oauth/google'
-import { GoogleButton } from 'react-google-button'
 import api from '../../api.js'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import InputForm from '../../components/inputForm/inputForm.jsx'
-import InputFormPassword from '../../components/inputFormPassword/inputFormPassword.jsx'
-
-
-
-
 
 function Forgot(){
     
-    const [user, setUser] = useState('')
-    const [password, setPass] = useState('')
+    const [email, setEmail] = useState('')
     const [load, setLoad]  = useState()
     const [disable, setDisable] = useState(false)
-   
-
-    
-        
+         
     const navigate = useNavigate();
     const handleChange = (event, setText) => {
         setText(event.target.value);
     };
     
-
-    
     function loading(){
         setLoad(true)
-        auth()
+        send()
     }
    
-    async function auth(){
+    async function send(){
             
-        const userData = { email: user}
+        const userData = { email}
         
         try {
             
             let res = await api.post("/forgotPassword", userData);
-            if(res.data.message == "Senha redefinida"){
+            if(res.status === 200){
                 toast.success("Senha redefinida com sucesso!")
+                toast.info("Confira a caixa de entrada de " + email)
 
                 setTimeout(() => {
                     navigate("/login")
@@ -55,34 +39,22 @@ function Forgot(){
             }
             
         } catch (error) {
-            
-            
             setTimeout(() => {
                 setLoad(false)
-                toast.error('Falha ao redefinir senha!');
+                toast.error('Falha ao redefinir senha!'+error);
             }, 1000);
-            
            
         }
     }
    
-    useEffect(() =>{
-        
-        
+    useEffect(() =>{     
         async function effect(){
-            
         if(load == true){
             setDisable(true)
         }
         else{
             setDisable(false)
-        }
-        
-
-                   
-                
-                
-                
+        }        
      
     } effect()}, [load])
 
@@ -92,10 +64,10 @@ function Forgot(){
                     <div className="forms">
                         <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                         <div className="div_forms_login">
-                            <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Email"/>
-                            
-                            
-                            
+
+                            Vamos enviar instruções para seu email
+
+                            <InputForm type='email' off={disable} onChange={(event) => handleChange(event, setEmail)} placeholder="Email"/>
                             
                             <button className="button-login-form" onClick={loading}>Redefinir Senha</button>
                             <button className="button-login-form" onClick={()=>navigate("/")}>Cancelar</button>

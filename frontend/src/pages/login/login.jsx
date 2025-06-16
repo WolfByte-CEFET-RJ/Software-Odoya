@@ -157,7 +157,7 @@ function Login(){
                             <a onClick={Forgot}>Esqueci minha senha</a>
                             <GoogleButton type="light" label="Login com o Google" onClick={login}></GoogleButton>
                             
-                            <button className="button-login-form" onClick={loading}>Redefinir senha</button>
+                            <button className="button-login-form" onClick={loading}>Entrar</button>
                             <button className="button-login-form" onClick={()=>navigate("/register")}>Criar conta</button>
 
                         </div>
