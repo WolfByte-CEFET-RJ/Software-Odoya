@@ -7,6 +7,8 @@ import {
   FaPlus,
   FaTrash,
   FaSun,
+  FaCog,
+  FaPen
 } from 'react-icons/fa';
 import './MetricsModal.scss';
 import { useState, useEffect } from 'react';
@@ -85,6 +87,7 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
     <div className="metrics-modal-overlay">
       <div className="metrics-modal">
         <div className="modal-header">
+          <FaCog size={50}/>
           <h2>Atualizar Métricas de Extensão</h2>
           <button className="close-btn" onClick={onClose}>
             <FaTimes />
@@ -101,12 +104,15 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
                 <FaSun className="metric-icon" />
                 Iniciativas contra Mudança Climática
               </label>
-              <input
-                type="number"
-                placeholder="0"
-                value={metrics.climateInitiatives}
-                onChange={(e) => handleChange('climateInitiatives', e.target.value)}
-              />
+              <div className="metric-input-container">
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={metrics.climateInitiatives}
+                  onChange={(e) => handleChange('climateInitiatives', e.target.value)}
+                ></input>
+                <FaPen className="metric-input-icon"/>
+              </div>
             </div>
 
             <div className="metric-input">
@@ -114,12 +120,15 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
                 <FaUsers className="metric-icon" />
                 Vidas Impactadas
               </label>
-              <input
-                type="number"
-                placeholder="0"
-                value={metrics.livesImpacteds}
-                onChange={(e) => handleChange('livesImpacteds', e.target.value)}
-              />
+              <div className="metric-input-container">
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={metrics.livesImpacteds}
+                  onChange={(e) => handleChange('livesImpacteds', e.target.value)}
+                />
+                <FaPen className="metric-input-icon"/>
+              </div>
             </div>
 
             <div className="metric-input">
@@ -127,48 +136,60 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
                 <FaRecycle className="metric-icon" />
                 KG de Lixo Reciclado
               </label>
-              <input
-                type="number"
-                placeholder="Insira a quantidade em KG"
-                value={metrics.kgRecycled}
-                onChange={(e) => handleChange('kgRecycled', e.target.value)}
-              />
+              <div className="metric-input-container">
+                <input
+                  type="number"
+                  placeholder="Insira a quantidade em KG"
+                  value={metrics.kgRecycled}
+                  onChange={(e) => handleChange('kgRecycled', e.target.value)}
+                />
+                <FaPen className="metric-input-icon"/>
+              </div>
             </div>
 
             <div className="metric-input">
               <label>
                 Sanitários Instalados
               </label>
-              <input
-                type="number"
-                placeholder="0"
-                value={metrics.sanitationInstalled}
-                onChange={(e) => handleChange('sanitationInstalled', e.target.value)}
-              />
+              <div className="metric-input-container">
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={metrics.sanitationInstalled}
+                  onChange={(e) => handleChange('sanitationInstalled', e.target.value)}
+                />
+                <FaPen className="metric-input-icon"/>
+              </div>
             </div>
 
             <div className="metric-input">
               <label>
                 BETs Construídos
               </label>
-              <input
-                type="number"
-                placeholder="0"
-                value={metrics.bets}
-                onChange={(e) => handleChange('bets', e.target.value)}
-              />
+              <div className="metric-input-container">
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={metrics.bets}
+                  onChange={(e) => handleChange('bets', e.target.value)}
+                />
+                <FaPen className="metric-input-icon"/>
+              </div>
             </div>
 
             <div className="metric-input">
               <label>
                 Litros de Água Tratados
               </label>
-              <input
-                type="number"
-                placeholder="0"
-                value={metrics.litersTreatedWater}
-                onChange={(e) => handleChange('litersTreatedWater', e.target.value)}
-              />
+              <div className="metric-input-container">
+                <input
+                  type="number"
+                  placeholder="0"
+                  value={metrics.litersTreatedWater}
+                  onChange={(e) => handleChange('litersTreatedWater', e.target.value)}
+                />
+                <FaPen className="metric-input-icon"/>
+              </div>
             </div>
 
           </div>
@@ -179,9 +200,6 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
                 <FaHandshake className="section-icon" />
                 Parceiros:
               </h4>
-              <button className="add-partner-btn" onClick={addPartner}>
-                <FaPlus /> Adicionar Parceiro
-              </button>
             </div>
 
             {metrics.partners?.map((partner, index) => (
@@ -211,18 +229,19 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
                     className="remove-partner-btn"
                     onClick={() => removePartner(index)}
                   >
-                    <FaTrash />
+                    <FaTrash size={20} />
                   </button>
                 )}
               </div>
             ))}
+
+            <button className="add-partner-btn" onClick={addPartner}>
+              <FaPlus /> Adicionar Parceiro
+            </button>
           </div>
         </div>
 
         <div className="modal-footer">
-          <button className="secondary-btn" onClick={onClose}>
-            Sair
-          </button>
           <button className="save-btn" onClick={handleSave}>
             <FaSave className="save-icon" />
             Salvar Mudanças
