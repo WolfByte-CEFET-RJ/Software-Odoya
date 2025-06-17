@@ -12,6 +12,7 @@ import api from '../../api.js';
 function DonationCard(props) {
     const [load, setLoad] = useState(false);
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     const nav = useNavigate();
 
@@ -71,7 +72,12 @@ function DonationCard(props) {
     return (
     <>
         {props.donate ? (
-        <div className={cardStyle.container}>
+        <div className={cardStyle.container} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            {isHovered && (
+                <h3 className="tooltip-text">
+                    Clique no card para mostrar o mapa
+                </h3>
+            )}
             <h1 className={cardStyle.titulo}>{props.num} esponjas</h1>
             <div className={cardStyle.info}>
             <span className={cardStyle.infoSpan}><MdLocationOn className={cardStyle.icon} /> {props.place}</span>
