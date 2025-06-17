@@ -43,6 +43,8 @@ collectionPointRouter
      * @param {Number} id - ID do ponto de coleta
      * @returns { void }
      */
-    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint);
+    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint)
+
+    .get("/geocode/:id", AuthMiddleware.ensureAdmin, CollectionPointController.getGeocode);
 
 export default collectionPointRouter;

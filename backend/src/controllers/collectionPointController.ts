@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { HttpCode } from "../erros/erro.config";
 import CollectionPointService from "../services/collectionPointService";
 import CollectionPoint, { UpdateCollectionPoint } from "../types/collectionPoint";
+import { GeocodeError } from "../erros/CollectionPointErros";
 
 export default class CollectionPointController {
 
@@ -64,6 +65,32 @@ export default class CollectionPointController {
 
         } catch (e: any) {
             next(e);
+        }
+    }
+
+    
+    public static async getGeocode(req: Request, res: Response, next: NextFunction) {
+        const { address } = req.query;
+        const { id } = req.params;
+
+        const url = `https://nominatim.openstreetmap.org/search?q=${address?.toString()}&format=json`;
+
+        try {
+            await CollectionPointService.getOneCollectionPoint(id);
+
+            const response = await fetch(url, {
+                headers: {
+                    'User-Agent': `odoya/1.0 ${process.env.EMAIL_APP_USER}`
+                }
+            }).catch((e: any)=>{
+                throw new GeocodeError(e.message);
+            })
+
+            const data = await response.json();
+            res.json({lat: data[0].lat, lon: data[0].lon});
+
+        } catch (e) {
+            next(e)
         }
     }
 }
