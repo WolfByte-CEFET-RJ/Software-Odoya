@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom';
 function DonationCard(props){
 
     const [streetName, setStreetName] = useState('');
-    const [ lati, setLati] = useState('');
-    const [ longi, setLongi] = useState('');
     const [load, setLoad] = useState(false)
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
 
@@ -44,9 +42,7 @@ function DonationCard(props){
             .then((data) => {
                 if (data.length > 0) {
                 setLoad(false)
-                setLati(parseFloat(data[0].lat));
-                setLongi(parseFloat(data[0].lon));
-                props.setLocation({stret: streetName, lat: lati, long: longi})
+                props.setLocation({stret: streetName, lat: data[0].lat, long: data[0].lon})
                 } else {
                 alert('Rua não encontrada.');
                 setLoad(false)    
@@ -70,9 +66,8 @@ function DonationCard(props){
                 .then((data) => {
                     if (data.length > 0) {
                     setLoad(false)    
-                    setLati(parseFloat(data[0].lat));
-                    setLongi(parseFloat(data[0].lon));
-                    props.setLocation({stret: streetName, lat: lati, long: longi})
+                    props.setLocation({stret: streetName, lat: data[0].lat, long: data[0].lon})
+
                     } else {
                     alert('Rua não encontrada.');
                     }
@@ -85,7 +80,9 @@ function DonationCard(props){
         setLoad(false)
 
        }
-      },[streetName, lati, longi, props])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[streetName])
+
       useEffect(() =>{
             
               if(load == true){
@@ -132,7 +129,7 @@ function DonationCard(props){
                 <span className={cardStyle.infoSpan}> Situação: {props.state ? "inativo" : "ativo"}</span>
             </div>
         </div>
-        <button onClick={handleDepo}>Fazer depósito</button>
+        <button onClick={handleDepo}>Depositar aqui</button>
         </div>
     ) : (
        

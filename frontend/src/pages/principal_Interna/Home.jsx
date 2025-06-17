@@ -96,7 +96,7 @@ function Home() {
       getColectData();
       dadosDeps();
     }
-  }, [client]);
+  }, [token]);
 
   return (
     <>
