@@ -148,7 +148,7 @@ function Login(){
 
     return(
         <>
-            <div className="body">
+            <div className="bodyLogin">
                     <div className="forms">
                         <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                         <div className="div_forms_login">

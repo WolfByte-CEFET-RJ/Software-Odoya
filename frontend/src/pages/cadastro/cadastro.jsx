@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 
 import '../../styles/cadastro.scss';
@@ -58,7 +57,7 @@ function Cadastro(){
 
     return(
         <>
-            <div className="body">
+            <div className="bodyCadastro">
                 <div className="formulario" >
                     <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                     <div className="div_formulario_cadastro">
