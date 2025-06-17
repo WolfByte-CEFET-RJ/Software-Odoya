@@ -14,6 +14,7 @@ function DonationCard(props){
     const [streetName, setStreetName] = useState('');
     const [load, setLoad] = useState(false)
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
 
     
     const nav = useNavigate()
@@ -118,10 +119,16 @@ function DonationCard(props){
         </div>
         <BiSolidDonateHeart className={cardStyle.iconCard} />
     </div>
-) : (
-    props.open ? (
+) : ( 
     
-        <div className={cardStyle.container}>
+    props.open ? (
+        
+        <div className={cardStyle.container} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            {isHovered && (
+                <h3 className="tooltip-text">
+                    Clique no card para mostrar o mapa
+                </h3>
+            )}
             <div onClick={handleSearch} >
             <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
             <div className={cardStyle.infoPonto}>
