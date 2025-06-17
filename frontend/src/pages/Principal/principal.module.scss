@@ -96,6 +96,111 @@
     }
     
 }
+
+@media screen and (max-width: 768px){
+    body{
+        width:100vw; 
+        font-size: 70%;
+
+        .secao2 {
+            .caracteristicas {
+                flex-direction: column;
+                gap: 2rem;
+                width: 100%;
+                
+                .card {
+                    width: 100%;
+                    margin: 1rem 0 5rem 0;
+                    
+                    .icone {
+                        width: 30%;
+                        margin: -15% 30% 0 20%;
+
+                    }
+                    
+                    .icone_olho {
+                        width: 30%;
+                        margin: -15% 30% 0 10%;
+
+                    }
+                }
+            }
+
+            .valores{
+                gap: 2rem;
+                padding: 50px;
+                width: 100%;
+                
+                .valor {
+                    font-size: 3rem;
+                    margin-top: 1rem;
+                }
+            }
+        }
+        
+        .secao3 {
+            padding: 0 5%;
+            
+            .titulo {
+                font-size: 1.5rem;
+                padding-top: 10%;
+            }
+            
+            .titulo2 {
+                font-size: 1.5rem;
+                margin-top: 10%;
+            }
+            
+            .listaActions {
+                margin: 0 5%;
+                .field {
+                    width: 100%;
+                    font-size: 1rem;
+                }
+            }
+            
+            .partedebaixo {
+                width: 100%;
+                
+                .healthIssues {
+                    left: 0;
+                    width: 100%;
+                    
+                    .ordem {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    
+                    .cards {
+                        width: 80%;
+                        margin: 5% auto;
+                    }
+                }
+                
+                .slider {
+                    margin: 5% 0;
+                    width: 100%;
+                    
+                    .imagem {
+                        width: 100%;
+                        height: 200px;
+                    }
+                }
+            }
+        }
+    }
+        .secao4{
+            width:20%;
+            .parceiros{
+                width: 20%;
+                padding: 1rem;
+                .titulo{
+                padding-right:0;
+            }
+        }     
+    }
+}
+    
 .banner {
     width: 100%;
     
