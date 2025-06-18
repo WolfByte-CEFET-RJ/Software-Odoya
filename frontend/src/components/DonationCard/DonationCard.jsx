@@ -8,6 +8,7 @@ import { MdAccessTimeFilled, MdLocationOn } from "react-icons/md";
 import UpdatePointModal from "../../components/Modals/UpdatePointModal.jsx";
 import { useNavigate } from 'react-router-dom';
 import api from '../../api.js';
+import { FaFlag } from 'react-icons/fa';
 
 function DonationCard(props) {
     const [load, setLoad] = useState(false);
@@ -20,7 +21,7 @@ function DonationCard(props) {
         setLoad(true);
         const address = props.place;
         try{
-            const req = await api.get(`/geocode/${props.id}?address=${address}`);
+            const req = await api.get(`collectionPoint/geocode/${props.id}`);
         
             if (req.status === 200) {
                 props.setLocation({ stret: address, lat: req.data.lat, long: req.data.lon });
@@ -72,23 +73,24 @@ function DonationCard(props) {
     return (
     <>
         {props.donate ? (
-        <div className={cardStyle.container} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-            {isHovered && (
-                <h3 className="tooltip-text">
-                    Clique no card para mostrar o mapa
-                </h3>
-            )}
-            <h1 className={cardStyle.titulo}>{props.num} esponjas</h1>
-            <div className={cardStyle.info}>
-            <span className={cardStyle.infoSpan}><MdLocationOn className={cardStyle.icon} /> {props.place}</span>
-            <span className={cardStyle.infoSpan}><FaCalendarDays className={cardStyle.icon} /> {props.date}</span>
-            <span className={cardStyle.infoSpan}><MdAccessTimeFilled className={cardStyle.icon} /> {props.hour}</span>
+            <div className={cardStyle.container}>
+                <h1 className={cardStyle.titulo}>{props.num} esponjas</h1>
+                <div className={cardStyle.info}>
+                <span className={cardStyle.infoSpan}><MdLocationOn className={cardStyle.icon} /> {props.place}</span>
+                <span className={cardStyle.infoSpan}><FaCalendarDays className={cardStyle.icon} /> {props.date}</span>
+                <span className={cardStyle.infoSpan}><MdAccessTimeFilled className={cardStyle.icon} /> {props.hour}</span>
+                <span className={cardStyle.infoSpan}><FaFlag className={cardStyle.icon} /> {props.state}</span>
             </div>
             <BiSolidDonateHeart className={cardStyle.iconCard} />
         </div>
         ) : (
         props.open ? (
-            <div className={cardStyle.container}>
+            <div className={cardStyle.container} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            {isHovered && (
+                <h3 className="tooltip-text">
+                    Clique no card para mostrar o mapa
+                </h3>
+            )}
             <div onClick={handleSearch}>
                 <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
                 <div className={cardStyle.infoPonto}>

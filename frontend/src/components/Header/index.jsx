@@ -1,13 +1,14 @@
  
 import React from "react";
 import { useEffect, useState } from "react";
-import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdHomeFilled, MdAccountCircle, MdLogout, MdEngineering, MdCollectionsBookmark } from "react-icons/md";
+import { MdOutlineLogin, MdAssignmentInd, MdMenu, MdClose, MdHomeFilled, MdAccountCircle, MdLogout, MdEngineering, MdCollectionsBookmark, MdChangeHistory } from "react-icons/md";
 import { Link } from "react-router-dom";
 import header from "./header.module.scss";
 import { useContext } from "react";
 import { UserContext } from "../Context/userContext";
 import { FaLeaf } from "react-icons/fa";
 import MetricsModal from "../MetricsModal"
+import { FaGear } from "react-icons/fa6";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -57,6 +58,10 @@ const Header = () => {
                                 <MdCollectionsBookmark color="#114C6D" />Relatórios
                                 </Link> 
                                 */}
+
+                                <Link to={"/homeAdm"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <FaGear color="#114C6D" />Portal do Administrador
+                                </Link>    
 
                                 <div className={header.link} onClick={() => {setShowMetrics(true)}}>
                                     <FaLeaf color="#114C6D" />

@@ -13,6 +13,7 @@ const DepositoAdm = () => {
     
 
     const [pontoNome, setPontoNome] = useState('')
+    const [pontoID, setPontoID] = useState('')
     const [paginaAtual, setPaginaAtual] = useState(1)
     const [users, setUSer] = useState([])
     const [totalPages, setTotalPages] = useState('0');
@@ -39,6 +40,7 @@ const DepositoAdm = () => {
             setTotalPages(req.data.totalPages);
             setUSer(req.data.deposits);
             setPontoNome(req.data.deposits[0].point_name)
+            setPontoID(req.data.deposits[0].collectionPointId)
             setIsSearching(false)
             }
         }
@@ -133,7 +135,8 @@ const DepositoAdm = () => {
                 <img src="/Ondinhas.svg" className={styles.separador} />
             </div>
             <div className={styles.divPrincipal}>
-                <h1 id="TITLE" style={{textAlign: "center", marginBottom: "5%"}}>Ponto de coleta {pontoNome}</h1>
+                <h1 id="TITLE" style={{textAlign: "center"}}>Ponto de Coleta: {pontoNome}</h1>
+                <h2 style={{textAlign: "center", marginBottom: "5%", fontSize: "medium", color: "gray"}}>id: {pontoID}</h2>
                 <p>Registro de depósitos</p>
                 <form  onSubmit={(e) => {e.preventDefault(); searchDeposit(e.target.elements.search.value, true)}} style={{cursor: "pointer"}}  className={styles.retangulo}>
                     <img style={{paddingLeft: "2%"}} src="/SearchClient.png" alt="" />
@@ -153,9 +156,21 @@ const DepositoAdm = () => {
                                 <p className={styles.text}>Quantidade: {user.amountSponges}</p>
                                 </div>
                                 <div style={{ cursor: "pointer" }} className={styles.line}>
-                                <img src="/Picture.png" alt="Comprovante" />
-                                <p className={styles.text}>Clique para ver comprovante</p>
+
+                                {user.imageURL?
+                                <div style={{display: "flex", width: "100%", alignItems: "center"}}>
+                                    <img src="/Picture.png" alt="Comprovante" />
+                                    <a href={(`${user.imageURL}`)} className={styles.text}>Clique para ver comprovante</a>
                                 </div>
+                                :
+                                <>
+                                    <img src="/Picture.png" alt="Comprovante" />
+                                    <p className={styles.text}>Sem comprovante!</p>
+                                </>
+                                }
+
+                                </div>
+                                
                                 <div className={styles.buttons}>
                                 <div className={styles.valida}>
                                     <p onClick={() => {if (user.status === "APROVADO") return; else changeStatus(index, "APROVADO");}} className={styles.text}>

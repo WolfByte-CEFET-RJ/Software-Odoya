@@ -70,13 +70,12 @@ export default class CollectionPointController {
 
     
     public static async getGeocode(req: Request, res: Response, next: NextFunction) {
-        const { address } = req.query;
         const { id } = req.params;
 
-        const url = `https://nominatim.openstreetmap.org/search?q=${address?.toString()}&format=json`;
-
         try {
-            await CollectionPointService.getOneCollectionPoint(id);
+            const collection: CollectionPoint = await CollectionPointService.getOneCollectionPoint(id);
+
+            const url = `https://nominatim.openstreetmap.org/search?q=${collection.location}&format=json`;
 
             const response = await fetch(url, {
                 headers: {

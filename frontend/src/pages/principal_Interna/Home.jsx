@@ -217,18 +217,21 @@ function Home() {
                     timeZone: 'America/Sao_Paulo',
                   });
                   const hour = dado.created_at.split("T")[1]?.replace(/Z$/, '').substring(0, 5);
+                  const location = point.find((p) => p.id === dado.collectionPointId);
 
                   return (
                     <DonationCard
                       key={dado.id}
                       donate={true}
                       num={dado.amountSponges}
-                      place={dado.point_name}
+                      state={dado.status}
+                      place={location ? location.location : "Endereço não disponível"}
                       date={brasiliaDate}
                       hour={hour}
                     />
                   );
                 })}
+
               </>
             ) : (
               <p>Nenhuma doação encontrada.</p>

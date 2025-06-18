@@ -13,6 +13,14 @@ collectionPointRouter
     .get("/collectionPoints", AuthMiddleware.ensureAuthenticated, CollectionPointController.getAllCollectionPoint)
 
     /**
+     * @route GET /collectionPoint/geocode/:id
+     * @description Fornece os dados de um ponto de coleta
+     * @param {Number} id
+     * @returns { CollectionPoint }
+     */
+    .get("/collectionPoint/geocode/:id", AuthMiddleware.ensureAdmin, CollectionPointController.getGeocode)
+
+    /**
      * @route GET /collectionPoint/:id
      * @description Fornece os dados de um ponto de coleta
      * @param {Number} id
@@ -43,8 +51,7 @@ collectionPointRouter
      * @param {Number} id - ID do ponto de coleta
      * @returns { void }
      */
-    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint)
+    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint);
 
-    .get("/geocode/:id", AuthMiddleware.ensureAdmin, CollectionPointController.getGeocode);
 
 export default collectionPointRouter;
