@@ -8,9 +8,10 @@ const depositRouter = Router();
 
 depositRouter
     /**
-     * @route GET /deposits
+     * @route GET /deposits?page=xx&limit= xx
      * @description Retorna todos os depositos de um usuario
-     * @returns { Deposit[] } 
+     * @default (1,9) (página,itens)
+     * @returns { amount: number, totalPages: number, deposit: Deposit[] , collectionPoint_name } 
      */
     .get('/deposits', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
