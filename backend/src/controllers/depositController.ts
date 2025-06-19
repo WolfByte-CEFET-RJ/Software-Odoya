@@ -9,10 +9,15 @@ export default class DepositController{
 
     public static async getDeposit(req: Request, res: Response, next: NextFunction): Promise<any>{
         try {
-            const id = req.deposit?.id;
+            const id = req.user?.id
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 9;
 
-            const deposit = await DepositService.getDeposit(String(id));
-            return res.status(HttpCode.OK).json(deposit);
+            const data = await DepositService.getDeposit(page, limit,String(id));
+            const totalPages = Math.ceil(parseInt(data[0].total.toString(), 10) / limit);
+            const amount = data[0].total;
+            const deposits: any[] = data.map(({ total, ...deposit }) => deposit);
+            return res.status(HttpCode.OK).json({amount: amount, totalPages: totalPages, deposits});
         
         } catch(e: any){
             next(e);

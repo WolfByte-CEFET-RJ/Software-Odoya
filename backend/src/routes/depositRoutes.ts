@@ -8,20 +8,21 @@ const depositRouter = Router();
 
 depositRouter
     /**
-     * @route GET /deposits
+     * @route GET /deposits?page=xx&limit= xx
      * @description Retorna todos os depositos de um usuario
-     * @returns { Deposit[] } 
+     * @default (1,9) (página,itens)
+     * @returns { amount: number, totalPages: number, deposit: Deposit[] , collectionPoint_name } 
      */
     .get('/deposits', AuthMiddleware.ensureAuthenticated, DepositController.getDeposit)
 
     /**
-     * @route GET /deposits/adm:id?page=xx&limit=xx
-     * @description Retorna todos os depósitos e o número de págianas totais dado o id de um colection point 
+     * @route GET /deposits/adm:id?page=xx&limit= xx
+     * @description Retorna todos os depósitos, número de págianas totais e a quantidade de entradas dado o id de um colection point 
      * @default (1,9) (página,itens)
      * @param {string} id - ID do colection point 
      * @returns { amount: number, totalPages: number, deposit: Deposit[] } 
      */
-    .get("/deposits/adm:id", AuthMiddleware.ensureAdmin, DepositController.getAllDeposits)
+    .get("/deposits/adm:id", AuthMiddleware.authorizeRoot, DepositController.getAllDeposits)
     
     /**
      * @route GET /deposits/adm/search:id?page=xx&limit=xx&name=xx

@@ -85,15 +85,22 @@ export default class DepositService{
     /**
      * @description Busca um Deposito
      * @param {string} id
-     * @returns {Promise<Deposit>}
+     * @returns {< any []>}
      */
-    public static async getDeposit(id: string): Promise<Deposit> {    
-        const deposit: Deposit = await knex('Deposit')
-            .select('id', 'collectionPointId', 'userId', 'amountSponges', 'imageURL', 'status', 'created_at', 'updated_at').where({id}).first();
-        
-        if (!deposit) {
+    public static async getDeposit(page: number, limit: number,id: string,): Promise<any[]> {  
+        const offset = (page - 1) * limit;
+        const deposit = await knex('Deposit')
+            .join("Collection_point as cp", "Deposit.collectionPointId", "cp.id")
+            .select('Deposit.id', 'collectionPointId', 'cp.name as point_name' , 'Deposit.amountSponges', 'Deposit.imageURL', 'Deposit.status', 'Deposit.created_at', 'Deposit.updated_at' , knex.raw('COUNT(Deposit.id) OVER() as total'))
+            .orderBy([{ column: 'deposit.created_at', order: 'desc' }, { column: 'cp.name', order: 'asc' }])
+            .where('deposit.userId', id)
+            .limit(limit)
+            .offset(offset);
+
+        if (deposit.length === 0) {
             throw new DepositNotFoundError()
         }
+        
         return deposit;
     }
 
