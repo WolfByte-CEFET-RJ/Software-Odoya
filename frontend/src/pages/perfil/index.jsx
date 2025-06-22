@@ -49,11 +49,19 @@ const Perfil = () => {
         }
         catch (error) {
             console.log(error)
+            if(error.response){
+                    setLoad(false)
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
             
-            setTimeout(() => {
+            }else{
                 setLoad(false)
-                toast.error('Falha ao excluir conta');
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
+            }
+            
     }
     }
 
@@ -76,11 +84,18 @@ const Perfil = () => {
         }
         catch (error) {
             console.log(error)
+            if(error.response){
+                    setLoad(false)
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
             
-            setTimeout(() => {
+            }else{
                 setLoad(false)
-                toast.error('Falha ao alterar dados');
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
+            }
     }
     }
 

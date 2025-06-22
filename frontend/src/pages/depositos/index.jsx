@@ -62,8 +62,17 @@ const Depositos = () => {
                 })
             }
         } catch(error) {
+            
             console.log(error);
-            toast.error("Erro ao obter dados do ponto de coleta");
+            if(error.response){
+                setTimeout(()=>{
+                toast.error(error.response.data.message);
+                },1000);
+            }else{
+                setTimeout(()=>{
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+                },1000);
+            }
         }
     }
 
@@ -81,30 +90,27 @@ const Depositos = () => {
         try {
             
             let req = await api.post(`/deposit/${id}`, formData );
-            
+                console.log("aaaaa")
 
-                if(req.status == 200 || req.status == 201){
-                if(req.data.message == 'Deposito realizado'){
-                                    toast.success("Depósito registrado com sucesso!");
-                                setTimeout(() => {
-                                    
-                                    // mudar pra mandar o usuário de volta pra home user
-                     nav('/home');
-                 }, 2000)
-                 
+                if(req.status == 201){
+                    toast.success("Depósito registrado com sucesso!");
+                    setTimeout(() => {  
+                        nav('/home');
+                    }, 2000)
                 }
-                else{
-                    toast.warn(`${req.data.message}`)
-                }
-                }
-                else{
-                    toast.error(`Problemas de comunicação com o servidor: ${req.status}`)
-                }
-               
-                
         } catch(error) {
+            if(error.response){
+                setTimeout(()=>{
+                setLoad(false)
+                toast.error(error.response.data.message);
+            },1000);
+            }else{
+                setTimeout(()=>{
+                setLoad(false)
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+            },1000);
+            }
             
-            toast.error(`Erro ao registrar depósito: ${error}`);
         }
     }
 

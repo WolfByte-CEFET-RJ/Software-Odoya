@@ -95,7 +95,15 @@ const RH = () => {
             }
         } catch(error) {
             console.log(error);
-            toast.error("Erro ao obter dados dos usuários!")
+            if(error.response){
+                setTimeout(() => {
+                    toast.error(error.response.data.message);
+                }, 1000);
+                }else{
+                    setTimeout(() => {
+                        toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+                    }, 1000);
+                }
         }
     }
 

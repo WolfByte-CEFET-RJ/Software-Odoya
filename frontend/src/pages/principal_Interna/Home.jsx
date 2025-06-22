@@ -76,7 +76,23 @@ function Home() {
         setDonations(req.data);
       }
     } catch (err) {
-      toast.error(err);
+      console.log("estou aqui")
+      if(err.response){
+        if(err.response.status === 404){
+          setTimeout(() => {
+            toast.info("Você ainda não fez nenhum depósito. Que tal começar agora e ajudar o planeta 🌍 ♻️", { autoClose: 4000 });
+        }, 1000);
+        }else{
+          setTimeout(() => {
+            toast.error(err.response.data.message);
+        }, 1000);
+        }
+      }else{
+        setTimeout(() => {
+          toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+        }, 1000);
+      }
+      
     }
   }
 
@@ -85,9 +101,21 @@ function Home() {
       const req = await api.get('/collectionPoints');
       setPoint(req.data);
     } catch (error) {
-      setTimeout(() => {
-        toast.error('Falha ao buscar os pontos de coleta');
-      }, 1000);
+      if(error.response){
+        if(error.response.status === 404){
+          //se o usuario nao tiver dados de coleta ele não mostra nada no toast
+        }else{
+          setTimeout(() => {
+            toast.error(error.response.data.message);
+        }, 1000);
+        }
+        
+
+      }else{
+        setTimeout(() => {
+          toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+        }, 1000);
+      }
     }
   }
 

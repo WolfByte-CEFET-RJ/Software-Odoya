@@ -39,11 +39,17 @@ function Forgot(){
             }
             
         } catch (error) {
-            setTimeout(() => {
-                setLoad(false)
-                toast.error('Falha ao redefinir senha!'+error);
+            console.log(error)
+            if(error.response){
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
+            
+            }else{
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
-           
+            }
         }
     }
    

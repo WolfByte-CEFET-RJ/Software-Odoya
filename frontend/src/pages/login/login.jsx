@@ -16,7 +16,6 @@ import InputFormPassword from '../../components/inputFormPassword/inputFormPassw
 
 
 
-
 function Login(){
     
     const [user, setUser] = useState('')
@@ -52,12 +51,7 @@ function Login(){
         try {
             
             let res = await api.post("/login", userData);
-           
             if(res.data.token){
-                 setLoad(false)
-                toast.success('Bem vindo!');
-
-                
                 localStorage.setItem("token",res.data.token);
                 let req = await api.get('/user',  
                 {
@@ -65,35 +59,41 @@ function Login(){
                 }
                 
             )
+                setTimeout(()=>{
+                setLoad(false)
+                toast.success(`Bem Vindo ${req.data.name}!`);
+                },1000);
             
-                 if(req.data.admin == true){
-                 setTimeout(() => {
+                if(req.data.admin == true){
+                    setTimeout(() => {
                     navigate("/homeAdm")
-                    
-                 }, 2000);}
+                    }, 3000);}
                 
                 if(req.data.isRoot == true){
                 setTimeout(() => {
-                   navigate("/rh")
+                navigate("/rh")
                     
-                }, 2000);}
+                }, 3000);}
                 else{
                     setTimeout(() => {
-                   navigate("/home")
-                    
-                }, 2000);
+                navigate("/home")
+                
+                }, 3000);
                 }
                 
             }
         } catch (error) {
-            
-            
-            setTimeout(() => {
+            if(error.response){
+                setTimeout(()=>{
                 setLoad(false)
-                toast.error('Falha ao fazer login!');
-            }, 1000);
-            
-           
+                toast.error(error.response.data.message);
+            },1000);
+            }else{
+                setTimeout(()=>{
+                setLoad(false)
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+            },1000);
+            }
         }
     }
    
@@ -120,30 +120,34 @@ function Login(){
                 if(res.data.token){
                     setTimeout(() => {
                         setLoad(false)
-                        toast.success('Bem vindo!');
-                         
+                        toast.success(res.data.message);
                     }, 1000);
                     //getToken(res.data.token)
-                  localStorage.setItem("token",res.data.token);
-                   navigate("/home")
-                    
-                }}
+                localStorage.setItem("token",res.data.token);
+                navigate("/home")
+                
+                }
+            }
             catch (error) {
             toast.error(error)
-            
-            setTimeout(() => {
-                setLoad(false)
-                toast.error('Falha ao fazer login!!!');
-            }, 1000);
+            if(error.response){
+                setTimeout(() => {
+                    setLoad(false)
+                    toast.error(error.response.data.message);
+                }, 1000);
+            }
+            else{
+                setTimeout(() => {
+                    setLoad(false)
+                    toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+                }, 1000);
+
+            }
             
         
         }}
-
-                   
                 
                 
-                
-     
     } effect()}, [load, user2])
 
     return(

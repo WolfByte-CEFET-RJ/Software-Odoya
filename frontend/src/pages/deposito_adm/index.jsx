@@ -34,7 +34,7 @@ const DepositoAdm = () => {
     async function getDepositos() {
         try{
             let req = await api.get(`/deposit/adm/${id}?page=${paginaAtual}`)  
-                   
+            
             
             if(req.status == 200){
             setTotalPages(req.data.totalPages);
@@ -46,10 +46,23 @@ const DepositoAdm = () => {
         }
         catch (error) {
             console.log(error)
-            
-            setTimeout(() => {
-                toast.error('Falha ao recuperar as páginas de registro');
+
+            if(error.response){
+                if(error.response.status === 404){
+                    setTimeout(() => {
+                        toast.warning(error.response.data.message);
+                    }, 1000);
+                }else{
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
+            }
+            }else{
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
+            }
+            
     }
     }
 
@@ -68,14 +81,21 @@ const DepositoAdm = () => {
         }
         catch (error) {
             console.log(error)
+            if(error.response){
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
             
-            setTimeout(() => {
-                toast.error('Falha ao mudar o status');
+            }else{
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
+            }
+            
     }
     }
 
-   
+
 
     async function searchDeposit(name,isFirstSearch) {
         try{
