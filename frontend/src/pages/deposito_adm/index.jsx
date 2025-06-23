@@ -5,9 +5,9 @@ import { useState, useEffect} from "react";
 import api from '../../api'
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
-
+import { useConfirmation } from "../../components/ModalConfirmation/handleHook";
 const DepositoAdm = () => {
-    
+    const { confirm, ConfirmationModal } = useConfirmation();
     const loc = useLocation()
     const id = loc.state.idPoint
     
@@ -121,9 +121,9 @@ const DepositoAdm = () => {
     }
     }
 
-    function changeStatus(index,status){
+    async function changeStatus(index,status){
             let id = users[index].id
-            const confirmacao = window.confirm(`Você tem certeza que deseja alterar o status para ${status}?`);
+            const confirmacao = await confirm(`alterar o status para ${status}?`);
             if (!confirmacao){
                 return;
             }
@@ -192,8 +192,8 @@ const DepositoAdm = () => {
                                 </div>
                                 
                                 <div className={styles.buttons}>
-                                <div className={styles.valida}>
-                                    <p onClick={() => {if (user.status === "APROVADO") return; else changeStatus(index, "APROVADO");}} className={styles.text}>
+                                <div onClick={() => {if (user.status === "APROVADO") return; else changeStatus(index, "APROVADO");}} className={styles.valida}>
+                                    <p className={styles.text}>
                                         {user.status == "APROVADO"? 
                                         <div onClick={() => {if (user.status === "PENDENTE") return; else changeStatus(index, "PENDENTE");}} className={styles.pend}>
                                     <p className={styles.text}>
@@ -229,6 +229,7 @@ const DepositoAdm = () => {
 
 
             <Footer/>
+            <ConfirmationModal />
         </div>
     )
 
