@@ -160,7 +160,7 @@ const Perfil = () => {
                     <div className={perfil.divPoints}>
                         <p className={perfil.points}>0</p>
                         <div className={perfil.pointsInfo}>
-                            <MdInfo size={20}/>
+                            <MdInfo className={perfil.pointsInfoIcon} size={25}/>
                             <p>Faça depósitos de esponjas para conseguir mais pontos!</p>
                         </div>
                     </div>

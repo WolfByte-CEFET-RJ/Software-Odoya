@@ -1,3 +1,110 @@
+@media only screen and (max-width: 768px) {
+    .container {
+        h1 {
+            font-size: x-large;
+            position: relative;
+            bottom: 20dvh;
+        }
+
+        .logoazul {
+            width: 30%;
+            position: relative;
+            bottom: 12dvh;
+        }
+
+        .formProfile {
+            width: 80%;
+            position: relative;
+            bottom: 16dvh;
+        }
+
+        .formButtons {
+            margin: 15% 0 0 0;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .container {
+        h1 {
+            position: relative;
+            bottom: 30dvh;
+        }
+
+        .logoazul {
+            width: 35%;
+            position: relative;
+            bottom: 17dvh;
+        }
+
+        .formProfile {
+            position: relative;
+            bottom: 25dvh;
+        }
+
+        .formButtons {
+            position: relative;
+            top: 5dvh;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            
+            button {
+                width: 50%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .container {
+        h1 {
+            font-size: x-large;
+            line-height: 1.5;
+            position: relative;
+            bottom: 35dvh;
+        }
+
+        .logoazul {
+            width: 30%;
+            position: relative;
+            bottom: 18dvh;
+        }
+
+        .formProfile {
+            position: relative;
+            bottom: 35dvh;
+            font-size: small;
+        }
+
+        .formButtons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: -75%;
+
+            button {
+                width: 50%;
+            }
+        }
+
+        .divPoints {
+            .points {
+                width: 95%;
+            }
+
+            display: flex;
+            flex-direction: column;
+
+            .pointsInfoIcon {
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+}
+
 .container {
     margin-top: -4%;
     display: flex;
@@ -5,10 +112,11 @@
     align-items: center;
     background-color: #B1E3FA;
     font-family: 'Abel', sans-serif;
-    h1 {
     
-    font-family: 'Tankindred', sans-serif;
-}
+    h1 {
+        text-align: center;
+        font-family: 'Tankindred', sans-serif;
+    } 
 
     input {
         font-family: 'Abel', sans-serif;
@@ -23,7 +131,7 @@
     flex-direction: column;
     width: 50%;
     label {
-    margin: 2% 0% 0% 2%;
+    margin: 2% 0% 0% 0%;
     font-size: 18px;
 }
 }
