@@ -1,15 +1,30 @@
 @media only screen and (max-width: 1024px) {
     .container {
         h1 {
+            position: relative;
+            bottom: 15dvh;
             font-size: xx-large;
         }
 
         .formProfile {
+            position: relative;
+            bottom: 12dvh;
             width: 60%;
         }
 
-        .formButtons button {
-            width: 100%;
+        .formButtons  {
+            position: relative;
+            top: 5dvh;
+
+            button {
+                width: 100%;
+            }
+        }
+
+        .logoazul {
+            width: 30%;
+            position: relative;
+            bottom: 10dvh;
         }
     }
 }
