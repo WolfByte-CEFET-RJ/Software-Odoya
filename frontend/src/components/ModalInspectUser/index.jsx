@@ -143,8 +143,10 @@ const ModalInspectUser = ({user, closeModal}) => {
                     
                     <label>Nome completo</label>
                     <InputFormEdit onChange={(event) => handleChange(event, setUserName)} type="text" place={username} disable={lock}/>
+
                     <label>E-mail</label>
                     <InputFormEdit onChange={(event) => handleChange(event, setUserMail)} type="email" place={usermail} disable={lock}/>
+                    
 
                     <button className={modalInspect.buttonPromote} disabled={lock} onClick={() => loading('promote')}>Promover a Administrador</button>
                     <p>* Essa ação dará acesso a ações e dados sensíveis para este usuário.</p>
