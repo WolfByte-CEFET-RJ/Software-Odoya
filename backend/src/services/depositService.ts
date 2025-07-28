@@ -97,10 +97,10 @@ export default class DepositService{
     public static async getDeposit(page: number, limit: number,id: string,): Promise<any[]> {  
         const offset = (page - 1) * limit;
         const deposit = await knex('Deposit')
-            .join("Collection_point as cp", "Deposit.collectionPointId", "cp.id")
+            .join("Collection_Point as cp", "Deposit.collectionPointId", "cp.id")
             .select('Deposit.id', 'collectionPointId', 'cp.name as point_name' , 'Deposit.amountSponges', 'Deposit.imageURL', 'Deposit.status', 'Deposit.created_at', 'Deposit.updated_at' , knex.raw('COUNT(Deposit.id) OVER() as total'))
-            .orderBy([{ column: 'deposit.created_at', order: 'desc' }, { column: 'cp.name', order: 'asc' }])
-            .where('deposit.userId', id)
+            .orderBy([{ column: 'Deposit.created_at', order: 'desc' }, { column: 'cp.name', order: 'asc' }])
+            .where('Deposit.userId', id)
             .limit(limit)
             .offset(offset);
 
