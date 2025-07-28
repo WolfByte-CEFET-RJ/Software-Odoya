@@ -1,3 +1,156 @@
+@media only screen and (max-width: 1024px) {
+    .container {
+        h1 {
+            position: relative;
+            bottom: 15dvh;
+            font-size: xx-large;
+        }
+
+        .formProfile {
+            position: relative;
+            bottom: 12dvh;
+            width: 60%;
+        }
+
+        .formButtons  {
+            position: relative;
+            top: 5dvh;
+
+            button {
+                width: 100%;
+            }
+        }
+
+        .logoazul {
+            width: 30%;
+            position: relative;
+            bottom: 10dvh;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        h1 {
+            font-size: x-large;
+            position: relative;
+            bottom: 20dvh;
+        }
+
+        .logoazul {
+            width: 30%;
+            position: relative;
+            bottom: 12dvh;
+        }
+
+        .formProfile {
+            width: 80%;
+            position: relative;
+            bottom: 16dvh;
+        }
+
+        .formButtons {
+            margin: 15% 0 0 0;
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .container {
+        h1 {
+            position: relative;
+            bottom: 30dvh;
+            line-height: 1.5;
+        }
+
+        .logoazul {
+            width: 35%;
+            position: relative;
+            bottom: 17dvh;
+        }
+
+        .formProfile {
+            position: relative;
+            bottom: 25dvh;
+        }
+
+        .formButtons {
+            position: relative;
+            top: 5dvh;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            
+            button {
+                width: 50%;
+            }
+        }
+
+        .pointsInfoIcon {
+            padding-top: 3px;
+        }
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .container {
+        h1 {
+            font-size: x-large;
+            line-height: 1.5;
+            position: relative;
+            bottom: 35dvh;
+        }
+
+        .logoazul {
+            width: 30%;
+            position: relative;
+            bottom: 18dvh;
+        }
+
+        .formProfile {
+            position: relative;
+            bottom: 30dvh;
+            font-size: small;
+        }
+
+        .formButtons {
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            gap: 40px;
+            position: relative;
+            bottom: 40dvh;
+
+            button {
+                width: 50%;
+            }
+        }
+
+        .pointsInfoIcon {
+            padding-top: 2px;
+        }
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .container {
+        h1 {
+            font-size: medium;
+        }
+
+        .formProfile {
+            position: relative;
+            bottom: 35dvh;
+        }
+
+        .logoazul {
+            position: relative;
+            bottom: 19dvh;
+        }
+    }
+}
+
 .container {
     margin-top: -4%;
     display: flex;
@@ -5,10 +158,11 @@
     align-items: center;
     background-color: #B1E3FA;
     font-family: 'Abel', sans-serif;
-    h1 {
     
-    font-family: 'Tankindred', sans-serif;
-}
+    h1 {
+        text-align: center;
+        font-family: 'Tankindred', sans-serif;
+    } 
 
     input {
         font-family: 'Abel', sans-serif;
@@ -21,11 +175,13 @@
 .formProfile {
     display: flex;
     flex-direction: column;
+    margin-top: 2%;
     width: 50%;
+
     label {
-    margin: 2% 0% 0% 2%;
-    font-size: 18px;
-}
+        margin-top: auto;
+        font-size: 18px;
+    }
 }
 
 .divPoints {

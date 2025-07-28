@@ -37,9 +37,21 @@
     cursor: pointer;
 }
 
+@media only screen and (max-width: 1024px) {
+    .links {
+        gap: 2rem;
+    }
+
+    .link {
+        font-size: medium;
+    }
+}
+
 @media (max-width: 910px) {
     .menuButton {
         display: block;
+        position: relative;
+        left: 6dvw;
     }
 
     .links {
@@ -60,6 +72,7 @@
         // Garante que não mostre quando fechado
         opacity: 0;
         visibility: hidden;
+        display: none;
         pointer-events: none;
     }
 
@@ -68,6 +81,7 @@
         opacity: 1;
         visibility: visible;
         pointer-events: auto;
+        display: flex;
     }
 
 }

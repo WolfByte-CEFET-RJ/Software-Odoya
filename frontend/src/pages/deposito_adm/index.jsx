@@ -5,9 +5,9 @@ import { useState, useEffect} from "react";
 import api from '../../api'
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
-
+import { useConfirmation } from "../../components/ModalConfirmation/handleHook";
 const DepositoAdm = () => {
-    
+    const { confirm, ConfirmationModal } = useConfirmation();
     const loc = useLocation()
     const id = loc.state.idPoint
     
@@ -34,7 +34,7 @@ const DepositoAdm = () => {
     async function getDepositos() {
         try{
             let req = await api.get(`/deposit/adm/${id}?page=${paginaAtual}`)  
-                   
+            
             
             if(req.status == 200){
             setTotalPages(req.data.totalPages);
@@ -46,10 +46,23 @@ const DepositoAdm = () => {
         }
         catch (error) {
             console.log(error)
-            
-            setTimeout(() => {
-                toast.error('Falha ao recuperar as páginas de registro');
+
+            if(error.response){
+                if(error.response.status === 404){
+                    setTimeout(() => {
+                        toast.warning(error.response.data.message);
+                    }, 1000);
+                }else{
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
+            }
+            }else{
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
+            }
+            
     }
     }
 
@@ -68,14 +81,21 @@ const DepositoAdm = () => {
         }
         catch (error) {
             console.log(error)
+            if(error.response){
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
             
-            setTimeout(() => {
-                toast.error('Falha ao mudar o status');
+            }else{
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
+            }
+            
     }
     }
 
-   
+
 
     async function searchDeposit(name,isFirstSearch) {
         try{
@@ -101,9 +121,9 @@ const DepositoAdm = () => {
     }
     }
 
-    function changeStatus(index,status){
+    async function changeStatus(index,status){
             let id = users[index].id
-            const confirmacao = window.confirm(`Você tem certeza que deseja alterar o status para ${status}?`);
+            const confirmacao = await confirm(`alterar o status para ${status}?`);
             if (!confirmacao){
                 return;
             }
@@ -172,8 +192,8 @@ const DepositoAdm = () => {
                                 </div>
                                 
                                 <div className={styles.buttons}>
-                                <div className={styles.valida}>
-                                    <p onClick={() => {if (user.status === "APROVADO") return; else changeStatus(index, "APROVADO");}} className={styles.text}>
+                                <div onClick={() => {if (user.status === "APROVADO") return; else changeStatus(index, "APROVADO");}} className={styles.valida}>
+                                    <p className={styles.text}>
                                         {user.status == "APROVADO"? 
                                         <div onClick={() => {if (user.status === "PENDENTE") return; else changeStatus(index, "PENDENTE");}} className={styles.pend}>
                                     <p className={styles.text}>
@@ -209,6 +229,7 @@ const DepositoAdm = () => {
 
 
             <Footer/>
+            <ConfirmationModal />
         </div>
     )
 

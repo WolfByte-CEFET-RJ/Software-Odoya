@@ -27,14 +27,19 @@ const HomeAdm = () => {
     async function getCollectionPoints() {
         try {
             let res = await api.get("/collectionPoints");
-           if( res.status === 200){
-            console.log(res.data)
+            if( res.status === 200){
             setPontos(res.data);}
         } catch(error) {
             console.log(error);
-            setTimeout(() => {
-                toast.error("Erro ao coletar dados dos pontos de coleta!")
-            }, 2000)
+            if(error.response){
+                setTimeout(() => {
+                    toast.error(error.response.data.message);
+                }, 1000);
+                }else{
+                    setTimeout(() => {
+                        toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+                    }, 1000);
+                }
         }
     }
 

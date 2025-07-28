@@ -46,10 +46,18 @@ function Cadastro(){
                 navigate("/login")  
             }
         }catch(e){
-            setTimeout(()=>{
+            if(e.response){
+                setTimeout(()=>{
                 setLoad(false)
                 toast.error(e.response.data.message);
             },1000);
+            }else{
+                setTimeout(()=>{
+                setLoad(false)
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+            },1000);
+            }
+            
         }
     }
     
