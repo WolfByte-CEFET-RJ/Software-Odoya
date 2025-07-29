@@ -9,11 +9,13 @@ import { UserContext } from "../Context/userContext";
 import { FaLeaf } from "react-icons/fa";
 import MetricsModal from "../MetricsModal"
 import { FaGear } from "react-icons/fa6";
+import { useConfirmation } from "../ModalConfirmation/handleHook";
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showMetrics, setShowMetrics] = useState(false);
+    const { confirm, ConfirmationModal } = useConfirmation()
     
     const {admin, logout, token, root, client} = useContext(UserContext)
     
@@ -23,8 +25,11 @@ const Header = () => {
         }
     },[client, token])
     
-    const handleLogout = () => {
-        logout(); 
+    const handleLogout = async () => {
+        const confirmed = await confirm("sair")
+        if(confirmed){
+            logout(); 
+        }
     };
 
     return (
@@ -103,7 +108,8 @@ const Header = () => {
         </header>
 
         <MetricsModal open={showMetrics} onClose={() => setShowMetrics(false)} />
-
+        
+        <ConfirmationModal />
         </>
         
     );

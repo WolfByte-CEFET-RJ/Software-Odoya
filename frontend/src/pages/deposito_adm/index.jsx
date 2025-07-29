@@ -6,6 +6,8 @@ import api from '../../api'
 import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import { useConfirmation } from "../../components/ModalConfirmation/handleHook";
+import ImageModal from "../../components/ImageModal/ImageModal"
+
 const DepositoAdm = () => {
     const { confirm, ConfirmationModal } = useConfirmation();
     const loc = useLocation()
@@ -19,6 +21,8 @@ const DepositoAdm = () => {
     const [totalPages, setTotalPages] = useState('0');
     const [isSearching, setIsSearching] = useState(false);
     const [name, setName] = useState('');
+
+    const [modalImage, setModalImage] = useState(null);
     
 
     useEffect(() => {
@@ -180,7 +184,13 @@ const DepositoAdm = () => {
                                 {user.imageURL?
                                 <div style={{display: "flex", width: "100%", alignItems: "center"}}>
                                     <img src="/Picture.png" alt="Comprovante" />
-                                    <a href={(`${user.imageURL}`)} className={styles.text}>Clique para ver comprovante</a>
+<p 
+  className={styles.text}
+  style={{ textDecoration: "underline" }}
+  onClick={() => setModalImage(user.imageURL)}
+>
+  Clique para ver comprovante
+</p>
                                 </div>
                                 :
                                 <>
@@ -221,7 +231,7 @@ const DepositoAdm = () => {
                         <img onClick={() => goBack()} style={{cursor: "pointer"}} src="/ChevronRight.png" alt="" />
                         <p style={{color: "black", margin: "0px"}}>{paginaAtual.toString().padStart(2,'0')}/{totalPages.toString().padStart(2,'0')}</p>
                         <img onClick={() => goUp()} style={{transform: "rotate(180deg)", cursor: "pointer"}}  src="/ChevronRight.png" alt="" />
-                    </div>
+                    </div> 
 
                 </div>
                 
@@ -230,6 +240,15 @@ const DepositoAdm = () => {
 
             <Footer/>
             <ConfirmationModal />
+            {modalImage && (
+                <ImageModal 
+                    src={modalImage}
+                    alt="Comprovante"
+                    isOpen={!!modalImage}
+                    onClose={() => setModalImage(null)}
+                />
+                )}
+
         </div>
     )
 

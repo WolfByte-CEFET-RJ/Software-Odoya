@@ -110,6 +110,7 @@
 
 .accountInfoDescription {
     display: flex;
+    z-index: -1;
 }
 
 .accountInfoIcon {
@@ -213,20 +214,9 @@ button:hover {
         font-size: large;
     }
 
-    .accountInfo {
-        h1, p {
-            position: relative;
-            right: 8dvw;
-        }
-
-        .accountInfoIcon {
-            position: relative;
-            bottom: 4dvh;
-        }
-    }
 }
 
-@media only screen and (max-width: 425px) {
+@media only screen and (max-width: 625px) {
     .title {
         padding: 10%;
     }
@@ -244,7 +234,7 @@ button:hover {
 
     .inputSearchUser {
         width: 90%;
-        margin-bottom: 15%;
+        margin-bottom: 10%;
     }
 
     .iconSearchUser {

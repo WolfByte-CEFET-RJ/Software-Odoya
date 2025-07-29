@@ -54,6 +54,7 @@
           color: #333;
         }
       }
+
     }
 
     .modal-body {
@@ -73,6 +74,9 @@
       .metric-input, .partner-input {
         margin-bottom: 15px;
         flex: 0 1 45%;
+        @media (max-width: 768px) {
+          font-size: 2rem; 
+        }
 
         label {
           display: flex;
@@ -141,6 +145,11 @@
 
         }
 
+        .add-partner-btn:hover{
+          background-color: #444;
+          color: white;
+        }
+
         .partner-group {
           display: flex;
           gap: 20px;
@@ -148,6 +157,12 @@
           padding: 15px;
           border-radius: 4px;
           margin-bottom: 15px;
+          flex-wrap: wrap; // permite quebrar linha
+
+          @media (max-width: 768px) {
+              flex-direction: column;
+              gap: 10px;
+            }
 
           .remove-partner-btn {
             width: 5%;
@@ -160,6 +175,11 @@
             cursor: pointer;
             padding: 5px;
             font-size: 0.9rem;
+
+             @media (max-width: 768px) {
+              top:30%
+            }
+
 
             &:hover {
               color: #a71d2a;
@@ -184,7 +204,7 @@
         gap: 8px;
         background-color: #195D39;
         color: white;
-        width: 25%;
+        width: 50%;
         justify-content: center;
         border: none;
         padding: 10px 20px;

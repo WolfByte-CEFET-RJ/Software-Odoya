@@ -1,11 +1,17 @@
 #nao{
     background: #8b99a8;
+    width: 30%;
+    }
 
+#sim{
+    width: 30%;
     }
 
 .botoes{
 display: flex;
-justify-content: flex-end;
+justify-content: flex-start;
+width: 100%;
+gap: 5%
 
 }
 .pergunta{
@@ -27,7 +33,7 @@ align-items: center;
 justify-content: center;
 z-index: 1000;
 
-.modal-atualizar {
+.modal-atualizar-c {
 background: #B1E3FA;
 padding: 2rem;
 border-radius: 12px;

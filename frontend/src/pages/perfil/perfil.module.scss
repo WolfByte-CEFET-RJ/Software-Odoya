@@ -24,7 +24,7 @@
         .logoazul {
             width: 30%;
             position: relative;
-            bottom: 10dvh;
+            bottom: 8dvh;
         }
     }
 }
@@ -40,7 +40,7 @@
         .logoazul {
             width: 30%;
             position: relative;
-            bottom: 12dvh;
+            bottom: 18dvh;
         }
 
         .formProfile {
@@ -49,30 +49,39 @@
             bottom: 16dvh;
         }
 
-        .formButtons {
-            margin: 15% 0 0 0;
-            width: 100%;
+ .formButtons {
+            position: relative;
+            top: 0dvh;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            
+            button {
+                width: 70%;
+            }
         }
     }
 }
 
 @media only screen and (max-width: 425px) {
     .container {
+
+        height: 10%;
         h1 {
             position: relative;
-            bottom: 30dvh;
+            bottom: 35dvh;
             line-height: 1.5;
         }
 
         .logoazul {
             width: 35%;
             position: relative;
-            bottom: 17dvh;
+            bottom: 20dvh;
         }
 
         .formProfile {
             position: relative;
-            bottom: 25dvh;
+            bottom: 26dvh;
         }
 
         .formButtons {
@@ -83,70 +92,12 @@
             gap: 50px;
             
             button {
-                width: 50%;
+                width: 70%;
             }
         }
 
         .pointsInfoIcon {
             padding-top: 3px;
-        }
-    }
-}
-
-@media only screen and (max-width: 375px) {
-    .container {
-        h1 {
-            font-size: x-large;
-            line-height: 1.5;
-            position: relative;
-            bottom: 35dvh;
-        }
-
-        .logoazul {
-            width: 30%;
-            position: relative;
-            bottom: 18dvh;
-        }
-
-        .formProfile {
-            position: relative;
-            bottom: 30dvh;
-            font-size: small;
-        }
-
-        .formButtons {
-            display: flex;
-            flex-direction: column;
-            margin: auto;
-            gap: 40px;
-            position: relative;
-            bottom: 40dvh;
-
-            button {
-                width: 50%;
-            }
-        }
-
-        .pointsInfoIcon {
-            padding-top: 2px;
-        }
-    }
-}
-
-@media only screen and (max-width: 320px) {
-    .container {
-        h1 {
-            font-size: medium;
-        }
-
-        .formProfile {
-            position: relative;
-            bottom: 35dvh;
-        }
-
-        .logoazul {
-            position: relative;
-            bottom: 19dvh;
         }
     }
 }

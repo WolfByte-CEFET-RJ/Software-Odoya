@@ -200,14 +200,15 @@ export default class UserService {
             throw new MissinngDataError("Usuário não informado")
         }
 
-       const linesAffected = await knex("User").where({id: id}).del();
+        const user = await UserService.getUser(id);
+        if(user.email === process.env.ROOT_EMAIL){
+            throw new RootUserModificationError("Usuário root não pode ter seus dados cadastrais atualizados");
+        } 
 
-       if(linesAffected > 0){
+        await knex("User").where({id: id}).del();
+
         return "Usuario deletado com sucesso";
-       } else {
-        throw new UserNotFound();
-       }
-       
+
     }
 
     public static async forgotPassword(email: string) {

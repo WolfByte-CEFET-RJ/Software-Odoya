@@ -70,7 +70,7 @@ function Cadastro(){
                     <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                     <div className="div_formulario_cadastro">
                         <InputForm type='text' onChange={(event) => handleChange(event, setName)} placeholder='Nome'/>
-                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
+                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Email"/>
                         <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
                         <InputFormPassword onChange={(event) => handleChange(event, setConfirmPass)} placeholder="Confirmar Senha"/>
                         

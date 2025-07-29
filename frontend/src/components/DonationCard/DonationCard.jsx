@@ -4,16 +4,19 @@ import { BiSolidDonateHeart } from "react-icons/bi";
 import { FaCalendarDays } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { MdAccessTimeFilled, MdLocationOn } from "react-icons/md";
+import { MdAccessTimeFilled, MdCamera, MdLocationOn } from "react-icons/md";
 import UpdatePointModal from "../../components/Modals/UpdatePointModal.jsx";
 import { useNavigate } from 'react-router-dom';
 import api from '../../api.js';
 import { FaFlag } from 'react-icons/fa';
+import ImageModal from '../ImageModal/ImageModal.jsx';
 
 function DonationCard(props) {
     const [load, setLoad] = useState(false);
     const [isModalUpdatePointOpen, setModalUpdatePoint] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
 
     const nav = useNavigate();
 
@@ -69,19 +72,51 @@ function DonationCard(props) {
         toast.dismiss();
     }
     }, [load]);
-
     return (
     <>
         {props.donate ? (
-            <div className={cardStyle.container}>
+            <div style={{cursor: "auto"}} className={`${cardStyle.container} ${
+                props.state === 'REPROVADO'
+                ? cardStyle.rejected
+                : props.state === 'APROVADO'
+                ? cardStyle.approved
+                : ''
+            }`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                {isHovered && (
+                    <h3 className="tooltip-text">
+                    Concede {(props.image?2:1)*parseInt(props.num)} pontos quando aprovado
+                    </h3>
+                )}
                 <h1 className={cardStyle.titulo}>{props.num} esponjas</h1>
                 <div className={cardStyle.info}>
                 <span className={cardStyle.infoSpan}><MdLocationOn className={cardStyle.icon} /> {props.place}</span>
                 <span className={cardStyle.infoSpan}><FaCalendarDays className={cardStyle.icon} /> {props.date}</span>
                 <span className={cardStyle.infoSpan}><MdAccessTimeFilled className={cardStyle.icon} /> {props.hour}</span>
                 <span className={cardStyle.infoSpan}><FaFlag className={cardStyle.icon} /> {props.state}</span>
+                <span className={cardStyle.infoSpan}>
+                    <MdCamera className={cardStyle.icon} />
+                    {props.image ? (
+                    <span
+                        onClick={() => setShowModal(true)}
+                        style={{ color: "black", cursor: "pointer", textDecoration: "underline" }}
+                    >
+                        Ver comprovante
+                    </span>
+                    ) : (
+                    <span>Sem comprovante!</span>
+                    )}
+
+                </span>
             </div>
             <BiSolidDonateHeart className={cardStyle.iconCard} />
+
+            <ImageModal 
+            src={props.image} 
+            alt="Comprovante" 
+            isOpen={showModal} 
+            onClose={() => setShowModal(false)} 
+            />
+
         </div>
         ) : (
         props.open ? (
@@ -95,29 +130,43 @@ function DonationCard(props) {
                 <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
                 <div className={cardStyle.infoPonto}>
                 <span className={cardStyle.infoSpan}>{props.place}</span>
-                <span className={cardStyle.infoSpan}>Situação: {props.state ? "inativo" : "ativo"}</span>
+                <span className={cardStyle.infoSpan}>Situação: <strong>{props.state ? "Inativo" : "Ativo"}</strong></span>
                 </div>
             </div>
             <button onClick={handleDepo}>Depositar aqui</button>
             </div>
         ) : (
-            <div onClick={handleEdit} className={cardStyle.container}>
+            <div  style={{paddingBottom:10}} onClick={handleEdit} className={cardStyle.container} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+
+            {isHovered && (
+                <h3 className="tooltip-text">
+                    Clique para ver mais
+                </h3>
+            )}
+
             <h1 className={`${cardStyle.titulo} ${cardStyle.ponto}`}>{props.nome}</h1>
             <div className={cardStyle.infoPonto}>
                 <span className={cardStyle.infoSpan}>{props.place}</span>
-                <span className={cardStyle.infoSpan}>Situação: {props.state ? "inativo" : "ativo"}</span>
+                <span className={cardStyle.infoSpan}>Situação: <strong>{props.state ? "Inativo" : "Ativo"}</strong></span>
             </div>
             </div>
         )
         )}
+        {console.log(props)}
         <UpdatePointModal
-        open={isModalUpdatePointOpen}
-        onClose={() => setModalUpdatePoint(false)}
-        name={props.nome}
-        address={props.place}
-        idPoint={props.id}
-        amount={props.num}
+            open={isModalUpdatePointOpen}
+            onClose={() => setModalUpdatePoint(false)}
+            name={props.nome}
+            address={props.place}
+            idPoint={props.id}
+            amount={props.amount}
+            capacity={props.capacitySponges}
+            lastCollectionDate={props.lastCollectionDate}
+            nextCollectionDate={props.nextCollectionDate}
+            isInactive={props.state}
         />
+
+        
     </>
     );
 }

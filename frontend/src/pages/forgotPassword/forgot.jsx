@@ -71,7 +71,9 @@ function Forgot(){
                         <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                         <div className="div_forms_login">
 
+                            <p>
                             Vamos enviar instruções para seu email
+                            </p>
 
                             <InputForm type='email' off={disable} onChange={(event) => handleChange(event, setEmail)} placeholder="Email"/>
                             

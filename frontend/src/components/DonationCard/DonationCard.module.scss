@@ -1,8 +1,11 @@
 .container{
     width: 242px;
+    min-width: 242px;
     height: calc(fit-content + 20%);
+    max-height: 350px;
+
     position: relative;
-    padding: 2% 0;
+    padding-bottom: 10%;
     
     background-color: #00B8F1;
     border-radius: 10px;
@@ -81,6 +84,7 @@ h3::after {
         justify-content: flex-start;
         margin-left: 20px;
         margin-top: 2%;
+        min-height: 100px;
         .infoSpan{
             font-family: 'Abel', sans-serif;
             color: rgb(0, 0, 0);
@@ -119,15 +123,21 @@ h3::after {
     font-weight: 550;
     font-family: 'Abel', sans-serif;
     color: rgb(0, 0, 0);
+    font-weight: 600;
 
 }
 .ponto{
     text-align:start;
     margin-left: 20px;
 }
-.container:hover{
-    cursor: pointer;
- 
+
+.approved {
+  filter: brightness(0.8);
+}
+
+.rejected {
+  background-color: blanchedalmond;
+  border: 1px solid #d60000;
 }
 
 .logoazul{
@@ -150,6 +160,9 @@ h3::after {
     animation: rotacionar 1s linear infinite;
 }
 
+.container:hover{
+    cursor: pointer;
+}
 
 @keyframes rotacionar{
     from {
@@ -162,14 +175,12 @@ h3::after {
 
 @media(max-width: 590px){
     .container{
-        width: 170px;
-        height: 187px;
+
         .info{
             margin-left: 10px;
     
             .infoSpan{
                 gap: .6rem;
-                font-size: 0.9rem;
                 margin: 7.5px 0px;
             }
         }
@@ -179,13 +190,12 @@ h3::after {
     
             .infoSpan{
                 gap: .6rem;
-                font-size: 0.9rem;
                 margin: 7.5px 0px;
             }
         }
         .iconCard{
             font-size: 50px;
-            left: 100px;
+            left: 180px;
             bottom: 30px;
         }
     }

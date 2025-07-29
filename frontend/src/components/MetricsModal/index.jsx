@@ -94,7 +94,7 @@ const ExtensionMetricsModal = ({ open, onClose }) => {
           </button>
         </div>
 
-        <div className="modal-body">
+        <div style={{paddingTop: 0}} className="modal-body">
 
           <div className="metric-group">
 

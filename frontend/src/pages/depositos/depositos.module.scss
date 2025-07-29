@@ -31,7 +31,7 @@
     border-radius: 5px;
     color: black;
     background-color: #8cc6e8;
-    width: 15%;
+    width: 40%;
 }
 
 .btnRegisterDeposit, .pointFullError {
@@ -128,4 +128,47 @@
     background-color: #8cc6e8;
     margin-left: auto;
     margin-top: 2%;
+}
+
+@media (max-width: 768px) {
+  .modalBody {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .modalInputSpongeAmount {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .modalLabelInputImage {
+    width: 100%;
+    height: 20dvh;
+    font-size: 0.9rem;
+  }
+
+  .modalImagePreviewContainer {
+    width: 100%;
+
+    img {
+      max-width: 80%;
+    }
+
+    button {
+      font-size: 0.9rem;
+      padding: 2%;
+    }
+  }
+
+  .modalSubmit {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .modalForm label,
+  .modalImagePreviewContainer p {
+    font-size: 1rem;
+    text-align: center;
+  }
 }

@@ -32,7 +32,7 @@ export function useConfirmation() {
     const ConfirmationModal = () => (
         <ModalConfirmation
         open={modalConfig.open}
-        texto={modalConfig.texto}
+        finalText={modalConfig.texto}
         onConfirm={yes}
         onClose={no}
         />

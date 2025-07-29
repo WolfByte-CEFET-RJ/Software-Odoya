@@ -7,7 +7,7 @@ function ModalConfirmation({open, onClose, onConfirm, finalText}) {
     if(open){
         return (
         <div className="modal-backdrop">
-            <div className="modal-atualizar">
+            <div className="modal-atualizar-c">
             <button onClick={onClose} className="close-btn">×</button>
             <div className="pergunta">
                 <label>Você deseja realmente {finalText}?</label>

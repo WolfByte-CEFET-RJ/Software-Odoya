@@ -90,7 +90,6 @@ const Depositos = () => {
         try {
             
             let req = await api.post(`/deposit/${id}`, formData );
-                console.log("aaaaa")
 
                 if(req.status == 201){
                     toast.success("Depósito registrado com sucesso!");
@@ -101,12 +100,10 @@ const Depositos = () => {
         } catch(error) {
             if(error.response){
                 setTimeout(()=>{
-                setLoad(false)
                 toast.error(error.response.data.message);
             },1000);
             }else{
                 setTimeout(()=>{
-                setLoad(false)
                 toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             },1000);
             }
@@ -122,7 +119,7 @@ const Depositos = () => {
         <>
         <Header/>
         <div className={depositos.body}>
-            <h1>Ponto de coleta: {pointData.name}</h1>
+            <h1>Ponto de Coleta: {pointData.name}</h1>
             <section className={depositos.infoSection}>
                 <div>
                     <p>Este ponto de coleta está localizado em {pointData.location}.</p>
@@ -158,7 +155,7 @@ const Depositos = () => {
                         ) : (
                             <div>
                                 <label htmlFor="inputImage" className={depositos.modalLabelInputImage}>Insira sua imagem aqui!</label>
-                                <input className={depositos.modalInputImage} type="file" id="inputImage" accept="image/*" onChange={(event) => handleImageUpload(event)}></input>
+                                <input className={depositos.modalInputImage} type="file" id="inputImage" accept="image/*" capture="environment" onChange={(event) => handleImageUpload(event)}></input>
                             </div>
                         )}
 

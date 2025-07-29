@@ -100,7 +100,6 @@
             transform: scale(1.1);
         }
         .opcao1-escolha{
-            margin-right: 10%;
             background-color: #00B8F1;
             @media (max-width: 768px){
                 background-color: #00B8F1;
@@ -120,6 +119,29 @@
 
 }
 
+.ver-mais-wrapper {
+  display: flex;
+  justify-content: start;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.ver-mais-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ver-mais-btn:hover {
+  background-color: black
+}
+
+
 .sectionCards{
     display: flex;
     flex-direction: column;
@@ -130,6 +152,7 @@
     margin-bottom: 10%;
     font-size: 1.2rem;
     padding: 0 5% 0 5%;
+    height: 100%;
     .sectionCards-titulo{
         margin-top: 3%;
         margin-bottom: 3%;
