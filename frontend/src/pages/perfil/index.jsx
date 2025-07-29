@@ -25,7 +25,6 @@ const Perfil = () => {
     const [email, setEmail] = useState('')
 
     const {client, mail} = useContext(UserContext)
-    console.log(client, mail)
     
     const handleChange = (event, setText) => {
         setText(event.target.value);
