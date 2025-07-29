@@ -1,35 +1,28 @@
-// Defina suas variáveis de cor e fontes aqui, se ainda não o fez
-// Exemplo:
-// $primary-color: #269BDF;
-// $secondary-color: #114C6D;
-// $tertiary-color: #f0f0f0;
-// $quaternary-color: #333;
 
-// --- Estilos Globais e Padrões (Base / Desktop First) ---
-// Definir font-size no HTML para usar 'rem' de forma eficaz
 html {
-  font-size: 16px; // 1rem = 16px. Ajuste conforme sua necessidade base.
+  font-size: 16px;
 }
 
 body {
-  width: 100vw; // Garante que o body ocupe a largura total da viewport
-  font-size: 1rem; // Tamanho de fonte padrão para desktop
-  margin: 0; // Remova margens padrão do body
-  padding: 0; // Remova paddings padrão do body
-  overflow-x: hidden; // Previne scroll horizontal em excesso
+  width: 100vw;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 .container{
     .banner {
-width: 100vw;
+      width: 100vw;
+    }
 }
 
+  .separador{
+      width:100%;
+      margin-top:-3%;
+  }
 
-}
-
-
-.secao,
-.secao2 {
+.secao, .secao2 {
   display: flex;
   justify-content: center;
   margin-top: -4%;
@@ -53,6 +46,7 @@ width: 100vw;
     flex-direction: row;
     gap: 10rem;
     align-items: center;
+    justify-content: center;
   }
 
   p {
@@ -76,6 +70,10 @@ width: 100vw;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+  }
+
+  .subtitulo svg {
+    margin-top: -18px;
   }
 
   .botao_container {
@@ -111,6 +109,7 @@ width: 100vw;
     border: 4px solid var(--primary-color);
     border-radius: 10px;
     margin-bottom: 5rem;
+    width: 65%;
   }
 }
 
@@ -121,10 +120,18 @@ width: 100vw;
     display: flex;
     align-items: baseline;
     justify-content: center;
-    gap: 8rem; // Gap padrão para desktop
+
+    .cardAlign {
+      display: flex;
+      flex-direction: column; /* Faz os itens ficarem um embaixo do outro */
+      align-items: center;     /* Alinha horizontalmente */
+      justify-content: center; /* Alinha verticalmente */
+      width: 50%;
+    }
 
     .card {
       margin: 1rem 5rem 7rem 5rem;
+      width: 70%;
       display: flex; // Alterado para flex para melhor controle
       flex-direction: column; // Conteúdo do card em coluna
       align-items: center; // Centraliza itens dentro do card
@@ -147,23 +154,31 @@ width: 100vw;
 
       .icone_olho {
         // Pode ter ajustes específicos para este ícone se necessário
-        margin: -7rem 0 2rem 0; // Exemplo de ajuste mais simples para o olho
+        margin: -3rem 0 9rem 0; // Exemplo de ajuste mais simples para o olho
       }
 
       h2 {
         color: var(--quaternary-color);
       }
     }
+.valores {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
 
-    .valores {
-      display: flex;
-      position: relative;
-      top: 5%;
-      gap: 20%;
-      align-items: center;
-      justify-content: baseline;
-      margin-top: 5%;
-    }
+.val {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 150px;
+  height: 150px;
+}
+
+
   }
 }
 
@@ -200,6 +215,7 @@ width: 100vw;
 
   .line {
     display: flex;
+    flex-direction: column;
     width: 100%; // Ajuste para ocupar a largura total
     justify-content: center; // Centraliza o conteúdo da linha
   }
@@ -234,14 +250,24 @@ width: 100vw;
   .partedebaixo {
     display: flex;
     flex-direction: row; // Padrão desktop: lado a lado
-    width: 90%; // Largura do container para desktop
+    width: 100%; // Largura do container para desktop
     justify-content: space-around;
     align-items: flex-start; // Alinha no topo
     margin-top: 1.5%;
   }
 
+    .partedecima {
+    display: flex;
+    flex-direction: row; // Padrão desktop: lado a lado
+    width: 100%; // Largura do container para desktop
+    justify-content: center;
+    align-items: center; // Alinha no topo
+    margin-top: 3%;
+  }
+
   .healthIssues {
-    width: 45%; // Ocupa metade da largura na área de desktop
+    width: 100%; // Ocupa metade da largura na área de desktop
+    padding: 0;
     position: relative;
     left: 0; // Remova left: -20% para desktop
     display: flex;
@@ -253,6 +279,7 @@ width: 100vw;
       display: flex;
       justify-content: center;
       text-align: center;
+      width: 100%;
       flex-wrap: wrap; // Permite que os cards quebrem a linha
     }
     .cards {
@@ -276,6 +303,7 @@ width: 100vw;
     border-radius: 1rem;
     width: 45%; // Ocupa metade da largura na área de desktop
     margin: 0; // Remove margem fixa para desktop
+    
   }
 
   .imagem {
@@ -297,12 +325,13 @@ width: 100vw;
   .setas {
     display: flex;
     justify-content: space-between;
-    width: 80%; // Controla a largura das setas
+    width: 20%; // Controla a largura das setas
     background: none;
     border: none;
     outline: none;
     transition: color 0.3s ease;
     padding: 0;
+    margin: 0;
     margin-top: 1rem; // Ajusta a margem para desktop
 
     &:hover {
@@ -319,15 +348,15 @@ width: 100vw;
   .resultados {
     display: flex;
     justify-content: center;
-    gap: 15%;
     margin-top: 5%;
     margin-bottom: 5%;
   }
 
   .resultados2 {
     display: grid;
-    justify-content: center;
+    justify-content: start;
     gap: 1rem;
+    width: 40%;
   }
 
   .titulo {
@@ -405,24 +434,18 @@ p {
 }
 
 
-
-
-
-
 // --- Para Telas de até 1024px (Tablets e Laptops menores) ---
 @media screen and (max-width: 1024px) {
   body {
-    font-size: 90%; // Reduz o tamanho da fonte base
+    font-size: 90%;
   }
 
+  .separador{
+      width:100%;
+      margin-top:-4%;
+  }
 
-    .separador{
-        width:100%;
-        margin-top:-8%;
-    }
-
-  .secao,
-  .secao2 {
+  .secao, .secao2 {
     padding: 0 3%; // Reduz o padding lateral
     .titulo {
       font-size: 1.7rem;
@@ -450,6 +473,10 @@ p {
         .icone_olho {
           width: 10rem; // Reduz o tamanho dos ícones
           margin: -3rem 0 1rem 0; // Ajusta a margem para telas menores
+        }
+
+        .icone_olho{
+          margin: -3rem 0 10rem 0
         }
       }
     }
@@ -487,6 +514,11 @@ p {
       align-items: center;
       width: 95%; // Ocupa mais largura
     }
+    .partedecima {
+      flex-direction: column; // Pilha healthIssues e slider
+      align-items: center;
+      width: 95%; // Ocupa mais largura
+    }
     .healthIssues {
       width: 90%; // Ocupa quase toda a largura disponível
       margin-bottom: 3rem; // Espaçamento entre as seções empilhadas
@@ -501,6 +533,7 @@ p {
     }
     .slider {
       width: 90%; // Ocupa quase toda a largura disponível
+      margin-top: 5%;
       .imagem {
         height: 200px; // Reduz a altura da imagem do slider
       }
@@ -529,6 +562,7 @@ p {
       }
     }
   }
+
   p {
     font-size: 1rem; // Ajuste de parágrafo para tablet
   }
@@ -550,9 +584,9 @@ p {
     }
   }
   .separador {
-  width: 100vw;
-  margin-top: -5.5%; // Cuidado com margens negativas, podem criar lacunas inesperadas
-}
+    width: 100vw;
+    margin-top: -4%;
+  }
   .secao,
   .secao2 {
     
@@ -578,6 +612,8 @@ p {
 
   .secao2 {
     .caracteristicas {
+      justify-content: center;
+      align-items: center;
       flex-direction: column; // Cards empilhados
       gap: 1.5rem;
       .card {
@@ -654,13 +690,25 @@ p {
   }
 
   .secao4 {
+    .resultados{
+      display: block;
+    }
+    .resultados2{
+      width: 100%;
+      justify-content: center;
+    }
     .titulo {
       font-size: 1rem;
-      width: 80%;
+      width: 100%;
+      text-align: center;
+    }
+    .parlog{
+display: flex;
+flex-direction: column-reverse;
     }
     .parceiros {
       .titulo {
-        font-size: 1rem;
+        
         width: 80%;
       }
       .logos {
