@@ -4,7 +4,7 @@ import styles from "./deposito.module.scss"
 import { useState, useEffect} from "react";
 import api from '../../api'
 import { toast } from "react-toastify";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useConfirmation } from "../../components/ModalConfirmation/handleHook";
 import ImageModal from "../../components/ImageModal/ImageModal"
 
@@ -13,6 +13,7 @@ const DepositoAdm = () => {
     const loc = useLocation()
     const id = loc.state.idPoint
     
+    const navigate = useNavigate();
 
     const [pontoNome, setPontoNome] = useState('')
     const [pontoID, setPontoID] = useState('')
@@ -41,11 +42,11 @@ const DepositoAdm = () => {
             
             
             if(req.status == 200){
-            setTotalPages(req.data.totalPages);
-            setUSer(req.data.deposits);
-            setPontoNome(req.data.deposits[0].point_name)
-            setPontoID(req.data.deposits[0].collectionPointId)
-            setIsSearching(false)
+                setTotalPages(req.data.totalPages);
+                setUSer(req.data.deposits);
+                setPontoNome(req.data.deposits[0].point_name)
+                setPontoID(req.data.deposits[0].collectionPointId)
+                setIsSearching(false)
             }
         }
         catch (error) {
@@ -55,6 +56,7 @@ const DepositoAdm = () => {
                 if(error.response.status === 404){
                     setTimeout(() => {
                         toast.warning(error.response.data.message);
+                        navigate("/homeAdm")
                     }, 1000);
                 }else{
                     setTimeout(() => {
