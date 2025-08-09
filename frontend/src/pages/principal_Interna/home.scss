@@ -26,6 +26,9 @@
 .separador {
     width: 100%;
     margin-top: -3%;
+    @media(max-width: 550px){
+        margin-bottom: 10%;
+    }
 
 }
 .escolhas-section{
@@ -102,15 +105,18 @@
         .opcao1-escolha{
             background-color: #00B8F1;
             @media (max-width: 768px){
-                background-color: #00B8F1;
-                margin: 0
+               width: 80%;
+               font-size: 70%;
+                margin: 0;
             }
         }
         .opcao2-escolha{
             margin-left: 10%;
             background-color: #A3CBB6;
             @media (max-width: 768px){
-                 background-color: #A3CBB6;
+                 width: 80%;
+               font-size: 70%;
+                
                 margin: 8% 0 0 0;
 
             }
@@ -141,7 +147,6 @@
   background-color: black
 }
 
-
 .sectionCards{
     display: flex;
     flex-direction: column;
@@ -154,7 +159,7 @@
     padding: 0 5% 0 5%;
     height: 100%;
     .sectionCards-titulo{
-        margin-top: 3%;
+        margin-top: 10%;
         margin-bottom: 3%;
         text-align: center;
         font-size: 2.1rem;
@@ -193,6 +198,7 @@
             margin-left: -2%;
         }
     }
+
 }
 .map_container{
     width: "20%";
