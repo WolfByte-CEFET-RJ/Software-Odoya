@@ -570,17 +570,9 @@ p {
 
 // --- Para Telas de até 768px (Celulares) ---
 @media screen and (max-width: 768px) {
-  body {
-    *{
-        font-size: 70%;
-    }
-    ; // Reduz ainda mais o tamanho da fonte base
-  }
   .container{
     .banner{
-        width: 100vw;
-        
-        
+        width: 100vw;   
     }
   }
   .separador {
@@ -599,7 +591,8 @@ p {
       gap: 1.5rem;
     }
     .texto {
-      font-size: 1.1rem;
+      font-size: 80%;
+      text-align: center;
     }
     .subtitulo {
       font-size: 1rem;

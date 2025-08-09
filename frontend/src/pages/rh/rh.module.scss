@@ -145,51 +145,18 @@ button:hover {
 }
 
 @media only screen and (max-width: 1024px) {
-    .title {
-        font-size: 30px;
-    }
-
     .titleUserList {
         font-size: x-large;
     }
 
-    .inputSearchUser {
-        width: 40%;
-    }
-
-    .searchUserSwitches {
-        position: relative;
-        bottom: 3dvh;
-        right: 6dvw;
-    }
-
     .container {
         display: flex;
-        width: 95%;
     }
 
     .cardGrid {
         margin: 0 auto;
         row-gap: 2px;
         column-gap: 1px;
-    }
-
-    .accountInfo {
-        h1, p {
-            position: relative;
-            right: 3dvw;
-        }
-
-        p {
-            font-size: 18px;
-            width: 70%;
-        }
-    }
-
-    .accountInfoIcon {
-        position: relative;
-        right: 3dvw;
-        bottom: 3dvh;
     }
 }
 
@@ -247,17 +214,6 @@ button:hover {
         font-size: large;
     }
 
-    .accountInfo {
-        h1, p {
-            position: relative;
-            right: 5dvw;
-        }
-    }
-
-    .accountInfoIcon {
-        position: relative;
-        left: 3dvw;
-    }
 }
 
 @media only screen and (max-width: 625px) {
