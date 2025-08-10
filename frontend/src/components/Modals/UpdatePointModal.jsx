@@ -26,7 +26,9 @@ function UpdatePointModal({ open, onClose, name, address, idPoint, amount, capac
         isInactive: inativo,
       };
 
+      
       const req = await api.patch(`/collectionPoint/${id}`, body);
+      console.log(req.status)
 
       if (req.status === 200) {
         toast.success("Ponto de coleta atualizado com sucesso!");
@@ -37,7 +39,8 @@ function UpdatePointModal({ open, onClose, name, address, idPoint, amount, capac
         toast.error(req.data.message);
       }
     } catch (error) {
-      toast.error("Erro ao atualizar o ponto: "+error);
+      console.log(error)
+      toast.error("Erro ao atualizar o ponto: "+error.response.data.message);
     }
   }
 
