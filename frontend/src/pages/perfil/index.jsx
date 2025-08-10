@@ -21,10 +21,12 @@ const Perfil = () => {
     const [load, setLoad] = useState(false);
     const [lock, setLock] = useState(false)
     const [name, setName] = useState('')
+    const [point, setPoint] = useState()
+
     
     const [email, setEmail] = useState('')
 
-    const {client, mail} = useContext(UserContext)
+    const {client, points} = useContext(UserContext)
     
     const handleChange = (event, setText) => {
         setText(event.target.value);
@@ -67,7 +69,7 @@ const Perfil = () => {
     async function updateUser() {
         const userData = {};
         if (name !== client) userData.name = name;
-        if (email !== mail) userData.password = email;
+        if (email !== "") userData.password = email;
 
         if (Object.keys(userData).length === 0) {
             toast.info("Nenhuma informação foi alterada.");
@@ -102,14 +104,14 @@ const Perfil = () => {
         if(func == 'update'){
             if(await confirm("atualizar seus dados")){
                 setLoad(true);
-                updateUser()
-                location.reload()
+                await updateUser()
+                setTimeout(()=>{location.reload()}, 3000)
             }
         }
         else if(func == 'deleteUser'){
             if(await confirm("excluir sua conta")){
                 setLoad(true);
-                deleteUser()
+                await deleteUser()
                 logout()
             }
         }
@@ -139,9 +141,12 @@ const Perfil = () => {
 
             
     },[load])
+
+
     useEffect(() =>{
-        setEmail(mail)
+        setEmail("")
         setName(client)
+        setPoint(points)
     },[client])
     
 
@@ -157,11 +162,11 @@ const Perfil = () => {
                     <label>Nome</label>
                     <InputFormEdit onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormEdit>
                     <label>Senha</label>
-                    <InputFormEdit onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="password"></InputFormEdit>
+                    <InputFormEdit onChange={(event) => handleChange(event, setEmail)} hold="••••••••" disable={lock} type="password"></InputFormEdit>
 
                     <label>Pontos</label>
                     <div className={perfil.divPoints}>
-                        <p className={perfil.points}>0</p>
+                        <p className={perfil.points}>{point}</p>
                         <div className={perfil.pointsInfo}>
                             <MdInfo className={perfil.pointsInfoIcon} size={25}/>
                             <p>Faça depósitos de esponjas para conseguir mais pontos!</p>

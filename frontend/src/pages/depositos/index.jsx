@@ -20,8 +20,9 @@ const Depositos = () => {
         isInactive: 0
     })
     const [depositAmount, setDepositAmount] = useState(0);
-    const [imageURL, setImageURL] = useState("");
+    const [, setImageURL] = useState("");
     const [preview, setPreview] = useState(null);
+    const [imageFile, setImageFile] = useState(null); // arquivo real
     const [modalRegisterDeposit, setModalRegisterDeposit] = useState(false);
 
     const nav = useNavigate();
@@ -35,11 +36,9 @@ const Depositos = () => {
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-
-        if(file) {
-            const previewURL = URL.createObjectURL(file);
-            setPreview(previewURL);
-            setImageURL(previewURL);
+        if (file) {
+            setImageFile(file); // guarda o arquivo real
+            setPreview(URL.createObjectURL(file)); // gera preview
         }
     }
 
@@ -85,7 +84,7 @@ const Depositos = () => {
     async function registerDeposit() {  
         const formData = new FormData();
         formData.append("depositData", JSON.stringify({ amountSponges: depositAmount }));
-        formData.append('imageUrl', imageURL);
+        formData.append('comprovante', imageFile);
 
         try {
             

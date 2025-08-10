@@ -141,6 +141,11 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+
+  @media (max-width: 570px){
+      width: 100%;
+
+  }
 }
 
 .ver-mais-btn:hover {

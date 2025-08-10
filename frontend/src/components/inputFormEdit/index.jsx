@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { MdModeEdit } from "react-icons/md";
 import inputFormEdit from "./inputFormEdit.module.scss";
 
-function InputFormEdit({ type, onChange, place }) {
+function InputFormEdit({ type, onChange, place, hold }) {
   const [isInputEnabled, setIsInputEnabled] = useState(false);
   const inputRef = useRef(null);
 
@@ -22,6 +22,7 @@ function InputFormEdit({ type, onChange, place }) {
         type={type}
         onChange={onChange}
         value={place}
+        placeholder={hold?hold:undefined}
       />
       <button
         type="button"

@@ -10,7 +10,9 @@ const UserProvider = ({children}) => {
 
     const [client, setUser] = useState("")
     const [mail, setMail] = useState("")
-    const [admin, setAdmin] = useState()
+    const [points, setPoints] = useState()
+      const [admin, setAdmin] = useState()
+
     const [root, setRoot] = useState()
 
     const nav = useNavigate()
@@ -22,11 +24,9 @@ const UserProvider = ({children}) => {
                     headers: { Authorization: `Bearer ${token}`}
                 }
             )
-        setUserName(req.data.name, req.data.email)
-        
 
+        setUserName(req.data.name, req.data.email,req.data.points)
         getPrivilege(req.data.admin, req.data.isRoot)
-        
         
       }
      useEffect(()=>{
@@ -44,10 +44,11 @@ const UserProvider = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[client, token])
 
-    const setUserName = (client,mail) =>{
+    const setUserName = (client,mail,points) =>{
       
       if(client){setUser(client)}
       if(mail){setMail(mail)}
+      if(points){setPoints(points)}
       
     } 
     const getPrivilege = (admin, root) =>{
@@ -64,7 +65,7 @@ const UserProvider = ({children}) => {
       
     }
   
-  return <UserContext.Provider value={{client, mail, admin, token, root, setUserName, getPrivilege, logout}}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{client, mail, admin, token, points, root, setUserName, getPrivilege, logout}}>{children}</UserContext.Provider>
 }
 
 export default UserProvider

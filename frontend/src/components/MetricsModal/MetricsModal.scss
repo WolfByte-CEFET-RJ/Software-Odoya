@@ -22,6 +22,10 @@
     max-height: 90vh;
     overflow-y: auto;
 
+    @media(max-width: 768px){
+      width: 90%;
+    }
+
     .modal-header {
       background-color: #F1F1F1;
       border-bottom: 1px solid #e0e0e0;
@@ -52,6 +56,10 @@
 
         &:hover {
           color: #333;
+        }
+
+        @media(max-width: 768px){
+          margin-right: 5%;;
         }
       }
 
@@ -108,6 +116,9 @@
 
         .metric-input-icon {
           margin: 1.5% 0% 0% -6%;
+            @media(max-width: 768px){
+              width: 5%;
+            }
         }
       }
 
@@ -135,13 +146,14 @@
       .add-partner-btn {
           display: flex;
           align-items: center;
-          width: 30%;
+          width: 50%;
           gap: 5px;
           background: none;
           padding: 5px 10px;
           cursor: pointer;
           transition: all 0.2s;
-          color: black;
+          color: white;
+          background-color: #269BDF;
 
         }
 
@@ -177,7 +189,7 @@
             font-size: 0.9rem;
 
              @media (max-width: 768px) {
-              top:30%
+              top:20%
             }
 
 
@@ -214,6 +226,10 @@
 
         &:hover {
           filter: brightness(0.8);
+        }
+
+        @media(max-width: 768px){
+          width: 100%;
         }
       }
     }
