@@ -35,7 +35,7 @@ const Routing = () =>{
                 <Route path='/homeAdm' element={<HomeAdm/>}/>
                 
                 
-                <Route path="/deposit" element={<Depositos/>}/>
+                <Route path="/deposit/:id?" element={<Depositos/>}/>
                 <Route path="/rh" element={<RH/>}/>
                 <Route path="*" element={<NotFoundPage />} /> 
 

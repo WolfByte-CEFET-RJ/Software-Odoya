@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import depositos from './depositos.module.scss'
@@ -9,9 +9,20 @@ import { toast } from "react-toastify"
 import { useLocation } from "react-router-dom";
 
 const Depositos = () => {
-    const loc = useLocation()
-    const id = loc.state.id
- 
+
+    const { id: idUrl } = useParams();
+    const loc = useLocation();
+
+    let id = null;
+
+    if (loc.state?.id) {
+        id = loc.state.id; // prioridade para o que veio no state
+    } else {
+        id = idUrl; // se não tiver no state, pega da URL
+    }
+
+    console.log(id)
+    
     const [pointData, setPointData] = useState({
         name: "",
         location: "",

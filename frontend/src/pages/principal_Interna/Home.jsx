@@ -162,15 +162,27 @@ function Home() {
                   ? donations.deposits
                   : donations.deposits.slice(0, 4)
                 ).map((dado) => {
-                  const date = new Date(dado.created_at);
-                  const brasiliaDate = date.toLocaleDateString('pt-BR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    timeZone: 'America/Sao_Paulo',
-                  });
-                  const hour = dado.created_at.split("T")[1]?.replace(/Z$/, '').substring(0, 5);
-                  const location = point.find((p) => p.id === dado.collectionPointId);
+                
+                const dateUTC = new Date(dado.created_at);
+
+                // Data no horário de Brasília
+                const brasiliaDate = dateUTC.toLocaleDateString('pt-BR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  timeZone: 'America/Sao_Paulo',
+                });
+
+                // Hora no horário de Brasília
+                const hour = dateUTC.toLocaleTimeString('pt-BR', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: false,
+                  timeZone: 'America/Sao_Paulo'
+                });
+
+                const location = point.find((p) => p.id === dado.collectionPointId);
+
                   return (
                     <DonationCard
                       key={dado.id}
@@ -276,14 +288,23 @@ function Home() {
                       ? donations.deposits
                       : donations.deposits.slice(0, 4)
                     ).map((dado) => {
-                      const date = new Date(dado.created_at);
-                      const brasiliaDate = date.toLocaleDateString('pt-BR', {
+                      const dateUTC = new Date(dado.created_at);
+
+                      // Data no horário de Brasília
+                      const brasiliaDate = dateUTC.toLocaleDateString('pt-BR', {
                         day: '2-digit',
                         month: '2-digit',
                         year: 'numeric',
                         timeZone: 'America/Sao_Paulo',
                       });
-                      const hour = dado.created_at.split("T")[1]?.replace(/Z$/, '').substring(0, 5);
+
+                      // Hora no horário de Brasília
+                      const hour = dateUTC.toLocaleTimeString('pt-BR', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                        timeZone: 'America/Sao_Paulo'
+                      });
                       const location = point.find((p) => p.id === dado.collectionPointId);
                       return (
                         <DonationCard
