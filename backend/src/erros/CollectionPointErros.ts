@@ -17,3 +17,13 @@ export class CollectionPointWithDepositsError extends HttpError {
         super({ status: HttpCode.CONFLICT, message });
     }
 }
+
+/**
+ * @extends HttpError
+ * @description Erro ao buscar localização geográfica do ponto de coleta
+ */
+export class GeocodeError extends HttpError {
+    constructor(message: string = 'Erro ao buscar localização geográfica do ponto de coleta') {
+        super({ status: HttpCode.BAD_REQUEST, message });
+    }
+}

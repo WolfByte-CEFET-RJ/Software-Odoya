@@ -16,7 +16,6 @@ const mailer = new Mailer();
  * @description Serviços para Usuário
  */
 export default class UserService {
-
     /**
      * @description Busca um Usuário
      * @param {string} id
@@ -32,8 +31,19 @@ export default class UserService {
     }
 
     /**
+     * @description Busca um Usuário por email
+     * @param {string} email
+     * @returns {Promise<User>}
+     */
+    public static async getUserByEmail(email: string): Promise<User> {
+
+        const user = await knex('User').select('id', 'name', 'email', 'admin', 'points').where({email}).first();
+        return user;
+    }
+
+    /**
      * @warning
-     * @description Busca um Usuário por emaiil. Hash da senha incluso no objeto de resposta.
+     * @description Busca um Usuário por emaiail. Hash da senha incluso no objeto de resposta.
      * @param {string} email
      * @returns {Promise<User & { password: string }>}
      */
@@ -45,26 +55,6 @@ export default class UserService {
         }
         return user;
     }
-
-    /**
-     * @description Busca todos os usuários, com exceção do super-usuário
-     * @returns {Promise<User[]>}
-     */
-    public static async getAll(): Promise<User[]>{
-        const users: User[] = await knex("User").select('id', 'name', 'email', 'admin', 'points').whereNot({email: process.env.ROOT_EMAIL});
-    
-        if(users.length===0){
-            throw new UserNotFound()
-        }
-        
-        // Traduzindo campos booleanos
-        users.forEach(user => {
-            user.admin = Boolean(user.admin);
-        });
-    
-        return users
-    }
-
     /**
      * @description Retorna uma lista paginada de usuários, com exceção do super-usuário
      * @param {number} page
@@ -141,7 +131,7 @@ export default class UserService {
         if (existingUser) {
             throw new EmailDuplicate();
         }
-        
+
         const user = {
             id: v4(),
             name,
@@ -183,6 +173,25 @@ export default class UserService {
     }
 
     /**
+     * @description Busca todos os usuários, com exceção do super-usuário
+     * @returns {Promise<User[]>}
+     */
+    public static async getAll(): Promise<User[]>{
+        const users: User[] = await knex("User").select('id', 'name', 'email', 'admin', 'points').whereNot({email: process.env.ROOT_EMAIL});
+    
+        if(users.length===0){
+            throw new UserNotFound()
+        }
+        
+        // Traduzindo campos booleanos
+        users.forEach(user => {
+            user.admin = Boolean(user.admin);
+        });
+    
+        return users
+    }
+
+    /**
      * @description Delete o usuário do id seleccionado
      * @returns {Promise<string>}
      */
@@ -191,14 +200,15 @@ export default class UserService {
             throw new MissinngDataError("Usuário não informado")
         }
 
-       const linesAffected = await knex("User").where({id: id}).del();
+        const user = await UserService.getUser(id);
+        if(user.email === process.env.ROOT_EMAIL){
+            throw new RootUserModificationError("Usuário root não pode ter seus dados cadastrais atualizados");
+        } 
 
-       if(linesAffected > 0){
+        await knex("User").where({id: id}).del();
+
         return "Usuario deletado com sucesso";
-       } else {
-        throw new UserNotFound();
-       }
-       
+
     }
 
     public static async forgotPassword(email: string) {

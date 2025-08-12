@@ -1,4 +1,4 @@
-.body{
+.bodyLogin{
     background-image: url("../../public/fundoLogin.jpg");
     display: flex;
     background-repeat: no-repeat;
@@ -6,21 +6,24 @@
     width:100%;
     height: 100vh;
     text-align: center;
-    
     justify-content: center;
-    
-    
+    align-items: center;
     
 }
+
+p{
+    font-weight: 600;
+}
+
 .forms{
     border-radius: 2% 0 0 2%;
     margin: 2% 0 5% 5%;
-    align-items: center;
-   
     display:flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     background-color: #F1F1F1;
-    height: 90%;
+    height: 80%;
     width:50%;    
 }
 .div_forms_login{
@@ -30,27 +33,14 @@
     align-items: center;
     justify-content: center;
 }
+
 .forms .logoazul{
-    margin-top: 10%;
-    width: 201px;
-    height: 156px;
-    // width: 130px;
-    // height: 130px;
-}
-.forms .logoazul{
-    margin-top: 10%;
     width: 201px;
     height: 156px;
     transition: transform 1s linear;
 }
 
 .forms .logoazul2{
-    margin-top: 10%;
-    width: 201px;
-    height: 156px;
-}
-.forms .logoazul2{
-    margin-top: 10%;
     width: 201px;
     height: 156px;
     animation: rotacionar 1s linear infinite;
@@ -64,15 +54,7 @@
       transform: rotate(360deg);
     }
   }
-// .forms input{
-    
-//     margin-top:3%;
-//     width: 50%;
-//     height: 7%;
-//     border: none;
-//     border-radius: 10px;
-//     background-color: #B1E3FA;
-// }
+
 
 .forms a{
     margin-top:3%;
@@ -97,24 +79,16 @@
     cursor: pointer;
 }
 
-// .forms button{
-//     all: unset;
-//     margin-top:3%;
-//     width: 50%;
-//     height: 7%;
-//     border-radius: 10px;
-//     background-color: #269BDF;
-//     color: #F1F1F1;
-    
-// }
+
 
 .logo{
     background-color: #00B8F1;
     border-radius: 0 2% 2% 0;
+    display: flex;
     align-items: center;
     justify-content: center;
     width:50%;
-    height: 90%;
+    height: 80%;
     margin: 2% 5% 5% 0;
 }
 .logo-logomarca{
@@ -125,7 +99,6 @@
     margin: 2% 5% 5% 0;
 }
 .logo-logomarca .logobranca{
-    margin-top: 20%;
     height: 218px;
     width: 447px;
     
@@ -175,7 +148,7 @@
     }
     .logo{
         width:50%;
-        height: 90%;
+        height: 80%;
     }
     .logo-logomarca{
         width:100%;
@@ -192,48 +165,52 @@
         font-size: 1rem;
     }
 }
-@media(max-width: 640px){
-    .body{
-        flex-direction: column;
-    }
-    .forms{
-        width: 85%;
-        height: 100%;
-        margin: 5% 5% 5% 5%;
-        padding-bottom: 5%;   
-    }
-    .forms .logoazul{
-        margin-top: 8%;
-    }
-    .button-login-form{
-        width: 250px;
-    }
-    .logo{
-        margin: -7.5% 5% 5% 5%;
-        width:85%;
-        height: 30%;
-    }
-    .logo-logomarca{
-        top: -25%;
-    }
+@media (max-width: 640px) {
+  .bodyLogin {
+    display: flex;
+    flex-direction: column; /* inverte a ordem: logo embaixo */
+    height: 100%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+  }
+
+  .forms {
+    width: 85%;
+    height: auto;
+    margin: 0 auto;
+    padding: 5% 0;
+  }
+
+  .forms .logoazul {
+    margin-top: 8%;
+  }
+
+  .button-login-form {
+    width: 250px;
+  }
+
+  .logo {
+    width: 85%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .logo-logomarca {
+    position: static;
+    margin: 0;
+    padding: 5%;
+    text-align: center;
+  }
+
+  .logo-logomarca .logobranca{
+    margin: 0;
+  }
+
+  .logo-logomarca img {
+    width: 60%;
+    height: auto;
+  }
+
 }
-@media(max-width: 480px){
-    .body{
-        flex-direction: column;
-    }
-    .forms{
-        width: 85%;
-        height: 100%;
-        margin: 5% 5% 5% 5%;
-        padding-bottom: 5%;   
-    }
-    .forms .logoazul{
-        margin-top: 8%;
-    }
-    .div_forms_login{
-        width: 80%;
-    }
-    .button-login-form{
-        width: 200px;
-    }
-}
+

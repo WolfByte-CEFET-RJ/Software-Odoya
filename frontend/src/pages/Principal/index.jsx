@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import principal from "./principal.module.scss";
 import { TbArrowRightDashed } from "react-icons/tb";
@@ -8,20 +8,33 @@ import { MdOutlineMenuBook } from "react-icons/md";
 import { FaRegLightbulb } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import Footer from "../../components/Footer";
-import { RiInfinityLine } from "react-icons/ri";
-import { RiGraduationCapLine } from "react-icons/ri";
-import { MdOutlineWaterDrop } from "react-icons/md";
-import { FaTemperatureArrowDown } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import api from "../../api";
+import {toast} from "react-toastify"
 
 const Principal = () => {
+
+  const [metrics, setMetrics] = useState({});
 
   const imagensCarrossel = [
     "./ImagemCarrossel1.svg",
     "./ImagemCarrossel2.png",
     "./ImagemCarrossel3.png",
   ];
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const metrics = await api.get("/metrics")
+        setMetrics(metrics.data)
+      } catch (e) {
+        toast.error(e)
+      }
+    }
+
+    fetchMetrics();
+  }, [])
 
   const [indiceAtual, setIndiceAtual] = useState(0);
 
@@ -55,7 +68,9 @@ const Principal = () => {
             <p className={principal.texto}>
               <strong>
                 Você sabia que as esponjas podem fazer uma grande diferença no
-                meio ambiente? O projeto Odoyá convida você a se tornar parte
+                meio ambiente?
+                <br></br>
+                O projeto Odoyá convida você a se tornar parte
                 dessa mudança!
               </strong>
             </p>
@@ -63,7 +78,7 @@ const Principal = () => {
             <div className={principal.subtitulo}>
               <TbArrowRightDashed size={30} />
               <h2>
-                <strong>O que é o Odoyá: </strong>
+                <strong>O que é o Odoyá? </strong>
               </h2>
             </div>
             <p className={principal.texto}>
@@ -71,6 +86,7 @@ const Principal = () => {
               determinados em trazer soluções para o meio ambiente e gerar ações
               que causem um impacto positivo e sustentável para o nosso planeta.
             </p>
+            <br></br>
             <div className={principal.subtitulo}>
               <TbArrowRightDashed size={30} />
               <h2>
@@ -96,7 +112,6 @@ const Principal = () => {
               </strong>
             </p>
             <div className={principal.botao_container}>
-              
               <Link className={principal.botao} to="/register">
                 Cadastre-se
               </Link>
@@ -113,7 +128,7 @@ const Principal = () => {
       <section className={principal.secao2}>
         <h1 className={principal.titulo}>Sobre o Projeto</h1>
         <div className={principal.caracteristicas}>
-          <div>
+          <div className={principal.cardAlign}>
             <div className={principal.card}>
               <h2>Missão</h2>
               <p className={principal.texto}>
@@ -138,7 +153,7 @@ const Principal = () => {
               <img src="./flag.png" className={principal.icone} alt="" />
             </div>
           </div>
-          <div>
+          <div className={principal.cardAlign}>
             <div className={principal.card}>
               <h2>Visão</h2>
               <p className={principal.texto}>
@@ -156,21 +171,21 @@ const Principal = () => {
             <div className={principal.card}>
               <h2>Valores</h2>
               <div className={principal.valores}>
-                <div>
+                <div className={principal.val}>
                   <HiMiniGlobeAmericas size={40} color="00B8F1" />
                   <p>Sustentabilidade</p>
                 </div>
-                <div>
+                <div className={principal.val}>
                   <MdOutlineMenuBook size={40} color="00B8F1" />
                   <p>Educação Ambiental</p>
                 </div>
               </div>
               <div className={principal.valores}>
-                <div>
+                <div className={principal.val}>
                   <FaRegLightbulb size={40} color="00B8F1" />
                   <p>Inovação</p>
                 </div>
-                <div>
+                <div className={principal.val}>
                   <FaPeopleGroup size={40} color="00B8F1" />
                   <p>Empoderamento Comunitário</p>
                 </div>
@@ -183,35 +198,43 @@ const Principal = () => {
       <img src="./Ondinhas.svg" className={principal.separador} />
 
       <section className={principal.secao3}>
-        <div style={{height:"130px"}}></div>
+        
         <h1 className={principal.titulo}>Nossas Ações </h1>
         <div className={principal.line}>
-          <div className={principal.listaActions}>
-            <div className={principal.field}>
-              <TbArrowRightDashed size={30} color="269BDF" />
-              <h2>Coleta de Esponjas</h2>
+
+          <div className={principal.partedecima}>
+            <div className={principal.listaActions}>
+              <div className={principal.field}>
+                <TbArrowRightDashed size={30} color="269BDF" />
+                <h2>Coleta de Esponjas</h2>
+              </div>
+              <div className={principal.field}>
+                <TbArrowRightDashed size={30} color="269BDF" />
+                <h2>Letramento Ambiental</h2>
+              </div>
+              <div className={principal.field}>
+                <TbArrowRightDashed size={30} color="269BDF" />
+                <h2>Mutirões de Limpeza</h2>
+              </div>
+            </div>  
+            
+            <div className={principal.slider}>
+              <button className={principal.setas} onClick={imagemAnterior}>
+                <IoIosArrowBack size={100} />
+              </button>
+              <div className={principal.imagem}>
+                <img src={imagensCarrossel[indiceAtual]} style={{ width: "100%" }} />
+              </div>
+              <button className={principal.setas} onClick={proximaImagem}>
+                <IoIosArrowForward size={100} />
+              </button>
             </div>
-            <div className={principal.field}>
-              <TbArrowRightDashed size={30} color="269BDF" />
-              <h2>Letramento Ambiental</h2>
-            </div>
-            <div className={principal.field}>
-              <TbArrowRightDashed size={30} color="269BDF" />
-              <h2>Mutirões de Limpeza</h2>
-            </div>
-          </div>  
-          <div className={principal.partedebaixo}>
-          <div className={principal.slider}>
-            <button className={principal.setas} onClick={imagemAnterior}>
-              <IoIosArrowBack size={100} />
-            </button>
-            <div className={principal.imagem}>
-              <img src={imagensCarrossel[indiceAtual]} style={{ width: "100%" }} />
-            </div>
-            <button className={principal.setas} onClick={proximaImagem}>
-              <IoIosArrowForward size={100} />
-            </button>
           </div>
+
+
+          <div className={principal.partedebaixo}>
+
+          <div className={principal.healthIssues}>
           <h2 className={principal.titulo2}>Objetivos de desenvolvimento sustentável</h2>
           <div className={principal.ordem}>
               <div className={principal.cards}>
@@ -230,7 +253,10 @@ const Principal = () => {
               <div className={principal.cards}>
                   <img src="Obj4.svg"/>
               </div>
+            
             </div>
+          </div>
+          
           </div>
         </div>
       
@@ -240,32 +266,33 @@ const Principal = () => {
       <section className={principal.secao4}>
         <div className={principal.resultados}>
           <div className={principal.titulo}>
-            <h2>Nossos</h2> 
-            <h2>Principais</h2>
-            <h2>Resultados</h2> 
+            <h2>Nossos Principais Resultados</h2>
           </div>
           <div className={principal.resultados2}> 
-            <p>x esponjas coletadas</p>
-            <p>x pessoas alcançadas online</p>
-            <p>x KG de lixo reciclável coletado</p>
-            <p>x pessoas certificadas nas atividades</p>
+            <p>{metrics.climateInitiatives} ações contra mudança climática</p>
+            <p>{metrics.kgRecycled} KG de lixo reciclável coletado</p>
+            <p>{metrics.spongesCollected} esponjas coletadas</p>
+            <p>{metrics.totalEvents} mutirões bem-sucedidos</p>
+            <p>{metrics.livesImpacteds} vidas impactadas</p>
+            <p>{metrics.sanitationInstalled} instalações de saneamento</p>
+            <p>{metrics.bets} BETs construídos</p>
+            <p>{metrics.litersTreatedWater} litros de água tratada</p>
           </div>
         </div>
           <div className={principal.parceiros}>
             <div className={principal.logos}>
 
-              <div className={principal.linha}>
-                <img src="./parceiro1.png" alt="Parceiro 1" />
-                <img src="./parceiro2.png" alt="Parceiro 2" />
-                <img src="./parceiro3.png" alt="Parceiro 3" />
+              <div className={principal.parlog}>
+
+                <div className={principal.linha}>
+                  {metrics?.partners?.map((p, i)=>{
+                    return <img key={i} src={p.logo} alt={p.name} />
+                  })}
+                </div>
+
+                <h2 className={principal.titulo}>Parcerias</h2>
               </div>
 
-              <h2 className={principal.titulo}>Parcerias</h2>
-              <div className={principal.linha}>
-                <img src="./parceiro4.png" alt="Parceiro 4" />
-                <img src="./parceiro5.png" alt="Parceiro 5" />
-                <img src="./parceiro6.png" alt="Parceiro 6" />
-              </div>
             </div>
           </div>
         </section>

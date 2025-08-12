@@ -1,452 +1,754 @@
-.container {
-    display: flex;
-    justify-content: center;
-    height: 50%;
-    
-    
+
+html {
+  font-size: 16px;
+}
+
+body {
+  width: 100vw;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.container{
     .banner {
-        width: 100%;
-        
-        @media (min-width: 1300px) {
-            width: 60%;
-            border: 4px solid var(--primary-color);
-            
-        }
-    }
+      width: 100vw;
 
-    @media (min-width: 1300px) {
-        background-color: #F1F1F1;
-        background-image: url('../../public/fundobanner.png');
-        background-repeat: no-repeat; /* Do not repeat the image */
-        background-size:cover;
-        
+      @media(max-width: 550px){
+        margin-bottom: -1%;
+      }
     }
-    
 }
 
-.separador {
-    width: 100%;
-    margin-top: -3%;
+  .separador{
+      width:100%;
+      margin-top:-3%;
 
-}
+  }
 
 .secao, .secao2 {
+  display: flex;
+  justify-content: center;
+  margin-top: -4%;
+  flex-direction: column;
+  font-family: 'Abel', sans-serif;
+  font-size: 1.2rem;
+  background-color: var(--tertiary-color);
+  padding: 0 5%;
+
+  .titulo {
+    margin-top: 10%;
+    text-align: center;
+    font-size: 1.9rem;
+    margin-bottom: 3%;
+    font-family: 'Tankindred', sans-serif;
+    color: var(--secondary-color);
+  }
+
+  .textos_conteudo {
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Tankindred', sans-serif; // Mova para o seletor principal do h2
+    font-size: 1.5rem; // Tamanho padrão para h2
+  }
+
+  .texto {
+    color: #000000;
+    font-size: 1.5rem;
+    margin-bottom: 2%;
+  }
+
+  .subtitulo {
+    font-family: 'Batangas', sans-serif;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .subtitulo svg {
+    margin-top: -18px;
+  }
+
+  .botao_container {
     display: flex;
     justify-content: center;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
 
-    margin-top: -4%;     
-    flex-direction: column;
-    font-family: 'Abel', sans-serif;
-    font-size: 1.2rem;
-    background-color: var(--tertiary-color);
-    padding: 0 5% 0 5%;
+    .botao {
+      text-align: center;
+      background-color: var(--primary-color);
+      padding: 1rem 5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      color: white;
+      font-family: 'Batangas', sans-serif;
+      font-size: 1.3rem;
+      width: auto;
+      margin: 0 auto;
+      transition: all ease-in-out 0.2s;
 
-    .titulo {
-        margin-top: 10%;
-        text-align: center;
-        font-size: 1.9rem;
-        margin-bottom: 3%;
-        font-family: 'Tankindred', sans-serif;
-        color: var(--secondary-color);
-
-        @media (max-width: 910px) {
-            font-size: 1.5rem;
-        }
+      &:hover {
+        background-color: #114c6d;
+      }
     }
+  }
 
-    .textos_conteudo {
-        display: flex;
-        flex-direction: row;
-        gap: 10rem;
-        align-items: center;
+  img {
+    height: 50%; // Pode precisar de ajuste fino em breakpoints
+  }
 
-        
-        @media (max-width: 910px) {
-            flex-direction: column;
-            gap: 0rem;
-            font-size: 1.1rem;
-        }
-        
-        }
-
-    p {
-        margin-bottom: 1rem;
-    }
-
-    h2 {
-        @media (max-width: 910px) {
-            font-size: 1.2rem;
-        }
-    }
-
-    .texto {
-        color: #000000;
-        font-size: 1.5rem;
-        margin-bottom: 2%;
-
-        @media (max-width: 910px) {
-            font-size: 1.3rem;
-        }
-    }
-
-    .subtitulo {
-        font-family: 'Batangas', sans-serif;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-    }
-    .botao_container {
-        display: flex;
-        justify-content: center;
-        margin-top: 3rem;
-        margin-bottom: 5rem;
-
-        @media (max-width: 910px) {
-            margin-bottom: 3rem;
-          
-        }
-        
-            .botao {
-                text-align: center;
-                background-color: var(--primary-color);
-                
-                padding: 1rem 5rem;
-                border-radius:50px;
-                text-decoration: none;
-             
-                color: white;
-                font-family: 'Batangas', sans-serif;
-                font-size: 1.3rem;
-                width: auto;
-                margin: 0 auto;
-                transition: all ease-in-out  .2s;
-
-                @media (max-width: 910px) {
-                    font-size: 1.2rem;
-                }
-            }
-
-            .botao:hover {
-                background-color: #114C6D;
-              
-            }   
-    }
-
-    img {
-        height: 50%;
-        @media (max-width: 910px) {
-            margin-bottom: 5rem;
-        }
-    }
-
-    .imagemEquipe {
-        border: 4px solid var(--primary-color);
-        border-radius: 10px;
-        margin-bottom: 5rem;
-    }
-
+  .imagem {
+    border: 4px solid var(--primary-color);
+    border-radius: 10px;
+    margin-bottom: 5rem;
+    width: 65%;
+  }
 }
 
 .secao2 {
-    background-color: white;
+  background-color: white;
 
+  .caracteristicas {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
 
-    .caracteristicas {
-        display: flex;
-        align-items: baseline;
-        justify-content: center;
-        gap: 1rem;
-
-        @media (max-width: 910px) {
-            flex-direction: column;
-        }
-
-        .card {
-            margin: 1rem 5rem 7rem 5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            .icone {
-                margin:-50% 0% 0% 100%;
-                height: 15rem;
-
-                @media (min-width: 1500px) {
-                    margin:-30% 0% 0% 100%;
-                }
-                @media (min-width: 1780px) {
-                    margin:-20% 0% 0% 100%;
-                }
-                @media (max-width: 1499px) {
-                    margin:-30% 0% 0% 100%;
-                }
-                @media (max-width: 1880px) {
-                    margin:-40% 0% 0% 100%;
-                }
-                @media (max-width: 1080px) {
-                    margin:-60% 0% 0% 100%;
-                }
-                @media (max-width: 990px) {
-                    margin:-100% 0% 0% 100%;
-                }
-                @media (max-width: 910px) {
-                    // margin:-25% 0% 0% 100%;
-                    // height: 10rem;
-                    display: none;
-                }
-            }
-            
-            .icone_olho {
-                margin:-70% 0% 0% 100%;
-                height: 10rem;
-
-                @media (max-width: 910px) {
-                    // margin:-10% 0% 0% 10%;
-                    // height: 7rem;
-                    display: none;
-                }
-
-                @media (min-width: 1500px) {
-                    margin:-35% 0% 0% 100%;
-                }
-                @media (min-width: 1780px) {
-                    margin:-20% 0% 0% 100%;
-                }
-                @media (max-width: 1499px) {
-                    margin:-35% 0% 0% 100%;
-                }
-                @media (max-width: 1880px) {
-                    margin:-60% 0% 0% 100%;
-                }
-                
-            }
-            h2 {
-                color: var(--quaternary-color);
-                
-               
-            }
-            
-        }
-        
-    .valores {
-        display: flex;
-        gap: 5rem;
-        align-items: center;
-        justify-content: baseline;
-        margin-bottom: 3rem;
-        
-       
-    }
+    .cardAlign {
+      display: flex;
+      flex-direction: column; /* Faz os itens ficarem um embaixo do outro */
+      align-items: center;     /* Alinha horizontalmente */
+      justify-content: center; /* Alinha verticalmente */
+      width: 50%;
     }
 
-    
+    .card {
+      margin: 1rem 5rem 7rem 5rem;
+      width: 70%;
+      display: flex; // Alterado para flex para melhor controle
+      flex-direction: column; // Conteúdo do card em coluna
+      align-items: center; // Centraliza itens dentro do card
+      text-align: center; // Centraliza texto dentro do card
+      // Adicione uma largura base ou max-width para controle em desktop
+      // Ex: width: 300px; ou max-width: 30%;
 
-    h2 {
-        font-family: 'Tankindred', sans-serif;
-        margin-bottom: 2rem;
+      .icone,
+      .icone_olho {
+        // Removi as margens negativas complexas.
+        // Use posicionamento absoluto se eles devem sobrepor,
+        // ou ajuste o layout com padding/margin para a imagem e texto.
+        // Se eles devem flutuar para fora do card, o .card precisa de position: relative;
+        width: 15rem; // Defina um tamanho base em rem para melhor escala
+        height: auto; // Mantém a proporção
+        margin: -5rem 0 2rem 0; // Exemplo de ajuste mais simples
+        // Considere position: absolute; top: -XXpx; left: 50%; transform: translateX(-50%);
+        // Se o objetivo é que flutuem para fora do card.
+      }
+
+      .icone_olho {
+        // Pode ter ajustes específicos para este ícone se necessário
+        margin: -3rem 0 9rem 0; // Exemplo de ajuste mais simples para o olho
+      }
+
+      h2 {
+        color: var(--quaternary-color);
+      }
     }
-
-    
+.valores {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
 }
 
-.secao3{
-    background-color: #B1E3FA;
-    margin-top: -3.5%;
-    
-    .titulo {
-        // display: flex;
-        position: relative;
-        top: 30%;
-        text-align: center;
-        font-size: 1.8rem;
-        // margin-top: 3%;
-        font-family: 'Tankindred', sans-serif;
-        color: var(--secondary-color);
+.val {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 150px;
+  height: 150px;
+}
 
-        @media (max-width: 910px) {
-            font-size: 1.5rem;
-        }   
-    }
 
-    .objetivos{
-        text-align: center;
-        font-size: 1rem;
-        font-family: 'Abel', sans-serif;
-        margin-top: 10%;
+  }
+}
+
+.secao3 {
+  background-color: #b1e3fa;
+  margin-top: -3.5%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 5% 0; // Adicione um padding vertical para a seção
+
+  .titulo {
+    padding-top: 5%;
+    text-align: center;
+    font-family: 'Tankindred', sans-serif;
+    color: var(--secondary-color);
+  }
+
+  .objetivos {
+    text-align: center;
+    font-size: 1rem;
+    font-family: 'Abel', sans-serif;
+    margin-top: 10%;
+  }
+
+  .titulo2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 3%;
+    margin-top: 15%;
+    font-family: 'Tankindred', sans-serif;
+    color: #195d39;
+  }
+
+  .line {
+    display: flex;
+    flex-direction: column;
+    width: 100%; // Ajuste para ocupar a largura total
+    justify-content: center; // Centraliza o conteúdo da linha
+  }
+
+  .listaActions {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    width: 80%; // Defina uma largura para a lista de ações
+    max-width: 600px; // Limite a largura máxima para desktop
+  }
+
+  .field {
+    display: flex;
+    align-items: center; // Alinha ícone e texto
+    gap: 0.5rem; // Espaçamento entre o ícone e o texto
+    font-size: 0.9rem;
+    margin: 1% auto; // Centraliza e reduz margem vertical
+    font-family: 'Tankindred', sans-serif;
+    color: #269bdf;
+    width: 100%; // Ocupa a largura do seu pai (.listaActions)
+  }
+
+  .cards {
+    width: 200px;
+    height: 250px;
+    text-align: center;
+    gap: 10px;
+    margin: 5% 2% 10% 2%;
+  }
+
+  .partedebaixo {
+    display: flex;
+    flex-direction: row; // Padrão desktop: lado a lado
+    width: 100%; // Largura do container para desktop
+    justify-content: space-around;
+    align-items: flex-start; // Alinha no topo
+    margin-top: 1.5%;
+  }
+
+    .partedecima {
+    display: flex;
+    flex-direction: row; // Padrão desktop: lado a lado
+    width: 100%; // Largura do container para desktop
+    justify-content: center;
+    align-items: center; // Alinha no topo
+    margin-top: 3%;
+  }
+
+  .healthIssues {
+    width: 100%; // Ocupa metade da largura na área de desktop
+    padding: 0;
+    position: relative;
+    left: 0; // Remova left: -20% para desktop
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .ordem {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      flex-wrap: wrap; // Permite que os cards quebrem a linha
     }
-    .titulo2{
-        text-align: center;
-        //padding-left: 8rem;
-        font-size: 1.8rem;
-        margin-bottom: 3%;
-        margin-top: 25%;
-        font-family: 'Tankindred', sans-serif;
-        color: #195D39;
-        
-    }
-    .line{
-        display:flex;
-    }
-    .listaActions{
-        margin-top: 4rem;
-        display:flex;
-        flex-direction: column;
-        
-        
-    }
-    .field{
-        display:flex;
-        padding-left: 30rem;
-        font-size: 0.9rem;
-        margin: 8% 0 10% 0;
-        font-family: 'Tankindred', sans-serif;
-        color: #269BDF;  
-    }
-    
-    .cards{
-        width: 200px;
-        height: 250px;
-        text-align: center;
-        gap: 10px;
-        margin: 5% 2% 10% 2%;
-        
-    }
-    .partedebaixo{
-        display:flex;
-        flex-direction: column;
-        margin-top: 2.5%;
-        
-       
-    }
-    .ordem{
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        
-    }
-    .field2{
-        margin: 20% 20% 20% 20%;
-        
-    }
-    .slider{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: #F1F1F1;
-        padding: 5% 0%;
-        border-radius: 1rem;
-        margin: 5% 0% 0 20%;
-       
-    }
-    .imagem {
-        width: 500px;
-        height: 300px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        border-radius: 1rem;
-      }
-      
-      .imagem img {
+    .cards {
+      width: 180px; // Tamanho do card de healthIssues
+      height: auto; // Ajuste automático da altura
+      margin: 2% 1%; // Margem menor entre os cards
+      img {
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 1rem;
+        height: auto;
       }
-    .setas{
-        display: flex;
-        justify-content: space-between;
-        background: none;
-        border: none;
-        outline: none;
-        transition: color 0.3s ease;
-        padding: 0;
-        margin-top: -1.0rem;
     }
-    .setas:hover{
-        color: gray;
-        cursor: pointer;
+  }
+
+  .slider {
+    display: flex;
+   
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f1f1;
+    padding: 3% 2%; // Reduz padding
+    border-radius: 1rem;
+    width: 45%; // Ocupa metade da largura na área de desktop
+    margin: 0; // Remove margem fixa para desktop
+    
+  }
+
+  .imagem {
+    width: 100%; // Ocupa 100% do slider container
+    height: 300px; // Altura fixa para desktop
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 1rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
+  }
+
+  .setas {
+    display: flex;
+    justify-content: space-between;
+    width: 20%; // Controla a largura das setas
+    background: none;
+    border: none;
+    outline: none;
+    transition: color 0.3s ease;
+    padding: 0;
+    margin: 0;
+    margin-top: 1rem; // Ajusta a margem para desktop
+
+    &:hover {
+      color: gray;
+      cursor: pointer;
+    }
+  }
 }
 
-.secao4{
-    .resultados{
-        display: flex;
-        justify-content: center;
-        gap: 400px;
-        margin-top: 5%;
-        margin-bottom: 5%;
+.secao4 {
+  padding: 5% 0; // Adiciona padding vertical
+  width: 100%; // Garante que a seção ocupe a largura total
+
+  .resultados {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  .resultados2 {
+    display: grid;
+    justify-content: start;
+    gap: 1rem;
+    width: 40%;
+  }
+
+  .titulo {
+    text-align: left;
+    font-size: 2.2rem; // Ajuste para um tamanho mais comum de título
+    width: 30%; // Aumente a largura para o título em desktop
+    margin: 3% auto 1.5rem auto; // Centraliza e ajusta margem
+    font-family: 'Tankindred', sans-serif;
+    text-decoration: underline;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .parlog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .parceiros {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 5%;
+
+    .titulo {
+      text-align: center; // Centraliza o título dos parceiros
+      font-size: 2.5rem; // Ajuste para desktop
+      width: 50%; // Aumenta a largura para o título de parceiros
+      font-family: 'Tankindred', sans-serif;
+      color: var(--secondary-color);
+      text-decoration: underline;
+      margin-bottom: 2rem; // Adiciona margem abaixo do título
+      display: flex;
+      align-items: center; // Alinha os itens, "s" era inválido
+      justify-content: center;
     }
-    
-    .resultados2{
+
+    .logos {
+      display: flex;
+      flex-direction: column; // Permanece coluna para mobile, muda no breakpoint
+      gap: 2rem;
+      width: 100%;
+      padding-left: 1rem;
+      padding-bottom: 2rem;
+
+      .linha {
         display: grid;
+        grid-template-columns: repeat(3, 1fr); // 3 colunas para desktop
+        gap: 4rem;
+        padding: 0 1rem;
+        max-width: 100%; // Garante que não ultrapasse o contêiner
+
+        img {
+          width: 150px; // Removi !important
+          height: 150px; // Removi !important
+          object-fit: contain;
+          display: block;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+p {
+  font-size: 1.1rem; // Ajuste o tamanho da fonte padrão
+  font-family: 'Abel', sans-serif;
+  margin-bottom: 3%;
+  padding: 0.5rem 0;
+  color: var(--secondary-color);
+}
+
+
+// --- Para Telas de até 1024px (Tablets e Laptops menores) ---
+@media screen and (max-width: 1024px) {
+  body {
+    font-size: 90%;
+  }
+
+  .separador{
+      width:100%;
+      margin-top:-4%;
+  }
+
+  .secao, .secao2 {
+    padding: 0 3%; // Reduz o padding lateral
+    .titulo {
+      font-size: 1.7rem;
+    }
+    .textos_conteudo {
+      gap: 5rem; // Reduz o gap
+    }
+    .texto {
+      font-size: 1.3rem;
+    }
+    .botao_container .botao {
+      font-size: 1.2rem;
+      padding: 1rem 3rem;
+    }
+  }
+
+  .secao2 {
+    .caracteristicas {
+      gap: 3rem; // Reduz o gap entre cards
+    
+      .card {
+        width: 45%; // Permite 2 cards por linha
+        margin: 1rem 2% 4rem 2%; // Ajusta as margens
+        .icone,
+        .icone_olho {
+          width: 10rem; // Reduz o tamanho dos ícones
+          margin: -3rem 0 1rem 0; // Ajusta a margem para telas menores
+        }
+
+        .icone_olho{
+          margin: -3rem 0 10rem 0
+        }
+      }
+    }
+    .valores {
+      gap: 10%; // Reduz o gap entre os valores
+      flex-wrap: wrap; // Permite que os valores quebrem a linha
+      justify-content: center;
+      .valor {
+        font-size: 2.5rem; // Ajusta o tamanho da fonte do valor
+      }
+    }
+  }
+
+  .secao3 {
+    .line{
         justify-content: center;
-        gap: 1rem;
+        align-items: center;
     }
     .titulo {
-        text-align: left;
-        font-size: 40px;
-        margin-top: 5%;
-        margin-bottom: 1.5rem;
-        font-family: 'Tankindred', sans-serif;
-        text-decoration: underline;
-        color: var(--secondary-color);
+      font-size: 1.8rem;
+    }
+    .titulo2 {
+      font-size: 1.5rem;
+    }
+    .listaActions {
+      width: 100%; // Aumenta a largura da lista de ações
+      text-align: center;
+    }
+    .field {
+      font-size: 0.95rem;
+      margin: 0.5% auto;
+    }
+    .partedebaixo {
+      flex-direction: column; // Pilha healthIssues e slider
+      align-items: center;
+      width: 95%; // Ocupa mais largura
+    }
+    .partedecima {
+      flex-direction: column; // Pilha healthIssues e slider
+      align-items: center;
+      width: 95%; // Ocupa mais largura
+    }
+    .healthIssues {
+      width: 90%; // Ocupa quase toda a largura disponível
+      margin-bottom: 3rem; // Espaçamento entre as seções empilhadas
+      .ordem {
+        flex-direction: row; // Tenta manter em linha se houver espaço
+        flex-wrap: wrap; // Permite quebrar se necessário
+      }
+      .cards {
+        width: 150px; // Ajusta o tamanho dos cards de healthIssues
+        margin: 1%;
+      }
+    }
+    .slider {
+      width: 90%; // Ocupa quase toda a largura disponível
+      margin-top: 5%;
+      .imagem {
+        height: 200px; // Reduz a altura da imagem do slider
+      }
+    }
+  }
 
-        @media (max-width: 910px) {
-            font-size: 1.5rem;
-        }
+  .secao4 {
+    .titulo {
+      font-size: 1.8rem; // Título da seção 4
+      width: 50%; // Aumenta a largura do título
     }
     .parceiros {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start; 
-        width: 100%; 
-        padding: 0 5%; 
-      
-        .titulo {
-          text-align: right;
-          font-size: 40px;
-          width: 100%;
-          margin: 2rem 0; 
-          font-family: 'Tankindred', sans-serif;
-          color: var(--secondary-color);
-          text-decoration: underline;
-          width: 100%; 
-          padding-right: 35rem; 
-        }
-      
-        .logos {
-          display: flex;
-          flex-direction: column;
+      .titulo {
+        font-size: 1.8rem; // Título dos parceiros
+        width: 60%;
+      }
+      .logos {
+        .linha {
+          grid-template-columns: repeat(2, 1fr); // 2 colunas para logos
           gap: 2rem;
-          width: 100%;
-          padding-left: 28rem;
-          padding-bottom: 300px;
-      
-          .linha {
-            display: flex;
-            justify-content: flex-start; 
-            gap: 4rem;
-            flex-wrap: wrap;
-            padding: 0 1rem; 
-      
-            img {
-              width: 200px;
-              height: 120px;
-              object-fit: contain;
-            }
+          img {
+            width: 100px; // Reduz o tamanho das imagens de parceiros
+            height: 100px;
           }
         }
-      } 
+      }
     }
+  }
 
-    p{
-        font-size: 1.3rem;
-        font-family: 'Abel', sans-serif;
-        margin-bottom: 3%;
-        padding: 0.5rem 0;
-        color: var(--secondary-color);
+  p {
+    font-size: 1rem; // Ajuste de parágrafo para tablet
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .secao{
+    margin-bottom: -2%;
+
+     padding: 0 2%; // Mais padding lateral para telas menores
+    .titulo {
+      font-size: 1.5rem;
     }
+    .textos_conteudo {
+      flex-direction: column; // Conteúdo em coluna
+      gap: 1.5rem;
+    }
+    .texto {
+      font-size: 80%;
+      text-align: center;
+    }
+    .subtitulo {
+      font-size: 1rem;
+    }
+    .botao_container .botao {
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
+    }
+  }
+}
+
+
+// --- Para Telas de até 768px (Celulares) ---
+@media screen and (max-width: 768px) {
+  .container{
+    .banner{
+        width: 100vw;   
+    }
+  }
+  .separador {
+    width: 100vw;
+    margin-top: -4%;
+  }
+
+  .secao2 {
+    
+    padding: 0 2%; // Mais padding lateral para telas menores
+    .titulo {
+      font-size: 1.5rem;
+    }
+    .textos_conteudo {
+      flex-direction: column; // Conteúdo em coluna
+      gap: 1.5rem;
+    }
+    .texto {
+      font-size: 80%;
+      text-align: center;
+    }
+    .subtitulo {
+      font-size: 1rem;
+    }
+    .botao_container .botao {
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
+    }
+  }
+
+  .secao2 {
+    .caracteristicas {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; // Cards empilhados
+      gap: 1.5rem;
+      .card {
+        width: 90%; // Um card por linha
+        margin: 1rem auto 2rem auto; // Centraliza e ajusta margens
+        .icone,
+        .icone_olho {
+          width: 8rem; // Reduz o tamanho dos ícones
+          margin: -2rem 0 0.5rem 0;
+        }
+      }
+    }
+    .valores {
+      flex-direction: column; // Valores empilhados
+      gap: 0.8rem;
+      padding: 1rem;
+      .valor {
+        font-size: 2rem; // Tamanho menor
+      }
+    }
+  }
+
+  .secao3 {
+        margin-bottom: -2%;
+    .titulo {
+      font-size: 1.5rem;
+    }
+    .line{
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .objetivos {
+      font-size: 0.9rem;
+    }
+    .titulo2 {
+      font-size: 1.2rem;
+      margin-top: 10%;
+    }
+    .listaActions {
+      width: 95%; // Mais largura para a lista
+    }
+    .field {
+      justify-content: center;
+      
+      margin: 0.5% auto;
+      h2{
+        
+        font-size: 1rem;
+      }
+    }
+    .partedebaixo {
+      width: 98%;
+    }
+    .healthIssues {
+      width: 60%;
+      
+      .cards {
+        
+        margin: 1rem auto;
+      }
+    }
+    .slider {
+      width: 100%;
+      display: flex;
+      .setas{
+        width: 20%;
+      }
+      .imagem {
+        width: 80%;
+      }
+    }
+  }
+
+  .secao4 {
+    .resultados{
+      display: block;
+    }
+    .resultados2{
+      width: 100%;
+      justify-content: center;
+    }
+    .titulo {
+      font-size: 1rem;
+      width: 100%;
+      text-align: center;
+    }
+    .parlog{
+display: flex;
+flex-direction: column-reverse;
+    }
+    .parceiros {
+      .titulo {
+        
+        width: 80%;
+      }
+      .logos {
+        .linha {
+          grid-template-columns: 1fr; // Uma coluna para logos
+          gap: 1rem;
+          img {
+            width: 80px; // Tamanho bem reduzido
+            height: 80px;
+          }
+        }
+      }
+    }
+  }
+  p {
+    font-size: 0.9rem; // Ajuste final de parágrafo
+  }
+}

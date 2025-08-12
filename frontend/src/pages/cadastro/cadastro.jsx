@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 
 import '../../styles/cadastro.scss';
@@ -47,10 +46,18 @@ function Cadastro(){
                 navigate("/login")  
             }
         }catch(e){
-            setTimeout(()=>{
+            if(e.response){
+                setTimeout(()=>{
                 setLoad(false)
                 toast.error(e.response.data.message);
             },1000);
+            }else{
+                setTimeout(()=>{
+                setLoad(false)
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+            },1000);
+            }
+            
         }
     }
     
@@ -58,12 +65,12 @@ function Cadastro(){
 
     return(
         <>
-            <div className="body">
+            <div className="bodyCadastro">
                 <div className="formulario" >
                     <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                     <div className="div_formulario_cadastro">
                         <InputForm type='text' onChange={(event) => handleChange(event, setName)} placeholder='Nome'/>
-                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
+                        <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Email"/>
                         <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
                         <InputFormPassword onChange={(event) => handleChange(event, setConfirmPass)} placeholder="Confirmar Senha"/>
                         

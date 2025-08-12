@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 import { toast } from 'react-toastify';
-//import {useNavigate} from 'react-router-dom'
+
 import "react-toastify/dist/ReactToastify.css";
 import '../../styles/login.scss';
 import { useNavigate } from 'react-router-dom'
@@ -13,22 +13,18 @@ import React, { useState, useEffect } from 'react'
 import InputForm from '../../components/inputForm/inputForm.jsx'
 import InputFormPassword from '../../components/inputFormPassword/inputFormPassword.jsx'
 
-import { useContext } from 'react';
-import { UserContext } from '../../components/Context/userContext.jsx';
-import { User } from 'lucide-react';
 
 
-//import jwt_decode from 'jwt-decode';
 
 function Login(){
-    //const nav = useNavigate()
+    
     const [user, setUser] = useState('')
     const [password, setPass] = useState('')
     const [load, setLoad]  = useState()
     const [disable, setDisable] = useState(false)
     const [ user2, setUser2 ] = useState([]);
 
-    const {getToken} = useContext(UserContext)
+    
         
     const navigate = useNavigate();
     const handleChange = (event, setText) => {
@@ -36,11 +32,11 @@ function Login(){
     };
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser2(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
+        onError: (error) => toast.error('Problema no login:', error)
     });
     function Forgot(){
-        //nav('insira a rota de esquecimento')
-        alert('inserir pagina')
+        navigate('/forgot')
+        
     };
     
     function loading(){
@@ -55,27 +51,49 @@ function Login(){
         try {
             
             let res = await api.post("/login", userData);
-           console.log(res.data)
             if(res.data.token){
-                 setLoad(false)
-                toast.success('Bem vindo!');
-                setTimeout(() => {
-                   navigate("/profile")
-                    window.location.reload()
-                }, 2000);
                 localStorage.setItem("token",res.data.token);
-                   
+                let req = await api.get('/user',  
+                {
+                    headers: { Authorization: `Bearer ${res.data.token}`}
+                }
+                
+            )
+                setTimeout(()=>{
+                setLoad(false)
+                toast.success(`Bem Vindo ${req.data.name}!`);
+                },1000);
+            
+                if(req.data.admin == true){
+                    setTimeout(() => {
+                    navigate("/homeAdm")
+                    }, 3000);}
+                
+                if(req.data.isRoot == true){
+                setTimeout(() => {
+                navigate("/rh")
+                    
+                }, 3000);}
+                else{
+                    setTimeout(() => {
+                navigate("/home")
+                
+                }, 3000);
+                }
                 
             }
         } catch (error) {
-            console.log(error)
-            
-            setTimeout(() => {
+            if(error.response){
+                setTimeout(()=>{
                 setLoad(false)
-                toast.error('Falha ao fazer login!!!');
-            }, 1000);
-            
-           
+                toast.error(error.response.data.message);
+            },1000);
+            }else{
+                setTimeout(()=>{
+                setLoad(false)
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+            },1000);
+            }
         }
     }
    
@@ -102,41 +120,45 @@ function Login(){
                 if(res.data.token){
                     setTimeout(() => {
                         setLoad(false)
-                        toast.success('Bem vindo!');
-                         
+                        toast.success(res.data.message);
                     }, 1000);
                     //getToken(res.data.token)
-                  localStorage.setItem("token",res.data.token);
-                   navigate("/home")
-                    
-                }}
+                localStorage.setItem("token",res.data.token);
+                navigate("/home")
+                
+                }
+            }
             catch (error) {
-            console.log(error)
-            
-            setTimeout(() => {
-                setLoad(false)
-                toast.error('Falha ao fazer login!!!');
-            }, 1000);
+            toast.error(error)
+            if(error.response){
+                setTimeout(() => {
+                    setLoad(false)
+                    toast.error(error.response.data.message);
+                }, 1000);
+            }
+            else{
+                setTimeout(() => {
+                    setLoad(false)
+                    toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+                }, 1000);
+
+            }
             
         
         }}
-
-                   
                 
                 
-                
-     
     } effect()}, [load, user2])
 
     return(
         <>
-            <div className="body">
+            <div className="bodyLogin">
                     <div className="forms">
                         <img src="../public/LogoAzul.svg" className={(load===true) ? "logoazul2" : "logoazul"} alt="Logo Azul da ENACTUS"/>
                         <div className="div_forms_login">
                             <InputForm type='email' onChange={(event) => handleChange(event, setUser)} placeholder="Usuário"/>
                             <InputFormPassword onChange={(event) => handleChange(event, setPass)} placeholder="Senha"/>
-                            <a >Esqueci minha senha</a>
+                            <a onClick={Forgot}>Esqueci minha senha</a>
                             <GoogleButton type="light" label="Login com o Google" onClick={login}></GoogleButton>
                             
                             <button className="button-login-form" onClick={loading}>Entrar</button>

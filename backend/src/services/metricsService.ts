@@ -50,6 +50,9 @@ export class MetricsService {
             climateInitiatives: metrics.climateInitiatives,
             livesImpacteds: metrics.livesImpacteds,
             kgRecycled: metrics.kgRecycled,
+            litersTreatedWater: metrics.litersTreatedWater,
+            bets: metrics.bets,
+            sanitationInstalled: metrics.sanitationInstalled,
             partners: JSON.stringify(metrics.partners)
         });
 

@@ -22,6 +22,9 @@
 .separator {
     width: 100%;
     margin-top: -3%;
+    @media(max-width: 550px){
+        margin-bottom: 10%;
+    }
 }
 
 .searchUser {
@@ -110,6 +113,7 @@
 
 .accountInfoDescription {
     display: flex;
+    z-index: -1;
 }
 
 .accountInfoIcon {
@@ -141,4 +145,191 @@
 
 button:hover {
     filter: brightness(0.8);
+}
+
+@media only screen and (max-width: 1024px) {
+    .titleUserList {
+        font-size: x-large;
+    }
+
+    .container {
+        display: flex;
+    }
+
+    .cardGrid {
+        margin: 0 auto;
+        row-gap: 2px;
+        column-gap: 1px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .title {
+        padding: 10%;
+    }
+
+    .title, .titleUserList {
+        font-size: x-large;
+    }
+
+    .titleUserList {
+        margin-bottom: 1%;
+    }
+
+    .searchUserSwitches {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        bottom: 5dvh;
+        left: 10dvw;
+
+        label {
+            font-size: medium;
+        }
+    }
+
+    .inputSearchUser {
+        flex: 0 1 40%;
+        font-size: medium;
+    }
+
+    .iconSearchUser {
+        margin: 2.5% 0 0 6%
+    }
+
+    .results {
+        position: relative;
+        bottom: 5dvh;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    .cardGrid {
+        position: relative;
+        bottom: 5dvh;
+    }
+
+    .buttons p {
+        position: relative;
+        top: 1dvh;
+        font-size: large;
+    }
+
+}
+
+@media only screen and (max-width: 625px) {
+    .title {
+        padding: 10%;
+    }
+
+    .titleUserList {
+        margin: 3% 0 3% 0;
+        text-align: center;
+        font-size: medium;
+    }
+
+    .searchUser {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .inputSearchUser {
+        width: 90%;
+        margin-bottom: 10%;
+    }
+
+    .iconSearchUser {
+        margin-top: 3.5%;
+        margin-left: 7%;
+    }
+
+    .searchUserSwitches {
+        position: relative;
+        bottom: 5dvh;
+        left: 10dvw;
+        width: 30%;
+
+        label {
+            margin: 0;
+            font-size: medium;
+        }
+    }
+
+
+    .results {
+        margin: auto;
+        text-align: center;
+    }
+
+    .cardGrid {
+        gap: 10px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .accountInfo {
+        h1, p {
+            margin: auto;
+            text-align: center;
+        }
+
+        p {
+            padding: 0;
+            font-size: large;
+        }
+    }
+
+    .accountInfoIcon {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .titleUserList {
+        font-size: 20px;
+    }
+
+    .searchUserSwitches {
+        padding-top: 15px;
+    }
+
+    .accountInfo {
+        p {
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .accountInfo {
+        h1 {
+            font-size: x-large;
+        }
+
+        p {
+            width: 100%;
+        }
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .accountInfo {
+        h1, p {
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 21px;
+        }
+
+        p {
+            font-size: 15px;
+        }
+    }
 }

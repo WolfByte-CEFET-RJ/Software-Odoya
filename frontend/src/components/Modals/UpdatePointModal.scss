@@ -1,0 +1,88 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  .modal-atualizar {
+    background: #B1E3FA;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh; // limita a altura máxima
+    overflow-y: auto; // permite rolar se passar do limite
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    position: relative;
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #2a3d45;
+      padding: 0.2rem;
+      line-height: 1;
+    }
+
+    h2 {
+      margin: 0;
+      color: #2a3d45;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .form-group {
+      margin: 0;
+      label {
+        display: block;
+        font-weight: 500;
+        color: #2a3d45;
+        margin: 0;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.8);
+        font-family: inherit;
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+
+      .confirm-btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        background: #269BDF;
+        color: white;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+        width: 100%;
+
+        &:hover {
+          background: darken(#269BDF, 10%);
+        }
+      }
+    }
+  }
+}

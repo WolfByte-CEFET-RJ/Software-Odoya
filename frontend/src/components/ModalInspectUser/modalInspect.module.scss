@@ -18,6 +18,7 @@
     left: 50%; 
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    z-index: 4;
     
     p {
         font-size: small;
@@ -26,6 +27,7 @@
     }
 
     label {
+        margin: 4% 0 0 2%;
         font-size: medium;
     }
 }
@@ -96,5 +98,53 @@
     .optionsSaveProfileAdm {
         background-color: #195D39;
         color: white;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .body {
+        width: 80%;
+
+        button {
+            font-size: large;
+        }
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .body {
+        width: 90%;
+
+        button {
+            font-size: medium;
+        }
+    }
+
+    .title h2 {
+        font-size: medium;
+        margin-top: 2.5%;
+    }
+
+    .buttonClose {
+        position: relative;
+        bottom: 4dvw;
+        left: 15dvw;
+    }
+
+    .buttonPromote, .buttonDemote, .optionsSaveProfile, .optionsDeleteProfile {
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .buttonClose {
+        position: relative;
+        bottom: 2dvh;
+        left: 0;
+    }
+
+    .buttonPromote, .buttonDemote {
+        font-size: small;
+        width: 60%;
     }
 }

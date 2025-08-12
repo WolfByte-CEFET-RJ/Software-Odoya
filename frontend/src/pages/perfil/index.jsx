@@ -10,21 +10,23 @@ import perfil from "./perfil.module.scss"
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import api from '../../api'
-
 import { useContext } from "react";
 import { UserContext } from "../../components/Context/userContext";
+import { useConfirmation } from "../../components/ModalConfirmation/handleHook";
 
 const Perfil = () => {
     const navigate = useNavigate();
+    const {confirm, ConfirmationModal} = useConfirmation()
+    const {logout} = useContext(UserContext)
     const [load, setLoad] = useState(false);
     const [lock, setLock] = useState(false)
-    //const [text, setText] = useState('')
     const [name, setName] = useState('')
+    const [point, setPoint] = useState()
+
     
     const [email, setEmail] = useState('')
 
-    const {client, mail} = useContext(UserContext)
-    console.log(client, mail)
+    const {client, points} = useContext(UserContext)
     
     const handleChange = (event, setText) => {
         setText(event.target.value);
@@ -36,8 +38,7 @@ const Perfil = () => {
         try{
             let req = await api.delete('/user')
          
-            
-            if(req.status == 200){
+            if(req.status == 204){
                 
                 setLoad(false)
                 setTimeout(() => {
@@ -49,51 +50,70 @@ const Perfil = () => {
         }
         catch (error) {
             console.log(error)
+            if(error.response){
+                    setLoad(false)
+                    setTimeout(() => {
+                        toast.error(error.response.data.message);
+                    }, 1000);
             
-            setTimeout(() => {
+            }else{
                 setLoad(false)
-                toast.error('Falha ao excluir conta');
+                setTimeout(() => {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
             }, 1000);
-    }
-    }
-
-    async function updateUser(){
-        //let tokenId = localStorage.getItem("id")
-        const userData = {name: name, email: email}
-        
-
-        try{
-            let req = await api.patch('/user', userData)
-            if(req.status == 200){
-                
-                setLoad(false)
-                 setTimeout(() => {
-                                    setLoad(false)
-                                    toast.success('Usuário atualizado!');
-                                }, 1000);
-                                
             }
-        }
-        catch (error) {
-            console.log(error)
             
+    }
+    }
+
+    async function updateUser() {
+        const userData = {};
+        if (name !== client) userData.name = name;
+        if (email !== "") userData.password = email;
+
+        if (Object.keys(userData).length === 0) {
+            toast.info("Nenhuma informação foi alterada.");
+            setLoad(false)
+            return;
+        }
+
+        try {
+            const req = await api.patch('/user', userData);
+            if (req.status === 200) {
+            setLoad(false);
             setTimeout(() => {
-                setLoad(false)
-                toast.error('Falha ao alterar dados');
+                toast.success('Usuário atualizado!');
             }, 1000);
+            }
+        } catch (error) {
+            console.log(error);
+            setLoad(false);
+            setTimeout(() => {
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error('Servidor não respondeu. Verifique sua conexão ou tente mais tarde.');
+            }
+            }, 1000);
+        }
     }
-    }
+
 
     
-    const loading = (func) => {
-        setLoad(true);
+    const loading = async (func) => {
         if(func == 'update'){
-            updateUser()
+            if(await confirm("atualizar seus dados")){
+                setLoad(true);
+                await updateUser()
+                setTimeout(()=>{location.reload()}, 3000)
+            }
         }
-        
         else if(func == 'deleteUser'){
-            
-            deleteUser()
+            if(await confirm("excluir sua conta")){
+                setLoad(true);
+                await deleteUser()
+                logout()
+            }
         }
         
     }
@@ -121,9 +141,12 @@ const Perfil = () => {
 
             
     },[load])
+
+
     useEffect(() =>{
-        setEmail(mail)
+        setEmail("")
         setName(client)
+        setPoint(points)
     },[client])
     
 
@@ -138,14 +161,14 @@ const Perfil = () => {
                 <form className={perfil.formProfile}>
                     <label>Nome</label>
                     <InputFormEdit onChange={(event) => handleChange(event, setName)} place={name} disable={lock} type="text"></InputFormEdit>
-                    <label>E-mail</label>
-                    <InputFormEdit onChange={(event) => handleChange(event, setEmail)}  place={mail} disable={lock} type="email"></InputFormEdit>
+                    <label>Senha</label>
+                    <InputFormEdit onChange={(event) => handleChange(event, setEmail)} hold="••••••••" disable={lock} type="password"></InputFormEdit>
 
                     <label>Pontos</label>
                     <div className={perfil.divPoints}>
-                        <p className={perfil.points}>0</p>
+                        <p className={perfil.points}>{point}</p>
                         <div className={perfil.pointsInfo}>
-                            <MdInfo size={20}/>
+                            <MdInfo className={perfil.pointsInfoIcon} size={25}/>
                             <p>Faça depósitos de esponjas para conseguir mais pontos!</p>
                         </div>
                     </div>
@@ -153,11 +176,12 @@ const Perfil = () => {
                     <div className={perfil.formButtons}>
                         <button className={perfil.buttonCancelar} disabled={lock} onClick={() => navigate("/")}>Cancelar</button>
                         <button type="button" className={perfil.buttonAlterar} disabled={lock} onClick={() => loading('update')}>Alterar</button>
-                        <button className={perfil.buttonExcluirConta} disabled={lock} onClick={() => loading('deleteUser')}>Excluir Conta</button>
+                        <button type="button" className={perfil.buttonExcluirConta} disabled={lock} onClick={() => loading('deleteUser')}>Excluir Conta</button>
                     </div>
                 </form>
             </div>
             <Footer/>
+            <ConfirmationModal></ConfirmationModal>
         </>
     );
 };
