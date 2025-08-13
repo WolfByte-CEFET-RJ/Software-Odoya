@@ -4,7 +4,19 @@ export enum RegistrationStatus {
     CANCELED = "CANCELADO"
 }
 
-export default interface Registration {
+export interface GroupedRegistration {
+    eventId: string,
+    eventName: string,
+    users: {
+        userId: string,
+        userName: string,
+        status: string,
+        created_at: Date,
+        updated_at: Date
+    }[]
+}
+
+export interface Registration {
     eventId: string,
     userId: string
     status: RegistrationStatus,
