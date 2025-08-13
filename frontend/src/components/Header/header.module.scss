@@ -1,0 +1,87 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem 3rem;
+    background-color: var(--primary-color);
+}
+
+.links {
+    display: flex;
+    gap: 4rem;
+}
+
+
+.link {
+    font-family: 'Abel', sans-serif;
+    color: white;
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all ease-in .2s;  
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: rgb(207, 207, 207);
+
+}
+
+.menuButton {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 1024px) {
+    .links {
+        gap: 2rem;
+    }
+
+    .link {
+        font-size: medium;
+    }
+}
+
+@media (max-width: 910px) {
+    .menuButton {
+        display: block;
+        position: relative;
+        left: 6dvw;
+    }
+
+    .links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: var(--primary-color);
+        flex-direction: column;
+        width: 200px;
+        gap: 2rem;
+        padding: 1rem;
+        border-radius: 8px;
+        z-index: 999;
+
+        transform: translateX(100%); // esconde fora da tela
+        transition: transform 0.3s ease-in-out;
+
+        // Garante que não mostre quando fechado
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+        pointer-events: none;
+    }
+
+    .open {
+        transform: translateX(0); // mostra o menu
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        display: flex;
+    }
+
+}

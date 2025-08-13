@@ -1,0 +1,213 @@
+.container{
+    width: 242px;
+    min-width: 242px;
+    height: calc(fit-content + 20%);
+    max-height: 350px;
+
+    position: relative;
+    padding-bottom: 10%;
+    
+    background-color: #00B8F1;
+    border-radius: 10px;
+    align-items: center;
+    
+    transition: transform 0.3s linear;
+    h3 {
+    width: 150px; /* Um pouco maior para a mensagem em React */
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 7px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; /* Posição acima da div */
+    left: 50%;
+    transform: translateX(-50%); /* Centraliza a mensagem de forma mais robusta */
+    opacity: 1; /* Não precisa de transição de opacidade aqui, pois a renderização é condicional */
+    font-size: 0.9em;
+}
+
+        @media (max-width: 590px) {
+            margin-left: 25%;
+        }
+
+        @media (max-width: 390px) {
+            margin-left: 12%;
+        }
+
+
+
+/* Estilo para a seta da mensagem (opcional) */
+h3::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Na parte inferior da mensagem */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+    
+
+    button {
+        background-color: #0077cc;
+        color: white;
+        width: 70%;
+        padding: 0.6rem 1.2rem;
+        margin-top:5%;
+        margin-left: 12%;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #005fa3;
+        }
+
+        &:active {
+            background-color: #004d82;
+        }
+    }
+
+    .info{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 20px;
+        
+
+        .infoSpan{
+            font-family: 'Abel', sans-serif;
+            color: rgb(0, 0, 0);
+            display: flex;
+            gap: .4rem;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin: 1.5px 3px;
+        }
+    }
+    .infoPonto{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-left: 20px;
+        margin-top: 2%;
+        min-height: 100px;
+        .infoSpan{
+            font-family: 'Abel', sans-serif;
+            color: rgb(0, 0, 0);
+            display: flex;
+            gap: .6rem;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.3rem;
+            
+            // .icon{
+            //     color:#114C6D
+            // }
+        }
+    }
+    .icon{
+        color:#114C6D;
+        display: block;
+        position: relative;
+        flex-shrink: 0;
+        // font-size: 23px;
+    }
+    .iconCard{
+        color:#114C6D;
+        position:absolute;
+        font-size: 70px; 
+        bottom: 10px; 
+        right: 10px;
+        max-width: 80%;
+    }
+}
+.titulo{
+    margin-top: 10%;
+    margin-bottom: 3%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 550;
+    font-family: 'Abel', sans-serif;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+
+}
+.ponto{
+    text-align:start;
+    margin-left: 20px;
+}
+
+.approved {
+  filter: brightness(0.8);
+}
+
+.rejected {
+  background-color: blanchedalmond;
+  border: 1px solid #d60000;
+}
+
+.logoazul{
+    margin-top:-10%;
+    width: 390px;
+    height: 390px;
+    z-index:1
+}
+.logoLoad{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    
+}
+
+.logoLoad2{
+    margin-top: 10%;
+    width: 201px;
+    height: 156px;
+    animation: rotacionar 1s linear infinite;
+}
+
+.container:hover{
+    cursor: pointer;
+}
+
+@keyframes rotacionar{
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+@media(max-width: 590px){
+    .container{
+
+        .info{
+            margin-left: 10px;
+    
+            .infoSpan{
+                gap: .6rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .infoPonto{
+            margin-left: 10px;
+            margin-top: 30px;
+    
+            .infoSpan{
+                gap: .6rem;
+                margin: 7.5px 0px;
+            }
+        }
+        .iconCard{
+            font-size: 50px;
+            left: 180px;
+            bottom: 30px;
+        }
+    }
+}

@@ -1,0 +1,247 @@
+.body {
+  overflow-x: hidden;
+}
+
+.ondas_background {
+  background-color: #b1e3fa;
+}
+
+.separador {
+  width: 100%;
+  margin-top: 8%;
+  margin-bottom: -4%;
+}
+
+.divPrincipal {
+  padding: 5% 8%;
+}
+
+.retangulo {
+  width: 833px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  background-color: #f1f1f1;
+  border: 2px solid #767676;
+  border-radius: 5px;
+}
+
+.input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+  margin-left: 2%;
+  flex: 1;
+  color: #121212;
+
+  &::placeholder {
+    color: #121212;
+  }
+}
+
+.registros {
+  min-height: 50vh;
+  padding-top: 5%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  list-style: none;
+}
+
+.card {
+  height: auto;
+  width: 382px;
+  border-radius: 10px;
+  background-color: #b1e3fa;
+
+  .line {
+    display: flex;
+    align-items: center;
+    margin: 4% 5%;
+
+    .text {
+      margin: 0 0 0 2%;
+      color: #121212;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 4% 5%;
+    gap: 1rem;
+
+    .valida,
+    .reprova,
+    .pend {
+      width: 160px;
+      min-height: 53px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px 12px;
+      cursor: pointer;
+      word-break: break-word;
+      white-space: normal;
+
+      .text {
+        margin: 0;
+        color: #121212;
+        font-size: 16px;
+        line-height: 1.2;
+        word-break: break-word;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+
+    .valida {
+      background-color: #a3cbb6;
+    }
+
+    .reprova {
+      background-color: #f35b5b;
+    }
+
+    .pend {
+      background-color: #ffdbbb;
+      margin: 0;
+    }
+  }
+}
+
+.cardAprova {
+  @extend .card;
+  background-color: #a3cbb6;
+
+  .buttons {
+    display: block;
+
+    .valida {
+      cursor: auto;
+      width: auto;
+      background-color: transparent;
+
+      .text {
+        font-size: xx-large;
+      }
+    }
+
+    .reprova {
+      display: none;
+    }
+  }
+}
+
+.cardReprova {
+  @extend .card;
+  background-color: #f35b5b;
+
+  .buttons {
+    display: block;
+
+    .valida {
+      display: none;
+    }
+
+    .reprova {
+      cursor: auto;
+      width: auto;
+      background-color: transparent;
+
+      .text {
+        font-size: xx-large;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .retangulo {
+    width: auto;
+    height: 48px;
+  }
+
+  .input {
+    font-size: 16px;
+  }
+
+  .card {
+    width: 100%;
+
+    .text {
+      margin-left: 0;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      flex-direction: column;
+      align-items: center;
+
+      .valida,
+      .reprova,
+      .pend {
+        width: 100%;
+        min-height: auto;
+
+        .text {
+          font-size: larger;
+        }
+      }
+    }
+  }
+
+  .cardAprova .buttons .valida .text,
+  .cardReprova .buttons .reprova .text {
+    font-size: x-large;
+  }
+}
+
+@media (max-width: 898px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+
+  .retangulo {
+    height: 48px;
+  }
+
+  .input {
+    font-size: 16px;
+  }
+
+  .card {
+    width: 100%;
+
+    .text {
+      margin-left: 0;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      flex-direction: column;
+      align-items: center;
+
+      .valida,
+      .reprova,
+      .pend {
+        width: 100%;
+        min-height: auto;
+
+        .text {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
