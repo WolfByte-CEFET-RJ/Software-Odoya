@@ -23,5 +23,14 @@ registrationRouter
     */
 .get("/user/registration", AuthMiddleware.ensureAuthenticated, RegistrationController.getRegistrationByUser)
 
+/**
+ * @route POST /user/registration
+ * @description Cria um registro de inscrição para o usuário autenticado em um evento
+ * @param {string} eventId - ID do evento para o qual o usuário deseja se inscrever
+ * @returns { message: string }
+ * 
+ */
+.post("/user/registration/:id_event", AuthMiddleware.ensureAuthenticated, RegistrationController.createRegistration)
+
 
 export default registrationRouter;

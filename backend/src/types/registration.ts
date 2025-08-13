@@ -1,7 +1,7 @@
 export enum RegistrationStatus {
-    PENDENTE = "PENDENTE",
-    APROVADO = "CONFIRMADO",
-    REPROVADO = "CANCELADO"
+    PENDING = "PENDENTE",
+    APPROVED = "CONFIRMADO",
+    CANCELED = "CANCELADO"
 }
 
 export default interface Registration {
