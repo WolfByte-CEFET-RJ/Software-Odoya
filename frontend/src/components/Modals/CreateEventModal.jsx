@@ -12,6 +12,13 @@ function CreateEventModal({ open, onClose }) {
     estimatedDuration: ""
   })
 
+  const currentDateAndTime = new Date().toISOString().slice(0, 16);
+
+  const handleClose = () => {
+    setFormData("");
+    onClose();
+  }
+
   const handleConfirm = () => {
     if(!(formData.name && formData.location && formData.date && formData.meetingPoint && formData.estimatedDuration)) {
       toast.error("Um ou mais campos estão vazios");
@@ -22,9 +29,7 @@ function CreateEventModal({ open, onClose }) {
     try {
       let req = await api.post('/event', formData);
 
-      if(req.status == 201) {
-        toast.success("Mutirão criado com sucesso!")
-      }
+      if(req.status == 201) toast.success("Mutirão criado com sucesso!")
     } catch(error) {
       toast.error(error.response?.data?.message || "Erro ao criar mutirão")
       console.log(error.message);
@@ -34,7 +39,7 @@ function CreateEventModal({ open, onClose }) {
   if(open) return (
     <div className="modal-backdrop">
       <div className="modal-evento">
-        <button onClick={onClose} className="close-btn">×</button>
+        <button onClick={handleClose} className="close-btn">×</button>
         
         <h2>Novo Mutirão</h2>
 
@@ -74,6 +79,7 @@ function CreateEventModal({ open, onClose }) {
               type="datetime-local"
               step={0}
               value={formData.date}
+              min={currentDateAndTime}
               onChange={(e) => setFormData({...formData, date: e.target.value})}
             />
           </div>
