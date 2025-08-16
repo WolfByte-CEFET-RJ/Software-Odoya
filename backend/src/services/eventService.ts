@@ -1,7 +1,7 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 import { Event, CreateEvent, UpdateEvent } from '../types/event';
 import { v4 } from "uuid";
-import { EventNotFoundError } from '../erros/EventError';
+import { EventAlreadyOccurred, EventNotFoundError } from '../erros/EventError';
 import EventValidator from '../utils/Yup/eventValidator';
 import { MissinngDataError } from '../erros/CommonErros';
 
@@ -80,7 +80,9 @@ export default class EventService{
     }
 
     public static async updateEvent(id: string, data: UpdateEvent) {
-        
+        const currentDate = new Date();
+
+
         if(!id) {
             throw new MissinngDataError("Id do depósito não informado")
         }
@@ -95,9 +97,15 @@ export default class EventService{
             throw new EventNotFoundError();
         }
 
+        if(event.date < currentDate){
+            throw new EventAlreadyOccurred();
+        }
+
         if(data.date) {
             data.date = new Date(data.date);
         }
+
+       
 
         await EventValidator.validateUpdateEvent(data);
 

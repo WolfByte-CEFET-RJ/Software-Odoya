@@ -15,3 +15,9 @@ export class RegistrationDuplicate extends HttpError{
         super({status: HttpCode.CONFLICT, message})
     }
 }
+
+export class RegistrationEventAlreadyOccurred  extends HttpError{
+    constructor(message: string = 'Não é possível se inscrever em um mutirão que já ocorreu!'){
+        super({status: HttpCode.BAD_REQUEST, message})
+    }
+}
