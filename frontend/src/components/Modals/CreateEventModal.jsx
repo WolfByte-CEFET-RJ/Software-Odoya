@@ -29,7 +29,11 @@ function CreateEventModal({ open, onClose }) {
     try {
       let req = await api.post('/event', formData);
 
-      if(req.status == 201) toast.success("Mutirão criado com sucesso!")
+      if(req.status == 201) {
+        toast.success("Mutirão criado com sucesso!", {
+          onClose: () => window.location.reload()
+        });
+      }
     } catch(error) {
       toast.error(error.response?.data?.message || "Erro ao criar mutirão")
       console.log(error.message);
