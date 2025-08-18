@@ -32,5 +32,12 @@ registrationRouter
  */
 .post("/user/registration/:id_event", AuthMiddleware.ensureAuthenticated, RegistrationController.createRegistration)
 
+/**
+ * @route PUT /admin/registration/:id_event
+ * @description Atualiza o status da inscrição do usuário em um evento
+ * @returns { message: string }
+ */
+.patch("/admin/registration", AuthMiddleware.ensureAuthenticated, AuthMiddleware.ensureAdmin, RegistrationController.validateRegistration)
+
 
 export default registrationRouter;

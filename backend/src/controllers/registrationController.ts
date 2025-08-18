@@ -58,4 +58,30 @@ export default class RegistrationController {
         }
     }
 
+    public static async validateRegistration( req: Request, res: Response, next: NextFunction): Promise<any> {
+        try{       
+            const userId = req.body?.userId;
+            const newStatus = req.body?.status;
+            const eventId = req.body?.eventId;
+
+            if(!userId){
+                throw new MissinngDataError("ID de usuário não fornecido");
+            }
+
+            if(!newStatus){
+                throw new MissinngDataError("Status de inscrição não fornecido");
+            }
+
+            if(!eventId){
+                throw new MissinngDataError("ID do mutirão não fornecido");
+            }
+            
+            const response = await RegistrationService.validateRegistration(userId, eventId, newStatus);
+
+            res.status(HttpCode.OK).json(response);
+        }catch(e: any){
+            next(e);
+        }
+    }
+
 }
