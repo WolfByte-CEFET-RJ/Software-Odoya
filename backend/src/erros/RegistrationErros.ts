@@ -15,3 +15,9 @@ export class RegistrationDuplicate extends HttpError{
         super({status: HttpCode.CONFLICT, message})
     }
 }
+
+export class RegistrationStatusInvalid extends HttpError{
+    constructor(message: string = 'Status de inscrição inválido'){
+        super({status: HttpCode.BAD_REQUEST, message})
+    }
+}
