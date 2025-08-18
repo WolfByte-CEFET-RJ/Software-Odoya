@@ -1,3 +1,7 @@
+h2, label, input, textarea {
+  font-family: 'Abel', sans-serif;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -14,16 +18,32 @@
     background: #A3CBB6;
     padding: 2rem;
     border-radius: 12px;
-    width: 400px;
+    width: 30dvw;
     display: flex;
     flex-direction: column;
     gap: 1rem;
     position: relative;
 
+    @media (max-width: 1440px) {
+      width: 40dvw;
+    }
+
+    @media (max-width: 1024px) {
+      width: 60dvw;
+    }
+
+    @media (max-width: 768px) {
+      width: 75dvw;
+    }
+
+    @media (max-width: 425px) {
+      width: 80dvw;
+    }
+
     .close-btn {
       position: absolute;
       top: 1rem;
-      right: 1rem;
+      right: -1rem;
       background: none;
       border: none;
       font-size: 3rem;
@@ -31,6 +51,14 @@
       color: #2a3d45;
       padding: 0.2rem;
       line-height: 1;
+
+      @media (max-width: 1024px) {
+        font-size: 2rem;
+      }
+
+      @media (max-width: 425px) {
+        right: 0;
+      }
     }
 
     h2 {
@@ -40,17 +68,10 @@
       text-align: center;
     }
 
-    .subtitle {
-      margin: -0.5rem 0 1rem 0;
-      color: #2a3d45;
-      text-align: center;
-      font-weight: 500;
-    }
-
     .form-group {
       label {
         display: block;
-        margin-bottom: 0.5rem;
+        margin: 0 0 0.5rem 0;
         font-weight: 500;
         color: #2a3d45;
       }
@@ -61,18 +82,27 @@
         border-radius: 6px;
         border: 1px solid rgba(0, 0, 0, 0.2);
         background: rgba(255, 255, 255, 0.8);
-        font-family: inherit;
       }
 
       textarea {
         min-height: 100px;
         resize: vertical;
       }
+
+      @media (max-width: 320px) {
+        input[type="datetime-local"], input[type="time"] {
+          width: 82%;
+        }
+      }
     }
 
     .form-row {
       display: flex;
       gap: 1rem;
+
+      @media (max-width: 425px) {
+        display: grid;
+      }
 
       .form-group {
         flex: 1;
@@ -92,10 +122,22 @@
         color: white;
         font-weight: 500;
         cursor: pointer;
-        width: 100%;
+        width: 30%;
 
         &:hover {
-          background: darken(#0E7D06, 10%);
+          background: darken(#0E7D06, 5%);
+        }
+
+        @media (max-width: 425px) {
+          width: 40%;
+        }
+
+        @media (max-width: 375px) {
+          width: 50%;
+        }
+
+        @media (max-width: 320px) {
+          width: 60%;
         }
       }
     }

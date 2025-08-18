@@ -1,63 +1,90 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import {toast} from "react-toastify";
 import "./CreateEventModal.scss";
+import api from '../../api';
 
-function CreateEventModal({ open, onClose, onConfirm }) {
-  const [titulo, setTitulo] = useState("");
-  const [data, setData] = useState("");
-  const [local, setLocal] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [horario, setHorario] = useState("");
-  const [duracao, setDuracao] = useState("");
+function CreateEventModal({ open, onClose }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    location: "",
+    date: "",
+    meetingPoint: "",
+    estimatedDuration: ""
+  })
+
+  const currentDateAndTime = new Date().toISOString().slice(0, 16);
+
+  const handleClose = () => {
+    setFormData("");
+    onClose();
+  }
 
   const handleConfirm = () => {
-    onConfirm({ titulo, data, local, descricao, horario, duracao, });
-  };
+    if(!(formData.name && formData.location && formData.date && formData.meetingPoint && formData.estimatedDuration)) {
+      toast.error("Um ou mais campos estão vazios");
+    } else createEvent();
+  }
 
-  
-  if(open){
-    return (
-      <div className="modal-backdrop">
-        <div className="modal-evento">
-          <button onClick={onClose} className="close-btn">×</button>
-          
-          <h2>Pontos de Coleta</h2>
-          <p className="subtitle">Mutirões</p>
+  async function createEvent() {
+    try {
+      let req = await api.post('/event', formData);
 
+      if(req.status == 201) {
+        toast.success("Mutirão criado com sucesso!", {
+          onClose: () => window.location.reload()
+        });
+      }
+    } catch(error) {
+      toast.error(error.response?.data?.message || "Erro ao criar mutirão")
+      console.log(error.message);
+    }
+  }
+
+  if(open) return (
+    <div className="modal-backdrop">
+      <div className="modal-evento">
+        <button onClick={handleClose} className="close-btn">×</button>
+        
+        <h2>Novo Mutirão</h2>
+
+        <div className="form-group">
+          <label>Nome</label>
+          <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({...formData, name: e.target.value})}
+          />
+        </div>
+
+        <div className="form-row">
           <div className="form-group">
-            <label>Nome do evento</label>
+            <label>Local</label>
             <input
               type="text"
-              value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
+              value={formData.location}
+              onChange={(e) => setFormData({...formData, location: e.target.value})}
             />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>Data</label>
-              <input
-                type="date"
-                value={data}
-                onChange={(e) => setData(e.target.value)}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Horário estimado</label>
-              <input
-                type="time"
-                value={horario}
-                onChange={(e) => setHorario(e.target.value)}
-              />
-            </div>
           </div>
 
           <div className="form-group">
             <label>Ponto de encontro</label>
             <input
               type="text"
-              value={local}
-              onChange={(e) => setLocal(e.target.value)}
+              value={formData.meetingPoint}
+              onChange={(e) => setFormData({...formData, meetingPoint: e.target.value})}
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label>Data e Hora</label>
+            <input
+              type="datetime-local"
+              step={0}
+              value={formData.date}
+              min={currentDateAndTime}
+              onChange={(e) => setFormData({...formData, date: e.target.value})}
             />
           </div>
 
@@ -65,26 +92,19 @@ function CreateEventModal({ open, onClose, onConfirm }) {
             <label>Duração estimada</label>
             <input
               type="time"
-              value={duracao}
-              onChange={(e) => setDuracao(e.target.value)}
+              step={1}
+              value={formData.estimatedDuration}
+              onChange={(e) => setFormData({...formData, estimatedDuration: e.target.value})}
             />
-          </div>
-
-          <div className="form-group">
-            <label>Descrição</label>
-            <textarea
-              value={descricao}
-              onChange={(e) => setDescricao(e.target.value)}
-            />
-          </div>
-
-          <div className="modal-actions">
-            <button onClick={handleConfirm} className="confirm-btn">Salvar</button>
           </div>
         </div>
+
+        <div className="modal-actions">
+          <button onClick={() => handleConfirm()} className="confirm-btn">Salvar</button>
+        </div>
       </div>
-    );
-  } else return (<></>);
+    </div>
+  )
 }
 
 export default CreateEventModal;
