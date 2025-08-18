@@ -12,37 +12,42 @@ dotenv.config();
 
 interface UploadStrategy {
   /**
-   * Faz o upload de uma imagem a partir de um buffer
-   * @param buffer Buffer com os dados da imagem
-   * @param system_id Identificador único da entidade associado a imagem
-   * @returns {Promise<string>} Caminho da imagem
+   * Faz o upload de um arquivo a partir de um buffer
+   * @param buffer Buffer com os dados do arquivo
+   * @param system_id Identificador único da entidade associado ao arquivo
+   * @returns {Promise<string>} Caminho do arquivo
    */
-  uploadImage: (buffer: Buffer, system_id: string) => Promise<string>
+  uploadFile: (buffer: Buffer, system_id: string) => Promise<string>
 
   /**
-   * Remove uma imagem
+   * Remove um arquivo
    * Operação não fatal. Erros são registrados, mas não interrompem o fluxo de execução
-   * @param system_id Identificador único da entidade associado a imagem
+   * @param system_id Identificador único da entidade associado ao arquivo
    * @returns {Promise<Boolean>} Status da operação
    */
-  removeImage: (system_id: string) => Promise<Boolean>
+  removeFile: (system_id: string) => Promise<Boolean>
 }
 
 /**
  * @class
- * Lida com uploads e requisiçãoes de imagens da nuvem do Cloudinary
+ * Lida com uploads e requisiçãoes de arquivos da nuvem do Cloudinary
  */
 class CloudinaryStrategy implements UploadStrategy {
 
-  public async uploadImage(buffer: Buffer, system_id: string): Promise<string> {
+  public async uploadFile(buffer: Buffer, system_id: string): Promise<string> {
     
     const uploader = CloudinaryConfig.getUploader();
+
+    const fileType = await fileTypeFromBuffer(buffer); 
+    const ext = fileType?.ext;
+    
+    if (!ext) throw new FileExtensionError("Não foi possível determinar o tipo do arquivo.");
 
     const streamUpload = (): Promise<UploadApiResponse> => {
       return new Promise((resolve, reject) => {
 
         const stream = uploader.upload_stream(
-          { public_id: system_id },
+          { public_id: system_id, resource_type: "raw", format: ext, access_mode: "public" },
           (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
 
             if (result) {
@@ -62,11 +67,11 @@ class CloudinaryStrategy implements UploadStrategy {
       return secure_url;
 
     } catch (error: any) {
-      throw new UploadError("Falha no upload da imagem. " + error.message);
+      throw new UploadError("Falha no upload do arquivo. " + error.message);
     }
   }
 
-  async removeImage(system_id: string): Promise<Boolean> {
+  async removeFile(system_id: string): Promise<Boolean> {
     try {
       const result = await CloudinaryConfig.getUploader().destroy(system_id);
 
@@ -78,7 +83,7 @@ class CloudinaryStrategy implements UploadStrategy {
 
     } catch (error: any) {
 
-      console.error("Erro ao remover imagem na nuvem :", error.message);
+      console.error("Erro ao remover arquivo na nuvem :", error.message);
       console.error(`Identificador buscado: ${system_id}`)
       return false;
     }
@@ -88,11 +93,11 @@ class CloudinaryStrategy implements UploadStrategy {
 
 /**
  * @class
- * Lida com uploads e requisiçãoes de imagens localmente
+ * Lida com uploads e requisiçãoes de arquivos localmente
  */
 class LocalStrategy implements UploadStrategy {
 
-  public async uploadImage(buffer: Buffer, system_id: string): Promise<string> {
+  public async uploadFile(buffer: Buffer, system_id: string): Promise<string> {
     try {
       const uploadsDir = path.resolve(process.cwd(), "uploads");
 
@@ -119,11 +124,11 @@ class LocalStrategy implements UploadStrategy {
       });
 
     } catch (error: any) {
-      throw new UploadError("Falha no upload da imagem. " + error.message);
+      throw new UploadError("Falha no upload do arquivo. " + error.message);
     }
   }
 
-  async removeImage(system_id: string): Promise<Boolean> {
+  async removeFile(system_id: string): Promise<Boolean> {
     try {
       const uploadsDir = path.resolve(process.cwd(), "uploads");
       const files = fs.readdirSync(uploadsDir);
@@ -138,7 +143,7 @@ class LocalStrategy implements UploadStrategy {
       return true;
     } catch (error: any) {
 
-      console.error("Erro ao remover imagem local:", error.message);
+      console.error("Erro ao remover arquivo local:", error.message);
       console.error(`Identificador buscado: ${system_id}`)
       return false;
     }
@@ -172,33 +177,32 @@ export default class FileService {
   }
 
   /**
-   * Realiza o upload de uma imagem com a estratégia definida
-   * @param buffer Buffer da imagem
+   * Realiza o upload de um arquivo com a estratégia definida
+   * @param buffer Buffer do arquivo
    * @param system_id Nome do arquivo ou ID único
-   * @returns Caminho ou URL da imagem
+   * @returns Caminho ou URL do arquivo
    */
   public static async upload(buffer: Buffer, system_id: string): Promise<string> {
     if (!this.strategy) {
       this.setStrategy(null)
     }
 
-    return this.strategy.uploadImage(buffer, system_id);
+    return this.strategy.uploadFile(buffer, system_id);
   }
 
   /**
-   * Remove uma imagem armazenada.
+   * Remove um arquivo armazenado.
    * Mudar de ambiente entre os testes pode causar inconsistência
    * @param system_id Nome do arquivo ou ID único
    * @returns Status da remoção
    */
   public static async remove(system_id: string): Promise<Boolean> {
-    console.log("Removendo imagem: " + system_id)
+    console.log("Removendo arquivo: " + system_id)
 
     if (!this.strategy) {
       this.setStrategy(null)
     }
 
-    return this.strategy.removeImage(system_id);
+    return this.strategy.removeFile(system_id);
   }
 }
-
