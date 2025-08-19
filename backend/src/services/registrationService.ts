@@ -1,6 +1,6 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
 import { GroupedRegistration, Registration, RegistrationStatus } from '../types/registration';
-import { RegistrationDuplicate, RegistrationNotFound } from '../erros/RegistrationErros';
+import { RegistrationDuplicate, RegistrationEventAlreadyOccurred, RegistrationNotFound } from '../erros/RegistrationErros';
 import { EventNotFoundError } from '../erros/EventError';
 import { UserNotFound } from '../erros/UserErros';
 
@@ -69,6 +69,7 @@ export default class RegistrationService {
     
     public static async createRegistration(userId: string, eventId: string): Promise<any> {
         const status = RegistrationStatus.PENDING;
+        const currentDate = new Date();
 
         const event = await knex('Event').where({ id: eventId }).first();
 
@@ -81,6 +82,10 @@ export default class RegistrationService {
             eventId,
             status
         };
+
+        if (event.date < currentDate){
+            throw new RegistrationEventAlreadyOccurred();
+        }
 
         try {
             await knex('Registration').insert({
