@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import RegistrationService from "../services/registrationService";
-import { GroupedRegistration, Registration } from "../types/registration";
+import { GroupedRegistration, Registration, RegistrationStatus } from "../types/registration";
 
 import { HttpCode } from "../erros/erro.config";
 import { AuthenticationError } from "../erros/AuthErros";
 import { MissinngDataError } from "../erros/CommonErros";
+import { RegistrationValidator } from "../utils/registrationValidator";
+import { RegistrationStatusInvalid } from "../erros/RegistrationErros";
 
 export default class RegistrationController {
     public static async getRegistrationAll(req: Request, res: Response,  next: NextFunction): Promise<any>{
@@ -51,6 +53,36 @@ export default class RegistrationController {
             }
 
             const response = await RegistrationService.createRegistration(userId, eventId);
+
+            res.status(HttpCode.OK).json(response);
+        }catch(e: any){
+            next(e);
+        }
+    }
+
+    public static async validateRegistration( req: Request, res: Response, next: NextFunction): Promise<any> {
+        try{       
+            const userId: string = req.body?.userId;
+            const newStatus: RegistrationStatus = req.body?.status;
+            const eventId: string = req.body?.eventId;
+
+            if(!userId){
+                throw new MissinngDataError("ID de usuário não fornecido");
+            }
+
+            if(!newStatus){
+                throw new MissinngDataError("Status de inscrição não fornecido");
+            }
+
+            if(!eventId){
+                throw new MissinngDataError("ID do mutirão não fornecido");
+            }
+
+            if(!RegistrationValidator.isStatusValid(newStatus)){
+                throw new RegistrationStatusInvalid();
+            }
+            
+            const response = await RegistrationService.validateRegistration(userId, eventId, newStatus);
 
             res.status(HttpCode.OK).json(response);
         }catch(e: any){

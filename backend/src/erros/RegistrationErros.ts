@@ -16,8 +16,14 @@ export class RegistrationDuplicate extends HttpError{
     }
 }
 
-export class RegistrationEventAlreadyOccurred  extends HttpError{
-    constructor(message: string = 'Não é possível se inscrever em um mutirão que já ocorreu!'){
-        super({status: HttpCode.BAD_REQUEST, message})
+export class RegistrationStatusInvalid extends HttpError {
+    constructor(message: string = 'Status de inscrição inválido') {
+        super({ status: HttpCode.BAD_REQUEST, message });
+    }
+}
+
+export class RegistrationEventAlreadyOccurred extends HttpError {
+    constructor(message: string = 'Não é possível se inscrever em um mutirão que já ocorreu!') {
+        super({ status: HttpCode.BAD_REQUEST, message });
     }
 }

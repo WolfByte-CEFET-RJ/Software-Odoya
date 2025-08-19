@@ -2,6 +2,7 @@ import DatabaseConnection from '../database/connection/DatabaseConnection';
 import { GroupedRegistration, Registration, RegistrationStatus } from '../types/registration';
 import { RegistrationDuplicate, RegistrationEventAlreadyOccurred, RegistrationNotFound } from '../erros/RegistrationErros';
 import { EventNotFoundError } from '../erros/EventError';
+import { UserNotFound } from '../erros/UserErros';
 
 const knex = DatabaseConnection.getInstance();
 
@@ -97,6 +98,36 @@ export default class RegistrationService {
         } catch (error) {
             throw new RegistrationDuplicate();
         }
+    }
+
+    public static async validateRegistration(userId: string, eventId: string, newStatus: RegistrationStatus){
+
+        const user = await knex('User').where({id: userId}).first();
+
+        if(!user){
+            throw new UserNotFound();
+        }
+
+        const event = await knex('Event').where({ id: eventId }).first();
+
+        if (!event) {
+            throw new EventNotFoundError();
+        }
+
+        const registrationData = {
+            userId,
+            eventId,
+            newStatus
+        };
+
+        await knex('Registration').update({
+            status: registrationData.newStatus
+        }).where({
+            userId: registrationData.userId,
+            eventId: registrationData.eventId,
+        });
+
+        return {"message":"Status atualizado com sucesso"};
     }
     
 }
