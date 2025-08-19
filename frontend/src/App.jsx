@@ -14,7 +14,7 @@ import RH from './pages/rh/index.jsx'
 import HomeAdm from './pages/principal_InternaAdm/HomeAdm.jsx'
 import Forgot from './pages/forgotPassword/forgot.jsx'
 import NotFoundPage from './pages/notFound/notFound.jsx'; 
-
+import Newsletter from "./pages/newsletter/Newsletter.jsx"
 
 
 
@@ -30,6 +30,7 @@ const Routing = () =>{
                 <Route path='/home' element={<Home/>}/>
                 <Route path="/profile" element={<Perfil/>}/>
                 <Route path="/forgot" element={<Forgot/>}/>
+                <Route path="/newsletter" element={<Newsletter/>}></Route>
 
                 <Route path="/deposit/adm" element={<DepositoAdm/>}/>
                 <Route path='/homeAdm' element={<HomeAdm/>}/>
