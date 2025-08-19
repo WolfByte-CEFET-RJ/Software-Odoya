@@ -11,3 +11,8 @@ export class UnauthorizedEventAccessError extends HttpError {
         super({ status: HttpCode.FORBIDDEN, message });
     }
 }
+export class EventAlreadyOccurred  extends HttpError {
+    constructor(message: string = 'Não é possível alterar um mutirão que já ocorreu!') {
+        super({ status: HttpCode.BAD_REQUEST, message });
+    }
+}
