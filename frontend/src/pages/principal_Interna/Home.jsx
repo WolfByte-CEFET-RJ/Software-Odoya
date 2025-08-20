@@ -14,39 +14,35 @@ import { toast } from "react-toastify";
 import { UserContext } from "../../components/Context/userContext";
 
 function Home() {
-  //Condicional para o conteúdo a ser apresentado
-  const [esponge, setEsponge] = useState(false);
-  const [muti, setMuti] = useState(false);
-  //info do mapa
-  const [adress, setAdress] = useState({ street: "", lat: "", long: "" });
-
-  //Informações de pontos, doações e mutirões
-  const [point, setPoint] = useState([]);
+  const [pointSection, setPointSection] = useState(false);
+  const [eventSection, setEventSection] = useState(false);
+  const [mapAddress, setMapAddress] = useState({ street: "", lat: "", long: "" });
+  const [points, setPoints] = useState([]);
   const [donations, setDonations] = useState([]);
   const [events, setEvents] = useState([]);
-
-  const { client, token } = useContext(UserContext);
   const [showAllDonations, setShowAllDonations] = useState(false);
   const [showAllPoints, setShowAllPoints] = useState(false);
 
+  const { client, token } = useContext(UserContext);
+
   const coletaSectionRef = useRef(null);
 
-  function changePageEsponge(e) {
+  function changePagePoint(e) {
     e.preventDefault();
-    setEsponge(true);
-    setMuti(false);
+    setPointSection(true);
+    setEventSection(false);
     setTimeout(() => {
       coletaSectionRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   }
 
-  function changePageMuti(e) {
+  function changePageEvent(e) {
     e.preventDefault();
-    setEsponge(false);
-    setMuti(true);
+    setPointSection(false);
+    setEventSection(true);
   }
 
-  async function getEventsSchelduled() {
+  async function getScheduledEvents() {
     try {
       const req = await api.get("/events/scheduled");
       if (req.status === 200) {
@@ -66,7 +62,7 @@ function Home() {
       }
     }
   }
-  async function dadosDeps() {
+  async function getDeposits() {
     try {
       const req = await api.get("/deposits");
 
@@ -74,56 +70,32 @@ function Home() {
         setDonations(req.data);
       }
     } catch (err) {
-      if (err.response) {
-        if (err.response.status === 404) {
-          setTimeout(() => {
-            //toast.info("Você ainda não fez nenhum depósito. Que tal começar agora e ajudar o planeta 🌍 ♻️", { autoClose: 3000 });
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            toast.error(err.response.data.message);
-          }, 1000);
-        }
-      } else {
-        setTimeout(() => {
-          toast.error(
-            "Servidor não respondeu. Verifique sua conexão ou tente mais tarde."
-          );
-        }, 1000);
+      if(!(err.response.status === 404)) {
+        toast.error(err.response?.data?.message || "Servidor não respondeu. Verifique sua conexão ou tente mais tarde.")
+        console.log(err);
       }
     }
   }
 
-  async function getColectData() {
+  async function getCollectionPoints() {
     try {
       const req = await api.get("/collectionPoints");
       console.log(await api.get("/collectionPoints"));
-      setPoint(req.data);
+      setPoints(req.data);
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 404) {
-          //se o usuario nao tiver dados de coleta ele não mostra nada no toast
-        } else {
-          setTimeout(() => {
-            toast.error(error.response.data.message);
-          }, 1000);
-        }
-      } else {
-        setTimeout(() => {
-          toast.error(
-            "Servidor não respondeu. Verifique sua conexão ou tente mais tarde."
-          );
-        }, 1000);
+      if(!(error.response.status === 404)) {
+        toast.error(error.response?.data?.message || "Servidor não respondeu. Verifique sua conexão ou tente mais tarde.");
+        console.log(error);
       }
     }
-    console.log(point);
+    console.log(points);
   }
 
   useEffect(() => {
     if (token) {
-      getColectData();
-      dadosDeps();
-      getEventsSchelduled();
+      getCollectionPoints();
+      getDeposits();
+      getScheduledEvents();
     }
   }, [token]);
 
@@ -161,7 +133,7 @@ function Home() {
           Escolha o que deseja fazer a seguir:
         </h1>
         <div className="escolha-buttons">
-          <button className="opcao1-escolha" onClick={changePageEsponge}>
+          <button className="opcao1-escolha" onClick={changePagePoint}>
             {" "}
             Depositar esponjas
           </button>
@@ -170,7 +142,7 @@ function Home() {
             // onClick={() => {
             //   toast.info("Tente novamente em breve!");
             // }}
-            onClick={changePageMuti}
+            onClick={changePageEvent}
           >
             {" "}
             Participar de multirões
@@ -178,7 +150,7 @@ function Home() {
         </div>
       </section>
 
-      {esponge && (
+      {pointSection && (
         <>
           <section className="sectionCards">
             <h1 className="sectionCards-titulo">Minhas doações recentes</h1>
@@ -195,7 +167,7 @@ function Home() {
                   ).map((dado) => {
                     const { brasiliaDate, hour } = convertDate(dado.created_at);
 
-                    const location = point.find(
+                    const location = points.find(
                       (p) => p.id === dado.collectionPointId
                     );
 
@@ -241,20 +213,20 @@ function Home() {
               rowSpacing={{ xs: 2, sm: 5, md: 10 }}
               columnSpacing={{ xs: 1, sm: 5, md: 10 }}
             >
-              {(showAllPoints ? point : point.slice(0, 4)).map((dado) => (
+              {(showAllPoints ? points : points.slice(0, 4)).map((dado) => (
                 <DonationCard
                   key={dado.id}
                   id={dado.id}
                   nome={dado.name}
                   place={dado.location}
                   state={dado.isInactive}
-                  setLocation={setAdress}
+                  setLocation={setMapAddress}
                   open={true}
                 />
               ))}
             </Grid2>
 
-            {point.length > 4 && (
+            {points.length > 4 && (
               <div className="ver-mais-wrapper">
                 <button
                   className="ver-mais-btn"
@@ -267,12 +239,12 @@ function Home() {
           </section>
 
           <section id="map" className="section_map">
-            <Mapa location={adress} />
+            <Mapa location={mapAddress} />
           </section>
         </>
       )}
 
-      {muti && (
+      {eventSection && (
         <>
           {/* <section className="sectionCards">
             <h1 className="sectionCards-titulo"> Minhas Inscrições</h1>
@@ -319,7 +291,7 @@ function Home() {
         </>
       )}
 
-      {!esponge && !muti && (
+      {!pointSection && !eventSection && (
         <>
           <section className="sectionCards">
             <h1 className="sectionCards-titulo">Minhas doações recentes</h1>
@@ -335,7 +307,7 @@ function Home() {
                     : donations.deposits.slice(0, 4)
                   ).map((dado) => {
                     const { brasiliaDate, hour } = convertDate(dado.created_at);
-                    const location = point.find(
+                    const location = points.find(
                       (p) => p.id === dado.collectionPointId
                     );
                     return (
