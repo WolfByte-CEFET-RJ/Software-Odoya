@@ -1,10 +1,11 @@
-.calendario{
+.calendario {
     height: 90vh;
     width: 100vw;
     // background-color: #262626;
     margin-bottom: 5%;
 }
-.calendar{
+
+.calendar {
     margin: 5% 5%;
     padding: 1%;
     // height: 60vh;
@@ -14,96 +15,101 @@
     border-radius: 4px;
 }
 
-.calendar button{
+.calendar button {
     // color:#c2c2c2;
 }
+
 /*header modificado*/
-.toolbar-container{
+.toolbar-container {
     display: flex;
     height: 12vh;
     align-items: center;
     padding-left: 50px;
 }
-.mesAno{
+
+.mesAno {
     width: 50%;
     color: #f3f3f3;
     justify-content: flex-start;
 }
-.dirtop{
+
+.dirtop {
     width: 50%;
     justify-content: end;
     display: flex;
     align-items: center;
     padding-left: 5%;
 }
-.rbc-toolbar{
+
+.rbc-toolbar {
     height: 10vh;
     color: #bbb;
     font-size: 20px;
 }
 
-.rbc-btn-group > button{
+.rbc-btn-group>button {
     border: 0;
 }
 
-.rbc-toolbar button{
-    color:#cecece;
+.rbc-toolbar button {
+    color: #cecece;
     border: 1px solid #cccccc4f;
 }
 
-.rbc-toolbar button:active, 
-.rbc-toolbar button.rbc-active{
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
     background-color: #565656;
-    border-color:#bbbb
+    border-color: #bbbb
 }
 
 /*Corpo*/
 /*linhas*/
 
-.rbc-month-view{
+.rbc-month-view {
     border-color: #eeeeee5f;
 }
-.rbc-month-row + .rbc-month-row {
+
+.rbc-month-row+.rbc-month-row {
     border-color: #dddddd73;
 }
 
-.rbc-day-bg + .rbc-day-bg{
+.rbc-day-bg+.rbc-day-bg {
     border-color: #dddddd73;
 }
 
 /*Mês*/
 
-.rbc-header{
-    color:#eeeeeeee;
+.rbc-header {
+    color: #eeeeeeee;
     border-color: #dddddd73;
 }
 
-.rbc-header + .rbc-header{
+.rbc-header+.rbc-header {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
     border-color: #dddddd73;
 }
 
-.rbc-off-range-bg{
-    background-color: #313131; 
+.rbc-off-range-bg {
+    background-color: #313131;
 }
 
-.rbc-today{
+.rbc-today {
     background-color: #1a1a1a;
 }
 
-.rbc-button-link{
+.rbc-button-link {
     margin: 2px;
     font-size: 15px;
     color: #eeeeeee5;
 }
 
-.rbc-off-range .rbc-button-link{
+.rbc-off-range .rbc-button-link {
     color: #eeeeee37;
 }
 
-.rbc-now .rbc-button-link{
+.rbc-now .rbc-button-link {
     background-color: #B1E3FA;
     color: #114C6D;
     border-radius: 2px;
@@ -112,28 +118,93 @@
     font-size: 16px;
 }
 
-.rbc-time-content, .rbc-time-content > .rbc-day-slot, 
-.rbc-timeslot-group, .rbc-time-slot{
+.rbc-time-content,
+.rbc-time-content>.rbc-day-slot,
+.rbc-timeslot-group,
+.rbc-time-slot {
     color: #bbb;
     border-color: #b0b0b036;
 }
 
-.rbc-day-slot .rbc-time-slot{
-    border-top:1px solid #c8c8c80a;
+.rbc-day-slot .rbc-time-slot {
+    border-top: 1px solid #c8c8c80a;
 }
 
 /*Agenda*/
 
-.rbc-agenda-content, .rbc-agenda-view{
+.rbc-agenda-content,
+.rbc-agenda-view {
     color: #aaa;
 }
 
-.rbc-agenda-date-cell, .rbc-agenda-time-cell{
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell {
     background-color: #262626;
 }
 
-.rbc-agenda-event-cell{
+.rbc-agenda-event-cell {
     border-radius: 20px;
     font-weight: bold;
     color: #e0e0e0;
+}
+
+.dropdown {
+    width: 30%;
+}
+
+.dropdown button {
+    width: 100%;
+}
+
+.toolbar-navigation {
+    width: 50%;
+    display: flex;
+    gap: 2%;
+}
+
+#today_config {
+    width: 60%;
+}
+
+#prev_config,
+#next_config {
+    width: 20%;
+}
+
+@media(max-width:760px) {
+    .dropdown {
+        width: 40%;
+    }
+
+    .toolbar-navigation {
+        margin-right: 5%;
+    }
+
+}
+
+@media(max-width:580px) {
+    .mesAno {
+        font-size: 20px;
+    }
+
+    .dropdown {
+        width: 50%;
+    }
+
+    .toolbar-navigation {
+
+        margin-right: 7%;
+    }
+
+}
+
+@media(max-width:580px) {
+    .mesAno {
+        position: relative;
+        left: -10%;
+    }
+
+    .dirtop {
+        width: 80%;
+    }
 }

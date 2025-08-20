@@ -168,7 +168,9 @@ const CustomTollbar = ({
 
   return (
     <div className="toolbar-container">
-      <h1 className="mesAno">{label}</h1>
+      <h1 className="mesAno">
+        {label.charAt(0).toUpperCase() + label.slice(1)}
+      </h1>
       <div className="dirtop">
         <div className="dropdown">
           <button
@@ -193,20 +195,23 @@ const CustomTollbar = ({
             ))}
           </ul>
         </div>
-        <div className="toolbar-navigation" style={{ marginLeft: "15px" }}>
+        <div className="toolbar-navigation" style={{ marginLeft: "10%" }}>
           <button
+            id="today_config"
             className="btn btn-secondary btn-ls mr-2 border-0"
             onClick={() => handleNavigate("TODAY")}
           >
             Hoje
           </button>
           <button
+            id="prev_config"
             className="btn btn-sm mr-2 text-secondary"
             onClick={() => handleNavigate("PREV")}
           >
             <i className="bi bi-caret-left"></i>
           </button>
           <button
+            id="next_config"
             className="btn btn-sm mr-2 text-secondary"
             onClick={() => handleNavigate("NEXT")}
           >
