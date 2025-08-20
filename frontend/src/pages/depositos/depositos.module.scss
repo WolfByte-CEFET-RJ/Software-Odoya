@@ -1,5 +1,6 @@
 .body {
     min-height: 75dvh;
+
     h1 {
         margin: 5% 0% 0% 3%;
     }
@@ -11,7 +12,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 7%;
-    
+
     p {
         margin: auto;
         color: black;
@@ -22,7 +23,11 @@
     padding-top: 5%;
 }
 
-.infoSection p, .btnRegisterDeposit, .modalBody label, .modalImagePreviewContainer p, .modalSubmit {
+.infoSection p,
+.btnRegisterDeposit,
+.modalBody label,
+.modalImagePreviewContainer p,
+.modalSubmit {
     font-family: 'Tankindred', sans-serif;
 }
 
@@ -34,7 +39,8 @@
     width: 40%;
 }
 
-.btnRegisterDeposit, .pointFullError {
+.btnRegisterDeposit,
+.pointFullError {
     margin: 5% 0% 3% 0%;
 }
 
@@ -53,9 +59,9 @@
     border-radius: 10px;
     background-color: #F1F1F1;
     padding: 20px;
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
@@ -130,45 +136,113 @@
     margin-top: 2%;
 }
 
+@media(max-width:1340px) {
+    .modalBody {
+        width: 50%;
+        padding: 3%
+    }
+
+    .modalClose {
+        margin-bottom: -9%;
+    }
+}
+
+@media(max-width:1115px) {
+    .modalForm label {
+        font-size: 17px;
+    }
+
+    .modalForm div label {
+        font-size: 15px;
+    }
+
+}
+
+@media (max-width: 1035px) {
+    .infoSection {
+        max-width: 100%;
+        padding: 2% 5%;
+        margin-top: 4%;
+    }
+
+    .modalSubmit {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        margin-right: 5%;
+        font-size: 80%;
+        min-width: 25px;
+        padding: 2%;
+    }
+}
+
+@media(max-width:870px) {
+    .modalForm div label {
+        font-size: 13px;
+    }
+
+}
+
 @media (max-width: 768px) {
-  .modalBody {
-    width: 90%;
-    padding: 15px;
-  }
-
-  .modalInputSpongeAmount {
-    width: 100%;
-    font-size: 1rem;
-  }
-
-  .modalLabelInputImage {
-    width: 100%;
-    height: 20dvh;
-    font-size: 0.9rem;
-  }
-
-  .modalImagePreviewContainer {
-    width: 100%;
-
-    img {
-      max-width: 80%;
+    .modalBody {
+        width: 80%;
+        padding: 5% 5%;
+        justify-content: center;
+        align-items: center;
     }
 
-    button {
-      font-size: 0.9rem;
-      padding: 2%;
+    .modalForm {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
     }
-  }
 
-  .modalSubmit {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-  }
+    .modalForm div label {
+        min-width: 90%;
+    }
 
-  .modalForm label,
-  .modalImagePreviewContainer p {
+    .modalForm div {
+        min-width: 70%;
+    }
+
+    .modalInputSpongeAmount {
+        margin-left: 0%;
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    .modalLabelInputImage {
+        width: 100%;
+        height: 20dvh;
+        font-size: 0.9rem;
+    }
+
+    .modalInputImage {
+        width: 90%;
+    }
+
+    .modalImagePreviewContainer {
+        width: 100%;
+
+        img {
+            max-width: 80%;
+        }
+
+        button {
+            font-size: 0.9rem;
+            padding: 2%;
+        }
+    }
+
+    .modalSubmit {
+        display: flex;
+        width: 50%;
+        margin-left: 5%;
+        font-size: 1rem;
+    }
+}
+
+.modalForm label,
+.modalImagePreviewContainer p {
     font-size: 1rem;
-    text-align: center;
-  }
 }
