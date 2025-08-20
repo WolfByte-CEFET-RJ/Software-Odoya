@@ -40,12 +40,11 @@ function Home() {
     }, 100);
   }
 
-  /*function changePageMuti(e) {
+  function changePageMuti(e) {
     e.preventDefault();
     setEsponge(false);
     setMuti(true);
   }
-*/
 
   async function getEventsSchelduled() {
     try {
@@ -149,11 +148,6 @@ function Home() {
     });
     return { brasiliaDate, hour };
   };
-  const parseDate = (str) => {
-    const [dia, mes, ano] = str.split("/");
-    return new Date(`${ano}-${mes}-${dia}`);
-  };
-
   return (
     <>
       <Header />
@@ -173,9 +167,10 @@ function Home() {
           </button>
           <button
             className="opcao2-escolha"
-            onClick={() => {
-              toast.info("Tente novamente em breve!");
-            }}
+            // onClick={() => {
+            //   toast.info("Tente novamente em breve!");
+            // }}
+            onClick={changePageMuti}
           >
             {" "}
             Participar de multirões
@@ -319,7 +314,7 @@ function Home() {
           </section>
 
           <section className="section_calendar">
-            <Calendar />
+            <Calendar eventos={events} />
           </section>
         </>
       )}
