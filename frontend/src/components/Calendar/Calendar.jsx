@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Calendar,
   dateFnsLocalizer,
-  momentLocalizer,
 } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
@@ -35,24 +34,18 @@ function Calendario({ eventos }) {
 
     const dateStart = new Date(year, month - 1, day, hour, minute);
 
-    // Cálculo da duração em horas:minutos
     const [durHour, durMin] = evento.estimatedDuration.split(":").map(Number);
 
     const dateEnd = new Date(dateStart);
     dateEnd.setHours(dateEnd.getHours() + durHour);
     dateEnd.setMinutes(dateEnd.getMinutes() + durMin);
 
-    const color = ["#2ECC71", "#3498DB", "#1ABC9C", "#A569BD"];
-
-    let idx = Math.floor(Math.random() * color.length);
-
     return {
       title: evento.name,
       start: dateStart,
       end: dateEnd,
       desc: `Localização: ${evento.location}`,
-      // color: "#195D39",
-      color: color[idx],
+      color: "#195D39"
     };
   });
 
@@ -64,7 +57,6 @@ function Calendario({ eventos }) {
   const [viewAtual, setViewAtual] = useState("month");
   const [dataAtual, setDataAtual] = useState(new Date());
 
-  // Força sincronização com a view inicial
   useEffect(() => {
     setViewAtual("month");
   }, []);
@@ -108,7 +100,6 @@ const CustomTollbar = ({
   views,
   viewAtual,
   setViewAtual,
-  onNavigate,
   dataAtual,
   setDataAtual,
 }) => {
