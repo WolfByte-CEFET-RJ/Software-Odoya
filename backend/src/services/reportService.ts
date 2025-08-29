@@ -1,5 +1,5 @@
 import DatabaseConnection from '../database/connection/DatabaseConnection';
-
+import { ReportNotFound } from '../erros/ReportErros';
 
 const knex = DatabaseConnection.getInstance();
 
@@ -53,6 +53,10 @@ export default class ReportService {
         .andWhere('created_at', '<', endDate)
         .groupByRaw('year, month')
         .orderByRaw('year DESC, month DESC');
+
+        if (!rows || rows.length === 0) {
+            throw new ReportNotFound();
+        }
 
         return rows.map(row => ({
         year: Number(row.year),
