@@ -14,6 +14,7 @@ import path from 'path';
 import ErrorHandler from './middlewares/errorHandler';
 import metricsRouter from './routes/metricsRoutes';
 import registrationRouter from './routes/registrationRoutes';
+import reportRouter from './routes/reportRoutes';
 
 /**
  * Define endpoints mapeados
@@ -41,6 +42,7 @@ export default (app: Express): void => {
         .use(eventRouter)
         .use(metricsRouter)
         .use(registrationRouter)
+        .use(reportRouter)
 
 
     // Rota padrão

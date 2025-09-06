@@ -10,6 +10,9 @@ export default class ReportService {
      * Retorna o total de esponjas coletadas por mês, agrupando os depósitos aprovados
      * por ano e mês com base na data de criação (`created_at`).
      *
+     * Os resultados serão ordenados por **ano** e **mês** em ordem **ascendente**,
+     * ou seja, do mês mais antigo para o mais recente.
+     * 
      * Parâmetros Recebidos	    |Resultado
      * Nenhum	                |Retorna todo o histórico
      * startYear + startMonth	|Retorna daquele mês até os dados mais recentes
@@ -20,7 +23,7 @@ export default class ReportService {
      * @param {number} [endYear] - Ano final (opcional)
      * @param {number} [endMonth] - Mês final (opcional)
      * 
-     * @returns {Promise<Array<{ year: number, month: number, total_sponges_collected: number }>>}
+     * @returns {Promise<Array< number >>} Array com os totais mensais de esponjas
      */
     public static async getMonthlySpongeReport(
         startYear?: number, startMonth?: number, endYear?: number, endMonth?: number) 
@@ -44,24 +47,18 @@ export default class ReportService {
 
         const rows = await knex('Deposit')
         .select(
-            knex.raw('EXTRACT(YEAR FROM created_at) AS year'),
-            knex.raw('EXTRACT(MONTH FROM created_at) AS month'),
+            knex.raw('SUM(amountSponges) AS total_sponges_collected')
         )
-        .sum('amountSponges AS total_sponges_collected')
         .where('status', 'APROVADO')
         .andWhere('created_at', '>=', startDate)
         .andWhere('created_at', '<', endDate)
-        .groupByRaw('year, month')
-        .orderByRaw('year DESC, month DESC');
+        .groupByRaw('EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)')
+        .orderByRaw('EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)');
 
         if (!rows || rows.length === 0) {
             throw new ReportNotFound();
         }
 
-        return rows.map(row => ({
-        year: Number(row.year),
-        month: Number(row.month),
-        total_sponges_collected: Number(row.total_sponges_collected),
-        }));
+        return rows.map(row => Number(row.total_sponges_collected));
     }
 }
