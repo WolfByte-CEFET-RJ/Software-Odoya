@@ -5,22 +5,24 @@ import ReportController from '../controllers/reportController';
 const reportRouter = Router();
 /**
  * @route POST /reports/monthly-sponge
- * @description
- * Retorna o total de esponjas coletadas por mês, agrupando os depósitos com status "APROVADO"
+ * @description Retorna o total de esponjas coletadas por mês, agrupando os depósitos aprovados
  * por ano e mês com base na data de criação (`created_at`).
+ *
+ * Os resultados serão ordenados por **ano** e **mês** em ordem **ascendente**,
+ * ou seja, do mês mais antigo para o mais recente.
  * 
- * Parâmetros Recebidos	    |Resultado
- * Nenhum	                |Retorna todo o histórico
- * startYear + startMonth	|Retorna daquele mês até os dados mais recentes
- * + endYear + endMonth	    |Retorna o intervalo entre os meses informados
+ * **Parâmetros Recebidos**        | **Resultado**
+ * --------------------------------|-------------------------------------
+ * Nenhum                          | Retorna todo o histórico de depósitos aprovados.
+ * `startYear`, `startMonth`       | Retorna os dados desde o mês e ano informados até o presente momento.
+ * `startYear`, `startMonth`, `endYear`, `endMonth` | Retorna o intervalo entre os meses e anos informados.
  * 
  * @param {number} [startYear] Ano inicial (opcional)
  * @param {number} [startMonth] Mês inicial (opcional)
  * @param {number} [endYear] - Ano final (opcional)
  * @param {number} [endMonth] - Mês final (opcional)
  * 
- * @returns {Array<{ year: number, month: number, total_sponges_collected: number }>}
- * Um array com os totais de esponjas coletadas por mês, ordenado do mais recente para o mais antigo.
+ * @returns {Array< number >} Array com os totais mensais de esponjas
  */
 reportRouter.post('/reports/monthly-sponge', ReportController.getMonthlySpongeReport);
 // APENAS ADMIN????? 
