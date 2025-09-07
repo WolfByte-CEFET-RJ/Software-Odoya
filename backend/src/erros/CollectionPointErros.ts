@@ -27,3 +27,5 @@ export class GeocodeError extends HttpError {
         super({ status: HttpCode.BAD_REQUEST, message });
     }
 }
+
+

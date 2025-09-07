@@ -28,6 +28,9 @@ collectionPointRouter
      */
     .get("/collectionPoint/:id", AuthMiddleware.ensureAuthenticated, CollectionPointController.getOneCollectionPoint)
 
+
+    
+
     /**
      * @route POST /collectionPoint
      * @description Cria um novo ponto de coleta
@@ -51,7 +54,15 @@ collectionPointRouter
      * @param {Number} id - ID do ponto de coleta
      * @returns { void }
      */
-    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint);
+    .delete("/collectionPoint/delete/:id", AuthMiddleware.ensureAdmin, CollectionPointController.deleteCollectionPoint)
 
+    /**
+     * @route GET /report/fullDate/:id
+     * @description Retorna a ultima data de coleta e a data de quando o ponto ficou
+     * @param {Number} id - ID do ponto de coleta
+     * @returns { isFullDate: dateTime , lastCollectionDate:dateTime }
+     */
+    .get("/report/fullDate/:id", AuthMiddleware.ensureAdmin, CollectionPointController.reportGetFullDate)
+    
 
 export default collectionPointRouter;

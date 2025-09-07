@@ -6,6 +6,7 @@ import { CollectionPointNotFound } from '../erros/CollectionPointErros';
 import { DepositNotAllowed, DepositNotFoundError, UnauthorizedDepositAccessError } from '../erros/DepositErrors';
 import CollectionPointService from './collectionPointService';
 import Mailer from './Mailer';
+import { UpdateCollectionPoint } from '../types/collectionPoint';
 
 const knex = DatabaseConnection.getInstance();
 
@@ -144,16 +145,22 @@ export default class DepositService{
 
         const possibleAmount = collectionPoint.amountSponges + (Number(sumPendentes[0].total) || 0)
 
+
+        var today = new Date;
+
         if (possibleAmount + amountSponges > collectionPoint.capacitySponges){
             // Enviar email pros administradores avisando que alguem tentou registrar o deposito mas nn conseguiu
             //const mail = new Mailer()
             //mail.sendMail()
+
+            //atualiza o isFullDate ao sinalizar que o deposito está cheio para um depósito
+            await knex("Collection_Point").where({ id: collectionPointId }).update({isFullDate : today});
+
             throw new DepositNotAllowed(
                 `Limite excedido. Tente novamente após a coleta. Espaço disponível: ${collectionPoint.capacitySponges - possibleAmount}`);
         }
         
 
-        var today = new Date;
         const deposit: Partial<Deposit> = {
             id: depositId,
             collectionPointId,

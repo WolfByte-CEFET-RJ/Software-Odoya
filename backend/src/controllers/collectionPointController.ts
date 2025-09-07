@@ -92,4 +92,19 @@ export default class CollectionPointController {
             next(e)
         }
     }
+
+    /* Reports*/ 
+
+    public static async reportGetFullDate(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { id } = req.params;
+            
+            const ReportData = await CollectionPointService.reportGetFullDate(id);
+            res.status(HttpCode.OK).json(ReportData);
+            
+        } catch (e: any) {
+            next(e);
+        }
+    }
+
 }
