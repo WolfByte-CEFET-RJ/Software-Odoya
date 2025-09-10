@@ -58,7 +58,8 @@ collectionPointRouter
 
     /**
      * @route GET /report/fullDate/:id
-     * @description Retorna a ultima data de coleta e a data de quando o ponto ficou
+     * @description Retorna a ultima data de coleta e a data de quando o ponto ficou cheio. 
+     * @description se isFullDate for null ou menor que o lastcollectionDate significa que o ponto de coleta não ficou cheio
      * @param {Number} id - ID do ponto de coleta
      * @returns { isFullDate: dateTime , lastCollectionDate:dateTime }
      */
