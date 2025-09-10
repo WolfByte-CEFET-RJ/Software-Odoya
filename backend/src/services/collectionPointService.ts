@@ -129,6 +129,7 @@ export default class CollectionPointService {
         return `Ponto de Coleta ${collectionPoint.name} atualizado com sucesso.`;
     }
 
+
     /**
      * @method deleteCollectionPoint
      * @description Remove um ponto de coleta específico pelo ID, se não houver depósitos associados
@@ -244,4 +245,24 @@ export default class CollectionPointService {
 
         return scheduledTasks;
     }
+
+    // Reports
+
+    /**
+     * @description Retorna o campo isFullDate e lastCollectionDate
+     *  
+     * @returns {Promise<Record<string, schedule.Job> >} Retorna o objeto contendo todas as tarefas agendadas
+     */
+
+    public static async reportGetFullDate(id: string): Promise<CollectionPoint> {
+
+        const ReportData = await knex("Collection_Point").select("isFullDate,lastCollectionDate").where({id}).first();
+
+        if(!ReportData) {
+            throw new CollectionPointNotFound();
+        }
+        
+        return ReportData;
+    }
+
 }
