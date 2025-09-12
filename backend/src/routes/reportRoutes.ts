@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import ReportController from '../controllers/reportController';
-//import AuthMiddleware from '../middlewares/authMiddleware';
+import AuthMiddleware from '../middlewares/authMiddleware';
 
 const reportRouter = Router();
 /**
@@ -14,18 +14,15 @@ const reportRouter = Router();
  * **Parâmetros Recebidos**        | **Resultado**
  * --------------------------------|-------------------------------------
  * Nenhum                          | Retorna todo o histórico de depósitos aprovados.
- * `startYear`, `startMonth`       | Retorna os dados desde o mês e ano informados até o presente momento.
- * `startYear`, `startMonth`, `endYear`, `endMonth` | Retorna o intervalo entre os meses e anos informados.
+ * `startDate` (formato `YYYY-MM`) | Retorna os dados desde o mês e ano informados até o presente momento.
+ * `startDate` e `endDate` (formato `YYYY-MM`) | Retorna o intervalo entre os meses e anos informados.
  * 
- * @param {number} [startYear] Ano inicial (opcional)
- * @param {number} [startMonth] Mês inicial (opcional)
- * @param {number} [endYear] - Ano final (opcional)
- * @param {number} [endMonth] - Mês final (opcional)
+ * @param {string} [startDate] Data inicial no formato `YYYY-MM` (opcional)
+ * @param {string} [endDate] Data final no formato `YYYY-MM` (opcional)
  * 
- * @returns {Array< number >} Array com os totais mensais de esponjas
+ * @returns {Array<{ year: number, month: number, total_sponges_collected: number }>}
  */
-reportRouter.post('/reports/monthly-sponge', ReportController.getMonthlySpongeReport);
-// APENAS ADMIN????? 
+reportRouter.post('/reports/monthly-sponge', AuthMiddleware.ensureAdmin, ReportController.getMonthlySpongeReport);
 
 
 export default reportRouter;

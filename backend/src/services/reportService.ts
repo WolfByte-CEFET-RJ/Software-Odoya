@@ -16,50 +16,77 @@ export default class ReportService {
      * **Parâmetros Recebidos**        | **Resultado**
      * --------------------------------|-------------------------------------
      * Nenhum                          | Retorna todo o histórico de depósitos aprovados.
-     * `startYear`, `startMonth`       | Retorna os dados desde o mês e ano informados até o presente momento.
-     * `startYear`, `startMonth`, `endYear`, `endMonth` | Retorna o intervalo entre os meses e anos informados.
+     * `startDate` (formato `YYYY-MM`) | Retorna os dados desde o mês e ano informados até o presente momento.
+     * `startDate` e `endDate` (formato `YYYY-MM`) | Retorna o intervalo entre os meses e anos informados.
      * 
-     * @param {number} [startYear] Ano inicial (opcional)
-     * @param {number} [startMonth] Mês inicial (opcional)
-     * @param {number} [endYear] - Ano final (opcional)
-     * @param {number} [endMonth] - Mês final (opcional)
+     * @param {string} [startDate] Data inicial no formato `YYYY-MM` (opcional)
+     * @param {string} [endDate] Data final no formato `YYYY-MM` (opcional)
      * 
-     * @returns {Promise<Array< number >>} Array com os totais mensais de esponjas
+     * @returns {Promise<Array<{ year: number, month: number, total_sponges_collected: number }>>} 
      */
     public static async getMonthlySpongeReport(
-        startYear?: number, startMonth?: number, endYear?: number, endMonth?: number) 
-    {
-        let startDate: Date;
-        let endDate: Date;
-
-        if (startYear && startMonth) {
-        // Início do mês informado
-        startDate = new Date(startYear, startMonth - 1, 1);
-
-        // Se fim também for informado
-        endDate = endYear && endMonth
-            ? new Date(endYear, endMonth, 1)
-            : new Date();
-        } else {
-        // Histórico completo
-        startDate = new Date(0);
-        endDate = new Date();
-        }
-
+            startDate: Date, 
+            endDate: Date
+        ): Promise<Array<{ year: number, month: number, total_sponges_collected: number }>> 
+        {
         const rows = await knex('Deposit')
         .select(
-            knex.raw('SUM(amountSponges) AS total_sponges_collected')
+            knex.raw('EXTRACT(YEAR FROM created_at) AS year'),
+            knex.raw('EXTRACT(MONTH FROM created_at) AS month'),
         )
+        .sum('amountSponges AS total_sponges_collected')
         .where('status', 'APROVADO')
         .andWhere('created_at', '>=', startDate)
         .andWhere('created_at', '<', endDate)
-        .groupByRaw('EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)')
-        .orderByRaw('EXTRACT(YEAR FROM created_at), EXTRACT(MONTH FROM created_at)');
+        .groupByRaw('year, month')
+        .orderByRaw('year, month');
 
         if (!rows || rows.length === 0) {
             throw new ReportNotFound();
         }
 
-        return rows.map(row => Number(row.total_sponges_collected));
+        const filledResults = [];
+
+        // Início do primeiro mês
+        let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
+
+        for (const row of rows) {
+            const rowYear = Number(row.year);
+            const rowMonth = Number(row.month);
+
+            // Data do mês retornado
+            const rowDate = new Date(rowYear, rowMonth - 1, 1);
+
+            // Preencher meses faltando até o mês atual da row
+            while (current < rowDate) {
+                filledResults.push({
+                    year: current.getFullYear(),
+                    month: current.getMonth() + 1,
+                    total_sponges_collected: 0,
+                });
+                current.setMonth(current.getMonth() + 1);
+            }
+
+            // Adiciona o mês retornado do banco
+            filledResults.push({
+                year: rowYear,
+                month: rowMonth,
+                total_sponges_collected: Number(row.total_sponges_collected),
+            });
+
+            // Move para o próximo mês
+            current.setMonth(current.getMonth() + 1);
+        }
+
+        // Preenche até endDate, se necessário
+        while (current < endDate) {
+            filledResults.push({
+                year: current.getFullYear(),
+                month: current.getMonth() + 1,
+                total_sponges_collected: 0,
+            });
+            current.setMonth(current.getMonth() + 1);
+        }
+        return filledResults;
     }
 }
