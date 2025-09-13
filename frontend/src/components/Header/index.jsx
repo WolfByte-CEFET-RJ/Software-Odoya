@@ -58,11 +58,11 @@ const Header = () => {
                             
                         {admin == true ? (
                             <>
-                                {/* 
-                                <Link to={"/"} className={header.link} onClick={() => setMenuOpen(false)}>
-                                <MdCollectionsBookmark color="#114C6D" />Relatórios
+                                
+                                <Link to={"/reports"} className={header.link} onClick={() => setMenuOpen(false)}>
+                                    <MdCollectionsBookmark color="#114C6D" />Relatórios
                                 </Link> 
-                                */}
+                               
 
                                 <Link to={"/homeAdm"} className={header.link} onClick={() => setMenuOpen(false)}>
                                     <FaGear color="#114C6D" />Portal do Administrador
