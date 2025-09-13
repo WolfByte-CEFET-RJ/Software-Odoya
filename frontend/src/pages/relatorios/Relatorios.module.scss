@@ -70,3 +70,68 @@
     background-color: #fff;
     border: 3px solid #269BDF;
 }
+
+@media only screen and (max-width: 1024px) {
+    .relatorioContainer {
+        width: 80%;
+    }
+
+    .displayButtonsReport button {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    h2 {
+        text-align: center;
+        margin: 0;
+    }
+
+    .dispositionRelatorio {
+        margin: 2% 0 0 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .displayButtonsReport {
+        flex-direction: row;
+        margin: 3% 0 0 0;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .titulo_relatorios {
+        padding: 3%;
+    }
+
+    .amountDeposits {
+        margin: auto;
+        font-size: larger;
+    }
+
+    .relatorioContainer {
+        width: 85%;
+    }
+
+    .displayButtonsReport {
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .amountDeposits {
+        font-size: large;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .amountDeposits {
+        font-size: medium;
+    }
+
+    .displayButtonsReport {
+        width: 80%;
+    }
+}
