@@ -44,14 +44,29 @@
 
 .dispositionRelatorio {
     display: flex;
-    height: 400px;
+    margin: 1% 0 0 5%;
+}
+
+.relatorioContainer {
+    border: 3px solid #269BDF;
+    width: 50%;
 }
 
 .displayButtonsReport {
+    margin: auto;
     width: 40%;
     display: flex;
     margin-left: 10%;
     flex-direction: column;
-    // position: relative;
-    // gap: 1;
+    gap: 1rem;
+
+    button {
+        width: 30%;
+    }
+}
+
+.spreadsheetBtn {
+    color: #000;
+    background-color: #fff;
+    border: 3px solid #269BDF;
 }

@@ -77,7 +77,7 @@ const Relatorios = () => {
       type: "line",
     },
     title: {
-      text: "Exemplo de Line Chart",
+      text: "",
     },
     xAxis: {
       categories: categories,
@@ -88,6 +88,9 @@ const Relatorios = () => {
       },
     },
     series: data,
+    exporting: {
+      enabled: true
+    }
   };
 
   return (
@@ -102,10 +105,12 @@ const Relatorios = () => {
           <TbArrowDownDashed /> Tempo de Enchimento de Ponto de Coleta
         </h2>
         <div className={styles.dispositionRelatorio}>
-          <HighchartsReact highcharts={Highcharts} options={options} />
+          <div className={styles.relatorioContainer}>
+            <HighchartsReact highcharts={Highcharts} options={options} />
+          </div>
           <div className={styles.displayButtonsReport}>
-            <button>Gerar pdf</button>
-            <button>Gerar planilha</button>
+            <button>Gerar PDF</button>
+            <button className={styles.spreadsheetBtn}>Gerar Planilha</button>
           </div>
         </div>
       </section>
