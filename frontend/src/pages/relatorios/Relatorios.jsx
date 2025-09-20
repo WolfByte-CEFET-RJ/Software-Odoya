@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import Highcharts from "highcharts";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import Highcharts, { chart } from "highcharts";
+import 'highcharts/modules/exporting';
+import 'highcharts/modules/offline-exporting';
+import 'highcharts/modules/export-data';
 import HighchartsReact from "highcharts-react-official";
 import styles from "./Relatorios.module.scss";
 import { TbArrowDownDashed } from "react-icons/tb";
@@ -9,6 +12,8 @@ import { UserContext } from "../../components/Context/userContext";
 import { toast } from "react-toastify";
 
 const Relatorios = () => {
+  const enchimentoPontoChartRef = useRef(null);
+
   const data = [
     {
       name: "Installation & Developers",
@@ -72,12 +77,13 @@ const Relatorios = () => {
     "2021",
     "2022",
   ];
-  const options = {
+
+  const enchimentoPontoChartOptions = {
     chart: {
       type: "line",
     },
     title: {
-      text: "",
+      text: "Tempo de Enchimento de Ponto de Coleta",
     },
     xAxis: {
       categories: categories,
@@ -89,8 +95,80 @@ const Relatorios = () => {
     },
     series: data,
     exporting: {
-      enabled: true
+      enabled: false
     }
+  };
+
+  const mediaDepositoChartOptions = {
+    chart: {
+      type: "line",
+    },
+    title: {
+      text: "Média de Depósito",
+    },
+    xAxis: {
+      categories: categories,
+    },
+    yAxis: {
+      title: {
+        text: "Valores",
+      },
+    },
+    series: data,
+    exporting: {
+      enabled: false
+    }
+  };
+  const freqDepositoChartOptions = {
+    chart: {
+      type: "line",
+    },
+    title: {
+      text: "Frequência de Depósito",
+    },
+    xAxis: {
+      categories: categories,
+    },
+    yAxis: {
+      title: {
+        text: "Valores",
+      },
+    },
+    series: data,
+    exporting: {
+      enabled: false
+    }
+  };
+
+  const collectedSpongesChartOptions = {
+    chart: {
+      type: "column",
+    },
+    title: {
+      text: "Esponjas Coletadas",
+    },
+    xAxis: {
+      categories: categories,
+    },
+    yAxis: {
+      title: {
+        text: "Valores",
+      },
+    },
+    series: data,
+    exporting: {
+      enabled: false
+    }
+  };
+
+  const exportarPDF = (ref) => {
+    ref.current?.chart.exportChart({
+      type: "application/pdf"
+    });
+  };
+
+  const exportarXLS = (ref) => {
+    ref.current?.chart.downloadXLS();
   };
 
   return (
@@ -106,11 +184,11 @@ const Relatorios = () => {
         </h2>
         <div className={styles.dispositionRelatorio}>
           <div className={styles.relatorioContainer}>
-            <HighchartsReact highcharts={Highcharts} options={options} />
+            <HighchartsReact highcharts={Highcharts} options={enchimentoPontoChartOptions} ref={enchimentoPontoChartRef}/>
           </div>
           <div className={styles.displayButtonsReport}>
-            <button>Gerar PDF</button>
-            <button className={styles.spreadsheetBtn}>Gerar Planilha</button>
+            <button onClick={() => exportarPDF(enchimentoPontoChartRef)}>Gerar PDF</button>
+            <button className={styles.spreadsheetBtn} onClick={() => exportarXLS(enchimentoPontoChartRef)}>Gerar Planilha</button>
           </div>
         </div>
       </section>
