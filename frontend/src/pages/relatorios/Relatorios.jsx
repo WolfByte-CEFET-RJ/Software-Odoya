@@ -7,6 +7,7 @@ import HighchartsReact from "highcharts-react-official";
 import styles from "./Relatorios.module.scss";
 import { TbArrowDownDashed } from "react-icons/tb";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import api from "../../api.js";
 import { UserContext } from "../../components/Context/userContext";
 import { toast } from "react-toastify";
@@ -175,6 +176,7 @@ const Relatorios = () => {
   };
 
   return (
+    <>
     <div className={styles.body}>
       <Header />
       <div className={styles.ondas_background}>
@@ -241,6 +243,9 @@ const Relatorios = () => {
         </div>
       </section>
     </div>
+
+    <Footer/>
+    </>
   );
 };
 
