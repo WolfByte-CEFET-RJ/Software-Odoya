@@ -33,9 +33,9 @@
     }
 }
 
-// .relatorio {
-//     height: 80%;
-// }
+.relatorio {
+    margin-bottom: 3%;
+}
 
 .amountDeposits {
     font-weight: bold;
@@ -82,7 +82,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    h2 {
+    .amountDeposits {
         text-align: center;
         margin: 0;
     }
@@ -97,7 +97,7 @@
 
     .displayButtonsReport {
         flex-direction: row;
-        margin: 3% 0 0 0;
+        margin: 3% 0 3% 0;
     }
 }
 
