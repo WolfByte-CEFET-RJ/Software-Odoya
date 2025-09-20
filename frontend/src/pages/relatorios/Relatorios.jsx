@@ -13,6 +13,9 @@ import { toast } from "react-toastify";
 
 const Relatorios = () => {
   const enchimentoPontoChartRef = useRef(null);
+  const mediaDepositoChartRef = useRef(null);
+  const freqDepositoChartRef = useRef(null);
+  const collectedSpongesChartRef = useRef(null);
 
   const data = [
     {
@@ -189,6 +192,51 @@ const Relatorios = () => {
           <div className={styles.displayButtonsReport}>
             <button onClick={() => exportarPDF(enchimentoPontoChartRef)}>Gerar PDF</button>
             <button className={styles.spreadsheetBtn} onClick={() => exportarXLS(enchimentoPontoChartRef)}>Gerar Planilha</button>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.relatorio}>
+        <h2 className={styles.amountDeposits}>
+          <TbArrowDownDashed /> Média de Depósito
+        </h2>
+        <div className={styles.dispositionRelatorio}>
+          <div className={styles.relatorioContainer}>
+            <HighchartsReact highcharts={Highcharts} options={mediaDepositoChartOptions} ref={mediaDepositoChartRef}/>
+          </div>
+          <div className={styles.displayButtonsReport}>
+            <button onClick={() => exportarPDF(mediaDepositoChartRef)}>Gerar PDF</button>
+            <button className={styles.spreadsheetBtn} onClick={() => exportarXLS(mediaDepositoChartRef)}>Gerar Planilha</button>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.relatorio}>
+        <h2 className={styles.amountDeposits}>
+          <TbArrowDownDashed /> Frequência de Depósito
+        </h2>
+        <div className={styles.dispositionRelatorio}>
+          <div className={styles.relatorioContainer}>
+            <HighchartsReact highcharts={Highcharts} options={freqDepositoChartOptions} ref={freqDepositoChartRef}/>
+          </div>
+          <div className={styles.displayButtonsReport}>
+            <button onClick={() => exportarPDF(freqDepositoChartRef)}>Gerar PDF</button>
+            <button className={styles.spreadsheetBtn} onClick={() => exportarXLS(freqDepositoChartRef)}>Gerar Planilha</button>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.relatorio}>
+        <h2 className={styles.amountDeposits}>
+          <TbArrowDownDashed /> Esponjas Coletadas
+        </h2>
+        <div className={styles.dispositionRelatorio}>
+          <div className={styles.relatorioContainer}>
+            <HighchartsReact highcharts={Highcharts} options={collectedSpongesChartOptions} ref={collectedSpongesChartRef}/>
+          </div>
+          <div className={styles.displayButtonsReport}>
+            <button onClick={() => exportarPDF(collectedSpongesChartRef)}>Gerar PDF</button>
+            <button className={styles.spreadsheetBtn} onClick={() => exportarXLS(collectedSpongesChartRef)}>Gerar Planilha</button>
           </div>
         </div>
       </section>
