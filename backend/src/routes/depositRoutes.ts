@@ -43,6 +43,13 @@ depositRouter
     .get("/deposit/:id", AuthMiddleware.ensureAdmin, DepositController.getOneDeposit)
 
     /**
+     * @route GET /deposit/frequency
+     * @description Retorna a frequência de depósitos em cada ponto de coleta
+     * @returns { collectionPointId, point_name, totalDeposits }
+     */
+    .get("/deposits/frequency", AuthMiddleware.ensureAdmin, DepositController.getDepositFrequency)
+
+    /**
      * @route POST /deposit
      * @description cria um deposito,verifica se o usuário está logado e pega o id do usuário logado para fazer o deposit
      * @param {string} collectionPointId

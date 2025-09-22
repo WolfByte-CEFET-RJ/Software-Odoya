@@ -41,6 +41,18 @@ export default class DepositController{
         }
     }
 
+    static async getDepositFrequency(req: Request, res: Response): Promise<void> {
+        try {
+        const frequency = await DepositService.getDepositFrequency();
+        res.status(200).json(frequency); 
+        } catch (error: any) {
+        res.status(500).json({
+            message: "Erro ao gerar relatório de frequência de depósitos",
+            error: error.message,
+        });
+        }
+    }
+
     public static async getSearchDeposit(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;

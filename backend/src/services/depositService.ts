@@ -112,6 +112,24 @@ export default class DepositService{
     }
 
     /**
+     * @description Busca a frequência de depósitos em cada ponto de coleta
+     * @returns {Promise<{ collectionPointId: string, point_name: string, totalDeposits: number }[]>}
+     */
+    public static async getDepositFrequency(): Promise<{ collectionPointId: string, point_name: string, totalDeposits: number }[]> {
+    const result: any[] = await knex('Deposit')
+        .join("Collection_Point as cp", "Deposit.collectionPointId", "cp.id")
+        .select("Deposit.collectionPointId", "cp.name as point_name")
+        .count("Deposit.id as totalDeposits")
+        .groupBy("Deposit.collectionPointId", "cp.name");
+
+    return result.map(r => ({
+        collectionPointId: String(r.collectionPointId),
+        point_name: String(r.point_name),
+        totalDeposits: Number(r.totalDeposits)
+    }));
+    }
+
+    /**
      * @description Cria um depósito
      * @param {string} collectionPointId
      * @param {string} userId
