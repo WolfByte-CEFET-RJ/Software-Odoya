@@ -44,7 +44,7 @@ depositRouter
 
     /**
      * @route GET /deposit/frequency
-     * @description Retorna a frequência de depósitos em cada ponto de coleta
+     * @description Retorna a frequência de intervalos entre os depósitos em cada ponto de coleta
      * @returns { collectionPointId, point_name, totalDeposits }
      */
     .get("/deposits/frequency", AuthMiddleware.ensureAdmin, DepositController.getDepositFrequency)

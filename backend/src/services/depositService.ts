@@ -112,21 +112,50 @@ export default class DepositService{
     }
 
     /**
-     * @description Busca a frequência de depósitos em cada ponto de coleta
-     * @returns {Promise<{ collectionPointId: string, point_name: string, totalDeposits: number }[]>}
+     * @description Calcula o tempo médio (em dias) entre depósitos em cada ponto de coleta
+     * @returns {Promise<{ collectionPointId: string, point_name: string, mediaDiasEntreDepositos: number }[]>}
      */
-    public static async getDepositFrequency(): Promise<{ collectionPointId: string, point_name: string, totalDeposits: number }[]> {
-    const result: any[] = await knex('Deposit')
+    public static async getDepositFrequency(): Promise<{ collectionPointId: string, point_name: string, mediaDiasEntreDepositos: number }[]> {
+    // Buscando todos os depósitos ordenados por ponto e data
+    const deposits: any[] = await knex("Deposit")
         .join("Collection_Point as cp", "Deposit.collectionPointId", "cp.id")
-        .select("Deposit.collectionPointId", "cp.name as point_name")
-        .count("Deposit.id as totalDeposits")
-        .groupBy("Deposit.collectionPointId", "cp.name");
+        .select("Deposit.collectionPointId", "cp.name as point_name", "Deposit.created_at")
+        .orderBy(["Deposit.collectionPointId", { column: "Deposit.created_at", order: "asc" }]);
 
-    return result.map(r => ({
-        collectionPointId: String(r.collectionPointId),
-        point_name: String(r.point_name),
-        totalDeposits: Number(r.totalDeposits)
-    }));
+    // Agrupando por ponto de coleta
+    const grouped: Record<string, { point_name: string, dates: Date[] }> = {};
+    for (const dep of deposits) {
+        const id = String(dep.collectionPointId);
+        if (!grouped[id]) grouped[id] = { point_name: dep.point_name, dates: [] };
+        grouped[id].dates.push(new Date(dep.created_at));
+    }
+
+    // Calculando média dos intervalos entre os depósitos
+    const result: { collectionPointId: string, point_name: string, mediaDiasEntreDepositos: number }[] = [];
+    for (const [id, data] of Object.entries(grouped)) {
+        if (data.dates.length < 2) {
+        result.push({ collectionPointId: id, point_name: data.point_name, mediaDiasEntreDepositos: 0 });
+        continue;
+        }
+
+        let somaIntervaloEntreDepositos = 0;
+        let count = 0;
+        for (let i = 1; i < data.dates.length; i++) {
+        const diferencaTempoMs = data.dates[i].getTime() - data.dates[i - 1].getTime();
+        const diferencaTempoDias = diferencaTempoMs / (1000 * 60 * 60 * 24); 
+        somaIntervaloEntreDepositos += diferencaTempoDias;
+        count++;
+        }
+
+        const mediaTempoEntreDepositos = somaIntervaloEntreDepositos / count;
+        result.push({
+        collectionPointId: id,
+        point_name: data.point_name,
+        mediaDiasEntreDepositos: Number(mediaTempoEntreDepositos.toFixed(2))
+        });
+    }
+
+    return result;
     }
 
     /**

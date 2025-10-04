@@ -43,13 +43,12 @@ export default class DepositController{
 
     static async getDepositFrequency(req: Request, res: Response): Promise<void> {
         try {
-        const frequency = await DepositService.getDepositFrequency();
-        res.status(200).json(frequency); 
+            const data = await DepositService.getDepositFrequency();
+            res.status(200).json(data);
         } catch (error: any) {
-        res.status(500).json({
-            message: "Erro ao gerar relatório de frequência de depósitos",
-            error: error.message,
-        });
+            res.status(500).json({ 
+                message: "Erro ao calcular tempo médio entre depósitos", 
+                error: error.message });
         }
     }
 
