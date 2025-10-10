@@ -19,8 +19,8 @@ export default class ReportService {
      * `startDate` (formato `YYYY-MM`) | Retorna os dados desde o mês e ano informados até o presente momento.
      * `startDate` e `endDate` (formato `YYYY-MM`) | Retorna o intervalo entre os meses e anos informados.
      * 
-     * @param {string} [startDate] Data inicial no formato `YYYY-MM` (opcional)
-     * @param {string} [endDate] Data final no formato `YYYY-MM` (opcional)
+     * @param {Date} [startDate] Data inicial no formato `YYYY-MM` (opcional)
+     * @param {Date} [endDate] Data final no formato `YYYY-MM` (opcional)
      * 
      * @returns {Promise<Array<{ year: number, month: number, total_sponges_collected: number }>>} 
      */
@@ -88,5 +88,43 @@ export default class ReportService {
             current.setMonth(current.getMonth() + 1);
         }
         return filledResults;
+    }
+
+    /**
+     * @description Retorna o relatório de depósitos, contendo a **média de esponjas** depositadas e o **total de depósitos** feitos
+     * em cada ponto de coleta entre as datas fornecidas (`sDate` e `eDate`).
+     * 
+     * Os resultados serão agrupados por **nome do ponto de coleta** e ordenados em ordem alfabética.
+     * 
+     * **Parâmetros Recebidos**        | **Resultado**
+     * --------------------------------|-------------------------------------
+     * Nenhum                          | Retorna todo o histórico da média de depósitos e o total de esponjas por ponto de coleta.
+     * `startDate` (formato `YYYY-MM`) | Retorna os dados desde o mês e ano informados até o presente momento.
+     * `startDate` e `endDate` (formato `YYYY-MM-DD`) | Retorna a média de depósitos e o total de esponjas por ponto de coleta dentro do intervalo de datas fornecido.
+     * 
+     * @param {Date} [sDate] Data inicial no formato `YYYY-MM` (opcional)
+     * @param {Date} [eDate] Data final no formato `YYYY-MM` (opcional)
+     * 
+     * @returns {Promise<Array<{ collectionPointName: string, averageAmountSponges: number, totalDeposits: number }>>}
+    */
+    public static async getAverageDepositReport(sDate: Date, eDate: Date)
+        : Promise<Array<{ collectionPointName: string, averageAmountSponges: number, totalDeposits: number }>> {
+
+        const q = knex("Deposit")
+            .join("Collection_Point", "Deposit.collectionPointId", "Collection_Point.id")
+            .whereBetween("Deposit.created_at", [sDate, eDate])
+            .select(
+                "Collection_Point.name as collectionPointName",
+                knex.raw("AVG(Deposit.amountSponges) as averageAmountSponges"),
+                knex.raw("COUNT(Deposit.id) as totalDeposits")
+            )
+            .groupBy("Collection_Point.name")
+            .orderBy("collectionPointName");
+
+        if (!q) {
+            throw new ReportNotFound();
+        }
+        
+        return q;
     }
 }
